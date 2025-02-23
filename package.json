@@ -1,0 +1,37 @@
+{
+  "name": "favoritable",
+  "description": "API to handle favorites links",
+  "version": "0.0.1",
+  "author": "Thiago Mendonca",
+  "private": true,
+  "type": "module",
+  "homepage": "https://github.com/trystan2k/favoritable#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trystan2k/favoritable"
+  },
+  "bugs": {
+    "url": "https://github.com/trystan2k/favoritable/issues"
+  },
+  "keywords": [
+    "bookmarks",
+    "favoritable"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "typecheck": "turbo run check-types"
+  },
+  "devDependencies": {
+    "turbo": "~2.4.2"
+  },
+  "packageManager": "pnpm@10.4.1",
+  "engines": {
+    "node": ">=22.14.0",
+    "pnpm": ">=10.4.1"
+  }
+}
