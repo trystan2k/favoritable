@@ -27,9 +27,9 @@
     "typecheck": "turbo run check-types"
   },
   "devDependencies": {
-    "turbo": "~2.4.2"
+    "turbo": "~2.4.4"
   },
-  "packageManager": "pnpm@10.4.1",
+  "packageManager": "pnpm@10.5.0",
   "engines": {
     "node": ">=22.14.0",
     "pnpm": ">=10.4.1"
