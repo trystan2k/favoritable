@@ -33,5 +33,12 @@
   "engines": {
     "node": ">=22.14.0",
     "pnpm": ">=10.4.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "esbuild",
+      "sqlite3"
+    ]
   }
 }
