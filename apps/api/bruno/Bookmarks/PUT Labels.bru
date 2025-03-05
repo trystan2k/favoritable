@@ -1,0 +1,20 @@
+meta {
+  name: PUT Labels
+  type: http
+  seq: 6
+}
+
+put {
+  url: http://localhost:3000/api/bookmarks/8/labels
+  body: json
+  auth: none
+}
+
+body:json {
+  [{
+    "id": 5,
+    "name": "React",
+    "color": "blue"
+  }]
+  
+}
