@@ -10,6 +10,8 @@ import { LabelService } from "./features/labels/label.service";
 import { CreateUpdateBookmarkDTO } from "./db/schema/bookmark.schema";
 import { CreateUpdateLabelDTO } from "./db/schema/label.schema";
 import { LibsqlError } from "@libsql/client/.";
+import { EntityAlreadyExist } from "./errors/errors";
+import { errorHandler } from "./errors/errors.handler";
 
 const routes = {
   basePath: '/api',
@@ -18,7 +20,8 @@ const routes = {
 }
 
 const app = new Hono();
-app.use('*', requestId())
+app.use('*', requestId());
+app.onError(errorHandler);
 const api = app.basePath(routes.basePath);
 
 const bookmarkRepository = new SQLiteBookmarkRepository(db);
@@ -35,19 +38,12 @@ api.get(routes.bookmarks, async (c) => {
 api.post(routes.bookmarks, async (c) => {
   const data = await c.req.json<CreateUpdateBookmarkDTO>();
 
-  try {
-    const bookmark = await bookmarkService.createBookmark(data);
-    // Add location header in response, with the url of the newly created bookmark
-    c.header('Location', `${routes.basePath}${routes.bookmarks}/${bookmark.id}`);
+  const bookmark = await bookmarkService.createBookmark(data);
+  // Add location header in response, with the url of the newly created bookmark
+  c.header('Location', `${routes.basePath}${routes.bookmarks}/${bookmark.id}`);
 
-    return c.json(bookmark, 201);
-  } catch (error: unknown) {
-    if ((error as LibsqlError).code === 'SQLITE_CONSTRAINT_UNIQUE') {
-      return c.json({ message: 'Bookmark already exists' }, 409);
-    }
+  return c.json(bookmark, 201);
 
-    return c.json({ message: 'Something went wrong' }, 500);
-  }
 
 });
 
