@@ -1,5 +1,5 @@
-import { Bookmark } from '../entities/bookmark.js';
-import { Label } from '../entities/label.js';
+import { Bookmark } from '../entities/bookmark';
+import { Label } from '../entities/label';
 
 export interface CreateBookmarkDTO {
   slug: string;

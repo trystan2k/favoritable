@@ -1,0 +1,23 @@
+meta {
+  name: Bookmark - Add labels
+  type: http
+  seq: 6
+}
+
+put {
+  url: http://localhost:3000/api/bookmarks/3/labels
+  body: json
+  auth: none
+}
+
+body:json {
+  [{
+    "name": "React",
+    "color": "blue"
+  }, {
+    "name": "Vue",
+    "color": "green"
+  }, {
+    "id": 1
+  }]
+}

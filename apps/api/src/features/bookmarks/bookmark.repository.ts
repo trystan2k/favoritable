@@ -1,25 +1,21 @@
 import { eq } from "drizzle-orm";
-import { BookmarkRepository } from "./bookmark.types.js";
-import { DB } from "../../db/connection.js";
-import { BookmarkDTO, CreateUpdateBookmarkDTO, bookmarks, CreateUpdateLabelDTO, bookmarksLabel, labels } from "../../db/schema.js";
+import { BookmarkRepository } from "./bookmark.types";
+import type { db } from "../../db";
+import { bookmarkLabel } from "../../db/schema";
+import { CreateUpdateBookmarkDTO, bookmark } from "../../db/schema/bookmark.schema";
+import { CreateUpdateLabelDTO, label } from "../../db/schema/label.schema";
 
 export class SQLiteBookmarkRepository implements BookmarkRepository {
 
-  constructor(private db: DB) { }
+  constructor(private db: db) { }
 
   async findAll() {
-    return this.db.query.bookmarks.findMany({
+    return this.db.query.bookmark.findMany({
       with: {
-        bookmarksLabel: {
+        bookmarkLabel: {
           columns: {},
           with: {
-            label: {
-              columns: {
-                id: true,
-                name: true,
-                color: true
-              }
-            }
+            label: true
           }
         }
       }
@@ -27,19 +23,13 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
   }
 
   findById(id: number) {
-    return this.db.query.bookmarks.findFirst({
-      where: (bookmarks, { eq }) => eq(bookmarks.id, id),
+    return this.db.query.bookmark.findFirst({
+      where: (bookmark, { eq }) => eq(bookmark.id, id),
       with: {
-        bookmarksLabel: {
+        bookmarkLabel: {
           columns: {},
           with: {
-            label: {
-              columns: {
-                id: true,
-                name: true,
-                color: true
-              }
-            }
+            label: true
           }
         }
       }
@@ -47,40 +37,40 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
   }
 
   async create(data: CreateUpdateBookmarkDTO) {
-    const result = await this.db.insert(bookmarks).values(data);
-
-    return Number(result.lastInsertRowid);
+    return this.db.insert(bookmark).values(data).returning().get();
   }
 
-  update(id: number, data: CreateUpdateBookmarkDTO): Promise<boolean> {
-    throw new Error("Method not implemented.");
-  }
-
-  delete(id: number) {
-    return this.db.delete(bookmarks).where(eq(bookmarks.id, id)).returning({ id: bookmarks.id });
+  async delete(id: number) {
+    return this.db.delete(bookmark).where(eq(bookmark.id, id)).returning().get();
   }
 
   async updateLabels(bookmarkId: number, labelsToAdd: CreateUpdateLabelDTO[]) {
     await this.db.transaction(async (tx) => {
       // Delete existing relations for this bookmark
-      await tx.delete(bookmarksLabel)
-        .where(eq(bookmarksLabel.bookmarkId, bookmarkId));
+      await tx.delete(bookmarkLabel)
+        .where(eq(bookmarkLabel.bookmarkId, bookmarkId));
 
       // Check for existing labels and create new ones if needed
-      const existingLabels = await tx.query.labels.findMany({
+      const existingLabels = await tx.query.label.findMany({
         where: (labels, { inArray }) => inArray(labels.id, labelsToAdd.map(l => l.id!).filter(Boolean))
       });
 
       const existingLabelIds = new Set(existingLabels.map(l => l.id));
-      const labelsToCreate = labelsToAdd.filter(l => !l.id || !existingLabelIds.has(l.id));
 
-      const newLabelsCreatedIds = labelsToCreate.length > 0 ? await tx.insert(labels).values(labelsToCreate).returning({ id: labels.id }) : [];
+      const labelsToCreate = labelsToAdd.filter(l => {
+        return !l.id || !existingLabelIds.has(l.id)
+      });
+
+      const newLabelsCreatedIds = labelsToCreate.length > 0 ? await tx.insert(label).values(labelsToCreate).returning({ id: label.id }) : [];
 
       // Merge existing and newly created labels
       const allLabels = [...existingLabels, ...newLabelsCreatedIds];
 
+      // Update created_at field in bookmarks table for the bookmark
+      await tx.update(bookmark).set({ updatedAt: new Date() }).where(eq(bookmark.id, bookmarkId));
+
       // Create new relations
-      await tx.insert(bookmarksLabel)
+      await tx.insert(bookmarkLabel)
         .values(
           allLabels.map(label => ({
             bookmarkId,

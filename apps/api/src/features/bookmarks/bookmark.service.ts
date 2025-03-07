@@ -1,12 +1,13 @@
-import { CreateUpdateBookmarkDTO, CreateUpdateLabelDTO } from "../../db/schema.js";
-import { BookmarkRepository, BookmarkWithLabelsDTO, BookmarkResponseModel } from "./bookmark.types.js";
+import { CreateUpdateBookmarkDTO } from "../../db/schema/bookmark.schema";
+import { CreateUpdateLabelDTO } from "../../db/schema/label.schema";
+import { BookmarkRepository, BookmarkWithLabelsDTO, BookmarkResponseModel } from "./bookmark.types";
 
 export class BookmarkService {
   constructor(private bookmarkRepository: BookmarkRepository) { }
 
   private mapBookmarkWithLabels(bookmark: BookmarkWithLabelsDTO): BookmarkResponseModel {
-    const labels = bookmark.bookmarksLabel.map(bl => bl.label);
-    const { bookmarksLabel, ...rest } = bookmark;
+    const labels = bookmark.bookmarkLabel.map(bl => bl.label);
+    const { bookmarkLabel, ...rest } = bookmark;
     return {
       ...rest,
       labels,

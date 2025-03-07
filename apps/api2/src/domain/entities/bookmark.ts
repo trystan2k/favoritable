@@ -1,4 +1,4 @@
-import { Label } from './label.js';
+import { Label } from './label';
 
 export class Bookmark {
   constructor(

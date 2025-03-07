@@ -1,9 +1,9 @@
 import { eq } from 'drizzle-orm';
 import { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
-import { Bookmark } from '../../domain/entities/bookmark.js';
-import { Label } from '../../domain/entities/label.js';
-import { AddLabelDTO, BookmarkRepository, CreateBookmarkDTO, UpdateBookmarkDTO } from '../../domain/repositories/bookmark.repository.js';
-import { bookmarkLabels, bookmarks, labels } from '../../database/schema.js';
+import { Bookmark } from '../../domain/entities/bookmark';
+import { Label } from '../../domain/entities/label';
+import { AddLabelDTO, BookmarkRepository, CreateBookmarkDTO, UpdateBookmarkDTO } from '../../domain/repositories/bookmark.repository';
+import { bookmarkLabels, bookmarks, labels } from '../../database/schema';
 
 export class SQLiteBookmarkRepository implements BookmarkRepository {
   constructor(private db: BetterSQLite3Database) {}

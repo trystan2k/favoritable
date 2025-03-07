@@ -1,11 +1,11 @@
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
 import { OpenAPIHono } from '@hono/zod-openapi';
-import db from './database/index.js';
-import { SQLiteBookmarkRepository } from './infrastructure/repositories/sqlite-bookmark.repository.js';
-import { BookmarkService } from './application/services/bookmark.service.js';
-import { BookmarkController } from './presentation/controllers/bookmark.controller.js';
-import { registry } from './openapi/index.js';
+import db from './database/index';
+import { SQLiteBookmarkRepository } from './infrastructure/repositories/sqlite-bookmark.repository';
+import { BookmarkService } from './application/services/bookmark.service';
+import { BookmarkController } from './presentation/controllers/bookmark.controller';
+import { registry } from './openapi/index';
 
 const app = new Hono();
 const api = new OpenAPIHono();

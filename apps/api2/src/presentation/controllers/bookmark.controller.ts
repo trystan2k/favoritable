@@ -1,6 +1,6 @@
 import { Context } from 'hono';
-import { BookmarkService } from '../../application/services/bookmark.service.js';
-import { AddLabelDTO, CreateBookmarkDTO, UpdateBookmarkDTO } from '../../domain/repositories/bookmark.repository.js';
+import { BookmarkService } from '../../application/services/bookmark.service';
+import { AddLabelDTO, CreateBookmarkDTO, UpdateBookmarkDTO } from '../../domain/repositories/bookmark.repository';
 
 export class BookmarkController {
   constructor(private bookmarkService: BookmarkService) {}

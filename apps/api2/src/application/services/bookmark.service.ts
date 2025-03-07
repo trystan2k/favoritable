@@ -1,5 +1,5 @@
-import { Bookmark } from '../../domain/entities/bookmark.js';
-import { AddLabelDTO, BookmarkRepository, CreateBookmarkDTO, UpdateBookmarkDTO } from '../../domain/repositories/bookmark.repository.js';
+import { Bookmark } from '../../domain/entities/bookmark';
+import { AddLabelDTO, BookmarkRepository, CreateBookmarkDTO, UpdateBookmarkDTO } from '../../domain/repositories/bookmark.repository';
 
 export class BookmarkService {
   constructor(private bookmarkRepository: BookmarkRepository) {}

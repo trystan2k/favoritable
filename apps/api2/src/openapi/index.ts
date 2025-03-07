@@ -1,6 +1,6 @@
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import { createRoute } from '@hono/zod-openapi';
-import { addLabelsSchema, createBookmarkSchema, labelSchema, updateBookmarkSchema } from '../domain/schemas/bookmark.schema.js';
+import { addLabelsSchema, createBookmarkSchema, labelSchema, updateBookmarkSchema } from '../domain/schemas/bookmark.schema';
 import { z } from 'zod';
 
 export const registry = new OpenAPIRegistry();

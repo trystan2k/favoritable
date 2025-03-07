@@ -1,5 +1,5 @@
-import { CreateUpdateLabelDTO } from "../../db/schema.js";
-import { LabelRepository } from "./label.types.js";
+import { CreateUpdateLabelDTO } from "../../db/schema/label.schema";
+import { LabelRepository } from "./label.types";
 
 export class LabelService {
   constructor(private labelRepository: LabelRepository) { }
@@ -18,5 +18,9 @@ export class LabelService {
 
   deleteLabel(id: number) {
     return this.labelRepository.delete(id);
+  }
+
+  updateLabel(id: number, data: CreateUpdateLabelDTO) {
+    return this.labelRepository.update(id, data);
   }
 }
