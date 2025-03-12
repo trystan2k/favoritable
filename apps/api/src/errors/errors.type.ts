@@ -4,7 +4,8 @@ export type ErrorResponse = {
     code?: string
     message: string
     name?: string
-    details?: unknown
+    stack?: unknown
+    cause?: unknown
   }
   timestamp: string
 };

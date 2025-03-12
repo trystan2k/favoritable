@@ -9,7 +9,7 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
 
   constructor(private db: db) { }
 
-  async findAll() {
+  findAll() {
     return this.db.query.bookmark.findMany({
       with: {
         bookmarkLabel: {
@@ -36,11 +36,11 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
     });
   }
 
-  async create(data: CreateUpdateBookmarkDTO) {
+  create(data: CreateUpdateBookmarkDTO) {
     return this.db.insert(bookmark).values(data).returning().get();
   }
 
-  async delete(id: number) {
+  delete(id: number) {
     return this.db.delete(bookmark).where(eq(bookmark.id, id)).returning().get();
   }
 

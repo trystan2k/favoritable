@@ -4,11 +4,13 @@ export class APIError extends Error {
   name: string
   code?: string
   httpStatusCode?: ContentfulStatusCode
+  cause?: unknown;
 
-  constructor(message: string, code?: string, name?: string) {
+  constructor(message: string, cause?: unknown) {
     super(message)
-    this.name = name || 'UndefinedError';
-    this.code = code || '00000';
+    this.name = 'UndefinedError';
+    this.code = '00000';
+    this.cause = cause;
   }
 }
 

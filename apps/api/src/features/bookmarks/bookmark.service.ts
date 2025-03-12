@@ -1,8 +1,12 @@
 import { CreateUpdateBookmarkDTO } from "../../db/schema/bookmark.schema";
 import { CreateUpdateLabelDTO } from "../../db/schema/label.schema";
-import { BookmarkRepository, BookmarkWithLabelsDTO, BookmarkResponseModel } from "./bookmark.types";
+import { NotFoundError } from "../../errors/errors";
+import { handleServiceErrors } from "../../errors/errors.decorator";
+import { BookmarkRepository, BookmarkResponseModel, BookmarkWithLabelsDTO } from "./bookmark.types";
 
 export class BookmarkService {
+  private entityName = 'Bookmark';
+
   constructor(private bookmarkRepository: BookmarkRepository) { }
 
   private mapBookmarkWithLabels(bookmark: BookmarkWithLabelsDTO): BookmarkResponseModel {
@@ -14,28 +18,41 @@ export class BookmarkService {
     }
   }
 
+  @handleServiceErrors('entityName')
   getBookmarks() {
     return this.bookmarkRepository.findAll().then(bookmarks =>
       bookmarks.map(bookmark => this.mapBookmarkWithLabels(bookmark))
     );
   }
 
-  getBookmark(id: number) {
-    return this.bookmarkRepository.findById(id);
+  @handleServiceErrors('entityName')
+  async getBookmark(id: number) {
+    const bookmark = await this.bookmarkRepository.findById(id);
+    if (!bookmark) {
+      throw new NotFoundError(`${this.entityName} with id ${id} not found`);
+    }
+    return bookmark;
   }
 
+  @handleServiceErrors('entityName')
   createBookmark(data: CreateUpdateBookmarkDTO) {
     return this.bookmarkRepository.create(data);
   }
 
-  deleteBookmark(id: number) {
-    return this.bookmarkRepository.delete(id);
+  @handleServiceErrors('entityName')
+  async deleteBookmark(id: number) {
+    const bookmark = await this.bookmarkRepository.delete(id);
+    if (!bookmark) {
+      throw new NotFoundError(`${this.entityName} with id ${id} not found`);
+    }
+    return bookmark;
   }
 
-  updateLabels(bookmarkId: number, labels: CreateUpdateLabelDTO[]) {
-    const bookmark = this.bookmarkRepository.findById(bookmarkId);
+  @handleServiceErrors('entityName')
+  async updateLabels(bookmarkId: number, labels: CreateUpdateLabelDTO[]) {
+    const bookmark = await this.bookmarkRepository.findById(bookmarkId);
     if (!bookmark) {
-      throw new Error('Bookmark not found');
+      throw new NotFoundError(`${this.entityName} not found`);
     }
 
     return this.bookmarkRepository.updateLabels(bookmarkId, labels);

@@ -9,8 +9,7 @@ export const NodeEnvs = {
 
 const EnvSchema = z.object({
   NODE_ENV: z
-  .enum([NodeEnvs.DEVELOPMENT, NodeEnvs.TEST, NodeEnvs.PRODUCTION]).default(NodeEnvs.DEVELOPMENT)
-  .default("development"),
+    .enum([NodeEnvs.DEVELOPMENT, NodeEnvs.TEST, NodeEnvs.PRODUCTION]).default(NodeEnvs.DEVELOPMENT),
   DATABASE_URL: z.string(),
 });
 

@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "ac6d42bf-e453-45ea-8d52-d07ffcbd2684",
+  "id": "32b6dd5e-13d8-4026-aa62-f6ce737fd175",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "bookmarks": {
@@ -209,7 +209,15 @@
           "default": "(unixepoch() * 1000)"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "labels_name_unique": {
+          "name": "labels_name_unique",
+          "columns": [
+            "name"
+          ],
+          "isUnique": true
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},

@@ -1,26 +1,47 @@
 import { CreateUpdateLabelDTO } from "../../db/schema/label.schema";
+import { NotFoundError } from "../../errors/errors";
+import { handleServiceErrors } from "../../errors/errors.decorator";
 import { LabelRepository } from "./label.types";
 
 export class LabelService {
+
+  private entityName = 'Label';
+
   constructor(private labelRepository: LabelRepository) { }
 
+  @handleServiceErrors('entityName')
   getLabels() {
     return this.labelRepository.findAll();
   }
 
-  getLabel(id: number) {
-    return this.labelRepository.findById(id);
+  @handleServiceErrors('entityName')
+  async getLabel(id: number) {
+    const label = await this.labelRepository.findById(id);
+    if (!label) {
+      throw new NotFoundError(`${this.entityName} with id ${id} not found`);
+    }
+    return label;
   }
 
+  @handleServiceErrors('entityName')
   createLabel(data: CreateUpdateLabelDTO) {
     return this.labelRepository.create(data);
   }
 
-  deleteLabel(id: number) {
-    return this.labelRepository.delete(id);
+  @handleServiceErrors('entityName')
+  async deleteLabel(id: number) {
+    const label = await this.labelRepository.delete(id);
+    if (!label) {
+      throw new NotFoundError(`${this.entityName} with id ${id} not found`);
+    }
   }
 
-  updateLabel(id: number, data: CreateUpdateLabelDTO) {
-    return this.labelRepository.update(id, data);
+  @handleServiceErrors('entityName')
+  async updateLabel(id: number, data: CreateUpdateLabelDTO) {
+    const label = await this.labelRepository.update(id, data);
+    if (!label) {
+      throw new NotFoundError(`${this.entityName} with id ${id} not found`);
+    }
+    return label;
   }
 }

@@ -1,29 +1,23 @@
 import { LibsqlError } from "@libsql/client/.";
 import { APIError, EntityAlreadyExist, MalFormedRequestError, UnexpectedError } from "./errors";
 
-const mapSQLErrors = (error: LibsqlError) => {
-  if (error.code === 'SQLITE_CONSTRAINT_UNIQUE') {
-    return EntityAlreadyExist;
-  }
-
-  if (error.code === 'SQLITE_CONSTRAINT_NOTNULL') {
-    return MalFormedRequestError;
-  }
-
-  return UnexpectedError;
-}
-
-export const getErrorClass = (error: Error) => {
-
-  console.log('error', error);
-
-  if ('libsqlError' in error && error.libsqlError) {
-    return mapSQLErrors(error as unknown as LibsqlError);
-  }
+export const mapErrors = (error: unknown, entity: string) => {
 
   if (error instanceof APIError) {
-    return APIError;
+    return error;
   }
 
-  return UnexpectedError;
+  if (error instanceof Error && 'libsqlError' in error && error.libsqlError) {
+    const sqlError = error as unknown as LibsqlError;
+
+    if (sqlError.code === 'SQLITE_CONSTRAINT_UNIQUE') {
+      return new EntityAlreadyExist(`${entity} already exist`, error.message);
+    }
+
+    if (sqlError.code === 'SQLITE_CONSTRAINT_NOTNULL') {
+      return new MalFormedRequestError(`${entity} input data is invalid`, error.message);
+    }
+  }
+
+  return new UnexpectedError('An unexpected error has ocurred', (error as Error).message);
 }

@@ -2,32 +2,31 @@ import { eq } from "drizzle-orm";
 import type { db } from "../../db";
 import { LabelRepository } from "./label.types";
 import { LabelDTO, CreateUpdateLabelDTO, label } from "../../db/schema/label.schema";
+import { NotFoundError } from "../../errors/errors";
 
 export class SQLiteLabelRepository implements LabelRepository {
   constructor(private db: db) { }
 
-  findAll(): Promise<LabelDTO[]> {
+  findAll() {
     return this.db.query.label.findMany();
   }
 
-  findById(id: number): Promise<LabelDTO | null | undefined> {
+  findById(id: number) {
     return this.db.query.label.findFirst({
       where: (label, { eq }) => eq(label.id, id),
     });
   }
 
-  async create(data: CreateUpdateLabelDTO): Promise<number> {
-    const result = await this.db.insert(label).values(data);
-
-    return Number(result.lastInsertRowid);
+  create(data: CreateUpdateLabelDTO) {
+    return this.db.insert(label).values(data).returning().get();
   }
 
-  async update(id: number, data: CreateUpdateLabelDTO): Promise<LabelDTO> {
+  async update(id: number, data: CreateUpdateLabelDTO) {
     const newData = this.db.update(label).set({ ...data, updatedAt: new Date() }).where(eq(label.id, id)).returning();
-    return newData.get();
+    return await newData.get();
   }
 
-  delete(id: number): Promise<Pick<CreateUpdateLabelDTO, "id">[]> {
-    return this.db.delete(label).where(eq(label.id, id)).returning({ id: label.id });
+  delete(id: number) {
+    return this.db.delete(label).where(eq(label.id, id)).returning().get();
   }
 }

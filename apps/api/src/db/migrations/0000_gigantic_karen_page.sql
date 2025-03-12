@@ -29,3 +29,5 @@ CREATE TABLE `labels` (
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL
 );
+--> statement-breakpoint
+CREATE UNIQUE INDEX `labels_name_unique` ON `labels` (`name`);

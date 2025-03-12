@@ -1,4 +1,3 @@
-- Add error handler (middleware)
 - Add schema validation (Zod)
 - Add Open API docs (Swagger)
 - Add response mapper (DTO to Model)
