@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm/relations";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { bookmarkLabel } from "./bookmark-label.schema";
-import { trackingDates } from "./common.schema";
+import { bookmarkLabel } from "./bookmark-label.schema.js";
+import { trackingDates } from "./common.schema.js";
 
 export const label = sqliteTable('labels', {
   id: integer('id').primaryKey({ autoIncrement: true }),

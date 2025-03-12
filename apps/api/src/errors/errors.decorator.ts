@@ -1,4 +1,4 @@
-import { mapErrors } from './errors.mapper';
+import { mapErrors } from './errors.mapper.js';
 
 export const handleServiceErrors = (entityName: string) => {
   return function actualDecorator<This, Args extends any[], Return>(target: (this: This, ...args: Args) => Promise<Return>, context: ClassMethodDecoratorContext<This, (this: This, ...args: Args) => Promise<Return>>) {

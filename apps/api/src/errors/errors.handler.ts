@@ -1,9 +1,9 @@
 
 import { Context } from "hono";
 
-import { env, NodeEnvs } from "../env";
-import { APIError } from "./errors";
-import { ErrorResponse } from "./errors.type";
+import { env, NodeEnvs } from "../env.js";
+import { APIError } from "./errors.js";
+import { ErrorResponse } from "./errors.type.js";
 
 const buildErrorResponse = (err: APIError) => {
   const response: ErrorResponse = {

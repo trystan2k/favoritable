@@ -1,8 +1,7 @@
 import { eq } from "drizzle-orm";
-import type { db } from "../../db";
-import { LabelRepository } from "./label.types";
-import { LabelDTO, CreateUpdateLabelDTO, label } from "../../db/schema/label.schema";
-import { NotFoundError } from "../../errors/errors";
+import type { db } from "../../db/index.js";
+import { CreateUpdateLabelDTO, label } from "../../db/schema/label.schema.js";
+import { LabelRepository } from "./label.types.js";
 
 export class SQLiteLabelRepository implements LabelRepository {
   constructor(private db: db) { }

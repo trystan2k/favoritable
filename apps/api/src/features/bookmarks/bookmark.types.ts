@@ -1,5 +1,5 @@
-import { BookmarkDTO, CreateUpdateBookmarkDTO } from "../../db/schema/bookmark.schema";
-import { LabelDTO, CreateUpdateLabelDTO } from "../../db/schema/label.schema";
+import { BookmarkDTO, CreateUpdateBookmarkDTO } from "../../db/schema/bookmark.schema.js";
+import { LabelDTO, CreateUpdateLabelDTO } from "../../db/schema/label.schema.js";
 
 export type BookmarkWithLabelsDTO = BookmarkDTO & {
   bookmarkLabel: {

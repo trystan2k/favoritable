@@ -1,7 +1,7 @@
-import { CreateUpdateLabelDTO } from "../../db/schema/label.schema";
-import { NotFoundError } from "../../errors/errors";
-import { handleServiceErrors } from "../../errors/errors.decorator";
-import { LabelRepository } from "./label.types";
+import { CreateUpdateLabelDTO } from "../../db/schema/label.schema.js";
+import { NotFoundError } from "../../errors/errors.js";
+import { handleServiceErrors } from "../../errors/errors.decorator.js";
+import { LabelRepository } from "./label.types.js";
 
 export class LabelService {
 

@@ -1,9 +1,8 @@
 import { relations } from "drizzle-orm/relations";
 import { integer, sqliteTable } from "drizzle-orm/sqlite-core";
-import { bookmark } from "./bookmark.schema";
-import { label } from "./label.schema";
-import { trackingDates } from "./common.schema";
-import { sql } from "drizzle-orm/sql";
+import { bookmark } from "./bookmark.schema.js";
+import { trackingDates } from "./common.schema.js";
+import { label } from "./label.schema.js";
 
 export const bookmarkLabel = sqliteTable(
   'bookmarks_labels',

@@ -1,4 +1,4 @@
-import { LabelDTO, CreateUpdateLabelDTO } from "../../db/schema/label.schema";
+import { LabelDTO, CreateUpdateLabelDTO } from "../../db/schema/label.schema.js";
 
 export interface LabelRepository {
   findAll(): Promise<LabelDTO[]>;

@@ -1,5 +1,5 @@
 import { LibsqlError } from "@libsql/client/.";
-import { APIError, EntityAlreadyExist, MalFormedRequestError, UnexpectedError } from "./errors";
+import { APIError, EntityAlreadyExist, MalFormedRequestError, UnexpectedError } from "./errors.js";
 
 export const mapErrors = (error: unknown, entity: string) => {
 

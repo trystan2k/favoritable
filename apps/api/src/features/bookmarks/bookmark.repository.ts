@@ -1,9 +1,9 @@
 import { eq } from "drizzle-orm";
-import { BookmarkRepository } from "./bookmark.types";
-import type { db } from "../../db";
-import { bookmarkLabel } from "../../db/schema";
-import { CreateUpdateBookmarkDTO, bookmark } from "../../db/schema/bookmark.schema";
-import { CreateUpdateLabelDTO, label } from "../../db/schema/label.schema";
+import { BookmarkRepository } from "./bookmark.types.js";
+import type { db } from "../../db/index.js";
+import { bookmarkLabel } from "../../db/schema/index.js";
+import { CreateUpdateBookmarkDTO, bookmark } from "../../db/schema/bookmark.schema.js";
+import { CreateUpdateLabelDTO, label } from "../../db/schema/label.schema.js";
 
 export class SQLiteBookmarkRepository implements BookmarkRepository {
 

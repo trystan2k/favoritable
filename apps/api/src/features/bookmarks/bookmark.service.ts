@@ -1,8 +1,8 @@
-import { CreateUpdateBookmarkDTO } from "../../db/schema/bookmark.schema";
-import { CreateUpdateLabelDTO } from "../../db/schema/label.schema";
-import { NotFoundError } from "../../errors/errors";
-import { handleServiceErrors } from "../../errors/errors.decorator";
-import { BookmarkRepository, BookmarkResponseModel, BookmarkWithLabelsDTO } from "./bookmark.types";
+import { CreateUpdateBookmarkDTO } from "../../db/schema/bookmark.schema.js";
+import { CreateUpdateLabelDTO } from "../../db/schema/label.schema.js";
+import { NotFoundError } from "../../errors/errors.js";
+import { handleServiceErrors } from "../../errors/errors.decorator.js";
+import { BookmarkRepository, BookmarkResponseModel, BookmarkWithLabelsDTO } from "./bookmark.types.js";
 
 export class BookmarkService {
   private entityName = 'Bookmark';

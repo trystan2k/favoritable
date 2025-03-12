@@ -1,15 +1,15 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { requestId } from "hono/request-id";
-import { db } from "./db";
-import { BookmarkService } from './features/bookmarks/bookmark.service';
+import { db } from "./db/index.js";
+import { BookmarkService } from './features/bookmarks/bookmark.service.js';
 
-import { CreateUpdateBookmarkDTO } from "./db/schema/bookmark.schema";
-import { CreateUpdateLabelDTO } from "./db/schema/label.schema";
-import { errorHandler } from "./errors/errors.handler";
-import { SQLiteBookmarkRepository } from "./features/bookmarks/bookmark.repository";
-import { SQLiteLabelRepository } from "./features/labels/label.repository";
-import { LabelService } from "./features/labels/label.service";
+import { CreateUpdateBookmarkDTO } from "./db/schema/bookmark.schema.js";
+import { CreateUpdateLabelDTO } from "./db/schema/label.schema.js";
+import { errorHandler } from "./errors/errors.handler.js";
+import { SQLiteBookmarkRepository } from "./features/bookmarks/bookmark.repository.js";
+import { SQLiteLabelRepository } from "./features/labels/label.repository.js";
+import { LabelService } from "./features/labels/label.service.js";
 
 const routes = {
   basePath: '/api',

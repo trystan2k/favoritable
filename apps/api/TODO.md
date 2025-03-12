@@ -1,3 +1,6 @@
+- Add Scrapper endpoint
 - Add schema validation (Zod)
-- Add Open API docs (Swagger)
 - Add response mapper (DTO to Model)
+- Add Open API docs (Swagger)
+- Add logging system/middleware
+- Add tests
