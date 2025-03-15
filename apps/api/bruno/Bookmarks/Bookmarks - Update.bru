@@ -5,13 +5,17 @@ meta {
 }
 
 patch {
-  url: http://localhost:3000/api/bookmarks/32/state
+  url: http://localhost:3000/api/bookmarks
   body: json
   auth: none
 }
 
 body:json {
-  {
-    "state": "pending"
-  }
+  [{
+    "id": 32,
+    "state": "archived"
+  }, {
+    "id": 30,
+    "state": "archived"
+  }]
 }

@@ -6,16 +6,16 @@ meta {
 
 post {
   url: http://localhost:3000/api/bookmarks/from-url
-  body: formUrlEncoded
+  body: json
   auth: none
 }
 
 body:json {
   {
-    "url": "https://expressjs.com/a"
+    "url": "https://blog.logrocket.com/guide-modern-frontend-architecture-patterns/?ref=dailydev"
   }
 }
 
 body:form-urlencoded {
-  url: https://expressjs.com/a
+  url: https://reparaciones.phonehouse.es/averias?marca=xiaomi&modelo=21176&idaveria=&otra_averia=20408#reparacion
 }

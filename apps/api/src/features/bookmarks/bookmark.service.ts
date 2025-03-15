@@ -19,8 +19,8 @@ export class BookmarkService {
   }
 
   @handleServiceErrors('entityName')
-  getBookmarks() {
-    return this.bookmarkRepository.findAll().then(bookmarks =>
+  getBookmarks(searchQuery?: string) {
+    return this.bookmarkRepository.findAll(searchQuery).then(bookmarks =>
       bookmarks.map(bookmark => this.mapBookmarkWithLabels(bookmark))
     );
   }

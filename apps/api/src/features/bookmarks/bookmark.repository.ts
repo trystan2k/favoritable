@@ -9,8 +9,25 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
 
   constructor(private db: db) { }
 
-  findAll() {
+  findAll(searchQuery?: string) {
     return this.db.query.bookmark.findMany({
+      where: searchQuery ?
+        (bookmark, { or, like, exists, sql }) => {
+          const searchTerms = searchQuery.split(',').map(term => term.trim());
+          return or(
+            ...searchTerms.flatMap(term => [
+              like(bookmark.title, `%${term}%`),
+              like(bookmark.description, `%${term}%`),
+              like(bookmark.author, `%${term}%`),
+              exists(
+                this.db.select()
+                  .from(bookmarkLabel)
+                  .innerJoin(label, eq(label.id, bookmarkLabel.labelId))
+                  .where(sql`${bookmarkLabel.bookmarkId} = ${bookmark.id} AND ${label.name} LIKE ${`%${term}%`}`)
+              )
+            ])
+          );
+        } : undefined,
       with: {
         bookmarkLabel: {
           columns: {},

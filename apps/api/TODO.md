@@ -1,8 +1,6 @@
 TODO:
 
-- Add endpoint to search by title, description (return list with the ones that matchs)
 - Add endpoint to get all records (paginated)
-- Add endpoint to search/filter by label(s)
 
 - Add endpoint to import Omnivore files
 - Handle Controller errors (add decorator)
@@ -24,3 +22,5 @@ DONE:
 - Add endpoint to delete multiple records at once
 - Add endpoint to archieve bookmark
 - Add endpoint to archieve multiple records at once
+- Add endpoint to search by title, description (return list with the ones that matchs)
+- Add endpoint to search/filter by label(s)

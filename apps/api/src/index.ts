@@ -33,7 +33,8 @@ const labelService = new LabelService(labelRepository);
 
 // Bookmarks - Get
 api.get(routes.bookmarks, async (c) => {
-  const bookmarks = await bookmarkService.getBookmarks();
+  const searchQuery = c.req.query('q');
+  const bookmarks = await bookmarkService.getBookmarks(searchQuery);
   return c.json(bookmarks, 200);
 });
 

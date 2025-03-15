@@ -10,7 +10,7 @@ export type BookmarkWithLabelsDTO = BookmarkDTO & {
 export type BookmarkResponseModel = BookmarkDTO & { labels: LabelDTO[] };
 
 export interface BookmarkRepository {
-  findAll(): Promise<BookmarkWithLabelsDTO[]>;
+  findAll(searchString?: string): Promise<BookmarkWithLabelsDTO[]>;
   findById(id: number): Promise<BookmarkWithLabelsDTO | undefined>;
   create(data: CreateBookmarkDTO): Promise<BookmarkDTO>;
   delete(ids: number[]): Promise<BookmarkDTO[] | undefined>;
