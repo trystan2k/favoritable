@@ -1,8 +1,8 @@
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { BookmarkRepository } from "./bookmark.types.js";
 import type { db } from "../../db/index.js";
 import { bookmarkLabel } from "../../db/schema/index.js";
-import { CreateUpdateBookmarkDTO, bookmark } from "../../db/schema/bookmark.schema.js";
+import { CreateBookmarkDTO, UpdateBookmarkDTO, UpdateStateBookmarkDTO, bookmark } from "../../db/schema/bookmark.schema.js";
 import { CreateUpdateLabelDTO, label } from "../../db/schema/label.schema.js";
 
 export class SQLiteBookmarkRepository implements BookmarkRepository {
@@ -36,12 +36,12 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
     });
   }
 
-  create(data: CreateUpdateBookmarkDTO) {
+  create(data: CreateBookmarkDTO) {
     return this.db.insert(bookmark).values(data).returning().get();
   }
 
-  delete(id: number) {
-    return this.db.delete(bookmark).where(eq(bookmark.id, id)).returning().get();
+  delete(ids: number[]) {
+    return this.db.delete(bookmark).where(inArray(bookmark.id, ids)).returning().all();
   }
 
   async updateLabels(bookmarkId: number, labelsToAdd: CreateUpdateLabelDTO[]) {
@@ -78,5 +78,20 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
           }))
         );
     });
+  }
+
+  update(bookmarksData: UpdateBookmarkDTO[]) {
+    return this.db.transaction(async (tx) => {
+      return Promise.all(
+        bookmarksData.map(async (bookmarkData) => {
+          const { id, ...rest } = bookmarkData;
+          return await tx.update(bookmark).set(rest).where(eq(bookmark.id, id)).returning().get();
+        })
+      );
+    });
+  }
+
+  updateState(id: number, state: UpdateStateBookmarkDTO) {
+    return this.db.update(bookmark).set(state).where(eq(bookmark.id, id)).returning().get();
   }
 }

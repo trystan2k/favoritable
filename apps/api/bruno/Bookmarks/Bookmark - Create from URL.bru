@@ -1,0 +1,21 @@
+meta {
+  name: Bookmark - Create from URL
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/bookmarks/from-url
+  body: formUrlEncoded
+  auth: none
+}
+
+body:json {
+  {
+    "url": "https://expressjs.com/a"
+  }
+}
+
+body:form-urlencoded {
+  url: https://expressjs.com/a
+}

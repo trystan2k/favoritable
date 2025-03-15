@@ -7,6 +7,8 @@ export const mapErrors = (error: unknown, entity: string) => {
     return error;
   }
 
+  console.log('error', error)
+
   if (error instanceof Error && 'libsqlError' in error && error.libsqlError) {
     const sqlError = error as unknown as LibsqlError;
 
@@ -15,6 +17,12 @@ export const mapErrors = (error: unknown, entity: string) => {
     }
 
     if (sqlError.code === 'SQLITE_CONSTRAINT_NOTNULL') {
+      return new MalFormedRequestError(`${entity} input data is invalid`, error.message);
+    }
+  }
+
+  if (error instanceof Error) {
+    if (error.name === 'SyntaxError') {
       return new MalFormedRequestError(`${entity} input data is invalid`, error.message);
     }
   }

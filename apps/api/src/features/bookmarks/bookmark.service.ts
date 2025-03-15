@@ -1,4 +1,4 @@
-import { CreateUpdateBookmarkDTO } from "../../db/schema/bookmark.schema.js";
+import { CreateBookmarkDTO, UpdateBookmarkDTO, UpdateStateBookmarkDTO } from "../../db/schema/bookmark.schema.js";
 import { CreateUpdateLabelDTO } from "../../db/schema/label.schema.js";
 import { NotFoundError } from "../../errors/errors.js";
 import { handleServiceErrors } from "../../errors/errors.decorator.js";
@@ -35,17 +35,17 @@ export class BookmarkService {
   }
 
   @handleServiceErrors('entityName')
-  createBookmark(data: CreateUpdateBookmarkDTO) {
+  createBookmark(data: CreateBookmarkDTO) {
     return this.bookmarkRepository.create(data);
   }
 
   @handleServiceErrors('entityName')
-  async deleteBookmark(id: number) {
-    const bookmark = await this.bookmarkRepository.delete(id);
-    if (!bookmark) {
-      throw new NotFoundError(`${this.entityName} with id ${id} not found`);
+  async deleteBookmarks(ids: number[]) {
+    const bookmarks = await this.bookmarkRepository.delete(ids);
+    if (!bookmarks || bookmarks.length === 0) {
+      throw new NotFoundError(`${this.entityName}(s) with id(s) [${ids.toString()}] not found`);
     }
-    return bookmark;
+    return bookmarks;
   }
 
   @handleServiceErrors('entityName')
@@ -56,5 +56,19 @@ export class BookmarkService {
     }
 
     return this.bookmarkRepository.updateLabels(bookmarkId, labels);
+  }
+
+  @handleServiceErrors('entityName')
+  async updateState(bookmarkId: number, state: UpdateStateBookmarkDTO) {
+    const bookmark = await this.bookmarkRepository.findById(bookmarkId);
+    if (!bookmark) {
+      throw new NotFoundError(`${this.entityName} not found`);
+    }
+    return this.bookmarkRepository.updateState(bookmarkId, state);
+  }
+
+  @handleServiceErrors('entityName')
+  async updateBookmarks(data: UpdateBookmarkDTO[]) {
+    return this.bookmarkRepository.update(data);
   }
 }

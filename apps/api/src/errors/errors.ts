@@ -43,3 +43,9 @@ export class MalFormedRequestError extends APIError {
   name = 'MalFormedRequestError';
   httpStatusCode = 400 as ContentfulStatusCode;
 }
+
+export class URLContentParseError extends APIError {
+  code = '00007';
+  name = 'URLContentParseError';
+  httpStatusCode = 424 as ContentfulStatusCode;
+}

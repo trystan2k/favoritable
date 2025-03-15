@@ -1,0 +1,17 @@
+meta {
+  name: Bookmark - Update state
+  type: http
+  seq: 8
+}
+
+patch {
+  url: http://localhost:3000/api/bookmarks/32/state
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "state": "archived"
+  }
+}

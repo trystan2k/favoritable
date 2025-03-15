@@ -1,0 +1,17 @@
+meta {
+  name: Bookmarks - Update
+  type: http
+  seq: 9
+}
+
+patch {
+  url: http://localhost:3000/api/bookmarks/32/state
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "state": "pending"
+  }
+}

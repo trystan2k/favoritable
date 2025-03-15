@@ -7,7 +7,6 @@ import { ErrorResponse } from "./errors.type.js";
 
 const buildErrorResponse = (err: APIError) => {
   const response: ErrorResponse = {
-    success: false,
     error: {
       code: err.code,
       message: err.message,
