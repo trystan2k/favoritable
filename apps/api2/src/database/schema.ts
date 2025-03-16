@@ -1,4 +1,4 @@
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { integer, sqliteTable, text, index } from 'drizzle-orm/sqlite-core';
 
 export const bookmarks = sqliteTable('bookmarks', {
   id: integer('id').primaryKey({ autoIncrement: true }),
@@ -11,7 +11,11 @@ export const bookmarks = sqliteTable('bookmarks', {
   publishedAt: integer('published_at', { mode: 'timestamp' }),
   savedAt: integer('saved_at', { mode: 'timestamp' }).notNull().defaultNow(),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().defaultNow()
-});
+},
+  (t) => [
+    index('first_name_index').on(t.firstName).asc(),
+    index('first_name_and_id_index').on(t.firstName, t.id).asc(),
+  ]);
 
 export const labels = sqliteTable('labels', {
   id: integer('id').primaryKey({ autoIncrement: true }),

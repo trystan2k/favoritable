@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "32b6dd5e-13d8-4026-aa62-f6ce737fd175",
+  "id": "058bbb4b-253b-40f8-91bb-a5cc7b162881",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "bookmarks": {
@@ -9,10 +9,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": true
+          "autoincrement": false
         },
         "url": {
           "name": "url",
@@ -56,6 +56,14 @@
           "notNull": false,
           "autoincrement": false
         },
+        "state": {
+          "name": "state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'pending'"
+        },
         "published_at": {
           "name": "published_at",
           "type": "integer",
@@ -87,6 +95,13 @@
             "url"
           ],
           "isUnique": true
+        },
+        "bookamrk_id_index": {
+          "name": "bookamrk_id_index",
+          "columns": [
+            "id"
+          ],
+          "isUnique": false
         }
       },
       "foreignKeys": {},
@@ -99,21 +114,21 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": true
+          "autoincrement": false
         },
         "bookmark_id": {
           "name": "bookmark_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "label_id": {
           "name": "label_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -135,7 +150,15 @@
           "default": "(unixepoch() * 1000)"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "bookmarks_labels_id_index": {
+          "name": "bookmarks_labels_id_index",
+          "columns": [
+            "id"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
         "bookmarks_labels_bookmark_id_bookmarks_id_fk": {
           "name": "bookmarks_labels_bookmark_id_bookmarks_id_fk",
@@ -173,10 +196,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": true
+          "autoincrement": false
         },
         "name": {
           "name": "name",
@@ -216,6 +239,13 @@
             "name"
           ],
           "isUnique": true
+        },
+        "label_id_index": {
+          "name": "label_id_index",
+          "columns": [
+            "id"
+          ],
+          "isUnique": false
         }
       },
       "foreignKeys": {},

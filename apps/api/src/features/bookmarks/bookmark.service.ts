@@ -19,14 +19,25 @@ export class BookmarkService {
   }
 
   @handleServiceErrors('entityName')
-  getBookmarks(searchQuery?: string) {
-    return this.bookmarkRepository.findAll(searchQuery).then(bookmarks =>
-      bookmarks.map(bookmark => this.mapBookmarkWithLabels(bookmark))
-    );
+  async getBookmarks(searchQuery?: string, cursor?: string, limit?: number) {
+    const { bookmarks, hasMore } = await this.bookmarkRepository.findAll(searchQuery, { cursor, limit });
+    const mappedBookmarks = bookmarks.map(bookmark => this.mapBookmarkWithLabels(bookmark));
+
+    const searchQueryLimit = `?${searchQuery ? `q=${searchQuery}&` : ''}limit=${limit}`;
+
+    const pagination = {
+      next: hasMore ? `${searchQueryLimit}&cursor=${bookmarks[bookmarks.length - 1]!.id}` : undefined,
+      self: cursor ? `${searchQueryLimit}&cursor=${cursor}` : `${searchQueryLimit}`
+    }
+
+    return {
+      data: mappedBookmarks,
+      pagination
+    };
   }
 
   @handleServiceErrors('entityName')
-  async getBookmark(id: number) {
+  async getBookmark(id: string) {
     const bookmark = await this.bookmarkRepository.findById(id);
     if (!bookmark) {
       throw new NotFoundError(`${this.entityName} with id ${id} not found`);
@@ -40,7 +51,7 @@ export class BookmarkService {
   }
 
   @handleServiceErrors('entityName')
-  async deleteBookmarks(ids: number[]) {
+  async deleteBookmarks(ids: string[]) {
     const bookmarks = await this.bookmarkRepository.delete(ids);
     if (!bookmarks || bookmarks.length === 0) {
       throw new NotFoundError(`${this.entityName}(s) with id(s) [${ids.toString()}] not found`);
@@ -49,7 +60,7 @@ export class BookmarkService {
   }
 
   @handleServiceErrors('entityName')
-  async updateLabels(bookmarkId: number, labels: CreateUpdateLabelDTO[]) {
+  async updateLabels(bookmarkId: string, labels: CreateUpdateLabelDTO[]) {
     const bookmark = await this.bookmarkRepository.findById(bookmarkId);
     if (!bookmark) {
       throw new NotFoundError(`${this.entityName} not found`);
@@ -59,7 +70,7 @@ export class BookmarkService {
   }
 
   @handleServiceErrors('entityName')
-  async updateState(bookmarkId: number, state: UpdateStateBookmarkDTO) {
+  async updateState(bookmarkId: string, state: UpdateStateBookmarkDTO) {
     const bookmark = await this.bookmarkRepository.findById(bookmarkId);
     if (!bookmark) {
       throw new NotFoundError(`${this.entityName} not found`);

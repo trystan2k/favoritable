@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { integer, sqliteTable } from "drizzle-orm/sqlite-core";
+import { index, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { bookmark } from "./bookmark.schema.js";
 import { trackingDates } from "./common.schema.js";
 import { label } from "./label.schema.js";
@@ -7,16 +7,17 @@ import { label } from "./label.schema.js";
 export const bookmarkLabel = sqliteTable(
   'bookmarks_labels',
   {
-    id: integer('id').primaryKey({ autoIncrement: true }),
-    bookmarkId: integer('bookmark_id')
+    id: text('id').primaryKey(),
+    bookmarkId: text('bookmark_id')
       .notNull()
       .references(() => bookmark.id, { onDelete: 'cascade'}),
-    labelId: integer('label_id')
+    labelId: text('label_id')
       .notNull()
       .references(() => label.id, { onDelete: 'cascade'}),
       ...trackingDates
-  }
-);
+  }, (table) => [
+    index('bookmarks_labels_id_index').on(table.id)
+  ]);
 
 export const bookmarkLabelsRelations = relations(bookmarkLabel, ({ one }) => ({
   label: one(label, {

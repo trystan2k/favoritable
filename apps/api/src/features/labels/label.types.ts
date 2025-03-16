@@ -1,9 +1,9 @@
 import { LabelDTO, CreateUpdateLabelDTO } from "../../db/schema/label.schema.js";
 
 export interface LabelRepository {
-  findAll(): Promise<LabelDTO[]>;
-  findById(id: number): Promise<LabelDTO | null | undefined>;
+  findAll(searchQuery?: string): Promise<LabelDTO[]>;
+  findById(id: string): Promise<LabelDTO | null | undefined>;
   create(data: CreateUpdateLabelDTO): Promise<LabelDTO>;
-  update(id: number, data: CreateUpdateLabelDTO): Promise<LabelDTO>;
-  delete(id: number): Promise<LabelDTO | undefined>;
+  update(id: string, data: CreateUpdateLabelDTO): Promise<LabelDTO>;
+  delete(id: string): Promise<LabelDTO | undefined>;
 }

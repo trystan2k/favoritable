@@ -10,12 +10,12 @@ export class LabelService {
   constructor(private labelRepository: LabelRepository) { }
 
   @handleServiceErrors('entityName')
-  getLabels() {
-    return this.labelRepository.findAll();
+  getLabels(searchQuery?: string) {
+    return this.labelRepository.findAll(searchQuery);
   }
 
   @handleServiceErrors('entityName')
-  async getLabel(id: number) {
+  async getLabel(id: string) {
     const label = await this.labelRepository.findById(id);
     if (!label) {
       throw new NotFoundError(`${this.entityName} with id ${id} not found`);
@@ -29,7 +29,7 @@ export class LabelService {
   }
 
   @handleServiceErrors('entityName')
-  async deleteLabel(id: number) {
+  async deleteLabel(id: string) {
     const label = await this.labelRepository.delete(id);
     if (!label) {
       throw new NotFoundError(`${this.entityName} with id ${id} not found`);
@@ -37,7 +37,7 @@ export class LabelService {
   }
 
   @handleServiceErrors('entityName')
-  async updateLabel(id: number, data: CreateUpdateLabelDTO) {
+  async updateLabel(id: string, data: CreateUpdateLabelDTO) {
     const label = await this.labelRepository.update(id, data);
     if (!label) {
       throw new NotFoundError(`${this.entityName} with id ${id} not found`);

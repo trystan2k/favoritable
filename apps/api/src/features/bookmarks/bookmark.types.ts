@@ -9,12 +9,30 @@ export type BookmarkWithLabelsDTO = BookmarkDTO & {
 
 export type BookmarkResponseModel = BookmarkDTO & { labels: LabelDTO[] };
 
+export type CursorPaginationParams = {
+  limit?: number;
+  cursor?: string;
+};
+
+export type BookmarksPaginatedDTO = {
+  bookmarks: BookmarkWithLabelsDTO[];
+  hasMore: boolean;
+};
+
+export type BookmarksPaginatedModel = {
+  data: BookmarkDTO[];
+  pagination: {
+    next: string | null;
+    self: string | null;
+  };
+}
+
 export interface BookmarkRepository {
-  findAll(searchString?: string): Promise<BookmarkWithLabelsDTO[]>;
-  findById(id: number): Promise<BookmarkWithLabelsDTO | undefined>;
+  findAll(searchString?: string, pagination?: CursorPaginationParams): Promise<BookmarksPaginatedDTO>;
+  findById(id: string): Promise<BookmarkWithLabelsDTO | undefined>;
   create(data: CreateBookmarkDTO): Promise<BookmarkDTO>;
-  delete(ids: number[]): Promise<BookmarkDTO[] | undefined>;
+  delete(ids: string[]): Promise<BookmarkDTO[] | undefined>;
   update(data: UpdateBookmarkDTO[]): Promise<BookmarkDTO[]>;
-  updateLabels(bookmarkId: number, labels: CreateUpdateLabelDTO[]): Promise<void>;
-  updateState(id: number, state: UpdateStateBookmarkDTO): Promise<BookmarkDTO>;
+  updateLabels(bookmarkId: string, labels: CreateUpdateLabelDTO[]): Promise<void>;
+  updateState(id: string, state: UpdateStateBookmarkDTO): Promise<BookmarkDTO>;
 }

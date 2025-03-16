@@ -1,33 +1,52 @@
-import { eq, inArray } from "drizzle-orm";
-import { BookmarkRepository } from "./bookmark.types.js";
+import { and, eq, exists, inArray, like, or, sql } from "drizzle-orm";
 import type { db } from "../../db/index.js";
-import { bookmarkLabel } from "../../db/schema/index.js";
 import { CreateBookmarkDTO, UpdateBookmarkDTO, UpdateStateBookmarkDTO, bookmark } from "../../db/schema/bookmark.schema.js";
+import { bookmarkLabel } from "../../db/schema/index.js";
 import { CreateUpdateLabelDTO, label } from "../../db/schema/label.schema.js";
+import { tsidGenerator } from "../../utils/tsids-generator.js";
+import { BookmarkRepository, CursorPaginationParams } from "./bookmark.types.js";
 
 export class SQLiteBookmarkRepository implements BookmarkRepository {
 
   constructor(private db: db) { }
 
-  findAll(searchQuery?: string) {
-    return this.db.query.bookmark.findMany({
-      where: searchQuery ?
-        (bookmark, { or, like, exists, sql }) => {
+  async findAll(searchQuery?: string, pagination?: CursorPaginationParams) {
+    const limit = pagination?.limit || 10;
+    const cursor = pagination?.cursor;
+
+    const bookmarks = await this.db.query.bookmark.findMany({
+      limit: limit + 1,
+      orderBy(fields, { desc }) {
+        return desc(fields.id);
+      },
+      where: (bookmark, { lt }) => {
+        const conditions = [];
+
+        if (cursor) {
+          conditions.push(lt(bookmark.id, cursor));
+        }
+
+        if (searchQuery) {
           const searchTerms = searchQuery.split(',').map(term => term.trim());
-          return or(
-            ...searchTerms.flatMap(term => [
-              like(bookmark.title, `%${term}%`),
-              like(bookmark.description, `%${term}%`),
-              like(bookmark.author, `%${term}%`),
-              exists(
-                this.db.select()
-                  .from(bookmarkLabel)
-                  .innerJoin(label, eq(label.id, bookmarkLabel.labelId))
-                  .where(sql`${bookmarkLabel.bookmarkId} = ${bookmark.id} AND ${label.name} LIKE ${`%${term}%`}`)
-              )
-            ])
+          conditions.push(
+            or(
+              ...searchTerms.flatMap(term => [
+                like(bookmark.title, `%${term}%`),
+                like(bookmark.description, `%${term}%`),
+                like(bookmark.author, `%${term}%`),
+                exists(
+                  this.db.select()
+                    .from(bookmarkLabel)
+                    .innerJoin(label, eq(label.id, bookmarkLabel.labelId))
+                    .where(sql`${bookmarkLabel.bookmarkId} = ${bookmark.id} AND ${label.name} LIKE ${`%${term}%`}`)
+                )
+              ])
+            )
           );
-        } : undefined,
+        }
+
+        return conditions.length > 0 ? and(...conditions) : undefined;
+      },
       with: {
         bookmarkLabel: {
           columns: {},
@@ -37,9 +56,18 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
         }
       }
     });
+
+    // Check if there are more results
+    const hasMore = bookmarks.length > limit;
+    const items = hasMore ? bookmarks.slice(0, limit) : bookmarks;
+
+    return {
+      bookmarks: items,
+      hasMore,
+    }
   }
 
-  findById(id: number) {
+  findById(id: string) {
     return this.db.query.bookmark.findFirst({
       where: (bookmark, { eq }) => eq(bookmark.id, id),
       with: {
@@ -54,14 +82,15 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
   }
 
   create(data: CreateBookmarkDTO) {
-    return this.db.insert(bookmark).values(data).returning().get();
+    const id = tsidGenerator.generate();
+    return this.db.insert(bookmark).values({ ...data, id }).returning().get();
   }
 
-  delete(ids: number[]) {
+  delete(ids: string[]) {
     return this.db.delete(bookmark).where(inArray(bookmark.id, ids)).returning().all();
   }
 
-  async updateLabels(bookmarkId: number, labelsToAdd: CreateUpdateLabelDTO[]) {
+  async updateLabels(bookmarkId: string, labelsToAdd: CreateUpdateLabelDTO[]) {
     await this.db.transaction(async (tx) => {
       // Delete existing relations for this bookmark
       await tx.delete(bookmarkLabel)
@@ -76,7 +105,10 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
 
       const labelsToCreate = labelsToAdd.filter(l => {
         return !l.id || !existingLabelIds.has(l.id)
-      });
+      }).map(l => ({
+        ...l,
+        id: tsidGenerator.generate()
+      }));
 
       const newLabelsCreatedIds = labelsToCreate.length > 0 ? await tx.insert(label).values(labelsToCreate).returning({ id: label.id }) : [];
 
@@ -90,6 +122,7 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
       await tx.insert(bookmarkLabel)
         .values(
           allLabels.map(label => ({
+            id: tsidGenerator.generate(),
             bookmarkId,
             labelId: label.id!
           }))
@@ -108,7 +141,7 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
     });
   }
 
-  updateState(id: number, state: UpdateStateBookmarkDTO) {
-    return this.db.update(bookmark).set(state).where(eq(bookmark.id, id)).returning().get();
+  updateState(id: string, state: UpdateStateBookmarkDTO) {
+    return this.db.update(bookmark).set({ ...state, updatedAt: new Date() }).where(eq(bookmark.id, id)).returning().get();
   }
 }

@@ -34,7 +34,9 @@ const labelService = new LabelService(labelRepository);
 // Bookmarks - Get
 api.get(routes.bookmarks, async (c) => {
   const searchQuery = c.req.query('q');
-  const bookmarks = await bookmarkService.getBookmarks(searchQuery);
+  const limit = Number(c.req.query('limit')) || 10;
+  const cursor = c.req.query('cursor');
+  const bookmarks = await bookmarkService.getBookmarks(searchQuery, cursor, limit);
   return c.json(bookmarks, 200);
 });
 
@@ -59,7 +61,7 @@ api.post(`${routes.bookmarks}/from-url`, async (c) => {
 
 // Bookmark - Get
 api.get(`${routes.bookmarks}/:id`, async (c) => {
-  const id = Number(c.req.param('id'));
+  const id = c.req.param('id');
   const bookmark = await bookmarkService.getBookmark(id);
   return c.json(bookmark, 200);
 });
@@ -73,14 +75,14 @@ api.delete(routes.bookmarks, async (c) => {
 
 // Bookmark - Delete
 api.delete(`${routes.bookmarks}/:id`, async (c) => {
-  const id = Number(c.req.param('id'));
+  const id = c.req.param('id');
   await bookmarkService.deleteBookmarks([id]);
   return c.body(null, 204);
 });
 
 // Bookmarks - Update labels
 api.patch(`${routes.bookmarks}/:id/labels`, async (c) => {
-  const id = Number(c.req.param('id'));
+  const id = c.req.param('id');
   const data = await c.req.json<CreateUpdateLabelDTO[]>();
   await bookmarkService.updateLabels(id, data);
   return c.json({ message: 'Labels applied' }, 200);
@@ -96,7 +98,7 @@ api.patch(routes.bookmarks, async (c) => {
 // Bookmark - Update state
 api.patch(`${routes.bookmarks}/:id/state`, async (c) => {
   try {
-    const id = Number(c.req.param('id'));
+    const id = c.req.param('id');
     const data = await c.req.json<UpdateStateBookmarkDTO>();
     const updatedBookmark = await bookmarkService.updateState(id, data);
     return c.json(updatedBookmark, 200);
@@ -107,7 +109,8 @@ api.patch(`${routes.bookmarks}/:id/state`, async (c) => {
 
 // Labels - Get
 api.get(routes.labels, async (c) => {
-  const labels = await labelService.getLabels();
+  const searchQuery = c.req.query('q');
+  const labels = await labelService.getLabels(searchQuery);
   return c.json(labels, 200);
 });
 
@@ -122,21 +125,21 @@ api.post(routes.labels, async (c) => {
 
 // Label - Get
 api.get(`${routes.labels}/:id`, async (c) => {
-  const id = Number(c.req.param('id'));
+  const id = c.req.param('id');
   const label = await labelService.getLabel(id);
   return c.json(label, 200);
 });
 
 // Label - Delete
 api.delete(`${routes.labels}/:id`, async (c) => {
-  const id = Number(c.req.param('id'));
+  const id = c.req.param('id');
   await labelService.deleteLabel(id);
   return c.body(null, 204);
 });
 
 // Label - Update
 api.put(`${routes.labels}/:id`, async (c) => {
-  const id = Number(c.req.param('id'));
+  const id = c.req.param('id');
   const data = await c.req.json<CreateUpdateLabelDTO>();
   const updatedLabel = await labelService.updateLabel(id, data);
   return c.json(updatedLabel, 200);
