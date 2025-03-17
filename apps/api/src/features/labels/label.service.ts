@@ -24,6 +24,12 @@ export class LabelService {
   }
 
   @handleServiceErrors('entityName')
+  async findByName(name: string) {
+    const label = await this.labelRepository.findByName(name);
+    return label;
+  }
+
+  @handleServiceErrors('entityName')
   createLabel(data: CreateUpdateLabelDTO) {
     return this.labelRepository.create(data);
   }

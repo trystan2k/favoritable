@@ -27,6 +27,22 @@ export type BookmarksPaginatedModel = {
   };
 }
 
+export type OmnivoreBookmarkModel = {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  author: string | null;
+  url: string;
+  state: string;
+  readingProgress: number;
+  thumbnail: string | null;
+  labels: string[];
+  savedAt: string;
+  updatedAt: string;
+  publishedAt: string | null;
+};
+
 export interface BookmarkRepository {
   findAll(searchString?: string, pagination?: CursorPaginationParams): Promise<BookmarksPaginatedDTO>;
   findById(id: string): Promise<BookmarkWithLabelsDTO | undefined>;

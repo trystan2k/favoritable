@@ -13,6 +13,7 @@ import { SQLiteLabelRepository } from "./features/labels/label.repository.js";
 import { LabelService } from "./features/labels/label.service.js";
 import { scrapper } from "./utils/scrapper.js";
 import { mapErrors } from "./errors/errors.mapper.js";
+import { OmnivoreBookmarkModel } from "./features/bookmarks/bookmark.types.js";
 
 const routes = {
   basePath: '/api',
@@ -25,11 +26,11 @@ app.use('*', requestId());
 app.onError(errorHandler);
 const api = app.basePath(routes.basePath);
 
-const bookmarkRepository = new SQLiteBookmarkRepository(db);
-const bookmarkService = new BookmarkService(bookmarkRepository);
-
 const labelRepository = new SQLiteLabelRepository(db);
 const labelService = new LabelService(labelRepository);
+
+const bookmarkRepository = new SQLiteBookmarkRepository(db);
+const bookmarkService = new BookmarkService(bookmarkRepository, labelRepository);
 
 // Bookmarks - Get
 api.get(routes.bookmarks, async (c) => {
@@ -104,6 +105,17 @@ api.patch(`${routes.bookmarks}/:id/state`, async (c) => {
     return c.json(updatedBookmark, 200);
   } catch (error) {
     throw mapErrors(error, 'bookamrk');
+  }
+});
+
+// Bookmarks - Import from Omnivore
+api.post(`${routes.bookmarks}/import/omnivore`, async (c) => {
+  try {
+    const data = await c.req.json<OmnivoreBookmarkModel[]>();
+    const bookmarks = await bookmarkService.importFromOmnivore(data);
+    return c.json(bookmarks, 201);
+  } catch (error) {
+    throw mapErrors(error, 'bookmarks');
   }
 });
 

@@ -2,12 +2,14 @@ import { CreateBookmarkDTO, UpdateBookmarkDTO, UpdateStateBookmarkDTO } from "..
 import { CreateUpdateLabelDTO } from "../../db/schema/label.schema.js";
 import { NotFoundError } from "../../errors/errors.js";
 import { handleServiceErrors } from "../../errors/errors.decorator.js";
-import { BookmarkRepository, BookmarkResponseModel, BookmarkWithLabelsDTO } from "./bookmark.types.js";
+import { BookmarkRepository, BookmarkResponseModel, BookmarkWithLabelsDTO, OmnivoreBookmarkModel } from "./bookmark.types.js";
+import { tsidGenerator } from "../../utils/tsids-generator.js";
+import { LabelRepository } from "../labels/label.types.js";
 
 export class BookmarkService {
   private entityName = 'Bookmark';
 
-  constructor(private bookmarkRepository: BookmarkRepository) { }
+  constructor(private bookmarkRepository: BookmarkRepository, private labelRepository: LabelRepository) { }
 
   private mapBookmarkWithLabels(bookmark: BookmarkWithLabelsDTO): BookmarkResponseModel {
     const labels = bookmark.bookmarkLabel.map(bl => bl.label);
@@ -81,5 +83,50 @@ export class BookmarkService {
   @handleServiceErrors('entityName')
   async updateBookmarks(data: UpdateBookmarkDTO[]) {
     return this.bookmarkRepository.update(data);
+  }
+
+  @handleServiceErrors('entityName')
+  async importFromOmnivore(data: OmnivoreBookmarkModel[]) {
+    const importedBookmarks = [];
+
+    for (const bookmark of data) {
+      const state = bookmark.state.toLowerCase() === 'archived' ? 'archived' : 'pending';
+      const bookmarkData: CreateBookmarkDTO = {
+        id: tsidGenerator.generate(),
+        url: bookmark.url,
+        slug: bookmark.slug,
+        title: bookmark.title,
+        description: bookmark.description || undefined,
+        author: bookmark.author || undefined,
+        thumbnail: bookmark.thumbnail || undefined,
+        state,
+        publishedAt: bookmark.publishedAt ? new Date(bookmark.publishedAt) : undefined,
+        createdAt: new Date(bookmark.savedAt),
+        updatedAt: new Date(bookmark.updatedAt),
+      };
+
+      const createdBookmark = await this.createBookmark(bookmarkData);
+
+      if (bookmark.labels && bookmark.labels.length > 0) {
+        const labels: CreateUpdateLabelDTO[] = [];
+        for (const labelName of bookmark.labels) {
+          const label = await this.labelRepository.findByName(labelName);
+          if (!label) {
+            const createdLabel = await this.labelRepository.create({
+              id: tsidGenerator.generate(),
+              name: labelName,
+            });
+            labels.push(createdLabel);
+          } else {
+            labels.push(label);
+          }
+        }
+
+        await this.updateLabels(createdBookmark.id, labels);
+      }
+
+      importedBookmarks.push(await this.getBookmark(createdBookmark.id));
+    }
+    return importedBookmarks;
   }
 }

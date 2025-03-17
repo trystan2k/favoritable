@@ -13,6 +13,12 @@ export class SQLiteLabelRepository implements LabelRepository {
     })
   }
 
+  findByName(name: string) {
+    return this.db.query.label.findFirst({
+      where: (label, { eq }) => eq(label.name, name),
+    });
+  }
+
   findById(id: string) {
     return this.db.query.label.findFirst({
       where: (label, { eq }) => eq(label.id, id),

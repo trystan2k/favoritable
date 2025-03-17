@@ -1,6 +1,5 @@
 TODO:
 
-- Add endpoint to import Omnivore files
 - Add endpoint to import from Chrome bookmarks (add folder name as label)
 - Add endpoint to import from text file (one URL per line)
 - Move routes to a routes folder
@@ -17,6 +16,7 @@ TODO:
 
 DONE:
 
+- Add endpoint to import Omnivore files
 - Add Scrapper endpoint
 - Add endpoint to delete multiple records at once
 - Add endpoint to archieve bookmark
