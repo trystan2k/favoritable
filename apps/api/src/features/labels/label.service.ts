@@ -2,6 +2,7 @@ import { CreateUpdateLabelDTO } from "../../db/schema/label.schema.js";
 import { NotFoundError } from "../../errors/errors.js";
 import { handleServiceErrors } from "../../errors/errors.decorator.js";
 import { LabelRepository } from "./label.types.js";
+import { generateRandomColor } from "../../utils/colors.js";
 
 export class LabelService {
 
@@ -31,6 +32,7 @@ export class LabelService {
 
   @handleServiceErrors('entityName')
   createLabel(data: CreateUpdateLabelDTO) {
+    data.color = data.color || generateRandomColor();
     return this.labelRepository.create(data);
   }
 
@@ -44,6 +46,7 @@ export class LabelService {
 
   @handleServiceErrors('entityName')
   async updateLabel(id: string, data: CreateUpdateLabelDTO) {
+    data.color = data.color || generateRandomColor();
     const label = await this.labelRepository.update(id, data);
     if (!label) {
       throw new NotFoundError(`${this.entityName} with id ${id} not found`);

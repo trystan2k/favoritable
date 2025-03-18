@@ -18,7 +18,7 @@ export const bookmark = sqliteTable('bookmarks', {
   description: text('description'),
   author: text('author'),
   thumbnail: text('thumbnail'),
-  state: text('state').$type<'archived' | 'pending'>().notNull().default('pending'),
+  state: text('state').$type<'archived' | 'active'>().notNull().default('active'),
   publishedAt: integer('published_at', { mode: 'timestamp_ms' }),
   ...trackingDates,
 }, (table) => [

@@ -122,7 +122,6 @@ export class BookmarkService {
     const importedBookmarks = [];
 
     for (const bookmark of data) {
-      const state = bookmark.state.toLowerCase() === 'archived' ? 'archived' : 'pending';
       const bookmarkData: CreateBookmarkDTO = {
         id: tsidGenerator.generate(),
         url: bookmark.url,
@@ -131,10 +130,8 @@ export class BookmarkService {
         description: bookmark.description || undefined,
         author: bookmark.author || undefined,
         thumbnail: bookmark.thumbnail || undefined,
-        state,
-        publishedAt: bookmark.publishedAt ? new Date(bookmark.publishedAt) : undefined,
-        createdAt: new Date(bookmark.savedAt),
-        updatedAt: new Date(bookmark.updatedAt),
+        state: bookmark.state.toLowerCase() === 'archived' ? 'archived' : 'active',
+        publishedAt: bookmark.publishedAt ? new Date(bookmark.publishedAt) : undefined
       };
 
       const createdBookmark = await this.createBookmark(bookmarkData);

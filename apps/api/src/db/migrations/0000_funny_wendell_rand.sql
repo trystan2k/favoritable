@@ -6,7 +6,7 @@ CREATE TABLE `bookmarks` (
 	`description` text,
 	`author` text,
 	`thumbnail` text,
-	`state` text DEFAULT 'pending' NOT NULL,
+	`state` text DEFAULT 'active' NOT NULL,
 	`published_at` integer,
 	`created_at` integer DEFAULT (unixepoch() * 1000) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch() * 1000) NOT NULL

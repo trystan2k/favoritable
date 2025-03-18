@@ -5,6 +5,7 @@ import { bookmarkLabel } from "../../db/schema/index.js";
 import { CreateUpdateLabelDTO, label } from "../../db/schema/label.schema.js";
 import { tsidGenerator } from "../../utils/tsids-generator.js";
 import { BookmarkRepository, CursorPaginationParams } from "./bookmark.types.js";
+import { generateRandomColor } from "../../utils/colors.js";
 
 export class SQLiteBookmarkRepository implements BookmarkRepository {
 
@@ -107,6 +108,7 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
         return !l.id || !existingLabelIds.has(l.id)
       }).map(l => ({
         ...l,
+        color: l.color || generateRandomColor(),
         id: tsidGenerator.generate()
       }));
 

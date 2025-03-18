@@ -1,6 +1,5 @@
 TODO:
 
-- Change tsid generator to allow to use custom Date (instead of Date.now())
 - Add random color for label when importing and creating labels from URL or importing
 - Add endpoint to import from text file (one URL per line)
 - Move routes to a routes folder
@@ -17,6 +16,7 @@ TODO:
 
 INVESTIGATE:
 
+- Check if Firefox/Safari/Edge bookmarks are exported are similar to Chrome bookmarks
 - Strem <https://kumneger.dev/blog/server-sent-events-explained> <https://yanael.io/articles/hono-sse/>
 
 DONE:
