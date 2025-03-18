@@ -5,8 +5,8 @@ meta {
 }
 
 post {
-  url: http://localhost:3000/api/bookmarks
-  body: json
+  url: http://localhost:3000/api/bookmarks/import/omnivore
+  body: file
   auth: none
 }
 
@@ -19,4 +19,12 @@ body:json {
       "url": "https://expressjs.com/a",
       "thumbnail": "https://expressjs.com/images/express-facebook-share.png"
   }
+}
+
+body:file {
+  file: @file(/Users/trystan2k/Downloads/2025-01-19 - Favorites/metadata_160_to_180.json) @contentType(application/json; charset=utf-8)
+  ~file: @file(/Users/trystan2k/Downloads/2025-01-19 - Favorites/metadata_380_to_400.json) @contentType(application/json; charset=utf-8)
+  ~file: @file(/Users/trystan2k/Downloads/2025-01-19 - Favorites/metadata_220_to_240.json) @contentType(application/json; charset=utf-8)
+  ~file: @file(/Users/trystan2k/Downloads/2025-01-19 - Favorites/metadata_300_to_320.json) @contentType(application/json; charset=utf-8)
+  ~file: @file(/Users/trystan2k/Downloads/2025-01-19 - Favorites/metadata_80_to_100.json) @contentType(application/json; charset=utf-8)
 }

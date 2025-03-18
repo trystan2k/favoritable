@@ -133,6 +133,17 @@ api.post(`${routes.bookmarks}/import/chrome`, async (c) => {
   }
 });
 
+// Bookmarks - Import from Text List
+api.post(`${routes.bookmarks}/import/text`, async (c) => {
+  try {
+    const data = await c.req.text();
+    const bookmarks = await bookmarkService.importTextFile(data);
+    return c.json(bookmarks, 201);
+  } catch (error) {
+    throw mapErrors(error, 'bookmarks');
+  }
+});
+
 // Labels - Get
 api.get(routes.labels, async (c) => {
   const searchQuery = c.req.query('q');

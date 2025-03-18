@@ -154,4 +154,26 @@ export class BookmarkService {
     }
     return importedBookmarks;
   }
+
+  @handleServiceErrors('entityName')
+  async importTextFile(data: string) {
+    const importedBookmarks = [];
+    const urls = data.split('\n').filter(url => url.trim().length > 0);
+
+    for (const url of urls) {
+      let bookmarkData: CreateBookmarkDTO;
+      try {
+        bookmarkData = await scrapper(url.trim());
+      } catch (error) {
+        // TODO use the logging system
+        console.error(`Error importing bookmark ${url}: ${error}`);
+        continue;
+      }
+
+      const createdBookmark = await this.createBookmark(bookmarkData);
+      importedBookmarks.push(await this.getBookmark(createdBookmark.id));
+    }
+
+    return importedBookmarks;
+  }
 }

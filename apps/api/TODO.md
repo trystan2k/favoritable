@@ -1,7 +1,5 @@
 TODO:
 
-- Add random color for label when importing and creating labels from URL or importing
-- Add endpoint to import from text file (one URL per line)
 - Move routes to a routes folder
 - Setup headers (like Accept, Content-Type, etc)
 - Add versioning using headers
@@ -21,6 +19,8 @@ INVESTIGATE:
 
 DONE:
 
+- Add endpoint to import from text file (one URL per line)
+- Add random color for label when importing and creating labels from URL or importing
 - Add endpoint to import from Chrome bookmarks (add folder name as label)
 - Add endpoint to import Omnivore files
 - Add Scrapper endpoint
