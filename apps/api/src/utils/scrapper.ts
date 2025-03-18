@@ -2,6 +2,7 @@ import * as cheerio from 'cheerio';
 import { cleanableString } from './string.js';
 import { URLContentParseError } from '../errors/errors.js';
 import { CreateBookmarkDTO } from '../db/schema/bookmark.schema.js';
+import { tsidGenerator } from './tsids-generator.js';
 
 const headers = {
   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36'
@@ -46,6 +47,25 @@ const getPublishedAt = ($: cheerio.CheerioAPI) => {
     publishedAt = $('[datetime]').attr('datetime');
   }
 
+  if (!publishedAt) {
+    return null;
+  }
+
+  if (new Date(publishedAt).toString() === 'Invalid Date') {
+    // Try to find a date in the text
+    const regex = /\{(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+)/;
+    const match = publishedAt.match(regex);
+    if (match && match[1]) {
+      if (new Date(match[1]).toString() === 'Invalid Date') {
+        return null;
+      } else {
+        return new Date(match[1]);
+      }
+    } else {
+      return null;
+    }
+  }
+
   return publishedAt ? new Date(publishedAt) : null;
 }
 
@@ -88,6 +108,7 @@ export const scrapper = async (url: string) => {
     const title = cleanableString($('head > title').text().trim() || $('meta[property="og:title"]').attr('content') || '');
 
     bookmarkData = {
+      id: tsidGenerator.generate(),
       url: response.url,
       title: title.removeCarriageReturns().removeLineBreaks().removeTabs().getResult(),
       slug: title.convertToSlug().getResult(),
@@ -99,6 +120,7 @@ export const scrapper = async (url: string) => {
 
     return bookmarkData;
   } catch (error: unknown) {
+    console.log(error);
     const errorData = error as Error;
     throw new URLContentParseError(errorData.message, error);
   }

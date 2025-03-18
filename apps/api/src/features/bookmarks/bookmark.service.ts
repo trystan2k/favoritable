@@ -5,6 +5,8 @@ import { handleServiceErrors } from "../../errors/errors.decorator.js";
 import { BookmarkRepository, BookmarkResponseModel, BookmarkWithLabelsDTO, OmnivoreBookmarkModel } from "./bookmark.types.js";
 import { tsidGenerator } from "../../utils/tsids-generator.js";
 import { LabelRepository } from "../labels/label.types.js";
+import { parseChromebookmarks } from "../../utils/chrome-parser.js";
+import { scrapper } from "../../utils/scrapper.js";
 
 export class BookmarkService {
   private entityName = 'Bookmark';
@@ -86,6 +88,36 @@ export class BookmarkService {
   }
 
   @handleServiceErrors('entityName')
+  async importFromChrome(html: string, folderName?: string) {
+    const bookmarks = parseChromebookmarks(html, folderName);
+    const importedBookmarks = [];
+
+    for (const bookmark of bookmarks) {
+      let bookmarkData: CreateBookmarkDTO;
+      try {
+        bookmarkData = await scrapper(bookmark.url);
+      } catch (error) {
+        // TODO use the logging system
+        console.error(`Error importing bookmark ${bookmark.url}: ${error}`);
+        continue;
+      }
+
+      const createdBookmark = await this.createBookmark(bookmarkData);
+
+      const label = await this.labelRepository.findByName(bookmark.folderName);
+      const labelData = label || await this.labelRepository.create({
+        id: tsidGenerator.generate(),
+        name: bookmark.folderName,
+      });
+
+      await this.updateLabels(createdBookmark.id, [labelData]);
+      importedBookmarks.push(await this.getBookmark(createdBookmark.id));
+    }
+
+    return importedBookmarks;
+  }
+
+  @handleServiceErrors('entityName')
   async importFromOmnivore(data: OmnivoreBookmarkModel[]) {
     const importedBookmarks = [];
 
@@ -111,15 +143,11 @@ export class BookmarkService {
         const labels: CreateUpdateLabelDTO[] = [];
         for (const labelName of bookmark.labels) {
           const label = await this.labelRepository.findByName(labelName);
-          if (!label) {
-            const createdLabel = await this.labelRepository.create({
-              id: tsidGenerator.generate(),
-              name: labelName,
-            });
-            labels.push(createdLabel);
-          } else {
-            labels.push(label);
-          }
+          const labelData = label || await this.labelRepository.create({
+            id: tsidGenerator.generate(),
+            name: labelName,
+          });
+          labels.push(labelData);
         }
 
         await this.updateLabels(createdBookmark.id, labels);

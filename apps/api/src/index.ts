@@ -1,6 +1,7 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { requestId } from "hono/request-id";
+import { cors } from 'hono/cors'
 
 import { db } from "./db/index.js";
 import { BookmarkService } from './features/bookmarks/bookmark.service.js';
@@ -23,6 +24,7 @@ const routes = {
 
 const app = new Hono();
 app.use('*', requestId());
+app.use('*', cors())
 app.onError(errorHandler);
 const api = app.basePath(routes.basePath);
 
@@ -113,6 +115,18 @@ api.post(`${routes.bookmarks}/import/omnivore`, async (c) => {
   try {
     const data = await c.req.json<OmnivoreBookmarkModel[]>();
     const bookmarks = await bookmarkService.importFromOmnivore(data);
+    return c.json(bookmarks, 201);
+  } catch (error) {
+    throw mapErrors(error, 'bookmarks');
+  }
+});
+
+// Bookmarks - Import from Chrome
+api.post(`${routes.bookmarks}/import/chrome`, async (c) => {
+  try {
+    const folderName = c.req.query('folder');
+    const html = await c.req.text();
+    const bookmarks = await bookmarkService.importFromChrome(html, folderName);
     return c.json(bookmarks, 201);
   } catch (error) {
     throw mapErrors(error, 'bookmarks');

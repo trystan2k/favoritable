@@ -1,6 +1,7 @@
 TODO:
 
-- Add endpoint to import from Chrome bookmarks (add folder name as label)
+- Change tsid generator to allow to use custom Date (instead of Date.now())
+- Add random color for label when importing and creating labels from URL or importing
 - Add endpoint to import from text file (one URL per line)
 - Move routes to a routes folder
 - Setup headers (like Accept, Content-Type, etc)
@@ -8,14 +9,19 @@ TODO:
 - Add schema validation (Zod) - <https://chat.qwen.ai/c/3a138e54-fc97-466a-89c3-e61e14cffcb3>
 - Handle Controller errors (add decorator)
 - Add response mapper (DTO to Model)
-- Add Open API docs (Swagger)
+- Add Open API docs (Swagger) (<https://github.com/honojs/middleware/issues/735>)
 - Add logging system/middleware
 - Add endpoint to backup/export bookmarks
 - Add tests
 - Use AI to suggeest labels when adding a bookmark
 
+INVESTIGATE:
+
+- Strem <https://kumneger.dev/blog/server-sent-events-explained> <https://yanael.io/articles/hono-sse/>
+
 DONE:
 
+- Add endpoint to import from Chrome bookmarks (add folder name as label)
 - Add endpoint to import Omnivore files
 - Add Scrapper endpoint
 - Add endpoint to delete multiple records at once
