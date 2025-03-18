@@ -5,7 +5,7 @@ import { handleServiceErrors } from "../../errors/errors.decorator.js";
 import { BookmarkRepository, BookmarkResponseModel, BookmarkWithLabelsDTO, OmnivoreBookmarkModel } from "./bookmark.types.js";
 import { tsidGenerator } from "../../utils/tsids-generator.js";
 import { LabelRepository } from "../labels/label.types.js";
-import { parseChromebookmarks } from "../../utils/chrome-parser.js";
+import { parseHtmlbookmarks } from "../../utils/html-bookmarks-parser.js";
 import { scrapper } from "../../utils/scrapper.js";
 
 export class BookmarkService {
@@ -88,8 +88,8 @@ export class BookmarkService {
   }
 
   @handleServiceErrors('entityName')
-  async importFromChrome(html: string, folderName?: string) {
-    const bookmarks = parseChromebookmarks(html, folderName);
+  async importFromHtmlFile(html: string, folderName?: string) {
+    const bookmarks = parseHtmlbookmarks(html, folderName);
     const importedBookmarks = [];
 
     for (const bookmark of bookmarks) {
@@ -156,7 +156,7 @@ export class BookmarkService {
   }
 
   @handleServiceErrors('entityName')
-  async importTextFile(data: string) {
+  async importFromTextFile(data: string) {
     const importedBookmarks = [];
     const urls = data.split('\n').filter(url => url.trim().length > 0);
 

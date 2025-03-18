@@ -1,17 +1,13 @@
 meta {
-  name: Bookmarks - Import Chrome
+  name: Bookmarks - Import From Html File
   type: http
   seq: 11
 }
 
 post {
-  url: http://localhost:3000/api/bookmarks/import/chrome?folder=Favs
+  url: http://localhost:3000/api/bookmarks/import/html
   body: file
   auth: none
-}
-
-params:query {
-  folder: Favs
 }
 
 body:json {
@@ -26,5 +22,5 @@ body:json {
 }
 
 body:file {
-  file: @file(/Users/trystan2k/Downloads/bookmarks_3_14_25.html) @contentType(text/html; charset=utf-8)
+  file: @file(/Users/trystan2k/Downloads/bookmarks.html) @contentType(text/html; charset=utf-8)
 }

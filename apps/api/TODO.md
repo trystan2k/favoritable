@@ -14,11 +14,11 @@ TODO:
 
 INVESTIGATE:
 
-- Check if Firefox/Safari/Edge bookmarks are exported are similar to Chrome bookmarks
-- Strem <https://kumneger.dev/blog/server-sent-events-explained> <https://yanael.io/articles/hono-sse/>
+- Stream <https://kumneger.dev/blog/server-sent-events-explained> <https://yanael.io/articles/hono-sse/>
 
 DONE:
 
+- Check if Firefox/Safari/Edge bookmarks are exported are similar to Chrome bookmarks
 - Add endpoint to import from text file (one URL per line)
 - Add random color for label when importing and creating labels from URL or importing
 - Add endpoint to import from Chrome bookmarks (add folder name as label)

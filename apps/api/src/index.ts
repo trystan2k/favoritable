@@ -121,23 +121,23 @@ api.post(`${routes.bookmarks}/import/omnivore`, async (c) => {
   }
 });
 
-// Bookmarks - Import from Chrome
-api.post(`${routes.bookmarks}/import/chrome`, async (c) => {
+// Bookmarks - Import from HTML File Format
+api.post(`${routes.bookmarks}/import/html`, async (c) => {
   try {
     const folderName = c.req.query('folder');
     const html = await c.req.text();
-    const bookmarks = await bookmarkService.importFromChrome(html, folderName);
+    const bookmarks = await bookmarkService.importFromHtmlFile(html, folderName);
     return c.json(bookmarks, 201);
   } catch (error) {
     throw mapErrors(error, 'bookmarks');
   }
 });
 
-// Bookmarks - Import from Text List
+// Bookmarks - Import from Text File Format
 api.post(`${routes.bookmarks}/import/text`, async (c) => {
   try {
     const data = await c.req.text();
-    const bookmarks = await bookmarkService.importTextFile(data);
+    const bookmarks = await bookmarkService.importFromTextFile(data);
     return c.json(bookmarks, 201);
   } catch (error) {
     throw mapErrors(error, 'bookmarks');

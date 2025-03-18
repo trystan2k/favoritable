@@ -2,13 +2,13 @@ import * as cheerio from 'cheerio';
 import { isValidUrl } from './url.js';
 import { Element } from 'domhandler';
 
-interface ChromeBookmark {
+interface HTMLBookmark {
   url: string;
   folderName: string;
 }
 
-const parseBookmarksFromFolder = ($: cheerio.CheerioAPI, element: Element, currentFolder: string): ChromeBookmark[] => {
-  const bookmarks: ChromeBookmark[] = [];
+const parseBookmarksFromFolder = ($: cheerio.CheerioAPI, element: Element, currentFolder: string): HTMLBookmark[] => {
+  const bookmarks: HTMLBookmark[] = [];
   const directDL = $(element).next('dl');
   const bookmarkList = directDL.children().filter('dt').children('a');
 
@@ -24,9 +24,9 @@ const parseBookmarksFromFolder = ($: cheerio.CheerioAPI, element: Element, curre
   return bookmarks;
 };
 
-export const parseChromebookmarks = (html: string, folderName?: string): ChromeBookmark[] => {
+export const parseHtmlbookmarks = (html: string, folderName?: string): HTMLBookmark[] => {
   const $ = cheerio.load(html);
-  const bookmarks: ChromeBookmark[] = [];
+  const bookmarks: HTMLBookmark[] = [];
 
   // If folderName is provided, only parse bookmarks from that folder
   if (folderName) {
