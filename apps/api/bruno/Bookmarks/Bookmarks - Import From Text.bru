@@ -21,6 +21,10 @@ body:json {
   }
 }
 
+body:multipart-form {
+  file: @file(/Users/trystan2k/Downloads/2025-01-19 - Favorites/bookmarks.txt)
+}
+
 body:file {
   file: @file(/Users/trystan2k/Downloads/2025-01-19 - Favorites/bookmarks.txt) @contentType(text/plain; charset=utf-8)
 }

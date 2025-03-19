@@ -1,10 +1,12 @@
 TODO:
 
-- Move routes to a routes folder
+- Move routes to a routes files (<https://hono.dev/docs/guides/best-practices#building-a-larger-application>)
+- Handle routes errors (add decorator)
+- Investigate and add etag if it worth it
+- Add notFound handler
 - Setup headers (like Accept, Content-Type, etc)
 - Add versioning using headers
 - Add schema validation (Zod) - <https://chat.qwen.ai/c/3a138e54-fc97-466a-89c3-e61e14cffcb3>
-- Handle Controller errors (add decorator)
 - Add response mapper (DTO to Model)
 - Add Open API docs (Swagger) (<https://github.com/honojs/middleware/issues/735>)
 - Add logging system/middleware
@@ -14,6 +16,7 @@ TODO:
 
 INVESTIGATE:
 
+- Create nested routes (<https://github.com/honojs/examples/blob/main/basic/src/index.ts>)
 - Stream <https://kumneger.dev/blog/server-sent-events-explained> <https://yanael.io/articles/hono-sse/>
 
 DONE:
