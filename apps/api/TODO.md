@@ -1,6 +1,6 @@
 TODO:
 
-- Move routes to a routes files (<https://hono.dev/docs/guides/best-practices#building-a-larger-application>)
+- Review dependency injection (services and repositories)
 - Handle routes errors (add decorator)
 - Investigate and add etag if it worth it
 - Add notFound handler
@@ -16,11 +16,12 @@ TODO:
 
 INVESTIGATE:
 
-- Create nested routes (<https://github.com/honojs/examples/blob/main/basic/src/index.ts>)
 - Stream <https://kumneger.dev/blog/server-sent-events-explained> <https://yanael.io/articles/hono-sse/>
 
 DONE:
 
+- Create nested routes (<https://github.com/honojs/examples/blob/main/basic/src/index.ts>)
+- Move routes to a routes files (<https://hono.dev/docs/guides/best-practices#building-a-larger-application>)
 - Check if Firefox/Safari/Edge bookmarks are exported are similar to Chrome bookmarks
 - Add endpoint to import from text file (one URL per line)
 - Add random color for label when importing and creating labels from URL or importing
