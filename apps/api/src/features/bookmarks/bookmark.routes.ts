@@ -1,33 +1,39 @@
 import { Hono } from "hono";
+import { zValidator } from "../../core/validators.wrapper";
 import { db } from "../../db";
-import { SQLiteLabelRepository } from "../labels/label.repository";
-import { SQLiteBookmarkRepository } from "./bookmark.repository";
-import { BookmarkService } from "./bookmark.service";
-import { BookmarkFromURL, CreateBookmarkDTO, DeleteMultipleBookmarksDTO, UpdateBookmarkDTO, UpdateStateBookmarkDTO } from "../../db/schema/bookmark.schema";
-import { scrapper } from "../../utils/scrapper";
-import { CreateUpdateLabelDTO } from "../../db/schema/label.schema";
+import { InsertLabelDTO } from "../../db/dtos/label.dtos";
+import { UpdateStateBookmarkDTO } from "../../db/schema/bookmark.schema";
 import { mapErrors } from "../../errors/errors.mapper";
+import { scrapper } from "../../utils/scrapper";
+import { BookmarkUnitOfWork } from "./bookmark-unit-of-work";
+import { bookmarkIdParamSchema, BookmarkModel, createBookmarkFromURLSchema, createBookmarkSchema, deleteBookmarksSchema, getBookmarksQueryParamsSchema, UpdateBookmarkModel, updateBookmarkSchema } from "./bookmark.models";
+import { BookmarkService } from "./bookmark.service";
 import { OmnivoreBookmarkModel } from "./bookmark.types";
 
 const bookmarkRoutes = new Hono();
 
-const labelRepository = new SQLiteLabelRepository(db);
-const bookmarkRepository = new SQLiteBookmarkRepository(db);
-const bookmarkService = new BookmarkService(bookmarkRepository, labelRepository);
+// const labelRepository = new SQLiteLabelRepository(db);
+// const bookmarkRepository = new SQLiteBookmarkRepository(db);
+const bookmarkUnitOfWork = new BookmarkUnitOfWork();
+const bookmarkService = new BookmarkService(bookmarkUnitOfWork);
 
 // Bookmarks - Get
-bookmarkRoutes.get('/', async (c) => {
-  const searchQuery = c.req.query('q');
-  const limit = Number(c.req.query('limit')) || 10;
-  const cursor = c.req.query('cursor');
-
-  const bookmarks = await bookmarkService.getBookmarks(searchQuery, cursor, limit);
+bookmarkRoutes.get('/', zValidator('query', getBookmarksQueryParamsSchema), async (c) => {
+  const queryParams = c.req.valid('query');
+  const bookmarks = await bookmarkService.getBookmarks(queryParams);
   return c.json(bookmarks, 200);
 });
 
+// Bookmark - Get
+bookmarkRoutes.get('/:id', zValidator('param', bookmarkIdParamSchema), async (c) => {
+  const { id } = c.req.valid('param');
+  const bookmark = await bookmarkService.getBookmark(id);
+  return c.json(bookmark, 200);
+});
+
 // Bookmark - Create
-bookmarkRoutes.post('/', async (c) => {
-  const data = await c.req.json<CreateBookmarkDTO>();
+bookmarkRoutes.post('/', zValidator('json', createBookmarkSchema), async (c) => {
+  const data = c.req.valid('json');
   const bookmark = await bookmarkService.createBookmark(data);
 
   // Add location header in response, with the url of the newly created bookmark
@@ -36,8 +42,8 @@ bookmarkRoutes.post('/', async (c) => {
 });
 
 // Bookmark - Create from URL
-bookmarkRoutes.post('/from-url', async (c) => {
-  const data = await c.req.json<BookmarkFromURL>();
+bookmarkRoutes.post('/from-url', zValidator('json', createBookmarkFromURLSchema), async (c) => {
+  const data = await c.req.valid('json');
 
   const bookmarkData = await scrapper(data.url);
   const bookmark = await bookmarkService.createBookmark(bookmarkData);
@@ -46,56 +52,45 @@ bookmarkRoutes.post('/from-url', async (c) => {
 
   // Add location header in response, with the url of the newly created bookmark
   c.header('Location', `${location}/${bookmark.id}`);
-  return c.json(bookmark, 200);
+  return c.json(bookmark, 201);
 })
 
-// Bookmark - Get
-bookmarkRoutes.get('/:id', async (c) => {
-  const id = c.req.param('id');
-  const bookmark = await bookmarkService.getBookmark(id);
+// Bookmark - Update
+bookmarkRoutes.patch('/:id', zValidator('json', updateBookmarkSchema), zValidator('param', bookmarkIdParamSchema), async (c) => {
+  const data = await c.req.valid('json');
+  const { id } = c.req.valid('param');
+  data.id = id;
+
+  const bookmark = await bookmarkService.updateBookmark(data);
   return c.json(bookmark, 200);
+});
+
+bookmarkRoutes.patch('/', zValidator('json', updateBookmarkSchema.array()), async (c) => {
+  const data = await c.req.valid('json');
+
+  const bookmarks: BookmarkModel[] = [];
+  for (const bookmark of data) {
+    const updatedBookmark = await bookmarkService.updateBookmark(bookmark);
+    bookmarks.push(updatedBookmark);
+  }
+
+  return c.json(bookmarks, 200);
+})
+
+// Bookmark - Delete
+bookmarkRoutes.delete('/:id', zValidator('param', bookmarkIdParamSchema), async (c) => {
+  const { id } = c.req.valid('param');
+  const deletedBookmarks = await bookmarkService.deleteBookmarks([id]);
+  return c.body(null, 204);
 });
 
 // Bookmarks - Delete
-bookmarkRoutes.delete('/', async (c) => {
-  const data = await c.req.json<DeleteMultipleBookmarksDTO>();
-  await bookmarkService.deleteBookmarks(data.ids);
-  return c.body(null, 204);
+bookmarkRoutes.post('/batch-delete', zValidator('json', deleteBookmarksSchema), async (c) => {
+  const data = c.req.valid('json');
+  const deletedBookmarks = await bookmarkService.deleteBookmarks(data.ids);
+  return c.json(deletedBookmarks, 200);
 });
 
-// Bookmark - Delete
-bookmarkRoutes.delete('/:id', async (c) => {
-  const id = c.req.param('id');
-  await bookmarkService.deleteBookmarks([id]);
-  return c.body(null, 204);
-});
-
-// Bookmarks - Update
-bookmarkRoutes.patch('/', async (c) => {
-  const data = await c.req.json<UpdateBookmarkDTO[]>();
-  const bookmarks = await bookmarkService.updateBookmarks(data);
-  return c.json(bookmarks, 200);
-});
-
-// Bookmarks - Update labels
-bookmarkRoutes.patch('/:id/labels', async (c) => {
-  const id = c.req.param('id');
-  const data = await c.req.json<CreateUpdateLabelDTO[]>();
-  await bookmarkService.updateLabels(id, data);
-  return c.json({ message: 'Labels applied' }, 200);
-});
-
-// Bookmark - Update state
-bookmarkRoutes.patch('/:id/state', async (c) => {
-  try {
-    const id = c.req.param('id');
-    const data = await c.req.json<UpdateStateBookmarkDTO>();
-    const updatedBookmark = await bookmarkService.updateState(id, data);
-    return c.json(updatedBookmark, 200);
-  } catch (error) {
-    throw mapErrors(error, 'bookamrk');
-  }
-});
 
 const importRoutes = new Hono();
 

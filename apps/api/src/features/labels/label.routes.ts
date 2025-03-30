@@ -1,13 +1,14 @@
 import { Hono } from "hono";
-import { db } from "../../db";
-import { CreateUpdateLabelDTO } from "../../db/schema/label.schema";
-import { SQLiteLabelRepository } from "./label.repository";
+
+import { InsertLabelDTO } from "../../db/dtos/label.dtos";
+import { BookmarkUnitOfWork } from "../bookmarks/bookmark-unit-of-work";
 import { LabelService } from "./label.service";
 
 const labelRoutes = new Hono();
 
-const labelRepository = new SQLiteLabelRepository(db);
-const labelService = new LabelService(labelRepository);
+// const labelRepository = new SQLiteLabelRepository(db);
+const bookmarkUnitOfWork = new BookmarkUnitOfWork();
+const labelService = new LabelService(bookmarkUnitOfWork);
 
 // Labels - Get
 labelRoutes.get('/', async (c) => {
@@ -18,7 +19,7 @@ labelRoutes.get('/', async (c) => {
 
 // Labels - Create
 labelRoutes.post('/', async (c) => {
-  const data = await c.req.json<CreateUpdateLabelDTO>();
+  const data = await c.req.json<InsertLabelDTO>();
   const label = await labelService.createLabel(data);
   // Add location header in response, with the url of the newly created bookmark
   c.header('Location', `${c.req.url}/${label.id}`);
@@ -40,10 +41,9 @@ labelRoutes.delete('/:id', async (c) => {
 });
 
 // Label - Update
-labelRoutes.put('/:id', async (c) => {
-  const id = c.req.param('id');
-  const data = await c.req.json<CreateUpdateLabelDTO>();
-  const updatedLabel = await labelService.updateLabel(id, data);
+labelRoutes.put('/', async (c) => {
+  const data = await c.req.json<InsertLabelDTO>();
+  const updatedLabel = await labelService.updateLabel(data);
   return c.json(updatedLabel, 200);
 });
 

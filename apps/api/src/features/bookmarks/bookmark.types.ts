@@ -1,31 +1,6 @@
-import { BookmarkDTO, CreateBookmarkDTO, UpdateBookmarkDTO, UpdateStateBookmarkDTO } from "../../db/schema/bookmark.schema.js";
-import { LabelDTO, CreateUpdateLabelDTO } from "../../db/schema/label.schema.js";
-
-export type BookmarkWithLabelsDTO = BookmarkDTO & {
-  bookmarkLabel: {
-    label: LabelDTO;
-  }[];
-};
-
-export type BookmarkResponseModel = BookmarkDTO & { labels: LabelDTO[] };
-
-export type CursorPaginationParams = {
-  limit?: number;
-  cursor?: string;
-};
-
-export type BookmarksPaginatedDTO = {
-  bookmarks: BookmarkWithLabelsDTO[];
-  hasMore: boolean;
-};
-
-export type BookmarksPaginatedModel = {
-  data: BookmarkDTO[];
-  pagination: {
-    next: string | null;
-    self: string | null;
-  };
-}
+import { InsertLabelDTO } from "../../db/dtos/label.dtos.js";
+import { BookmarkDTO, UpdateStateBookmarkDTO } from "../../db/schema/bookmark.schema.js";
+import { BookmarkModel, CreateBookmarkModel, GetBookmarksQueryParamsModel, UpdateBookmarkModel } from "./bookmark.models.js";
 
 export type OmnivoreBookmarkModel = {
   id: string;
@@ -38,17 +13,16 @@ export type OmnivoreBookmarkModel = {
   readingProgress: number;
   thumbnail: string | null;
   labels: string[];
-  savedAt: string;
-  updatedAt: string;
-  publishedAt: string | null;
+  savedAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
 };
 
 export interface BookmarkRepository {
-  findAll(searchString?: string, pagination?: CursorPaginationParams): Promise<BookmarksPaginatedDTO>;
-  findById(id: string): Promise<BookmarkWithLabelsDTO | undefined>;
-  create(data: CreateBookmarkDTO): Promise<BookmarkDTO>;
-  delete(ids: string[]): Promise<BookmarkDTO[] | undefined>;
-  update(data: UpdateBookmarkDTO[]): Promise<BookmarkDTO[]>;
-  updateLabels(bookmarkId: string, labels: CreateUpdateLabelDTO[]): Promise<void>;
+  findAll(queryParams: GetBookmarksQueryParamsModel): Promise<BookmarkModel[]>;
+  findById(id: string): Promise<BookmarkModel>;
+  create(data: CreateBookmarkModel): Promise<BookmarkModel>;
+  delete(ids: string[]): Promise<string[]>;
+  update(data: UpdateBookmarkModel): Promise<BookmarkModel>;
   updateState(id: string, state: UpdateStateBookmarkDTO): Promise<BookmarkDTO>;
 }

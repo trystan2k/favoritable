@@ -1,10 +1,10 @@
-import { LabelDTO, CreateUpdateLabelDTO } from "../../db/schema/label.schema.js";
+import { LabelDTO, InsertLabelDTO } from "../../db/dtos/label.dtos";
 
 export interface LabelRepository {
-  findAll(searchQuery?: string): Promise<LabelDTO[]>;
+  findAll(searchQuery?: string): Promise<LabelDTO[] | undefined>;
   findByName(name: string): Promise<LabelDTO | null | undefined>;
   findById(id: string): Promise<LabelDTO | null | undefined>;
-  create(data: CreateUpdateLabelDTO): Promise<LabelDTO>;
-  update(id: string, data: CreateUpdateLabelDTO): Promise<LabelDTO>;
+  create(data: InsertLabelDTO): Promise<LabelDTO>;
+  update(data: InsertLabelDTO): Promise<LabelDTO>;
   delete(id: string): Promise<LabelDTO | undefined>;
 }

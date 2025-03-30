@@ -12,11 +12,15 @@ post {
 
 body:json {
   {
-      "title": "Learn Express.js",
+      
       "description": "A comprehensive guide to Express.js framework",
       "slug": "a-comprehensive-guide-to-expressjs-framework",
       "author": "Node.js Foundation",
-      "url": "https://expressjs.com/a",
+      "url": "https://expressjs.com",
       "thumbnail": "https://expressjs.com/images/express-facebook-share.png"
   }
+}
+
+body:multipart-form {
+  : @file()
 }

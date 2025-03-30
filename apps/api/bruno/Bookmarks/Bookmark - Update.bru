@@ -1,0 +1,28 @@
+meta {
+  name: Bookmark - Update
+  type: http
+  seq: 10
+}
+
+patch {
+  url: http://localhost:3000/api/bookmarks
+  body: json
+  auth: none
+}
+
+body:json {
+  [{
+    "id": "29105173955219456",
+    "state": "archived",
+    "label": [{
+      "id": "29163805930110976",
+      "name": "Thiago",
+      "color": "red"
+    }]
+  }, 
+  { 
+    "id": "29101105912029184",
+    "author": "Thiago Mendonca",
+    "title": "Just testing"
+  }]
+}

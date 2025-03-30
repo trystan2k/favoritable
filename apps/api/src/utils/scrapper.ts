@@ -1,8 +1,7 @@
 import * as cheerio from 'cheerio';
-import { cleanableString } from './string.js';
 import { URLContentParseError } from '../errors/errors.js';
-import { CreateBookmarkDTO } from '../db/schema/bookmark.schema.js';
-import { tsidGenerator } from './tsids-generator.js';
+import { CreateBookmarkModel } from '../features/bookmarks/bookmark.models.js';
+import { cleanableString } from './string.js';
 
 const headers = {
   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36'
@@ -51,12 +50,12 @@ const getPublishedAt = ($: cheerio.CheerioAPI) => {
     return null;
   }
 
-  if (new Date(publishedAt).toString() === 'Invalid Date') {
+  if (isNaN(Date.parse(publishedAt))) {
     // Try to find a date in the text
     const regex = /\{(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+)/;
     const match = publishedAt.match(regex);
     if (match && match[1]) {
-      if (new Date(match[1]).toString() === 'Invalid Date') {
+      if (isNaN(Date.parse(match[1]))) {
         return null;
       } else {
         return new Date(match[1]);
@@ -90,11 +89,11 @@ const getThumbnail = ($: cheerio.CheerioAPI) => {
   }
 
 
-  return thumbnail;
+  return thumbnail ?? null;
 }
 
-export const scrapper = async (url: string) => {
-  let bookmarkData: CreateBookmarkDTO | null = null;
+export const scrapper = async (url: string): Promise<CreateBookmarkModel> => {
+  let bookmarkData: CreateBookmarkModel | null = null;
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -105,22 +104,22 @@ export const scrapper = async (url: string) => {
     const html = await response.text();
     const $ = cheerio.load(html);
 
-    const title = cleanableString($('head > title').text().trim() || $('meta[property="og:title"]').attr('content') || '');
+    const title = cleanableString($('head > title').text().trim() || $('meta[property="title"]').attr('content') || $('meta[property="og:title"]').attr('content') || '');
 
     bookmarkData = {
-      id: tsidGenerator.generate(),
       url: response.url,
       title: title.removeCarriageReturns().removeLineBreaks().removeTabs().getResult(),
       slug: title.convertToSlug().getResult(),
       description: getDescription($),
       author: getAuthor($),
       thumbnail: getThumbnail($),
-      publishedAt: getPublishedAt($)
-    } as CreateBookmarkDTO;
+      publishedAt: getPublishedAt($),
+      state: 'active',
+      labels: []
+    };
 
     return bookmarkData;
   } catch (error: unknown) {
-    console.log(error);
     const errorData = error as Error;
     throw new URLContentParseError(errorData.message, error);
   }
