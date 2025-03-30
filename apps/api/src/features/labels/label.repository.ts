@@ -1,12 +1,13 @@
 import { eq, inArray } from "drizzle-orm";
+import { InsertLabelDTO, LabelDTO, UpdateLabelDTO } from "../../db/dtos/label.dtos.js";
 import type { db } from "../../db/index.js";
 import { label } from "../../db/schema/label.schema.js";
-import { LabelRepository } from "./label.types.js";
-import { tsidGenerator } from "../../utils/tsids-generator.js";
-import { InsertLabelDTO, LabelDTO } from "../../db/dtos/label.dtos.js";
 import { Tx } from "../bookmarks/bookmark-unit-of-work.js";
+import { LabelRepository } from "./label.types.js";
+
 export class SQLiteLabelRepository implements LabelRepository {
   constructor(private db: db) { }
+
   findAll(searchQuery?: string): Promise<LabelDTO[]> {
     return this.db.query.label.findMany({
       where: searchQuery ? (label, { like }) => like(label.name, `%${searchQuery}%`) : undefined
@@ -26,11 +27,10 @@ export class SQLiteLabelRepository implements LabelRepository {
   }
 
   create(data: InsertLabelDTO, tx: db | Tx = this.db): Promise<LabelDTO> {
-    const id = tsidGenerator.generate();
-    return tx.insert(label).values({ ...data, id }).returning().get();
+    return tx.insert(label).values(data).returning().get();
   }
 
-  update(data: InsertLabelDTO, tx: db | Tx = this.db): Promise<LabelDTO> {
+  update(data: UpdateLabelDTO, tx: db | Tx = this.db): Promise<LabelDTO> {
     return tx.update(label).set({ ...data, updatedAt: new Date() }).where(eq(label.id, data.id)).returning().get();
   }
 

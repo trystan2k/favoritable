@@ -7,6 +7,7 @@ export const mapErrors = (error: unknown, entity: string) => {
     return error;
   }
 
+  // TODO use logging system
   console.log('error', error)
 
   if (error instanceof LibsqlError || (error instanceof Error && 'libsqlError' in error && error.libsqlError)) {

@@ -1,16 +1,11 @@
 import { z } from "zod";
-import { createLabelSchema, labelSchema, updateLabelSchema } from "../labels/label.models";
-import { BOOKMARK_STATES } from "./bookmark.constants";
+import { labelSchema, updateLabelSchema } from "../labels/label.models.js";
+import { BOOKMARK_STATES } from "./bookmark.constants.js";
+import { dateSchema } from "../../core/validators.wrapper.js";
 
 type BookmarkStateKey = keyof typeof BOOKMARK_STATES;
-const bookmarkStateValues = Object.keys(BOOKMARK_STATES) as [BookmarkStateKey, ...BookmarkStateKey[]];
 
-// Create a schema that validates an ISO date string and converts it to a number
-const dateSchema = z.string()
-  .refine((value) => !isNaN(Date.parse(value)), {
-    message: 'Invalid date format. Expected ISO string format (e.g., 2025-02-15T19:34:47.649Z)'
-  })
-  .transform((dateString) => new Date(dateString));
+const bookmarkStateValues = Object.keys(BOOKMARK_STATES) as [BookmarkStateKey, ...BookmarkStateKey[]];
 
 export const bookmarkSchema = z.object({
   id: z.string().nonempty(),
@@ -36,6 +31,7 @@ export const getBookmarksQueryParamsSchema = z.object({
   label: bookmarkSchema.shape.labels.optional(),
   state: bookmarkSchema.shape.state.optional(),
 });
+
 export type GetBookmarksQueryParamsModel = z.infer<typeof getBookmarksQueryParamsSchema>;
 
 export type BookmarksModel = {
@@ -58,7 +54,10 @@ export const createBookmarkFromURLSchema = z.object({
 });
 export type CreateBookmarkFromURLModel = z.infer<typeof createBookmarkFromURLSchema>;
 
-export const bookmarkIdParamSchema = z.object({ id: z.string().nonempty() });
+export const bookmarkIdParamSchema = bookmarkSchema.pick({
+  id: true,
+});
+
 export type BookmarkIdParamModel = z.infer<typeof bookmarkIdParamSchema>;
 
 export const deleteBookmarksSchema = z.object({
@@ -70,9 +69,33 @@ export const updateBookmarkSchema = bookmarkSchema.partial().omit({
   createdAt: true,
   updatedAt: true,
 }).extend({
-  labels: updateLabelSchema.or(createLabelSchema).refine(data => Boolean('id' in data || 'name' in data), { message: 'Either id or name must be provided' }).array().optional().nullable().default([]),
+  labels: updateLabelSchema
+    .refine(data => Boolean('id' in data || 'name' in data), { message: 'Either id or name must be provided' })
+    .array().optional().nullable().default([]),
 });
 
 export const updateBookmarksSchema = updateBookmarkSchema.required({ id: true }).array();
 
 export type UpdateBookmarkModel = z.infer<typeof updateBookmarkSchema> & Pick<BookmarkModel, 'id'>;
+
+export const importOmnivoreBookmarksSchema = z.object({
+  id: z.string().nonempty(),
+  slug: z.string().nonempty(),
+  title: z.string().nonempty(),
+  description: z.string().optional().nullable().default(null),
+  author: z.string().optional().nullable().default(null),
+  url: z.string().url().nonempty(),
+  state: z.enum(['Archived', 'Active']).optional().default('Active'),
+  readingProgress: z.number().optional().nullable().default(0),
+  thumbnail: z.string().url().optional().nullable().default(null),
+  labels: z.string().array().optional().nullable().default([]),
+  savedAt: dateSchema,
+  updatedAt: dateSchema,
+  publishedAt: dateSchema.optional().nullable().default(null),
+});
+
+export type OmnivoreBookmarkModel = z.infer<typeof importOmnivoreBookmarksSchema>;
+
+export const importFromHTMLFileQueryParamsSchema = z.object({
+  folderName: z.string().optional(),
+})

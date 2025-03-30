@@ -1,6 +1,7 @@
-import { BookmarkDTO, BookmarkWithLabelsDTO, InsertBookmarkDTO, UpdateBookmarkDTO } from "../../db/dtos/bookmark.dtos";
-import { tsidGenerator } from "../../utils/tsids-generator";
-import { BookmarkModel, CreateBookmarkModel, UpdateBookmarkModel } from "./bookmark.models";
+import { BookmarkDTO, BookmarkWithLabelsDTO, InsertBookmarkDTO, UpdateBookmarkDTO } from "../../db/dtos/bookmark.dtos.js";
+import { tsidGenerator } from "../../utils/tsids-generator.js";
+import { BOOKMARK_STATES } from "./bookmark.constants.js";
+import { BookmarkModel, CreateBookmarkModel, OmnivoreBookmarkModel, UpdateBookmarkModel } from "./bookmark.models.js";
 
 export const mapCreateBookmarkModelToInsertBookmarkDTO = (bookmark: CreateBookmarkModel): InsertBookmarkDTO => {
   return {
@@ -16,7 +17,7 @@ export const mapCreateBookmarkModelToInsertBookmarkDTO = (bookmark: CreateBookma
   }
 }
 
-export const mapUpdateBookmarkModelToInsertBookmarkDTO = (bookmark: UpdateBookmarkModel): UpdateBookmarkDTO => {
+export const mapUpdateBookmarkModelToUpdateBookmarkDTO = (bookmark: UpdateBookmarkModel): UpdateBookmarkDTO => {
   return {
     id: bookmark.id,
     url: bookmark.url,
@@ -62,5 +63,19 @@ export const mapBookmarkDTOToBookmarkModel = (bookmark: BookmarkWithLabelsDTO): 
     updatedAt: bookmark.updatedAt,
     state: bookmark.state,
     labels: labels || [],
+  }
+}
+
+export const mapOnmivoreBookmarkToInsertBookmarkDTO = (bookmark: OmnivoreBookmarkModel): CreateBookmarkModel => {
+  return {
+    url: bookmark.url,
+    slug: bookmark.slug,
+    title: bookmark.title,
+    description: bookmark.description || null,
+    author: bookmark.author || null,
+    thumbnail: bookmark.thumbnail || null,
+    publishedAt: bookmark.publishedAt ?? null,
+    state: bookmark.state === 'Archived' ? BOOKMARK_STATES.archived : BOOKMARK_STATES.active,
+    labels: [],
   }
 }

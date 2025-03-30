@@ -1,20 +1,17 @@
-import { db } from '../../db';
-import { SQLiteBookmarkRepository } from './bookmark.repository';
-import { SQLiteLabelRepository } from '../labels/label.repository';
-import { SQLiteBookmarkLabelRepository } from '../bookmarkLabel/bookmarkLabel.repository';
+import { db } from "../../db/index.js";
+import { BookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.types.js";
+import { LabelRepository } from "../labels/label.types.js";
+import { BookmarkRepository } from "./bookmark.types.js";
 
 export type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
 export class BookmarkUnitOfWork {
-  private _bookmarkRepository: SQLiteBookmarkRepository;
-  private _labelRepository: SQLiteLabelRepository;
-  private _bookmarkLabelRepository: SQLiteBookmarkLabelRepository;
 
-  constructor() {
-    this._bookmarkRepository = new SQLiteBookmarkRepository(db);
-    this._labelRepository = new SQLiteLabelRepository(db);
-    this._bookmarkLabelRepository = new SQLiteBookmarkLabelRepository(db);
-  }
+  constructor(
+    private _bookmarkRepository: BookmarkRepository,
+    private _labelRepository: LabelRepository,
+    private _bookmarkLabelRepository: BookmarkLabelRepository
+  ) { }
 
   get bookmarkRepository() {
     return this._bookmarkRepository;

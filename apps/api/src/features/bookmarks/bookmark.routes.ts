@@ -1,38 +1,39 @@
 import { Hono } from "hono";
-import { zValidator } from "../../core/validators.wrapper";
-import { db } from "../../db";
-import { InsertLabelDTO } from "../../db/dtos/label.dtos";
-import { UpdateStateBookmarkDTO } from "../../db/schema/bookmark.schema";
-import { mapErrors } from "../../errors/errors.mapper";
-import { scrapper } from "../../utils/scrapper";
-import { BookmarkUnitOfWork } from "./bookmark-unit-of-work";
-import { bookmarkIdParamSchema, BookmarkModel, createBookmarkFromURLSchema, createBookmarkSchema, deleteBookmarksSchema, getBookmarksQueryParamsSchema, UpdateBookmarkModel, updateBookmarkSchema } from "./bookmark.models";
-import { BookmarkService } from "./bookmark.service";
-import { OmnivoreBookmarkModel } from "./bookmark.types";
+import { zCustomValidator } from "../../core/validators.wrapper.js";
+import { db } from "../../db/index.js";
+import { mapErrors } from "../../errors/errors.mapper.js";
+import { scrapper } from "../../utils/scrapper.js";
+import { SQLiteBookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.repository.js";
+import { SQLiteLabelRepository } from "../labels/label.repository.js";
+import { BookmarkUnitOfWork } from "./bookmark-unit-of-work.js";
+import { bookmarkIdParamSchema, createBookmarkFromURLSchema, createBookmarkSchema, deleteBookmarksSchema, getBookmarksQueryParamsSchema, importFromHTMLFileQueryParamsSchema, importOmnivoreBookmarksSchema, UpdateBookmarkModel, updateBookmarkSchema } from "./bookmark.models.js";
+import { SQLiteBookmarkRepository } from "./bookmark.repository.js";
+import { BookmarkService } from "./bookmark.service.js";
 
 const bookmarkRoutes = new Hono();
 
-// const labelRepository = new SQLiteLabelRepository(db);
-// const bookmarkRepository = new SQLiteBookmarkRepository(db);
-const bookmarkUnitOfWork = new BookmarkUnitOfWork();
+const labelRepository = new SQLiteLabelRepository(db);
+const bookmarkRepository = new SQLiteBookmarkRepository(db);
+const bookmarkLabelRepository = new SQLiteBookmarkLabelRepository(db);
+const bookmarkUnitOfWork = new BookmarkUnitOfWork(bookmarkRepository, labelRepository, bookmarkLabelRepository);
 const bookmarkService = new BookmarkService(bookmarkUnitOfWork);
 
 // Bookmarks - Get
-bookmarkRoutes.get('/', zValidator('query', getBookmarksQueryParamsSchema), async (c) => {
+bookmarkRoutes.get('/', zCustomValidator('query', getBookmarksQueryParamsSchema), async (c) => {
   const queryParams = c.req.valid('query');
   const bookmarks = await bookmarkService.getBookmarks(queryParams);
   return c.json(bookmarks, 200);
 });
 
 // Bookmark - Get
-bookmarkRoutes.get('/:id', zValidator('param', bookmarkIdParamSchema), async (c) => {
+bookmarkRoutes.get('/:id', zCustomValidator('param', bookmarkIdParamSchema), async (c) => {
   const { id } = c.req.valid('param');
   const bookmark = await bookmarkService.getBookmark(id);
   return c.json(bookmark, 200);
 });
 
 // Bookmark - Create
-bookmarkRoutes.post('/', zValidator('json', createBookmarkSchema), async (c) => {
+bookmarkRoutes.post('/', zCustomValidator('json', createBookmarkSchema), async (c) => {
   const data = c.req.valid('json');
   const bookmark = await bookmarkService.createBookmark(data);
 
@@ -42,8 +43,8 @@ bookmarkRoutes.post('/', zValidator('json', createBookmarkSchema), async (c) => 
 });
 
 // Bookmark - Create from URL
-bookmarkRoutes.post('/from-url', zValidator('json', createBookmarkFromURLSchema), async (c) => {
-  const data = await c.req.valid('json');
+bookmarkRoutes.post('/from-url', zCustomValidator('json', createBookmarkFromURLSchema), async (c) => {
+  const data = c.req.valid('json');
 
   const bookmarkData = await scrapper(data.url);
   const bookmark = await bookmarkService.createBookmark(bookmarkData);
@@ -56,30 +57,33 @@ bookmarkRoutes.post('/from-url', zValidator('json', createBookmarkFromURLSchema)
 })
 
 // Bookmark - Update
-bookmarkRoutes.patch('/:id', zValidator('json', updateBookmarkSchema), zValidator('param', bookmarkIdParamSchema), async (c) => {
-  const data = await c.req.valid('json');
-  const { id } = await c.req.valid('param');
+bookmarkRoutes.patch('/:id', zCustomValidator('json', updateBookmarkSchema), zCustomValidator('param', bookmarkIdParamSchema), async (c) => {
+  const data = c.req.valid('json');
+  const { id } = c.req.valid('param');
   data.id = id;
 
   const bookmark = await bookmarkService.updateBookmark(data as UpdateBookmarkModel);
   return c.json(bookmark, 200);
 });
 
-bookmarkRoutes.patch('/', zValidator('json', updateBookmarkSchema.array()), async (c) => {
-  const data = await c.req.valid('json');
+bookmarkRoutes.patch('/', zCustomValidator('json', updateBookmarkSchema.array()), async (c) => {
+  const data = c.req.valid('json');
+
+  console.log('data reouter', data)
+
   const bookmarks = await bookmarkService.updateBookmarks(data as UpdateBookmarkModel[]);
   return c.json(bookmarks, 200);
 })
 
 // Bookmark - Delete
-bookmarkRoutes.delete('/:id', zValidator('param', bookmarkIdParamSchema), async (c) => {
+bookmarkRoutes.delete('/:id', zCustomValidator('param', bookmarkIdParamSchema), async (c) => {
   const { id } = c.req.valid('param');
   await bookmarkService.deleteBookmarks([id]);
   return c.body(null, 204);
 });
 
 // Bookmarks - Delete
-bookmarkRoutes.post('/batch-delete', zValidator('json', deleteBookmarksSchema), async (c) => {
+bookmarkRoutes.post('/batch-delete', zCustomValidator('json', deleteBookmarksSchema), async (c) => {
   const data = c.req.valid('json');
   const deletedBookmarks = await bookmarkService.deleteBookmarks(data.ids);
   return c.json(deletedBookmarks, 200);
@@ -89,9 +93,9 @@ bookmarkRoutes.post('/batch-delete', zValidator('json', deleteBookmarksSchema), 
 const importRoutes = new Hono();
 
 // Bookmarks - Import from Omnivore
-importRoutes.post('/omnivore', async (c) => {
+importRoutes.post('/omnivore', zCustomValidator('json', importOmnivoreBookmarksSchema.array()), async (c) => {
   try {
-    const data = await c.req.json<OmnivoreBookmarkModel[]>();
+    const data = c.req.valid('json');
     const bookmarks = await bookmarkService.importFromOmnivore(data);
     return c.json(bookmarks, 201);
   } catch (error) {
@@ -100,9 +104,9 @@ importRoutes.post('/omnivore', async (c) => {
 });
 
 // Bookmarks - Import from HTML File Format
-importRoutes.post('/html', async (c) => {
+importRoutes.post('/html', zCustomValidator('query', importFromHTMLFileQueryParamsSchema), async (c) => {
   try {
-    const folderName = c.req.query('folder');
+    const { folderName } = c.req.valid('query');
     const html = await c.req.text();
     const bookmarks = await bookmarkService.importFromHtmlFile(html, folderName);
     return c.json(bookmarks, 201);

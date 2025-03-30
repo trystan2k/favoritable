@@ -4,12 +4,6 @@ import { bookmarkLabel } from "./bookmark-label.schema.js";
 import { trackingDates } from "./common.schema.js";
 import { BOOKMARK_STATES } from "../../features/bookmarks/bookmark.constants.js";
 
-export type BookmarkDTO = typeof bookmark.$inferSelect;
-export type UpdateBookmarkDTO = Partial<BookmarkDTO> & Pick<BookmarkDTO, 'id'>;
-export type DeleteMultipleBookmarksDTO = { ids: string[] };
-export type UpdateStateBookmarkDTO = Pick<BookmarkDTO, 'state'>
-export type BookmarkFromURL = { url: string };
-
 type BookmarkStateKey = keyof typeof BOOKMARK_STATES;
 
 export const bookmark = sqliteTable('bookmarks', {

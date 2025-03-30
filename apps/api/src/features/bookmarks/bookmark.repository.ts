@@ -2,11 +2,13 @@ import { and, eq, exists, inArray, like, or, sql } from "drizzle-orm";
 import { BookmarkDTO, BookmarkWithLabelsDTO, InsertBookmarkDTO, UpdateBookmarkDTO } from "../../db/dtos/bookmark.dtos.js";
 import type { db } from "../../db/index.js";
 import { bookmark } from "../../db/schema/bookmark.schema.js";
-import { bookmarkLabel, label } from "../../db/schema/index.js";
+import { bookmarkLabel } from "../../db/schema/bookmark-label.schema.js";
+import { label } from "../../db/schema/label.schema.js";
 import { NotFoundError } from "../../errors/errors.js";
 import { Tx } from "./bookmark-unit-of-work.js";
 import { GetBookmarksQueryParamsModel } from "./bookmark.models.js";
 import { BookmarkRepository } from "./bookmark.types.js";
+
 export class SQLiteBookmarkRepository implements BookmarkRepository {
 
   constructor(private db: db) { }
@@ -76,9 +78,8 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
     return bookmarkDto;
   }
 
-  async create(data: InsertBookmarkDTO): Promise<BookmarkDTO> {
-    const bookmarkDto = await this.db.insert(bookmark).values(data).returning().get();
-    return bookmarkDto;
+  create(data: InsertBookmarkDTO): Promise<BookmarkDTO> {
+    return this.db.insert(bookmark).values(data).returning().get();
   }
 
   async delete(ids: string[]): Promise<string[]> {

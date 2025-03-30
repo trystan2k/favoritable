@@ -1,11 +1,5 @@
 import { z } from "zod";
-
-// Create a schema that validates an ISO date string and converts it to a number
-const dateSchema = z.string()
-  .refine((value) => !isNaN(Date.parse(value)), {
-    message: 'Invalid date format. Expected ISO string format (e.g., 2025-02-15T19:34:47.649Z)'
-  })
-  .transform((dateString) => new Date(dateString));
+import { dateSchema } from "../../core/validators.wrapper.js";
 
 export const labelSchema = z.object({
   id: z.string().nonempty(),
@@ -16,6 +10,11 @@ export const labelSchema = z.object({
 });
 export type LabelModel = z.infer<typeof labelSchema>;
 
+export const getLabelsQueryParamsSchema = z.object({
+  q: z.string().optional(),
+});
+export type GetLabelsQueryParamsModel = z.infer<typeof getLabelsQueryParamsSchema>;
+
 export const createLabelSchema = labelSchema.omit({
   id: true,
   createdAt: true,
@@ -23,9 +22,11 @@ export const createLabelSchema = labelSchema.omit({
 });
 export type CreateLabelModel = z.infer<typeof createLabelSchema>;
 
-export const updateLabelSchema = labelSchema.partial().required({ id: true });
+export const labelIdParamSchema = labelSchema.pick({ id: true });
 
-export type UpdateLabelModel = z.infer<typeof updateLabelSchema>;
+export const updateLabelSchema = labelSchema.partial();
+
+export type UpdateLabelModel = z.infer<typeof updateLabelSchema> & Pick<LabelModel, 'id'>;
 
 export const deleteLabelssSchema = z.object({
   ids: z.string().array().nonempty(),

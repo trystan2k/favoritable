@@ -2,6 +2,7 @@ import * as cheerio from 'cheerio';
 import { URLContentParseError } from '../errors/errors.js';
 import { CreateBookmarkModel } from '../features/bookmarks/bookmark.models.js';
 import { cleanableString } from './string.js';
+import { BOOKMARK_STATES } from '../features/bookmarks/bookmark.constants.js';
 
 const headers = {
   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36'
@@ -114,7 +115,7 @@ export const scrapper = async (url: string): Promise<CreateBookmarkModel> => {
       author: getAuthor($),
       thumbnail: getThumbnail($),
       publishedAt: getPublishedAt($),
-      state: 'active',
+      state: BOOKMARK_STATES.active,
       labels: []
     };
 

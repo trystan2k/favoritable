@@ -1,28 +1,43 @@
 meta {
   name: Bookmark - Update
   type: http
-  seq: 10
+  seq: 7
 }
 
 patch {
-  url: http://localhost:3000/api/bookmarks
+  url: http://localhost:3000/api/bookmarks/29105173955219456
   body: json
   auth: none
 }
 
 body:json {
-  [{
+  {
     "id": "29105173955219456",
-    "state": "archived",
-    "label": [{
-      "id": "29163805930110976",
-      "name": "Thiago",
-      "color": "red"
-    }]
-  }, 
-  { 
-    "id": "29101105912029184",
-    "author": "Thiago Mendonca",
-    "title": "Just testing"
-  }]
+    "url": "https://expressjs.com",
+    "slug": "a-comprehensive-guide-to-expressjs-framework",
+    "title": "Learn Express.js",
+    "description": "A comprehensive guide to Express.js framework",
+    "author": "Node.js Foundation",
+    "thumbnail": "https://expressjs.com/images/express-facebook-share.png",
+    "state": "active",
+    "publishedAt": "2024-07-24T07:58:03.811Z",
+    "createdAt": "2025-03-22T07:33:34.000Z",
+    "updatedAt": "2025-01-30T05:59:20.893Z",
+    "labels": [
+      {
+        "id": "29163805930110976",
+        "name": "Joaquin",
+        "color": "blue",
+        "createdAt": "2025-03-22T11:26:33.000Z",
+        "updatedAt": "2025-03-29T08:32:34.783Z"
+      },
+      {
+        "id": "31656739212603392",
+        "name": "Ppapa",
+        "color": "#c0d72c",
+        "createdAt": "2025-03-29T08:32:34.000Z",
+        "updatedAt": "2025-03-29T08:32:34.000Z"
+      }
+    ]
+  }
 }

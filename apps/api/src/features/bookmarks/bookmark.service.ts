@@ -1,15 +1,13 @@
-import { InsertLabelDTO } from "../../db/dtos/label.dtos.js";
 import { handleServiceErrors } from "../../errors/errors.decorator.js";
-import { NotFoundError } from "../../errors/errors.js";
-import { generateRandomColor } from "../../utils/colors.js";
+import { MalFormedRequestError, NotFoundError } from "../../errors/errors.js";
 import { parseHtmlbookmarks } from "../../utils/html-bookmarks-parser.js";
 import { scrapper } from "../../utils/scrapper.js";
-import { tsidGenerator } from "../../utils/tsids-generator.js";
-import { LabelModel } from "../labels/label.models.js";
+import { createBookmarkLabelRelation } from "../bookmarkLabel/bookmarkLabel.mappers.js";
+import { mapCreateLabelModelToInsertLabelDTO } from "../labels/label.mappers.js";
+import { CreateLabelModel, LabelModel } from "../labels/label.models.js";
 import { BookmarkUnitOfWork, Tx } from "./bookmark-unit-of-work.js";
-import { mapBookmarkDTOToBookmarkModel, mapCreateBookmarkModelToInsertBookmarkDTO, mapUpdateBookmarkModelToInsertBookmarkDTO } from "./bookmark.mappers.js";
-import { BookmarkModel, BookmarksModel, CreateBookmarkModel, GetBookmarksQueryParamsModel, UpdateBookmarkModel } from "./bookmark.models.js";
-import { OmnivoreBookmarkModel } from "./bookmark.types.js";
+import { mapBookmarkDTOToBookmarkModel, mapCreateBookmarkModelToInsertBookmarkDTO, mapOnmivoreBookmarkToInsertBookmarkDTO, mapUpdateBookmarkModelToUpdateBookmarkDTO } from "./bookmark.mappers.js";
+import { BookmarkModel, BookmarksModel, CreateBookmarkModel, GetBookmarksQueryParamsModel, OmnivoreBookmarkModel, UpdateBookmarkModel } from "./bookmark.models.js";
 
 export class BookmarkService {
   private entityName = 'Bookmark';
@@ -61,15 +59,20 @@ export class BookmarkService {
   @handleServiceErrors('entityName')
   async deleteBookmarks(ids: string[]) {
     const deletedBookmarks = await this.bookmarkUnitOfWork.bookmarkRepository.delete(ids);
+    for (const bookmarkId of deletedBookmarks) {
+      await this.bookmarkUnitOfWork.bookmarkLabelRepository.deleteByBookmarkId(bookmarkId);
+    }
     return deletedBookmarks;
   }
 
   private async handleUpdateBookmark(data: UpdateBookmarkModel, uow: BookmarkUnitOfWork, tx: Tx) {
-    const updateBookmark = mapUpdateBookmarkModelToInsertBookmarkDTO(data);
+    const updateBookmark = mapUpdateBookmarkModelToUpdateBookmarkDTO(data);
     const updatedBookmarkDto = await uow.bookmarkRepository.update(updateBookmark, tx);
     if (!updatedBookmarkDto) {
       throw new NotFoundError(`bookmark with id ${data.id} not found`);
     }
+
+    console.log('bla', data)
 
     const updatedBookmark = mapBookmarkDTOToBookmarkModel(updatedBookmarkDto);
 
@@ -77,32 +80,26 @@ export class BookmarkService {
       const allLabels: LabelModel[] = [];
 
       for (const label of data.labels) {
-        if (!('id' in label)) {
-          const labelToCreate: InsertLabelDTO = {
-            id: tsidGenerator.generate(),
-            name: label.name,
-            color: label.color || generateRandomColor(),
-          };
-
+        console.log('label', label)
+        if (!label.id && label.name) {
+          const labelToCreate = mapCreateLabelModelToInsertLabelDTO(label as CreateLabelModel);
           const createdLabel = await uow.labelRepository.create(labelToCreate, tx);
           allLabels.push(createdLabel);
-        } else {
+        } else if (label.id) {
           const existingLabelToAdd = await uow.labelRepository.findById(label.id);
+          console.log('findi', existingLabelToAdd)
           if (existingLabelToAdd) {
             allLabels.push(existingLabelToAdd);
           }
+        } else {
+          throw new MalFormedRequestError(`label with id ${label.id} is missing id or name properties`);
         }
       }
 
-      const relations = allLabels.map(label => ({
-        id: tsidGenerator.generate(),
-        bookmarkId: updatedBookmark.id,
-        labelId: label.id
-      }));
-
       await uow.bookmarkLabelRepository.deleteByBookmarkId(updatedBookmark.id, tx);
 
-      for (const relation of relations) {
+      for (const label of allLabels) {
+        const relation = createBookmarkLabelRelation(updatedBookmark.id, label.id);
         await uow.bookmarkLabelRepository.create(relation, tx);
       }
       updatedBookmark.labels = allLabels;
@@ -151,16 +148,13 @@ export class BookmarkService {
       const createdBookmark = await this.createBookmark(bookmarkData);
 
       const label = await this.bookmarkUnitOfWork.labelRepository.findByName(bookmark.folderName);
-      const labelData = label || await this.bookmarkUnitOfWork.labelRepository.create({
-        id: tsidGenerator.generate(),
-        name: bookmark.folderName,
-      });
 
-      const relations = {
-        id: tsidGenerator.generate(),
-        bookmarkId: createdBookmark.id,
-        labelId: labelData.id
-      };
+      const labelData = label || await this.bookmarkUnitOfWork.labelRepository.create(mapCreateLabelModelToInsertLabelDTO({
+        name: bookmark.folderName,
+        color: null,
+      }));
+
+      const relations = createBookmarkLabelRelation(createdBookmark.id, labelData.id);
 
       await this.bookmarkUnitOfWork.bookmarkLabelRepository.create(relations);
       importedBookmarks.push(await this.getBookmark(createdBookmark.id));
@@ -174,34 +168,19 @@ export class BookmarkService {
     const importedBookmarks = [];
 
     for (const bookmark of data) {
-      const bookmarkData: CreateBookmarkModel = {
-        url: bookmark.url,
-        slug: bookmark.slug,
-        title: bookmark.title,
-        description: bookmark.description || null,
-        author: bookmark.author || null,
-        thumbnail: bookmark.thumbnail || null,
-        publishedAt: bookmark.publishedAt ?? null,
-        state: bookmark.state === 'Archived' ? 'archived' : 'active',
-        labels: []
-      };
+      const bookmarkData = mapOnmivoreBookmarkToInsertBookmarkDTO(bookmark)
 
       const createdBookmark = await this.createBookmark(bookmarkData);
 
       if (bookmark.labels && bookmark.labels.length > 0) {
         for (const labelName of bookmark.labels) {
           const label = await this.bookmarkUnitOfWork.labelRepository.findByName(labelName);
-          const labelData = label || await this.bookmarkUnitOfWork.labelRepository.create({
-            id: tsidGenerator.generate(),
+          const labelData = label || await this.bookmarkUnitOfWork.labelRepository.create(mapCreateLabelModelToInsertLabelDTO({
             name: labelName,
-          });
+            color: null,
+          }));
 
-          const relations = {
-            id: tsidGenerator.generate(),
-            bookmarkId: createdBookmark.id,
-            labelId: labelData.id
-          };
-
+          const relations = createBookmarkLabelRelation(createdBookmark.id, labelData.id);
           await this.bookmarkUnitOfWork.bookmarkLabelRepository.create(relations);
         }
       }
