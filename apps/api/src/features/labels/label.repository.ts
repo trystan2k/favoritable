@@ -1,41 +1,18 @@
-import { eq, inArray } from "drizzle-orm";
-import { InsertLabelDTO, LabelDTO, UpdateLabelDTO } from "../../db/dtos/label.dtos.js";
-import type { db } from "../../db/index.js";
-import { label } from "../../db/schema/label.schema.js";
+import { db } from "../../db/index.js";
 import { Tx } from "../bookmarks/bookmark-unit-of-work.js";
-import { LabelRepository } from "./label.types.js";
+import { label } from "../../db/schema/label.schema.js";
 
-export class SQLiteLabelRepository implements LabelRepository {
-  constructor(private db: db) { }
+export type LabelDTO = typeof label.$inferSelect;
 
-  findAll(searchQuery?: string): Promise<LabelDTO[]> {
-    return this.db.query.label.findMany({
-      where: searchQuery ? (label, { like }) => like(label.name, `%${searchQuery}%`) : undefined
-    })
-  }
+export type InsertLabelDTO = typeof label.$inferInsert;
 
-  findByName(name: string): Promise<LabelDTO | undefined> {
-    return this.db.query.label.findFirst({
-      where: (label, { eq }) => eq(label.name, name),
-    });
-  }
+export type UpdateLabelDTO = Partial<InsertLabelDTO> & Pick<InsertLabelDTO, 'id'>;
 
-  findById(id: string): Promise<LabelDTO | undefined> {
-    return this.db.query.label.findFirst({
-      where: (label, { eq }) => eq(label.id, id),
-    });
-  }
-
-  create(data: InsertLabelDTO, tx: db | Tx = this.db): Promise<LabelDTO> {
-    return tx.insert(label).values(data).returning().get();
-  }
-
-  update(data: UpdateLabelDTO, tx: db | Tx = this.db): Promise<LabelDTO> {
-    return tx.update(label).set({ ...data, updatedAt: new Date() }).where(eq(label.id, data.id)).returning().get();
-  }
-
-  async delete(ids: string[], tx: db | Tx = this.db): Promise<string[]> {
-    const deletedLabels = await tx.delete(label).where(inArray(label.id, ids)).returning().all();
-    return deletedLabels.map(deletedLabel => deletedLabel.id);
-  }
+export interface LabelRepository {
+  findAll(searchQuery?: string): Promise<LabelDTO[]>;
+  findByName(name: string): Promise<LabelDTO | undefined>;
+  findById(id: string): Promise<LabelDTO | undefined>;
+  create(data: InsertLabelDTO, tx?: db | Tx): Promise<LabelDTO>;
+  update(data: UpdateLabelDTO): Promise<LabelDTO>;
+  delete(ids: string[]): Promise<string[]>;
 }

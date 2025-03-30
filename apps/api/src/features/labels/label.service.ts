@@ -1,9 +1,9 @@
 import { handleServiceErrors } from "../../errors/errors.decorator.js";
 import { NotFoundError } from "../../errors/errors.js";
-import { BookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.types.js";
+import { BookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.repository.js";
 import { mapCreateLabelModelToInsertLabelDTO, mapLabelDTOToLabelModel, mapUpdateLabelModelToLabelDTO } from "./label.mappers.js";
 import { CreateLabelModel, GetLabelsQueryParamsModel, UpdateLabelModel } from "./label.models.js";
-import { LabelRepository } from "./label.types.js";
+import { LabelRepository } from "./label.repository.js";
 
 export class LabelService {
 

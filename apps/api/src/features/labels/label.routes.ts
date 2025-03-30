@@ -2,9 +2,9 @@ import { Hono } from "hono";
 
 import { db } from "../../db/index.js";
 import { createLabelSchema, deleteLabelssSchema, getLabelsQueryParamsSchema, labelIdParamSchema, UpdateLabelModel, updateLabelSchema } from "./label.models.js";
-import { SQLiteLabelRepository } from "./label.repository.js";
+import { SQLiteLabelRepository } from "./label.sq-lite.repository.js";
 import { LabelService } from "./label.service.js";
-import { SQLiteBookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.repository.js";
+import { SQLiteBookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.sql-lite.repository.js";
 import { zCustomValidator } from "../../core/validators.wrapper.js";
 
 const labelRoutes = new Hono();

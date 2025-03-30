@@ -1,14 +1,13 @@
-import { InsertLabelDTO, LabelDTO, UpdateLabelDTO } from "../../db/dtos/label.dtos.js";
 import { generateRandomColor } from "../../utils/colors.js";
 import { tsidGenerator } from "../../utils/tsids-generator.js";
 import { CreateLabelModel, LabelModel, UpdateLabelModel } from "./label.models.js";
+import { InsertLabelDTO, LabelDTO, UpdateLabelDTO } from "./label.repository.js";
 
 export const mapCreateLabelModelToInsertLabelDTO = (label: CreateLabelModel): InsertLabelDTO => {
   return {
     id: tsidGenerator.generate(),
     name: label.name,
     color: label.color || generateRandomColor(),
-
   }
 }
 

@@ -17,7 +17,7 @@ TODO:
 - Add versioning using headers
 - Add Open API docs (Swagger) (<https://github.com/honojs/middleware/issues/735>)
 - Add logging system/middleware
-- Add endpoint to backup/export bookmarks
+- Add endpoint to backup/export bookmarks (Worker?)
 - Add tests
 - Use AI to suggeest labels when adding a bookmark
 
@@ -32,6 +32,26 @@ INVESTIGATE:
 
 DONE:
 
+- Repositories should return DTO, services should convert to Models
+
+A simple REST API:
+
+GET: items/{id} - Returns a description of the item with the given id
+PUT: items/{id} - Updates or Creates the item with the given id
+DELETE: items/{id} - Deletes the item with the given id
+Top-resource API:
+
+GET: items?filter - Returns all item ids matching the filter
+POST: items - Creates one or more items as described by the JSON payload
+PATCH: items - Creates/Updates/Delete one or more items as described by the JSON payload
+
+POST /bookmarks/batch-delete
+PATCH /bookmarks/?delete - Delete
+PATCH /bookmarks/ - Create/Update
+
+- Review all Models/DTOs
+- Add schema validation (Zod) - <https://chat.qwen.ai/c/3a138e54-fc97-466a-89c3-e61e14cffcb3>
+- Add response mapper (DTO to Model)
 - Create nested routes (<https://github.com/honojs/examples/blob/main/basic/src/index.ts>)
 - Move routes to a routes files (<https://hono.dev/docs/guides/best-practices#building-a-larger-application>)
 - Check if Firefox/Safari/Edge bookmarks are exported are similar to Chrome bookmarks

@@ -1,0 +1,21 @@
+import { eq } from "drizzle-orm";
+import type { db } from "../../db/index.js";
+import { bookmarkLabel } from "../../db/schema/bookmark-label.schema.js";
+import { Tx } from "../bookmarks/bookmark-unit-of-work.js";
+import { BookmarkLabelDTO, BookmarkLabelRepository, InsertBookmarkLabelDTO } from "./bookmarkLabel.repository.js";
+
+export class SQLiteBookmarkLabelRepository implements BookmarkLabelRepository {
+  constructor(private db: db) { }
+
+  create(data: InsertBookmarkLabelDTO, tx: db | Tx = this.db): Promise<BookmarkLabelDTO> {
+    return tx.insert(bookmarkLabel).values(data).returning().get();
+  }
+
+  deleteByBookmarkId(bookmarkId: string, tx: db | Tx  = this.db): Promise<BookmarkLabelDTO[]> {
+    return tx.delete(bookmarkLabel).where(eq(bookmarkLabel.bookmarkId, bookmarkId)).returning().all();
+  }
+
+  deleteByLabelId(labelId: string, tx: db | Tx  = this.db): Promise<BookmarkLabelDTO[]> {
+    return tx.delete(bookmarkLabel).where(eq(bookmarkLabel.labelId, labelId)).returning().all();
+  }
+}

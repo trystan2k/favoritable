@@ -3,11 +3,11 @@ import { zCustomValidator } from "../../core/validators.wrapper.js";
 import { db } from "../../db/index.js";
 import { mapErrors } from "../../errors/errors.mapper.js";
 import { scrapper } from "../../utils/scrapper.js";
-import { SQLiteBookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.repository.js";
-import { SQLiteLabelRepository } from "../labels/label.repository.js";
+import { SQLiteBookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.sql-lite.repository.js";
+import { SQLiteLabelRepository } from "../labels/label.sq-lite.repository.js";
 import { BookmarkUnitOfWork } from "./bookmark-unit-of-work.js";
 import { bookmarkIdParamSchema, createBookmarkFromURLSchema, createBookmarkSchema, deleteBookmarksSchema, getBookmarksQueryParamsSchema, importFromHTMLFileQueryParamsSchema, importOmnivoreBookmarksSchema, UpdateBookmarkModel, updateBookmarkSchema } from "./bookmark.models.js";
-import { SQLiteBookmarkRepository } from "./bookmark.repository.js";
+import { SQLiteBookmarkRepository } from "./bookmark.sql-lite.repository.js";
 import { BookmarkService } from "./bookmark.service.js";
 
 const bookmarkRoutes = new Hono();

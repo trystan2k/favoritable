@@ -1,7 +1,8 @@
-import { BookmarkDTO, BookmarkWithLabelsDTO, InsertBookmarkDTO, UpdateBookmarkDTO } from "../../db/dtos/bookmark.dtos.js";
+
 import { tsidGenerator } from "../../utils/tsids-generator.js";
 import { BOOKMARK_STATES } from "./bookmark.constants.js";
 import { BookmarkModel, CreateBookmarkModel, OmnivoreBookmarkModel, UpdateBookmarkModel } from "./bookmark.models.js";
+import { BookmarkDTO, BookmarkWithLabelsDTO, InsertBookmarkDTO, UpdateBookmarkDTO } from "./bookmark.repository.js";
 
 export const mapCreateBookmarkModelToInsertBookmarkDTO = (bookmark: CreateBookmarkModel): InsertBookmarkDTO => {
   return {

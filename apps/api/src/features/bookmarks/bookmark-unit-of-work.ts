@@ -1,7 +1,7 @@
 import { db } from "../../db/index.js";
-import { BookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.types.js";
-import { LabelRepository } from "../labels/label.types.js";
-import { BookmarkRepository } from "./bookmark.types.js";
+import { BookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.repository.js";
+import { LabelRepository } from "../labels/label.repository.js";
+import { BookmarkRepository } from "./bookmark.repository.js";
 
 export type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0];
 

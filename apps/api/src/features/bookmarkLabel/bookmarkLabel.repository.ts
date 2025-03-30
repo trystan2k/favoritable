@@ -1,22 +1,13 @@
-import { eq } from "drizzle-orm";
-import { BookmarkLabelDTO, InsertBookmarkLabelDTO } from "../../db/dtos/bookmarkLabel.dtos.js";
-import type { db } from "../../db/index.js";
-import { bookmarkLabel } from "../../db/schema/bookmark-label.schema.js";
+import { db } from "../../db/index.js";
 import { Tx } from "../bookmarks/bookmark-unit-of-work.js";
-import { BookmarkLabelRepository } from "./bookmarkLabel.types.js";
+import { bookmarkLabel } from "../../db/schema/bookmark-label.schema.js";
 
-export class SQLiteBookmarkLabelRepository implements BookmarkLabelRepository {
-  constructor(private db: db) { }
+export type BookmarkLabelDTO = typeof bookmarkLabel.$inferSelect;
 
-  create(data: InsertBookmarkLabelDTO, tx: db | Tx = this.db): Promise<BookmarkLabelDTO> {
-    return tx.insert(bookmarkLabel).values(data).returning().get();
-  }
+export type InsertBookmarkLabelDTO = typeof bookmarkLabel.$inferInsert;
 
-  deleteByBookmarkId(bookmarkId: string, tx: db | Tx  = this.db): Promise<BookmarkLabelDTO[]> {
-    return tx.delete(bookmarkLabel).where(eq(bookmarkLabel.bookmarkId, bookmarkId)).returning().all();
-  }
-
-  deleteByLabelId(labelId: string, tx: db | Tx  = this.db): Promise<BookmarkLabelDTO[]> {
-    return tx.delete(bookmarkLabel).where(eq(bookmarkLabel.labelId, labelId)).returning().all();
-  }
+export interface BookmarkLabelRepository {
+  create(data: InsertBookmarkLabelDTO, tx?: db | Tx): Promise<BookmarkLabelDTO>;
+  deleteByBookmarkId(bookmarkId: string, tx?: db | Tx): Promise<BookmarkLabelDTO[]>;
+  deleteByLabelId(labelId: string): Promise<BookmarkLabelDTO[]>;
 }
