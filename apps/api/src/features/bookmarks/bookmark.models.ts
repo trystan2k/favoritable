@@ -75,4 +75,4 @@ export const updateBookmarkSchema = bookmarkSchema.partial().omit({
 
 export const updateBookmarksSchema = updateBookmarkSchema.required({ id: true }).array();
 
-export type UpdateBookmarkModel = z.infer<typeof updateBookmarkSchema>;
+export type UpdateBookmarkModel = z.infer<typeof updateBookmarkSchema> & Pick<BookmarkModel, 'id'>;

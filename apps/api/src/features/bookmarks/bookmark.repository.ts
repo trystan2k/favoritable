@@ -1,18 +1,17 @@
 import { and, eq, exists, inArray, like, or, sql } from "drizzle-orm";
-import { BookmarkWithLabelsDTO } from "../../db/dtos/bookmark.dtos.js";
+import { BookmarkDTO, BookmarkWithLabelsDTO, InsertBookmarkDTO, UpdateBookmarkDTO } from "../../db/dtos/bookmark.dtos.js";
 import type { db } from "../../db/index.js";
-import { UpdateStateBookmarkDTO, bookmark } from "../../db/schema/bookmark.schema.js";
+import { bookmark } from "../../db/schema/bookmark.schema.js";
 import { bookmarkLabel, label } from "../../db/schema/index.js";
 import { NotFoundError } from "../../errors/errors.js";
 import { Tx } from "./bookmark-unit-of-work.js";
-import { mapBookmarkDTOToBookmarkModel, mapCreateBookmarkModelToInsertBookmarkDTO } from "./bookmark.mappers.js";
-import { BookmarkModel, CreateBookmarkModel, GetBookmarksQueryParamsModel, UpdateBookmarkModel } from "./bookmark.models.js";
+import { GetBookmarksQueryParamsModel } from "./bookmark.models.js";
 import { BookmarkRepository } from "./bookmark.types.js";
 export class SQLiteBookmarkRepository implements BookmarkRepository {
 
   constructor(private db: db) { }
 
-  async findAll(queryParams: GetBookmarksQueryParamsModel) {
+  async findAll(queryParams: GetBookmarksQueryParamsModel): Promise<BookmarkWithLabelsDTO[]> {
     const { limit, q: searchQuery, cursor } = queryParams;
 
     const bookmarks: BookmarkWithLabelsDTO[] = await this.db.query.bookmark.findMany({
@@ -58,10 +57,10 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
       }
     });
 
-    return bookmarks.map(bookmark => mapBookmarkDTOToBookmarkModel(bookmark));
+    return bookmarks;
   }
 
-  async findById(id: string) {
+  async findById(id: string): Promise<BookmarkWithLabelsDTO> {
     const bookmarkDto: BookmarkWithLabelsDTO | undefined = await this.db.query.bookmark.findFirst({
       where: (bookmark, { eq }) => eq(bookmark.id, id),
       with: {
@@ -79,16 +78,15 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
       throw new NotFoundError(`bookmark with id ${id} not found`);
     }
 
-    return mapBookmarkDTOToBookmarkModel(bookmarkDto);
+    return bookmarkDto;
   }
 
-  async create(data: CreateBookmarkModel): Promise<BookmarkModel> {
-    const newBookmark = mapCreateBookmarkModelToInsertBookmarkDTO(data);
-    const bookmarkDto = await this.db.insert(bookmark).values(newBookmark).returning().get();
-    return mapBookmarkDTOToBookmarkModel(bookmarkDto);
+  async create(data: InsertBookmarkDTO): Promise<BookmarkDTO> {
+    const bookmarkDto = await this.db.insert(bookmark).values(data).returning().get();
+    return bookmarkDto;
   }
 
-  async delete(ids: string[]) {
+  async delete(ids: string[]): Promise<string[]> {
     const deletedBookmarks = await this.db.delete(bookmark).where(inArray(bookmark.id, ids)).returning().all();
     if (deletedBookmarks.length === 0) {
       throw new NotFoundError(`bookmarks with ids ${ids} not found`);
@@ -97,17 +95,12 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
     return deletedBookmarks.map(bookmark => bookmark.id);
   }
 
-  async update(bookmarksData: UpdateBookmarkModel, tx: db | Tx = this.db): Promise<BookmarkModel> {
-    // @ts-expect-error TODO
+  async update(bookmarksData: UpdateBookmarkDTO, tx: db | Tx = this.db): Promise<BookmarkDTO> {
     const bookmarkUpdated = await tx.update(bookmark).set({ ...bookmarksData, updatedAt: new Date() }).where(eq(bookmark.id, bookmarksData.id)).returning().get();
     if (!bookmarkUpdated) {
       throw new NotFoundError(`bookmark with id ${bookmarksData.id} not found`);
     }
 
-    return { ...bookmarkUpdated, labels: [] };
-  }
-
-  updateState(id: string, state: UpdateStateBookmarkDTO) {
-    return this.db.update(bookmark).set({ ...state, updatedAt: new Date() }).where(eq(bookmark.id, id)).returning().get();
+    return bookmarkUpdated;
   }
 }

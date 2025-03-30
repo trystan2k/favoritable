@@ -5,9 +5,9 @@ import { generateRandomColor } from "../../utils/colors.js";
 import { parseHtmlbookmarks } from "../../utils/html-bookmarks-parser.js";
 import { scrapper } from "../../utils/scrapper.js";
 import { tsidGenerator } from "../../utils/tsids-generator.js";
-import { CreateLabelModel, LabelModel } from "../labels/label.models.js";
+import { LabelModel } from "../labels/label.models.js";
 import { BookmarkUnitOfWork, Tx } from "./bookmark-unit-of-work.js";
-import { mapBookmarkDTOToBookmarkModel } from "./bookmark.mappers.js";
+import { mapBookmarkDTOToBookmarkModel, mapCreateBookmarkModelToInsertBookmarkDTO, mapUpdateBookmarkModelToInsertBookmarkDTO } from "./bookmark.mappers.js";
 import { BookmarkModel, BookmarksModel, CreateBookmarkModel, GetBookmarksQueryParamsModel, UpdateBookmarkModel } from "./bookmark.models.js";
 import { OmnivoreBookmarkModel } from "./bookmark.types.js";
 
@@ -23,9 +23,11 @@ export class BookmarkService {
 
     const bookmarks = await this.bookmarkUnitOfWork.bookmarkRepository.findAll(queryParams);
 
+    const mappedBookmarks = bookmarks.map(bookmark => mapBookmarkDTOToBookmarkModel(bookmark));
+
     // Check if there are more results
-    const hasMore = bookmarks.length > limit;
-    const items = hasMore ? bookmarks.slice(0, limit) : bookmarks;
+    const hasMore = mappedBookmarks.length > limit;
+    const items = hasMore ? mappedBookmarks.slice(0, limit) : mappedBookmarks;
 
     const searchQueryLimit = `?${searchQuery ? `q=${searchQuery}&` : ''}limit=${limit}`;
     const paginationMetadata = {
@@ -45,12 +47,15 @@ export class BookmarkService {
     if (!bookmark) {
       throw new NotFoundError(`${this.entityName} with id ${id} not found`);
     }
-    return bookmark;
+
+    return mapBookmarkDTOToBookmarkModel(bookmark);
   }
 
   @handleServiceErrors('entityName')
-  createBookmark(data: CreateBookmarkModel) {
-    return this.bookmarkUnitOfWork.bookmarkRepository.create(data);
+  async createBookmark(data: CreateBookmarkModel) {
+    const newBookmark = mapCreateBookmarkModelToInsertBookmarkDTO(data);
+    const bookmark = await this.bookmarkUnitOfWork.bookmarkRepository.create(newBookmark);
+    return mapBookmarkDTOToBookmarkModel(bookmark);
   }
 
   @handleServiceErrors('entityName')
@@ -60,10 +65,13 @@ export class BookmarkService {
   }
 
   private async handleUpdateBookmark(data: UpdateBookmarkModel, uow: BookmarkUnitOfWork, tx: Tx) {
-    const updatedBookmark = await uow.bookmarkRepository.update(data, tx);
-    if (!updatedBookmark) {
-        throw new NotFoundError(`bookmark with id ${data.id} not found`);
-      }
+    const updateBookmark = mapUpdateBookmarkModelToInsertBookmarkDTO(data);
+    const updatedBookmarkDto = await uow.bookmarkRepository.update(updateBookmark, tx);
+    if (!updatedBookmarkDto) {
+      throw new NotFoundError(`bookmark with id ${data.id} not found`);
+    }
+
+    const updatedBookmark = mapBookmarkDTOToBookmarkModel(updatedBookmarkDto);
 
     if (data.labels && data.labels.length > 0) {
       const allLabels: LabelModel[] = [];

@@ -1,6 +1,6 @@
-import { BookmarkDTO, BookmarkWithLabelsDTO, InsertBookmarkDTO } from "../../db/dtos/bookmark.dtos";
+import { BookmarkDTO, BookmarkWithLabelsDTO, InsertBookmarkDTO, UpdateBookmarkDTO } from "../../db/dtos/bookmark.dtos";
 import { tsidGenerator } from "../../utils/tsids-generator";
-import { BookmarkModel, CreateBookmarkModel } from "./bookmark.models";
+import { BookmarkModel, CreateBookmarkModel, UpdateBookmarkModel } from "./bookmark.models";
 
 export const mapCreateBookmarkModelToInsertBookmarkDTO = (bookmark: CreateBookmarkModel): InsertBookmarkDTO => {
   return {
@@ -12,6 +12,37 @@ export const mapCreateBookmarkModelToInsertBookmarkDTO = (bookmark: CreateBookma
     author: bookmark.author,
     thumbnail: bookmark.thumbnail,
     publishedAt: bookmark.publishedAt ? new Date(bookmark.publishedAt) : null,
+    state: bookmark.state,
+  }
+}
+
+export const mapUpdateBookmarkModelToInsertBookmarkDTO = (bookmark: UpdateBookmarkModel): UpdateBookmarkDTO => {
+  return {
+    id: bookmark.id,
+    url: bookmark.url,
+    slug: bookmark.slug,
+    title: bookmark.title,
+    description: bookmark.description,
+    author: bookmark.author,
+    thumbnail: bookmark.thumbnail,
+    publishedAt: bookmark.publishedAt ? new Date(bookmark.publishedAt) : null,
+    state: bookmark.state,
+  }
+}
+
+export const mapBookmarkModeltoBookmarkDTO = (bookmark: BookmarkModel): BookmarkDTO => {
+  return {
+    id: bookmark.id,
+    url: bookmark.url,
+    slug: bookmark.slug,
+    title: bookmark.title,
+    description: bookmark.description,
+    author: bookmark.author,
+    thumbnail: bookmark.thumbnail,
+    publishedAt: bookmark.publishedAt ? bookmark.publishedAt : null,
+    createdAt: bookmark.createdAt,
+    updatedAt: bookmark.updatedAt,
+    state: bookmark.state,
   }
 }
 

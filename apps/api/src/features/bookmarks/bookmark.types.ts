@@ -1,3 +1,4 @@
+import { BookmarkWithLabelsDTO, InsertBookmarkDTO } from "../../db/dtos/bookmark.dtos.js";
 import { InsertLabelDTO } from "../../db/dtos/label.dtos.js";
 import { BookmarkDTO, UpdateStateBookmarkDTO } from "../../db/schema/bookmark.schema.js";
 import { BookmarkModel, CreateBookmarkModel, GetBookmarksQueryParamsModel, UpdateBookmarkModel } from "./bookmark.models.js";
@@ -19,10 +20,9 @@ export type OmnivoreBookmarkModel = {
 };
 
 export interface BookmarkRepository {
-  findAll(queryParams: GetBookmarksQueryParamsModel): Promise<BookmarkModel[]>;
-  findById(id: string): Promise<BookmarkModel>;
-  create(data: CreateBookmarkModel): Promise<BookmarkModel>;
+  findAll(queryParams: GetBookmarksQueryParamsModel): Promise<BookmarkWithLabelsDTO[]>;
+  findById(id: string): Promise<BookmarkWithLabelsDTO>;
+  create(data: InsertBookmarkDTO): Promise<BookmarkDTO>;
   delete(ids: string[]): Promise<string[]>;
-  update(data: UpdateBookmarkModel): Promise<BookmarkModel>;
-  updateState(id: string, state: UpdateStateBookmarkDTO): Promise<BookmarkDTO>;
+  update(data: InsertBookmarkDTO): Promise<BookmarkDTO>;
 }
