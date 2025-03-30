@@ -58,29 +58,23 @@ bookmarkRoutes.post('/from-url', zValidator('json', createBookmarkFromURLSchema)
 // Bookmark - Update
 bookmarkRoutes.patch('/:id', zValidator('json', updateBookmarkSchema), zValidator('param', bookmarkIdParamSchema), async (c) => {
   const data = await c.req.valid('json');
-  const { id } = c.req.valid('param');
+  const { id } = await c.req.valid('param');
   data.id = id;
 
-  const bookmark = await bookmarkService.updateBookmark(data);
+  const bookmark = await bookmarkService.updateBookmark(data as UpdateBookmarkModel);
   return c.json(bookmark, 200);
 });
 
 bookmarkRoutes.patch('/', zValidator('json', updateBookmarkSchema.array()), async (c) => {
   const data = await c.req.valid('json');
-
-  const bookmarks: BookmarkModel[] = [];
-  for (const bookmark of data) {
-    const updatedBookmark = await bookmarkService.updateBookmark(bookmark);
-    bookmarks.push(updatedBookmark);
-  }
-
+  const bookmarks = await bookmarkService.updateBookmarks(data as UpdateBookmarkModel[]);
   return c.json(bookmarks, 200);
 })
 
 // Bookmark - Delete
 bookmarkRoutes.delete('/:id', zValidator('param', bookmarkIdParamSchema), async (c) => {
   const { id } = c.req.valid('param');
-  const deletedBookmarks = await bookmarkService.deleteBookmarks([id]);
+  await bookmarkService.deleteBookmarks([id]);
   return c.body(null, 204);
 });
 

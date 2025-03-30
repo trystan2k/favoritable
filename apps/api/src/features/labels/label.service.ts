@@ -37,11 +37,9 @@ export class LabelService {
   }
 
   @handleServiceErrors('entityName')
-  async deleteLabel(id: string) {
-    const label = await this.bookmarkUnitOfWork.labelRepository.delete(id);
-    if (!label) {
-      throw new NotFoundError(`${this.entityName} with id ${id} not found`);
-    }
+  async deleteLabels(ids: string[]) {
+    const deletdLabels = await this.bookmarkUnitOfWork.labelRepository.delete(ids);
+    return deletdLabels;
   }
 
   @handleServiceErrors('entityName')

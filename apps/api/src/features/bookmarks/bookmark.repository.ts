@@ -14,7 +14,7 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
   async findAll(queryParams: GetBookmarksQueryParamsModel): Promise<BookmarkWithLabelsDTO[]> {
     const { limit, q: searchQuery, cursor } = queryParams;
 
-    const bookmarks: BookmarkWithLabelsDTO[] = await this.db.query.bookmark.findMany({
+    const bookmarks = await this.db.query.bookmark.findMany({
       limit,
       orderBy(fields, { desc }) {
         return desc(fields.id);
@@ -60,7 +60,7 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
     return bookmarks;
   }
 
-  async findById(id: string): Promise<BookmarkWithLabelsDTO> {
+  async findById(id: string): Promise<BookmarkWithLabelsDTO | undefined> {
     const bookmarkDto: BookmarkWithLabelsDTO | undefined = await this.db.query.bookmark.findFirst({
       where: (bookmark, { eq }) => eq(bookmark.id, id),
       with: {
@@ -73,11 +73,6 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
       }
     });
 
-    // TODO: remove this, it should be handled by the service layer, not the repository one
-    if (!bookmarkDto) {
-      throw new NotFoundError(`bookmark with id ${id} not found`);
-    }
-
     return bookmarkDto;
   }
 
@@ -88,10 +83,6 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
 
   async delete(ids: string[]): Promise<string[]> {
     const deletedBookmarks = await this.db.delete(bookmark).where(inArray(bookmark.id, ids)).returning().all();
-    if (deletedBookmarks.length === 0) {
-      throw new NotFoundError(`bookmarks with ids ${ids} not found`);
-    }
-
     return deletedBookmarks.map(bookmark => bookmark.id);
   }
 

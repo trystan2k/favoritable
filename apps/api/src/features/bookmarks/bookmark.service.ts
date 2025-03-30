@@ -84,25 +84,27 @@ export class BookmarkService {
             color: label.color || generateRandomColor(),
           };
 
-            const createdLabel = await uow.labelRepository.create(labelToCreate, tx);
-            allLabels.push(createdLabel);
-          } else {
-            const existingLabelToAdd = await uow.labelRepository.findById(label.id);
-            if (existingLabelToAdd) {
-              allLabels.push(existingLabelToAdd);
-            }
+          const createdLabel = await uow.labelRepository.create(labelToCreate, tx);
+          allLabels.push(createdLabel);
+        } else {
+          const existingLabelToAdd = await uow.labelRepository.findById(label.id);
+          if (existingLabelToAdd) {
+            allLabels.push(existingLabelToAdd);
           }
         }
+      }
 
-        const relations = allLabels.map(label => ({
-          id: tsidGenerator.generate(),
-          bookmarkId: updatedBookmark.id,
-          labelId: label.id
-        }));
+      const relations = allLabels.map(label => ({
+        id: tsidGenerator.generate(),
+        bookmarkId: updatedBookmark.id,
+        labelId: label.id
+      }));
 
-        await uow.bookmarkLabelRepository.deleteByBookmarkId(updatedBookmark.id, tx);
-        await uow.bookmarkLabelRepository.create(relations, tx);
+      await uow.bookmarkLabelRepository.deleteByBookmarkId(updatedBookmark.id, tx);
 
+      for (const relation of relations) {
+        await uow.bookmarkLabelRepository.create(relation, tx);
+      }
       updatedBookmark.labels = allLabels;
     }
 
@@ -154,7 +156,13 @@ export class BookmarkService {
         name: bookmark.folderName,
       });
 
-      // await this.updateLabels(createdBookmark.id, [labelData]);
+      const relations = {
+        id: tsidGenerator.generate(),
+        bookmarkId: createdBookmark.id,
+        labelId: labelData.id
+      };
+
+      await this.bookmarkUnitOfWork.bookmarkLabelRepository.create(relations);
       importedBookmarks.push(await this.getBookmark(createdBookmark.id));
     }
 
@@ -175,23 +183,27 @@ export class BookmarkService {
         thumbnail: bookmark.thumbnail || null,
         publishedAt: bookmark.publishedAt ?? null,
         state: bookmark.state === 'Archived' ? 'archived' : 'active',
-        labels: [], // TODO add labels
+        labels: []
       };
 
       const createdBookmark = await this.createBookmark(bookmarkData);
 
       if (bookmark.labels && bookmark.labels.length > 0) {
-        const labels: InsertLabelDTO[] = [];
         for (const labelName of bookmark.labels) {
           const label = await this.bookmarkUnitOfWork.labelRepository.findByName(labelName);
           const labelData = label || await this.bookmarkUnitOfWork.labelRepository.create({
             id: tsidGenerator.generate(),
             name: labelName,
           });
-          labels.push(labelData);
-        }
 
-        // await this.updateLabels(createdBookmark.id, labels);
+          const relations = {
+            id: tsidGenerator.generate(),
+            bookmarkId: createdBookmark.id,
+            labelId: labelData.id
+          };
+
+          await this.bookmarkUnitOfWork.bookmarkLabelRepository.create(relations);
+        }
       }
 
       importedBookmarks.push(await this.getBookmark(createdBookmark.id));

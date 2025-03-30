@@ -21,7 +21,7 @@ export type OmnivoreBookmarkModel = {
 
 export interface BookmarkRepository {
   findAll(queryParams: GetBookmarksQueryParamsModel): Promise<BookmarkWithLabelsDTO[]>;
-  findById(id: string): Promise<BookmarkWithLabelsDTO>;
+  findById(id: string): Promise<BookmarkWithLabelsDTO | undefined>;
   create(data: InsertBookmarkDTO): Promise<BookmarkDTO>;
   delete(ids: string[]): Promise<string[]>;
   update(data: InsertBookmarkDTO): Promise<BookmarkDTO>;

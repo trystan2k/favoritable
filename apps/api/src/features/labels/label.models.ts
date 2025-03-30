@@ -26,3 +26,7 @@ export type CreateLabelModel = z.infer<typeof createLabelSchema>;
 export const updateLabelSchema = labelSchema.partial().required({ id: true });
 
 export type UpdateLabelModel = z.infer<typeof updateLabelSchema>;
+
+export const deleteLabelssSchema = z.object({
+  ids: z.string().array().nonempty(),
+});

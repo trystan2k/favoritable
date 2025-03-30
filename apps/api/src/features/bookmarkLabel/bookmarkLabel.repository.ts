@@ -9,7 +9,7 @@ import { BookmarkLabelRepository } from "./bookmarkLabel.types.js";
 export class SQLiteBookmarkLabelRepository implements BookmarkLabelRepository {
   constructor(private db: db) { }
 
-  create(data: InsertBookmarkLabelDTO[], tx: db | Tx  = this.db): Promise<BookmarkLabelDTO> {
+  create(data: InsertBookmarkLabelDTO, tx: db | Tx = this.db): Promise<BookmarkLabelDTO> {
     return tx.insert(bookmarkLabel).values(data).returning().get();
   }
 

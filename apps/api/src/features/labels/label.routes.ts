@@ -3,6 +3,8 @@ import { Hono } from "hono";
 import { InsertLabelDTO } from "../../db/dtos/label.dtos";
 import { BookmarkUnitOfWork } from "../bookmarks/bookmark-unit-of-work";
 import { LabelService } from "./label.service";
+import { zValidator } from "@hono/zod-validator";
+import { deleteLabelssSchema } from "./label.models";
 
 const labelRoutes = new Hono();
 
@@ -33,10 +35,17 @@ labelRoutes.get('/:id', async (c) => {
   return c.json(label, 200);
 });
 
+// Bookmarks - Delete
+labelRoutes.post('/batch-delete', zValidator('json', deleteLabelssSchema), async (c) => {
+  const data = c.req.valid('json');
+  const deletedBookmarks = await labelService.deleteLabels(data.ids);
+  return c.json(deletedBookmarks, 200);
+});
+
 // Label - Delete
 labelRoutes.delete('/:id', async (c) => {
   const id = c.req.param('id');
-  await labelService.deleteLabel(id);
+  await labelService.deleteLabels([id]);
   return c.body(null, 204);
 });
 
