@@ -1,7 +1,7 @@
 import * as cheerio from 'cheerio';
 import { URLContentParseError } from '../errors/errors.js';
 import { CreateBookmarkModel } from '../features/bookmarks/bookmark.models.js';
-import { cleanableString } from './string.js';
+import { cleanableString } from '../utils/string.js';
 import { BOOKMARK_STATES } from '../features/bookmarks/bookmark.constants.js';
 
 const headers = {

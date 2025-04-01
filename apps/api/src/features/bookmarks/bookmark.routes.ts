@@ -2,13 +2,13 @@ import { Hono } from "hono";
 import { zCustomValidator } from "../../core/validators.wrapper.js";
 import { db } from "../../db/index.js";
 import { mapErrors } from "../../errors/errors.mapper.js";
-import { scrapper } from "../../utils/scrapper.js";
 import { SQLiteBookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.sql-lite.repository.js";
 import { SQLiteLabelRepository } from "../labels/label.sq-lite.repository.js";
 import { BookmarkUnitOfWork } from "./bookmark-unit-of-work.js";
 import { bookmarkIdParamSchema, createBookmarkFromURLSchema, createBookmarkSchema, deleteBookmarksSchema, getBookmarksQueryParamsSchema, importFromHTMLFileQueryParamsSchema, importOmnivoreBookmarksSchema, UpdateBookmarkModel, updateBookmarkSchema } from "./bookmark.models.js";
 import { SQLiteBookmarkRepository } from "./bookmark.sql-lite.repository.js";
 import { BookmarkService } from "./bookmark.service.js";
+import { scrapper } from "../../core/puppeteer.scrapper.js";
 
 const bookmarkRoutes = new Hono();
 
@@ -44,11 +44,8 @@ bookmarkRoutes.post('/', zCustomValidator('json', createBookmarkSchema), async (
 
 // Bookmark - Create from URL
 bookmarkRoutes.post('/from-url', zCustomValidator('json', createBookmarkFromURLSchema), async (c) => {
-  const data = c.req.valid('json');
-
-  const bookmarkData = await scrapper(data.url);
-  const bookmark = await bookmarkService.createBookmark(bookmarkData);
-
+  const { url } = c.req.valid('json');
+  const bookmark = await bookmarkService.createBookmarkFromUrl(url);
   const location = c.req.url.replace('/from-url', '');
 
   // Add location header in response, with the url of the newly created bookmark
@@ -68,9 +65,6 @@ bookmarkRoutes.patch('/:id', zCustomValidator('json', updateBookmarkSchema), zCu
 
 bookmarkRoutes.patch('/', zCustomValidator('json', updateBookmarkSchema.array()), async (c) => {
   const data = c.req.valid('json');
-
-  console.log('data reouter', data)
-
   const bookmarks = await bookmarkService.updateBookmarks(data as UpdateBookmarkModel[]);
   return c.json(bookmarks, 200);
 })

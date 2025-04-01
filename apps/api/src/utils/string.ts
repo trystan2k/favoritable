@@ -1,5 +1,5 @@
 export const cleanableString = (input = "") => {
-  let value = input;
+  let value = input ?? '';
 
   const chain = {
     removeTabs() {

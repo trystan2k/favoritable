@@ -1,7 +1,7 @@
 import { handleServiceErrors } from "../../errors/errors.decorator.js";
 import { MalFormedRequestError, NotFoundError } from "../../errors/errors.js";
 import { parseHtmlbookmarks } from "../../utils/html-bookmarks-parser.js";
-import { scrapper } from "../../utils/scrapper.js";
+import { scrapper } from "../../core/puppeteer.scrapper.js";
 import { createBookmarkLabelRelation } from "../bookmarkLabel/bookmarkLabel.mappers.js";
 import { mapCreateLabelModelToInsertLabelDTO } from "../labels/label.mappers.js";
 import { CreateLabelModel, LabelModel } from "../labels/label.models.js";
@@ -57,6 +57,12 @@ export class BookmarkService {
   }
 
   @handleServiceErrors('entityName')
+  async createBookmarkFromUrl(url: string) {
+    const bookmarkData = await scrapper(url);
+    return this.createBookmark(bookmarkData);
+  }
+
+  @handleServiceErrors('entityName')
   async deleteBookmarks(ids: string[]) {
     const deletedBookmarks = await this.bookmarkUnitOfWork.bookmarkRepository.delete(ids);
     for (const bookmarkId of deletedBookmarks) {
@@ -71,23 +77,18 @@ export class BookmarkService {
     if (!updatedBookmarkDto) {
       throw new NotFoundError(`bookmark with id ${data.id} not found`);
     }
-
-    console.log('bla', data)
-
     const updatedBookmark = mapBookmarkDTOToBookmarkModel(updatedBookmarkDto);
 
     if (data.labels && data.labels.length > 0) {
       const allLabels: LabelModel[] = [];
 
       for (const label of data.labels) {
-        console.log('label', label)
         if (!label.id && label.name) {
           const labelToCreate = mapCreateLabelModelToInsertLabelDTO(label as CreateLabelModel);
           const createdLabel = await uow.labelRepository.create(labelToCreate, tx);
           allLabels.push(createdLabel);
         } else if (label.id) {
           const existingLabelToAdd = await uow.labelRepository.findById(label.id);
-          console.log('findi', existingLabelToAdd)
           if (existingLabelToAdd) {
             allLabels.push(existingLabelToAdd);
           }

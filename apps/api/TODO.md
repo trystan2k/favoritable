@@ -1,25 +1,42 @@
 TODO:
 
-- Review scrapper. Maybe use pupeeter or playwright (for pages like Temu and Twitter )
-  - <https://brightdata.com/blog/how-tos/web-scraping-puppeteer>
-  - <https://scrapfly.io/blog/web-scraping-with-puppeteer-and-nodejs/>
-  - <https://www.zenrows.com/blog/puppeteer-web-scraping#prerequisites>
-
 - Handle DB errors in Repository (decorator ?)
 - Handle routes errors (add decorator)
-- Review dependency injection (services and repositories)
+- Review dependency injection (services and repositories) <https://pja-g.medium.com/lets-be-serious-about-node-dependency-injection-73bcf9ac394c>
 
 - Add user to bookmarks and labels
 
 - Investigate and add etag if it worth it
 - Add notFound handler
+  - <https://github.dev/NicoPlyley/hono-error-handler>
+  - <https://app.studyraid.com/en/read/11303/352723/error-handling-middleware>
 - Setup headers (like Accept, Content-Type, etc)
 - Add versioning using headers
+  - <https://medium.com/@bubu.tripathy/best-practices-for-designing-rest-apis-2c084ab09059>
 - Add Open API docs (Swagger) (<https://github.com/honojs/middleware/issues/735>)
 - Add logging system/middleware
 - Add endpoint to backup/export bookmarks (Worker?)
+- Add Lint / Prettier / Biome / Knip
+  - Knip: <https://knip.dev/overview/getting-started>
+  - Biome: <https://blog.stackademic.com/biome-a-faster-unified-alternative-to-eslint-and-prettier-7767ed2637bd>
 - Add tests
+  - E2E - Test scrapper for onmivore import files
+  - E2E - Test scrappper for HTML files
+  - E2E - Test scrapper for Text files
+- Add Auth
+  - <https://x.com/sergiodxa/status/1897067211514372562?t=xVl11pi7stKjwVVgzvQu7g&s=09>
+  - <https://www.youtube.com/playlist?app=desktop&list=PLUofhDIg_38qm2oPOV-IRTTEKyrVBBaU7>
 - Use AI to suggeest labels when adding a bookmark
+- Review dependabot
+  - <https://woliveiras.github.io/posts/how-to-schedule-dependabot-to-keep-dependencies-updated/>
+
+REVIEW When almost ready:
+
+- <https://levelup.gitconnected.com/your-express-app-isnt-great-here-s-why-84003bbce092>
+- <https://medium.com/javarevisited/16-common-rest-api-status-code-mistakes-to-avoid-in-2025-f703c656deb0#3b1d>
+- <https://dev.to/schead/using-clean-architecture-and-the-unit-of-work-pattern-on-a-nodejs-application-3pc9>
+- <https://dev.to/dipakahirav/modern-api-development-with-nodejs-express-and-typescript-using-clean-architecture-1m77>
+- <https://github.com/AzouKr/typescript-clean-architecture/blob/main/src/app/domain/User.ts>
 
 INVESTIGATE:
 
@@ -27,11 +44,20 @@ INVESTIGATE:
   - <https://x.com/midudev/status/1807775893135278345?s=09&t=RI5qICHzTKjUht1zGVeR1g> (380_400.json)
 
 - Improvements: <https://medium.com/@mohantaankit2002/building-a-nest-js-api-that-can-handle-millions-of-requests-without-crashing-6212add27122>
-- Biome: <https://blog.stackademic.com/biome-a-faster-unified-alternative-to-eslint-and-prettier-7767ed2637bd>
+
 - Stream <https://kumneger.dev/blog/server-sent-events-explained> <https://yanael.io/articles/hono-sse/>
+
+FRONT:
+
+- <https://dev.to/itswillt/folder-structures-in-react-projects-3dp8>
+- <https://www.youtube.com/watch?v=RnNa47dN570>
 
 DONE:
 
+- Review scrapper. Maybe use pupeeter or playwright (for pages like Temu and Twitter )
+  - <https://brightdata.com/blog/how-tos/web-scraping-puppeteer>
+  - <https://scrapfly.io/blog/web-scraping-with-puppeteer-and-nodejs/>
+  - <https://www.zenrows.com/blog/puppeteer-web-scraping#prerequisites>
 - Repositories should return DTO, services should convert to Models
 
 A simple REST API:
