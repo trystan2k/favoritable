@@ -1,7 +1,7 @@
 import { z, ZodSchema } from 'zod'
 import type { ValidationTargets } from 'hono'
 import { zValidator } from '@hono/zod-validator'
-import { ValidationError } from '../errors/errors.js'
+import { MalFormedRequestError, ValidationError } from '../errors/errors.js'
 
 export const zCustomValidator = <T extends ZodSchema, Target extends keyof ValidationTargets>(
   target: Target,
@@ -9,7 +9,7 @@ export const zCustomValidator = <T extends ZodSchema, Target extends keyof Valid
 ) =>
   zValidator(target, schema, (result) => {
     if (!result.success) {
-      throw new ValidationError('Schema Validation Error', result.error.errors);
+      throw new MalFormedRequestError('Input data is invalid', result.error.errors);
     }
   });
 

@@ -1,17 +1,32 @@
-import { mapErrors } from './errors.mapper.js';
+export const ClassErrorHandler = (mapErrors: (error: unknown, entity: string) => void) => {
+  return function classDecorator<T extends { new(...args: any[]): {} }>(constructor: T) {
+    return class extends constructor {
+      constructor(...args: any[]) {
+        super(...args);
+        const methodNames = Object.getOwnPropertyNames(constructor.prototype);
 
-export const handleServiceErrors = (entityName: string) => {
-  return function actualDecorator<This, Args extends any[], Return>(target: (this: This, ...args: Args) => Promise<Return>, context: ClassMethodDecoratorContext<This, (this: This, ...args: Args) => Promise<Return>>) {
-      async function replacementMethod(this: This, ...args: Args): Promise<Return> {
-        try {
-          const result = await target.call(this, ...args);
-          return result;
-        } catch (error) {
-          // @ts-expect-error
-          throw mapErrors(error, this[entityName]);
+        for (const methodName of methodNames) {
+          // console.log('methodName', methodName)
+          if (methodName !== 'constructor') {
+            const descriptor = Object.getOwnPropertyDescriptor(constructor.prototype, methodName);
+            if (descriptor && typeof descriptor.value === 'function') {
+              const originalMethod = descriptor.value;
+              Object.defineProperty(this, methodName, {
+                value: async function (this: InstanceType<T>, ...args: Parameters<typeof originalMethod>) {
+                  try {
+                    const result = await originalMethod.apply(this, args);
+                    return result;
+                  } catch (error) {
+                    throw mapErrors(error, constructor.name);
+                  }
+                },
+                configurable: true,
+                writable: true
+              });
+            }
+          }
         }
       }
-
-      return replacementMethod;
-  }
-}
+    };
+  };
+};

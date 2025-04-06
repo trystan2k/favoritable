@@ -8,7 +8,10 @@ import { NotFoundError } from "../../errors/errors.js";
 import { Tx } from "./bookmark-unit-of-work.js";
 import { GetBookmarksQueryParamsModel } from "./bookmark.models.js";
 import { BookmarkDTO, BookmarkRepository, BookmarkWithLabelsDTO, InsertBookmarkDTO, UpdateBookmarkDTO } from "./bookmark.repository.js";
+import { ClassErrorHandler } from "../../errors/errors.decorator.js";
+import { mapRepositoryErrors } from "../../errors/errors.mapper.js";
 
+@ClassErrorHandler(mapRepositoryErrors)
 export class SQLiteBookmarkRepository implements BookmarkRepository {
 
   constructor(private db: db) { }

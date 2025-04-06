@@ -1,7 +1,5 @@
 TODO:
 
-- Handle DB errors in Repository (decorator ?)
-- Handle routes errors (add decorator)
 - Review dependency injection (services and repositories) <https://pja-g.medium.com/lets-be-serious-about-node-dependency-injection-73bcf9ac394c>
 
 - Add user to bookmarks and labels
@@ -15,6 +13,7 @@ TODO:
   - <https://medium.com/@bubu.tripathy/best-practices-for-designing-rest-apis-2c084ab09059>
 - Add Open API docs (Swagger) (<https://github.com/honojs/middleware/issues/735>)
 - Add logging system/middleware
+  - <https://medium.com/@mohantaankit2002/best-practices-for-logging-and-monitoring-in-large-nestjs-applications-ae6e2ed31d93>
 - Add endpoint to backup/export bookmarks (Worker?)
 - Add Lint / Prettier / Biome / Knip
   - Knip: <https://knip.dev/overview/getting-started>
@@ -24,6 +23,7 @@ TODO:
   - E2E - Test scrappper for HTML files
   - E2E - Test scrapper for Text files
 - Add Auth
+  - Passport.js
   - <https://x.com/sergiodxa/status/1897067211514372562?t=xVl11pi7stKjwVVgzvQu7g&s=09>
   - <https://www.youtube.com/playlist?app=desktop&list=PLUofhDIg_38qm2oPOV-IRTTEKyrVBBaU7>
 - Use AI to suggeest labels when adding a bookmark

@@ -1,4 +1,4 @@
-import { handleServiceErrors } from "../../errors/errors.decorator.js";
+import { ClassErrorHandler } from "../../errors/errors.decorator.js";
 import { MalFormedRequestError, NotFoundError } from "../../errors/errors.js";
 import { parseHtmlbookmarks } from "../../utils/html-bookmarks-parser.js";
 import { scrapper } from "../../core/puppeteer.scrapper.js";
@@ -8,13 +8,14 @@ import { CreateLabelModel, LabelModel } from "../labels/label.models.js";
 import { BookmarkUnitOfWork, Tx } from "./bookmark-unit-of-work.js";
 import { mapBookmarkDTOToBookmarkModel, mapCreateBookmarkModelToInsertBookmarkDTO, mapOnmivoreBookmarkToInsertBookmarkDTO, mapUpdateBookmarkModelToUpdateBookmarkDTO } from "./bookmark.mappers.js";
 import { BookmarkModel, BookmarksModel, CreateBookmarkModel, GetBookmarksQueryParamsModel, OmnivoreBookmarkModel, UpdateBookmarkModel } from "./bookmark.models.js";
+import { mapServiceErrors } from "../../errors/errors.mapper.js";
 
+@ClassErrorHandler(mapServiceErrors)
 export class BookmarkService {
   private entityName = 'Bookmark';
 
   constructor(private bookmarkUnitOfWork: BookmarkUnitOfWork) { }
 
-  @handleServiceErrors('entityName')
   async getBookmarks(queryParams: GetBookmarksQueryParamsModel): Promise<BookmarksModel> {
 
     const { q: searchQuery, limit, cursor } = queryParams;
@@ -39,7 +40,6 @@ export class BookmarkService {
     };
   }
 
-  @handleServiceErrors('entityName')
   async getBookmark(id: string): Promise<BookmarkModel> {
     const bookmark = await this.bookmarkUnitOfWork.bookmarkRepository.findById(id);
     if (!bookmark) {
@@ -49,20 +49,17 @@ export class BookmarkService {
     return mapBookmarkDTOToBookmarkModel(bookmark);
   }
 
-  @handleServiceErrors('entityName')
   async createBookmark(data: CreateBookmarkModel) {
     const newBookmark = mapCreateBookmarkModelToInsertBookmarkDTO(data);
     const bookmark = await this.bookmarkUnitOfWork.bookmarkRepository.create(newBookmark);
     return mapBookmarkDTOToBookmarkModel(bookmark);
   }
 
-  @handleServiceErrors('entityName')
   async createBookmarkFromUrl(url: string) {
     const bookmarkData = await scrapper(url);
     return this.createBookmark(bookmarkData);
   }
 
-  @handleServiceErrors('entityName')
   async deleteBookmarks(ids: string[]) {
     const deletedBookmarks = await this.bookmarkUnitOfWork.bookmarkRepository.delete(ids);
     for (const bookmarkId of deletedBookmarks) {
@@ -109,14 +106,12 @@ export class BookmarkService {
     return updatedBookmark;
   }
 
-  @handleServiceErrors('entityName')
   updateBookmark(data: UpdateBookmarkModel): Promise<BookmarkModel> {
     return this.bookmarkUnitOfWork.execute(async (uow, tx) => {
       return this.handleUpdateBookmark(data, uow, tx);
     });
   }
 
-  @handleServiceErrors('entityName')
   updateBookmarks(data: UpdateBookmarkModel[]): Promise<BookmarkModel[]> {
     return this.bookmarkUnitOfWork.execute(async (uow, tx) => {
 
@@ -131,7 +126,6 @@ export class BookmarkService {
     });
   }
 
-  @handleServiceErrors('entityName')
   async importFromHtmlFile(html: string, folderName?: string) {
     const bookmarks = parseHtmlbookmarks(html, folderName);
     const importedBookmarks = [];
@@ -164,7 +158,6 @@ export class BookmarkService {
     return importedBookmarks;
   }
 
-  @handleServiceErrors('entityName')
   async importFromOmnivore(data: OmnivoreBookmarkModel[]) {
     const importedBookmarks = [];
 
@@ -191,7 +184,6 @@ export class BookmarkService {
     return importedBookmarks;
   }
 
-  @handleServiceErrors('entityName')
   async importFromTextFile(data: string) {
     const importedBookmarks = [];
     const urls = data.split('\n').filter(url => url.trim().length > 0);

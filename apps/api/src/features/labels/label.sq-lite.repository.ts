@@ -3,7 +3,10 @@ import type { db } from "../../db/index.js";
 import { label } from "../../db/schema/label.schema.js";
 import { Tx } from "../bookmarks/bookmark-unit-of-work.js";
 import { InsertLabelDTO, LabelDTO, LabelRepository, UpdateLabelDTO } from "./label.repository.js";
+import { ClassErrorHandler } from "../../errors/errors.decorator.js";
+import { mapRepositoryErrors } from "../../errors/errors.mapper.js";
 
+@ClassErrorHandler(mapRepositoryErrors)
 export class SQLiteLabelRepository implements LabelRepository {
   constructor(private db: db) { }
 

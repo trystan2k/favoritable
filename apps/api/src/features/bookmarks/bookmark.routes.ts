@@ -1,14 +1,12 @@
 import { Hono } from "hono";
 import { zCustomValidator } from "../../core/validators.wrapper.js";
 import { db } from "../../db/index.js";
-import { mapErrors } from "../../errors/errors.mapper.js";
 import { SQLiteBookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.sql-lite.repository.js";
 import { SQLiteLabelRepository } from "../labels/label.sq-lite.repository.js";
 import { BookmarkUnitOfWork } from "./bookmark-unit-of-work.js";
 import { bookmarkIdParamSchema, createBookmarkFromURLSchema, createBookmarkSchema, deleteBookmarksSchema, getBookmarksQueryParamsSchema, importFromHTMLFileQueryParamsSchema, importOmnivoreBookmarksSchema, UpdateBookmarkModel, updateBookmarkSchema } from "./bookmark.models.js";
-import { SQLiteBookmarkRepository } from "./bookmark.sql-lite.repository.js";
 import { BookmarkService } from "./bookmark.service.js";
-import { scrapper } from "../../core/puppeteer.scrapper.js";
+import { SQLiteBookmarkRepository } from "./bookmark.sql-lite.repository.js";
 
 const bookmarkRoutes = new Hono();
 
@@ -88,36 +86,24 @@ const importRoutes = new Hono();
 
 // Bookmarks - Import from Omnivore
 importRoutes.post('/omnivore', zCustomValidator('json', importOmnivoreBookmarksSchema.array()), async (c) => {
-  try {
-    const data = c.req.valid('json');
-    const bookmarks = await bookmarkService.importFromOmnivore(data);
-    return c.json(bookmarks, 201);
-  } catch (error) {
-    throw mapErrors(error, 'bookmarks');
-  }
+  const data = c.req.valid('json');
+  const bookmarks = await bookmarkService.importFromOmnivore(data);
+  return c.json(bookmarks, 201);
 });
 
 // Bookmarks - Import from HTML File Format
 importRoutes.post('/html', zCustomValidator('query', importFromHTMLFileQueryParamsSchema), async (c) => {
-  try {
-    const { folderName } = c.req.valid('query');
-    const html = await c.req.text();
-    const bookmarks = await bookmarkService.importFromHtmlFile(html, folderName);
-    return c.json(bookmarks, 201);
-  } catch (error) {
-    throw mapErrors(error, 'bookmarks');
-  }
+  const { folderName } = c.req.valid('query');
+  const html = await c.req.text();
+  const bookmarks = await bookmarkService.importFromHtmlFile(html, folderName);
+  return c.json(bookmarks, 201);
 });
 
 // Bookmarks - Import from Text File Format
 importRoutes.post('/text', async (c) => {
-  try {
-    const data = await c.req.text();
-    const bookmarks = await bookmarkService.importFromTextFile(data);
-    return c.json(bookmarks, 201);
-  } catch (error) {
-    throw mapErrors(error, 'bookmarks');
-  }
+  const data = await c.req.text();
+  const bookmarks = await bookmarkService.importFromTextFile(data);
+  return c.json(bookmarks, 201);
 });
 
 bookmarkRoutes.route('/import', importRoutes);

@@ -2,7 +2,7 @@
 import { Context } from "hono";
 
 import { env, NodeEnvs } from "../env.js";
-import { APIError } from "./errors.js";
+import { APIError, UnexpectedError } from "./errors.js";
 import { ErrorResponse } from "./errors.type.js";
 
 const buildErrorResponse = (err: APIError) => {
@@ -20,7 +20,15 @@ const buildErrorResponse = (err: APIError) => {
   return response;
 }
 
-export const errorHandler = async (err: APIError, c: Context) => {
-  const response = buildErrorResponse(err);
-  return c.json(response, err.httpStatusCode || 500)
+export const errorHandler = async (err: Error, c: Context) => {
+
+  let errorObj;
+  if (!(err instanceof APIError)) {
+    errorObj = new UnexpectedError('An unexpected error has ocurred')
+  } else {
+    errorObj = err;
+  }
+
+  const response = buildErrorResponse(errorObj);
+  return c.json(response, errorObj.httpStatusCode || 500)
 }
