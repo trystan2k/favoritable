@@ -1,8 +1,8 @@
 import puppeteer, { type Page } from "puppeteer";
-import { CreateBookmarkModel } from "../features/bookmarks/bookmark.models";
-import { BOOKMARK_STATES } from "../features/bookmarks/bookmark.constants";
-import { URLContentParseError } from "../errors/errors";
-import { cleanableString } from "../utils/string";
+import { CreateBookmarkModel } from "../features/bookmarks/bookmark.models.js";
+import { BOOKMARK_STATES } from "../features/bookmarks/bookmark.constants.js";
+import { URLContentParseError } from "../errors/errors.js";
+import { cleanableString } from "../utils/string.js";
 
 const getTitle = async (page: Page) => {
   let title = await page.title();
