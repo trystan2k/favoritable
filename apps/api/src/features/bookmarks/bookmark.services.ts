@@ -1,20 +1,23 @@
-import { ClassErrorHandler } from "../../errors/errors.decorator.js";
+import { ClassErrorHandler } from "../../errors/errors.decorators.js";
 import { MalFormedRequestError, NotFoundError } from "../../errors/errors.js";
 import { parseHtmlbookmarks } from "../../utils/html-bookmarks-parser.js";
 import { scrapper } from "../../core/puppeteer.scrapper.js";
 import { createBookmarkLabelRelation } from "../bookmarkLabel/bookmarkLabel.mappers.js";
 import { mapCreateLabelModelToInsertLabelDTO } from "../labels/label.mappers.js";
 import { CreateLabelModel, LabelModel } from "../labels/label.models.js";
-import { BookmarkUnitOfWork, Tx } from "./bookmark-unit-of-work.js";
+import { BookmarkUnitOfWork } from "./bookmark-unit-of-work.js";
 import { mapBookmarkDTOToBookmarkModel, mapCreateBookmarkModelToInsertBookmarkDTO, mapOnmivoreBookmarkToInsertBookmarkDTO, mapUpdateBookmarkModelToUpdateBookmarkDTO } from "./bookmark.mappers.js";
 import { BookmarkModel, BookmarksModel, CreateBookmarkModel, GetBookmarksQueryParamsModel, OmnivoreBookmarkModel, UpdateBookmarkModel } from "./bookmark.models.js";
-import { mapServiceErrors } from "../../errors/errors.mapper.js";
+import { mapServiceErrors } from "../../errors/errors.mappers.js";
+import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
+import { type DBTransaction } from "../../db/types.js";
 
+@Service({ name: 'BookmarkService' })
 @ClassErrorHandler(mapServiceErrors)
 export class BookmarkService {
   private entityName = 'Bookmark';
 
-  constructor(private bookmarkUnitOfWork: BookmarkUnitOfWork) { }
+  constructor(@Inject('BookmarkUnitOfWork') private bookmarkUnitOfWork: BookmarkUnitOfWork) { }
 
   async getBookmarks(queryParams: GetBookmarksQueryParamsModel): Promise<BookmarksModel> {
 
@@ -68,7 +71,7 @@ export class BookmarkService {
     return deletedBookmarks;
   }
 
-  private async handleUpdateBookmark(data: UpdateBookmarkModel, uow: BookmarkUnitOfWork, tx: Tx) {
+  private async handleUpdateBookmark(data: UpdateBookmarkModel, uow: BookmarkUnitOfWork, tx: DBTransaction) {
     const updateBookmark = mapUpdateBookmarkModelToUpdateBookmarkDTO(data);
     const updatedBookmarkDto = await uow.bookmarkRepository.update(updateBookmark, tx);
     if (!updatedBookmarkDto) {

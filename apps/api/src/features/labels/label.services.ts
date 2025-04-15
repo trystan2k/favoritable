@@ -1,14 +1,20 @@
-import { ClassErrorHandler } from "../../errors/errors.decorator.js";
+import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
+import { ClassErrorHandler } from "../../errors/errors.decorators.js";
 import { NotFoundError } from "../../errors/errors.js";
-import { mapServiceErrors } from "../../errors/errors.mapper.js";
-import { BookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.repository.js";
+import { mapServiceErrors } from "../../errors/errors.mappers.js";
+import { type BookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.repository.js";
 import { mapCreateLabelModelToInsertLabelDTO, mapLabelDTOToLabelModel, mapUpdateLabelModelToLabelDTO } from "./label.mappers.js";
 import { CreateLabelModel, GetLabelsQueryParamsModel, UpdateLabelModel } from "./label.models.js";
-import { LabelRepository } from "./label.repository.js";
+import { type LabelRepository } from "./label.repository.js";
 
+@Service({ name: 'LabelService' })
 @ClassErrorHandler(mapServiceErrors)
 export class LabelService {
-  constructor(private labelRepository: LabelRepository, private bookmarkLabelRepository: BookmarkLabelRepository) { }
+
+  constructor(
+    @Inject('LabelRepository') private labelRepository: LabelRepository,
+    @Inject('BookmarkLabelRepository') private bookmarkLabelRepository: BookmarkLabelRepository,
+  ) { }
 
   async getLabels(queryParams: GetLabelsQueryParamsModel) {
     const { q: searchQuery } = queryParams;

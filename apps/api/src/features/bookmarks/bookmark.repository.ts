@@ -1,7 +1,6 @@
-import { db } from "../../db/index.js";
+import { type DBTransaction } from "../../db/types.js";
 import { bookmark } from "../../db/schema/bookmark.schema.js";
 import { LabelDTO } from "../labels/label.repository.js";
-import { Tx } from "./bookmark-unit-of-work.js";
 import { GetBookmarksQueryParamsModel } from "./bookmark.models.js";
 
 export type BookmarkDTO = typeof bookmark.$inferSelect;
@@ -21,5 +20,5 @@ export interface BookmarkRepository {
   findById(id: string): Promise<BookmarkWithLabelsDTO | undefined>;
   create(data: InsertBookmarkDTO): Promise<BookmarkDTO>;
   delete(ids: string[]): Promise<string[]>;
-  update(data: UpdateBookmarkDTO, tx?: db | Tx): Promise<BookmarkDTO>;
+  update(data: UpdateBookmarkDTO, tx?: DBTransaction): Promise<BookmarkDTO>;
 }

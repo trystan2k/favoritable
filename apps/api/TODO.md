@@ -1,10 +1,5 @@
 TODO:
 
-- Review dependency injection (services and repositories) <https://pja-g.medium.com/lets-be-serious-about-node-dependency-injection-73bcf9ac394c>
-
-- Add user to bookmarks and labels
-
-- Investigate and add etag if it worth it
 - Add notFound handler
   - <https://github.dev/NicoPlyley/hono-error-handler>
   - <https://app.studyraid.com/en/read/11303/352723/error-handling-middleware>
@@ -14,24 +9,31 @@ TODO:
 - Add Open API docs (Swagger) (<https://github.com/honojs/middleware/issues/735>)
 - Add logging system/middleware
   - <https://medium.com/@mohantaankit2002/best-practices-for-logging-and-monitoring-in-large-nestjs-applications-ae6e2ed31d93>
-- Add endpoint to backup/export bookmarks (Worker?)
-- Add Lint / Prettier / Biome / Knip
-  - Knip: <https://knip.dev/overview/getting-started>
-  - Biome: <https://blog.stackademic.com/biome-a-faster-unified-alternative-to-eslint-and-prettier-7767ed2637bd>
-- Add tests
-  - E2E - Test scrapper for onmivore import files
-  - E2E - Test scrappper for HTML files
-  - E2E - Test scrapper for Text files
+  - Change error handler to return generic info and log detailed one
 - Add Auth
   - Passport.js
   - <https://x.com/sergiodxa/status/1897067211514372562?t=xVl11pi7stKjwVVgzvQu7g&s=09>
   - <https://www.youtube.com/playlist?app=desktop&list=PLUofhDIg_38qm2oPOV-IRTTEKyrVBBaU7>
+  - Add user to bookmarks and labels  
+- Add endpoint to backup/export bookmarks (Worker?)
+  - <https://medium.com/@mehdibafdil/thread-safe-architecture-in-node-js-from-theory-to-implementation-12aa03b09b4e>
+- Add Lint / Prettier / Biome / Knip
+  - Knip: <https://knip.dev/overview/getting-started>
+  - Biome: <https://blog.stackademic.com/biome-a-faster-unified-alternative-to-eslint-and-prettier-7767ed2637bd>  
+- Add tests
+  - E2E - Test scrapper for onmivore import files
+  - E2E - Test scrappper for HTML files
+  - E2E - Test scrapper for Text files  
+- Review for Prod
+  - <https://medium.com/@mehdibafdil/is-your-node-js-application-production-ready-a-complete-checklist-601c9d494f4f>
+  - <https://dev.to/minima_desk_cd9b151c4e2fb/dockerize-your-nodejs-application-a-step-by-step-guide-iel?context=digest>
 - Use AI to suggeest labels when adding a bookmark
 - Review dependabot
   - <https://woliveiras.github.io/posts/how-to-schedule-dependabot-to-keep-dependencies-updated/>
 
 REVIEW When almost ready:
 
+- <https://github.com/goldbergyoni/nodejs-testing-best-practices?ck_subscriber_id=2107974869#readme>
 - <https://levelup.gitconnected.com/your-express-app-isnt-great-here-s-why-84003bbce092>
 - <https://medium.com/javarevisited/16-common-rest-api-status-code-mistakes-to-avoid-in-2025-f703c656deb0#3b1d>
 - <https://dev.to/schead/using-clean-architecture-and-the-unit-of-work-pattern-on-a-nodejs-application-3pc9>
@@ -54,6 +56,11 @@ FRONT:
 
 DONE:
 
+- Investigate and add etag if it worth it
+  - Used mostly for cached response, not applied to bookmarks
+- Review dependency injection (services and repositories) <https://pja-g.medium.com/lets-be-serious-about-node-dependency-injection-73bcf9ac394c>
+  - Change to be able to inject instances (like DB)
+  - Singleton, if makes sense
 - Review scrapper. Maybe use pupeeter or playwright (for pages like Temu and Twitter )
   - <https://brightdata.com/blog/how-tos/web-scraping-puppeteer>
   - <https://scrapfly.io/blog/web-scraping-with-puppeteer-and-nodejs/>

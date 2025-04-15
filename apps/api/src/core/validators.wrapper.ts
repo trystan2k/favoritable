@@ -1,7 +1,7 @@
-import { z, ZodSchema } from 'zod'
-import type { ValidationTargets } from 'hono'
-import { zValidator } from '@hono/zod-validator'
-import { MalFormedRequestError, ValidationError } from '../errors/errors.js'
+import { zValidator } from '@hono/zod-validator';
+import type { ValidationTargets } from 'hono';
+import { z, ZodSchema } from 'zod';
+import { MalFormedRequestError } from '../errors/errors.js';
 
 export const zCustomValidator = <T extends ZodSchema, Target extends keyof ValidationTargets>(
   target: Target,

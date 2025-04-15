@@ -1,20 +1,21 @@
 import { and, eq, exists, inArray, like, or, sql } from "drizzle-orm";
 
-import type { db } from "../../db/index.js";
+import { type DBTransaction } from "../../db/types.js";
 import { bookmark } from "../../db/schema/bookmark.schema.js";
 import { bookmarkLabel } from "../../db/schema/bookmark-label.schema.js";
 import { label } from "../../db/schema/label.schema.js";
 import { NotFoundError } from "../../errors/errors.js";
-import { Tx } from "./bookmark-unit-of-work.js";
 import { GetBookmarksQueryParamsModel } from "./bookmark.models.js";
 import { BookmarkDTO, BookmarkRepository, BookmarkWithLabelsDTO, InsertBookmarkDTO, UpdateBookmarkDTO } from "./bookmark.repository.js";
-import { ClassErrorHandler } from "../../errors/errors.decorator.js";
-import { mapRepositoryErrors } from "../../errors/errors.mapper.js";
+import { ClassErrorHandler } from "../../errors/errors.decorators.js";
+import { mapRepositoryErrors } from "../../errors/errors.mappers.js";
+import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
 
+@Service({ name: 'BookmarkRepository', singleton: true })
 @ClassErrorHandler(mapRepositoryErrors)
 export class SQLiteBookmarkRepository implements BookmarkRepository {
 
-  constructor(private db: db) { }
+  constructor(@Inject('db') private db: DBTransaction) { }
 
   async findAll(queryParams: GetBookmarksQueryParamsModel): Promise<BookmarkWithLabelsDTO[]> {
     const { limit, q: searchQuery, cursor } = queryParams;
@@ -90,7 +91,7 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
     return deletedBookmarks.map(bookmark => bookmark.id);
   }
 
-  async update(bookmarksData: UpdateBookmarkDTO, tx: db | Tx = this.db): Promise<BookmarkDTO> {
+  async update(bookmarksData: UpdateBookmarkDTO, tx: DBTransaction = this.db): Promise<BookmarkDTO> {
     const bookmarkUpdated = await tx.update(bookmark).set({ ...bookmarksData, updatedAt: new Date() }).where(eq(bookmark.id, bookmarksData.id)).returning().get();
     if (!bookmarkUpdated) {
       throw new NotFoundError(`bookmark with id ${bookmarksData.id} not found`);

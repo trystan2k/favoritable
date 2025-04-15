@@ -1,21 +1,22 @@
 import { eq } from "drizzle-orm";
-import type { db } from "../../db/index.js";
 import { bookmarkLabel } from "../../db/schema/bookmark-label.schema.js";
-import { Tx } from "../bookmarks/bookmark-unit-of-work.js";
 import { BookmarkLabelDTO, BookmarkLabelRepository, InsertBookmarkLabelDTO } from "./bookmarkLabel.repository.js";
+import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
+import { type DBTransaction } from "../../db/types.js";
 
+@Service({ name: 'BookmarkLabelRepository', singleton: true })
 export class SQLiteBookmarkLabelRepository implements BookmarkLabelRepository {
-  constructor(private db: db) { }
+  constructor(@Inject('db') private db: DBTransaction) { }
 
-  create(data: InsertBookmarkLabelDTO, tx: db | Tx = this.db): Promise<BookmarkLabelDTO> {
+  create(data: InsertBookmarkLabelDTO, tx: DBTransaction = this.db): Promise<BookmarkLabelDTO> {
     return tx.insert(bookmarkLabel).values(data).returning().get();
   }
 
-  deleteByBookmarkId(bookmarkId: string, tx: db | Tx  = this.db): Promise<BookmarkLabelDTO[]> {
+  deleteByBookmarkId(bookmarkId: string, tx: DBTransaction = this.db): Promise<BookmarkLabelDTO[]> {
     return tx.delete(bookmarkLabel).where(eq(bookmarkLabel.bookmarkId, bookmarkId)).returning().all();
   }
 
-  deleteByLabelId(labelId: string, tx: db | Tx  = this.db): Promise<BookmarkLabelDTO[]> {
+  deleteByLabelId(labelId: string, tx: DBTransaction = this.db): Promise<BookmarkLabelDTO[]> {
     return tx.delete(bookmarkLabel).where(eq(bookmarkLabel.labelId, labelId)).returning().all();
   }
 }

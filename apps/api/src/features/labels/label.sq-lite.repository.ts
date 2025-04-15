@@ -1,14 +1,15 @@
 import { eq, inArray } from "drizzle-orm";
-import type { db } from "../../db/index.js";
+import { type DBTransaction } from "../../db/types.js";
 import { label } from "../../db/schema/label.schema.js";
-import { Tx } from "../bookmarks/bookmark-unit-of-work.js";
 import { InsertLabelDTO, LabelDTO, LabelRepository, UpdateLabelDTO } from "./label.repository.js";
-import { ClassErrorHandler } from "../../errors/errors.decorator.js";
-import { mapRepositoryErrors } from "../../errors/errors.mapper.js";
+import { ClassErrorHandler } from "../../errors/errors.decorators.js";
+import { mapRepositoryErrors } from "../../errors/errors.mappers.js";
+import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
 
+@Service({ name: 'LabelRepository', singleton: true })
 @ClassErrorHandler(mapRepositoryErrors)
 export class SQLiteLabelRepository implements LabelRepository {
-  constructor(private db: db) { }
+  constructor(@Inject('db') private db: DBTransaction) { }
 
   findAll(searchQuery?: string): Promise<LabelDTO[]> {
     return this.db.query.label.findMany({
@@ -28,15 +29,15 @@ export class SQLiteLabelRepository implements LabelRepository {
     });
   }
 
-  create(data: InsertLabelDTO, tx: db | Tx = this.db): Promise<LabelDTO> {
+  create(data: InsertLabelDTO, tx: DBTransaction = this.db): Promise<LabelDTO> {
     return tx.insert(label).values(data).returning().get();
   }
 
-  update(data: UpdateLabelDTO, tx: db | Tx = this.db): Promise<LabelDTO> {
+  update(data: UpdateLabelDTO, tx: DBTransaction = this.db): Promise<LabelDTO> {
     return tx.update(label).set({ ...data, updatedAt: new Date() }).where(eq(label.id, data.id)).returning().get();
   }
 
-  async delete(ids: string[], tx: db | Tx = this.db): Promise<string[]> {
+  async delete(ids: string[], tx: DBTransaction = this.db): Promise<string[]> {
     const deletedLabels = await tx.delete(label).where(inArray(label.id, ids)).returning().all();
     return deletedLabels.map(deletedLabel => deletedLabel.id);
   }

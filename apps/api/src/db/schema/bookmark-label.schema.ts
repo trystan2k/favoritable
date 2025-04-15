@@ -19,7 +19,7 @@ export const bookmarkLabel = sqliteTable(
     index('bookmarks_labels_id_index').on(table.id)
   ]);
 
-export const bookmarkLabelsRelations = relations(bookmarkLabel, ({ one }) => ({
+export const bookmarkLabelsRelation = relations(bookmarkLabel, ({ one }) => ({
   label: one(label, {
     fields: [bookmarkLabel.labelId],
     references: [label.id],

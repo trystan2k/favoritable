@@ -1,63 +1,71 @@
 import { Hono } from "hono";
 
-import { db } from "../../db/index.js";
 import { createLabelSchema, deleteLabelssSchema, getLabelsQueryParamsSchema, labelIdParamSchema, UpdateLabelModel, updateLabelSchema } from "./label.models.js";
-import { SQLiteLabelRepository } from "./label.sq-lite.repository.js";
-import { LabelService } from "./label.service.js";
-import { SQLiteBookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.sql-lite.repository.js";
+import { LabelService } from "./label.services.js";
 import { zCustomValidator } from "../../core/validators.wrapper.js";
+import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
 
-const labelRoutes = new Hono();
+@Service({ name: 'LabelRoutes' })
+export class LabelRoutes {
+  private labelRoutes: Hono;
 
-const labelRepository = new SQLiteLabelRepository(db);
-const bookmarkLabelRepository = new SQLiteBookmarkLabelRepository(db);
-const labelService = new LabelService(labelRepository, bookmarkLabelRepository);
+  constructor(
+    @Inject('LabelService') private labelService: LabelService
+  ) {
+    this.labelRoutes = new Hono();
+    this.setupRoutes();
+  }
 
-// Labels - Get
-labelRoutes.get('/', zCustomValidator('param', getLabelsQueryParamsSchema), async (c) => {
-  const queryParams = c.req.valid('param');
-  const labels = await labelService.getLabels(queryParams);
-  return c.json(labels, 200);
-});
+  get routes() {
+    return this.labelRoutes;
+  }
 
-// Labels - Create
-labelRoutes.post('/', zCustomValidator('json', createLabelSchema), async (c) => {
-  const data = c.req.valid('json');
-  const label = await labelService.createLabel(data);
-  // Add location header in response, with the url of the newly created bookmark
-  c.header('Location', `${c.req.url}/${label.id}`);
-  return c.json(label, 201);
-});
+  private setupRoutes() {
+    // Labels - Get
+    this.labelRoutes.get('/', zCustomValidator('param', getLabelsQueryParamsSchema), async (c) => {
+      const queryParams = c.req.valid('param');
+      const labels = await this.labelService.getLabels(queryParams);
+      return c.json(labels, 200);
+    });
 
-// Label - Get
-labelRoutes.get('/:id', zCustomValidator('param', labelIdParamSchema), async (c) => {
-  const { id } = c.req.valid('param');
-  const label = await labelService.getLabel(id);
-  return c.json(label, 200);
-});
+    // Labels - Create
+    this.labelRoutes.post('/', zCustomValidator('json', createLabelSchema), async (c) => {
+      const data = c.req.valid('json');
+      const label = await this.labelService.createLabel(data);
+      // Add location header in response, with the url of the newly created bookmark
+      c.header('Location', `${c.req.url}/${label.id}`);
+      return c.json(label, 201);
+    });
 
-// Bookmarks - Delete
-labelRoutes.post('/batch-delete', zCustomValidator('json', deleteLabelssSchema), async (c) => {
-  const data = c.req.valid('json');
-  const deletedBookmarks = await labelService.deleteLabels(data.ids);
-  return c.json(deletedBookmarks, 200);
-});
+    // Label - Get
+    this.labelRoutes.get('/:id', zCustomValidator('param', labelIdParamSchema), async (c) => {
+      const { id } = c.req.valid('param');
+      const label = await this.labelService.getLabel(id);
+      return c.json(label, 200);
+    });
 
-// Label - Delete
-labelRoutes.delete('/:id', zCustomValidator('param', labelIdParamSchema), async (c) => {
-  const { id } = c.req.valid('param');
-  await labelService.deleteLabels([id]);
-  return c.body(null, 204);
-});
+    // Bookmarks - Delete
+    this.labelRoutes.post('/batch-delete', zCustomValidator('json', deleteLabelssSchema), async (c) => {
+      const data = c.req.valid('json');
+      const deletedBookmarks = await this.labelService.deleteLabels(data.ids);
+      return c.json(deletedBookmarks, 200);
+    });
 
-// Label - Update
-labelRoutes.put('/:id', zCustomValidator('param', labelIdParamSchema), zCustomValidator('json', updateLabelSchema.partial()), async (c) => {
-  const data = c.req.valid('json');
-  const { id } = c.req.valid('param');
-  data.id = id;
+    // Label - Delete
+    this.labelRoutes.delete('/:id', zCustomValidator('param', labelIdParamSchema), async (c) => {
+      const { id } = c.req.valid('param');
+      await this.labelService.deleteLabels([id]);
+      return c.body(null, 204);
+    });
 
-  const updatedLabel = await labelService.updateLabel(data as UpdateLabelModel);
-  return c.json(updatedLabel, 200);
-});
+    // Label - Update
+    this.labelRoutes.put('/:id', zCustomValidator('param', labelIdParamSchema), zCustomValidator('json', updateLabelSchema.partial()), async (c) => {
+      const data = c.req.valid('json');
+      const { id } = c.req.valid('param');
+      data.id = id;
 
-export { labelRoutes };
+      const updatedLabel = await this.labelService.updateLabel(data as UpdateLabelModel);
+      return c.json(updatedLabel, 200);
+    });
+  }
+}

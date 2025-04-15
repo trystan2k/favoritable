@@ -3,7 +3,7 @@ import { Context } from "hono";
 
 import { env, NodeEnvs } from "../env.js";
 import { APIError, UnexpectedError } from "./errors.js";
-import { ErrorResponse } from "./errors.type.js";
+import { ErrorResponse } from "./errors.types.js";
 
 const buildErrorResponse = (err: APIError) => {
   const response: ErrorResponse = {
