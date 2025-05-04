@@ -4,7 +4,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { requestId } from "hono/request-id";
 import { Container } from './core/dependency-injection/di.container.js';
-import { addCacheHeaders, addCorsHeaders, addSecurityHeaders, setContentTypeHeaders, validateAcceptHeader } from './core/http.headers.js';
+import { addCacheHeaders, addCorsHeaders, addSecurityHeaders, parseAPIVersion, setContentTypeHeaders } from './core/http.headers.js';
 import { db } from './db/index.js';
 import { newErrorHandler } from './errors/errors.handlers.js';
 import { repositoryErrorsHandler, serviceErrorsHandler } from './errors/errors.mappers.js';
@@ -48,7 +48,7 @@ const app = new Hono();
 app.use('*', requestId());
 app.use('*', addCorsHeaders());
 app.use('*', setContentTypeHeaders());
-app.use('*', validateAcceptHeader());
+app.use('*', parseAPIVersion());
 app.use('*', addSecurityHeaders());
 app.use('*', addCacheHeaders());
 

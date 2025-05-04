@@ -1,6 +1,6 @@
 import { Context, Next } from 'hono';
 import { cors } from 'hono/cors';
-import { NotAcceptedError } from '../errors/errors.js';
+import { NotAcceptedError } from '../errors/errors';
 
 export const addCorsHeaders = () => {
   return cors({
@@ -20,12 +20,42 @@ export const setContentTypeHeaders = (contentType = 'application/json') => {
   };
 };
 
-export const validateAcceptHeader = () => {
+const API_VERSIONS = {
+  LATEST: 'v1',
+  V1: 'v1'
+} as const;
+
+type APIVersion = typeof API_VERSIONS[keyof typeof API_VERSIONS];
+
+const DEPRICATED_VERSIONS: APIVersion[] = [];
+const VERSION_REGEX = /application\/vnd\.favoritable\.v(\d+)\+json/;
+
+export const parseAPIVersion = () => {
   return async (c: Context, next: Next) => {
     const accept = c.req.header('Accept');
-    if (accept && !accept.includes('application/json') && !accept.includes('multipart/form-data') && !accept.includes('*/*')) {
-      throw new NotAcceptedError('Unsupported Accept header', `Accept header must be application/json or */*`);
+
+    // Allow if no Accept header is present (defaults to latest version)
+    if (!accept) {
+      c.set('apiVersion', API_VERSIONS.LATEST);
+      return next();
     }
+
+    const versionMatch = accept.match(VERSION_REGEX);
+    if (versionMatch) {
+      const version = `v${versionMatch[1]}` as APIVersion;
+      if (DEPRICATED_VERSIONS.includes(version)) {
+        throw new NotAcceptedError('Depricated API version', `Use ${API_VERSIONS.LATEST} instead or a newer one`);
+      }
+
+      if (Object.values(API_VERSIONS).includes(version)) {
+        c.set('apiVersion', version);
+        return next();
+      } else {
+        throw new NotAcceptedError('Invalid API version');
+      }
+    }
+
+    c.set('apiVersion', API_VERSIONS.LATEST);
     return next();
   };
 };

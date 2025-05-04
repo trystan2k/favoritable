@@ -1,7 +1,5 @@
 TODO:
 
-- Add versioning using headers
-  - <https://medium.com/@bubu.tripathy/best-practices-for-designing-rest-apis-2c084ab09059>
 - Add Open API docs (Swagger) (<https://github.com/honojs/middleware/issues/735>)
 - Add logging system/middleware
   - <https://medium.com/@mohantaankit2002/best-practices-for-logging-and-monitoring-in-large-nestjs-applications-ae6e2ed31d93>
@@ -52,6 +50,8 @@ FRONT:
 
 DONE:
 
+- Add versioning using headers
+  - <https://medium.com/@bubu.tripathy/best-practices-for-designing-rest-apis-2c084ab09059>
 - Setup headers (like Accept, Content-Type, etc)
 - Add notFound handler
   - <https://github.dev/NicoPlyley/hono-error-handler>
