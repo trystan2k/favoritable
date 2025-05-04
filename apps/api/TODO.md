@@ -1,6 +1,5 @@
 TODO:
 
-- Setup headers (like Accept, Content-Type, etc)
 - Add versioning using headers
   - <https://medium.com/@bubu.tripathy/best-practices-for-designing-rest-apis-2c084ab09059>
 - Add Open API docs (Swagger) (<https://github.com/honojs/middleware/issues/735>)
@@ -53,6 +52,7 @@ FRONT:
 
 DONE:
 
+- Setup headers (like Accept, Content-Type, etc)
 - Add notFound handler
   - <https://github.dev/NicoPlyley/hono-error-handler>
   - <https://app.studyraid.com/en/read/11303/352723/error-handling-middleware>

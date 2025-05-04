@@ -7,6 +7,7 @@ import { Context } from "hono";
 export type ResponseHandler = (error: APIError, c: Context) => Response;
 
 const defaultResponseHandler = (err: APIError, c: Context): Response => {
+  c.header('Content-Type', 'application/json');
 
   // Sanitize error message for production
   const publicMessage = process.env.NODE_ENV === 'production'

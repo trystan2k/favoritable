@@ -2,12 +2,12 @@ import 'reflect-metadata';
 
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import { cors } from 'hono/cors';
 import { requestId } from "hono/request-id";
 import { Container } from './core/dependency-injection/di.container.js';
+import { addCacheHeaders, addCorsHeaders, addSecurityHeaders, setContentTypeHeaders, validateAcceptHeader } from './core/http.headers.js';
 import { db } from './db/index.js';
 import { newErrorHandler } from './errors/errors.handlers.js';
-import { serviceErrorsHandler, repositoryErrorsHandler } from './errors/errors.mappers.js';
+import { repositoryErrorsHandler, serviceErrorsHandler } from './errors/errors.mappers.js';
 import { SQLiteBookmarkLabelRepository } from './features/bookmarkLabel/bookmarkLabel.sql-lite.repository.js';
 import { BookmarkUnitOfWork } from './features/bookmarks/bookmark-unit-of-work.js';
 import { BookmarkRoutes } from './features/bookmarks/bookmark.routes.js';
@@ -44,12 +44,15 @@ const routes = {
 }
 
 const app = new Hono();
+
 app.use('*', requestId());
-app.use('*', cors())
+app.use('*', addCorsHeaders());
+app.use('*', setContentTypeHeaders());
+app.use('*', validateAcceptHeader());
+app.use('*', addSecurityHeaders());
+app.use('*', addCacheHeaders());
 
 const errorHandlers = [serviceErrorsHandler, repositoryErrorsHandler];
-
-
 app.onError(newErrorHandler(errorHandlers));
 
 const api = app.basePath(routes.basePath);

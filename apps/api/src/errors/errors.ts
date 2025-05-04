@@ -49,3 +49,9 @@ export class URLContentParseError extends APIError {
   name = 'URLContentParseError';
   httpStatusCode = 424 as ContentfulStatusCode;
 }
+
+export class NotAcceptedError extends APIError {
+  code = '00008';
+  name = 'NotAcceptedError';
+  httpStatusCode = 406 as ContentfulStatusCode;
+}
