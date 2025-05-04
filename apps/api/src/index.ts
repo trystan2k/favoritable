@@ -4,17 +4,16 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from 'hono/cors';
 import { requestId } from "hono/request-id";
-
-import { errorHandler } from "./errors/errors.handlers.js";
-
-import { LabelRoutes } from "./features/labels/label.routes.js";
 import { Container } from './core/dependency-injection/di.container.js';
-import { BookmarkRoutes } from './features/bookmarks/bookmark.routes.js';
 import { db } from './db/index.js';
+import { newErrorHandler } from './errors/errors.handlers.js';
+import { serviceErrorsHandler, repositoryErrorsHandler } from './errors/errors.mappers.js';
 import { SQLiteBookmarkLabelRepository } from './features/bookmarkLabel/bookmarkLabel.sql-lite.repository.js';
 import { BookmarkUnitOfWork } from './features/bookmarks/bookmark-unit-of-work.js';
+import { BookmarkRoutes } from './features/bookmarks/bookmark.routes.js';
 import { BookmarkService } from './features/bookmarks/bookmark.services.js';
 import { SQLiteBookmarkRepository } from './features/bookmarks/bookmark.sql-lite.repository.js';
+import { LabelRoutes } from "./features/labels/label.routes.js";
 import { LabelService } from './features/labels/label.services.js';
 import { SQLiteLabelRepository } from './features/labels/label.sq-lite.repository.js';
 
@@ -47,7 +46,11 @@ const routes = {
 const app = new Hono();
 app.use('*', requestId());
 app.use('*', cors())
-app.onError(errorHandler);
+
+const errorHandlers = [serviceErrorsHandler, repositoryErrorsHandler];
+
+
+app.onError(newErrorHandler(errorHandlers));
 
 const api = app.basePath(routes.basePath);
 

@@ -1,18 +1,15 @@
 import { and, eq, exists, inArray, like, or, sql } from "drizzle-orm";
 
-import { type DBTransaction } from "../../db/types.js";
-import { bookmark } from "../../db/schema/bookmark.schema.js";
+import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
 import { bookmarkLabel } from "../../db/schema/bookmark-label.schema.js";
+import { bookmark } from "../../db/schema/bookmark.schema.js";
 import { label } from "../../db/schema/label.schema.js";
+import { type DBTransaction } from "../../db/types.js";
 import { NotFoundError } from "../../errors/errors.js";
 import { GetBookmarksQueryParamsModel } from "./bookmark.models.js";
 import { BookmarkDTO, BookmarkRepository, BookmarkWithLabelsDTO, InsertBookmarkDTO, UpdateBookmarkDTO } from "./bookmark.repository.js";
-import { ClassErrorHandler } from "../../errors/errors.decorators.js";
-import { mapRepositoryErrors } from "../../errors/errors.mappers.js";
-import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
 
 @Service({ name: 'BookmarkRepository', singleton: true })
-@ClassErrorHandler(mapRepositoryErrors)
 export class SQLiteBookmarkRepository implements BookmarkRepository {
 
   constructor(@Inject('db') private db: DBTransaction) { }

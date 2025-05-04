@@ -1,8 +1,5 @@
 TODO:
 
-- Add notFound handler
-  - <https://github.dev/NicoPlyley/hono-error-handler>
-  - <https://app.studyraid.com/en/read/11303/352723/error-handling-middleware>
 - Setup headers (like Accept, Content-Type, etc)
 - Add versioning using headers
   - <https://medium.com/@bubu.tripathy/best-practices-for-designing-rest-apis-2c084ab09059>
@@ -56,6 +53,9 @@ FRONT:
 
 DONE:
 
+- Add notFound handler
+  - <https://github.dev/NicoPlyley/hono-error-handler>
+  - <https://app.studyraid.com/en/read/11303/352723/error-handling-middleware>
 - Investigate and add etag if it worth it
   - Used mostly for cached response, not applied to bookmarks
 - Review dependency injection (services and repositories) <https://pja-g.medium.com/lets-be-serious-about-node-dependency-injection-73bcf9ac394c>

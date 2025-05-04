@@ -1,13 +1,10 @@
 import { eq, inArray } from "drizzle-orm";
-import { type DBTransaction } from "../../db/types.js";
-import { label } from "../../db/schema/label.schema.js";
-import { InsertLabelDTO, LabelDTO, LabelRepository, UpdateLabelDTO } from "./label.repository.js";
-import { ClassErrorHandler } from "../../errors/errors.decorators.js";
-import { mapRepositoryErrors } from "../../errors/errors.mappers.js";
 import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
+import { label } from "../../db/schema/label.schema.js";
+import { type DBTransaction } from "../../db/types.js";
+import { InsertLabelDTO, LabelDTO, LabelRepository, UpdateLabelDTO } from "./label.repository.js";
 
 @Service({ name: 'LabelRepository', singleton: true })
-@ClassErrorHandler(mapRepositoryErrors)
 export class SQLiteLabelRepository implements LabelRepository {
   constructor(@Inject('db') private db: DBTransaction) { }
 

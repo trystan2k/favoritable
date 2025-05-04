@@ -8,12 +8,10 @@ import { CreateLabelModel, LabelModel } from "../labels/label.models.js";
 import { BookmarkUnitOfWork } from "./bookmark-unit-of-work.js";
 import { mapBookmarkDTOToBookmarkModel, mapCreateBookmarkModelToInsertBookmarkDTO, mapOnmivoreBookmarkToInsertBookmarkDTO, mapUpdateBookmarkModelToUpdateBookmarkDTO } from "./bookmark.mappers.js";
 import { BookmarkModel, BookmarksModel, CreateBookmarkModel, GetBookmarksQueryParamsModel, OmnivoreBookmarkModel, UpdateBookmarkModel } from "./bookmark.models.js";
-import { mapServiceErrors } from "../../errors/errors.mappers.js";
 import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
 import { type DBTransaction } from "../../db/types.js";
 
 @Service({ name: 'BookmarkService' })
-@ClassErrorHandler(mapServiceErrors)
 export class BookmarkService {
   private entityName = 'Bookmark';
 
