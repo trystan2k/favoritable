@@ -21,7 +21,7 @@ export class BookmarkRoutes {
 
   private setupRoutes() {
 
-// Bookmarks - Get
+    // Bookmarks - Get
     this.bookmarkRoutes.get('/', zCustomValidator('query', getBookmarksQueryParamsSchema), async (c) => {
       const queryParams = c.req.valid('query');
       const bookmarks = await this.bookmarkService.getBookmarks(queryParams);

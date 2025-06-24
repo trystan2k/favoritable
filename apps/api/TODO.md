@@ -1,23 +1,33 @@
 TODO:
 
-- Add Open API docs (Swagger) (<https://github.com/honojs/middleware/issues/735>)
 - Add logging system/middleware
+  - <https://github.com/pinojs/pino/blob/main/docs/web.md#pino-with-hono>
+  - <https://github.com/winstonjs/winston>
   - <https://medium.com/@mohantaankit2002/best-practices-for-logging-and-monitoring-in-large-nestjs-applications-ae6e2ed31d93>
   - Change error handler to return generic info and log detailed one
 - Add Auth
   - Passport.js
   - <https://x.com/sergiodxa/status/1897067211514372562?t=xVl11pi7stKjwVVgzvQu7g&s=09>
   - <https://www.youtube.com/playlist?app=desktop&list=PLUofhDIg_38qm2oPOV-IRTTEKyrVBBaU7>
+  - <https://javascript.plainenglish.io/the-node-js-microservices-masterclass-84c0329ad2d6>
   - Add user to bookmarks and labels  
 - Add endpoint to backup/export bookmarks (Worker?)
   - <https://medium.com/@mehdibafdil/thread-safe-architecture-in-node-js-from-theory-to-implementation-12aa03b09b4e>
 - Add Lint / Prettier / Biome / Knip
   - Knip: <https://knip.dev/overview/getting-started>
   - Biome: <https://blog.stackademic.com/biome-a-faster-unified-alternative-to-eslint-and-prettier-7767ed2637bd>  
+- Review Middlewares
+  - <https://hono.dev/docs/middleware/builtin/timeout>  
+- Add Open API docs (Swagger)
+  - <https://hono.dev/examples/hono-openapi>
+  - <https://github.com/honojs/middleware/issues/735>
 - Add tests
   - E2E - Test scrapper for onmivore import files
   - E2E - Test scrappper for HTML files
   - E2E - Test scrapper for Text files  
+- Review Logging Monitoring
+  - <https://medium.com/@mohantaankit2002/best-practices-for-logging-and-monitoring-in-large-nestjs-applications-ae6e2ed31d93>
+  - <https://betterstack.com/telemetry>
 - Review for Prod
   - <https://medium.com/@mehdibafdil/is-your-node-js-application-production-ready-a-complete-checklist-601c9d494f4f>
   - <https://dev.to/minima_desk_cd9b151c4e2fb/dockerize-your-nodejs-application-a-step-by-step-guide-iel?context=digest>

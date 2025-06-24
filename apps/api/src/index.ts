@@ -6,7 +6,7 @@ import { requestId } from "hono/request-id";
 import { Container } from './core/dependency-injection/di.container.js';
 import { addCacheHeaders, addCorsHeaders, addSecurityHeaders, parseAPIVersion, setContentTypeHeaders } from './core/http.headers.js';
 import { db } from './db/index.js';
-import { newErrorHandler } from './errors/errors.handlers.js';
+import { errorHandler } from './errors/errors.handlers.js';
 import { repositoryErrorsHandler, serviceErrorsHandler } from './errors/errors.mappers.js';
 import { SQLiteBookmarkLabelRepository } from './features/bookmarkLabel/bookmarkLabel.sql-lite.repository.js';
 import { BookmarkUnitOfWork } from './features/bookmarks/bookmark-unit-of-work.js';
@@ -53,7 +53,7 @@ app.use('*', addSecurityHeaders());
 app.use('*', addCacheHeaders());
 
 const errorHandlers = [serviceErrorsHandler, repositoryErrorsHandler];
-app.onError(newErrorHandler(errorHandlers));
+app.onError(errorHandler(errorHandlers));
 
 const api = app.basePath(routes.basePath);
 
@@ -62,6 +62,9 @@ const labelRoutes = Container.getInstance().resolve<LabelRoutes>('LabelRoutes');
 
 api.route(routes.bookmarks, bookmarkRoutes.routes);
 api.route(routes.labels, labelRoutes.routes);
+
+// Health check
+app.get('/health', (c) => c.text('OK'));
 
 // Start the server
 serve(app, (info) => {

@@ -28,7 +28,7 @@ const defaultResponseHandler = (err: APIError, c: Context): Response => {
   return c.json(response, err.httpStatusCode || 500);
 }
 
-export const newErrorHandler = (errorHandlers: Function[], customHandler: ResponseHandler = defaultResponseHandler): ErrorHandler => {
+export const errorHandler = (errorHandlers: Function[], customHandler: ResponseHandler = defaultResponseHandler): ErrorHandler => {
   return (err: Error, c) => {
     let errorObj: APIError;
     if (!(err instanceof APIError)) {

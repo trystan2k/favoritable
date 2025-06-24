@@ -1,15 +1,14 @@
-import { ClassErrorHandler } from "../../errors/errors.decorators.js";
+import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
+import { scrapper } from "../../core/puppeteer.scrapper.js";
+import { type DBTransaction } from "../../db/types.js";
 import { MalFormedRequestError, NotFoundError } from "../../errors/errors.js";
 import { parseHtmlbookmarks } from "../../utils/html-bookmarks-parser.js";
-import { scrapper } from "../../core/puppeteer.scrapper.js";
 import { createBookmarkLabelRelation } from "../bookmarkLabel/bookmarkLabel.mappers.js";
 import { mapCreateLabelModelToInsertLabelDTO } from "../labels/label.mappers.js";
 import { CreateLabelModel, LabelModel } from "../labels/label.models.js";
 import { BookmarkUnitOfWork } from "./bookmark-unit-of-work.js";
 import { mapBookmarkDTOToBookmarkModel, mapCreateBookmarkModelToInsertBookmarkDTO, mapOnmivoreBookmarkToInsertBookmarkDTO, mapUpdateBookmarkModelToUpdateBookmarkDTO } from "./bookmark.mappers.js";
 import { BookmarkModel, BookmarksModel, CreateBookmarkModel, GetBookmarksQueryParamsModel, OmnivoreBookmarkModel, UpdateBookmarkModel } from "./bookmark.models.js";
-import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
-import { type DBTransaction } from "../../db/types.js";
 
 @Service({ name: 'BookmarkService' })
 export class BookmarkService {
