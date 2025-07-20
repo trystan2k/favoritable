@@ -29,7 +29,8 @@ try {
     e.stack = "";
     throw e;
   } else {
-    console.error(error);
+    // Use logger here once the environment is properly loaded
+    console.error('Unexpected error during environment validation:', error);
   }
 }
 

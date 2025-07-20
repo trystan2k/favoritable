@@ -1,15 +1,12 @@
 TODO:
 
-- Add logging system/middleware
-  - <https://github.com/pinojs/pino/blob/main/docs/web.md#pino-with-hono>
-  - <https://github.com/winstonjs/winston>
-  - <https://medium.com/@mohantaankit2002/best-practices-for-logging-and-monitoring-in-large-nestjs-applications-ae6e2ed31d93>
-  - Change error handler to return generic info and log detailed one
 - Add Auth
   - Passport.js
+  - Auth.js (<https://authjs.dev/>)
   - <https://x.com/sergiodxa/status/1897067211514372562?t=xVl11pi7stKjwVVgzvQu7g&s=09>
   - <https://www.youtube.com/playlist?app=desktop&list=PLUofhDIg_38qm2oPOV-IRTTEKyrVBBaU7>
   - <https://javascript.plainenglish.io/the-node-js-microservices-masterclass-84c0329ad2d6>
+  - <https://article.arunangshudas.com/8-essential-steps-for-safe-node-js-authentication-4858fecdea41>
   - Add user to bookmarks and labels  
 - Add endpoint to backup/export bookmarks (Worker?)
   - <https://medium.com/@mehdibafdil/thread-safe-architecture-in-node-js-from-theory-to-implementation-12aa03b09b4e>
@@ -60,6 +57,11 @@ FRONT:
 
 DONE:
 
+- Add logging system/middleware
+  - <https://github.com/pinojs/pino/blob/main/docs/web.md#pino-with-hono>
+  - <https://medium.com/@artemkhrenov/building-a-production-grade-logger-for-node-js-applications-with-pino-2ebd8447d531>
+  - <https://medium.com/@mohantaankit2002/best-practices-for-logging-and-monitoring-in-large-nestjs-applications-ae6e2ed31d93>
+  - Change error handler to return generic info and log detailed one
 - Add versioning using headers
   - <https://medium.com/@bubu.tripathy/best-practices-for-designing-rest-apis-2c084ab09059>
 - Setup headers (like Accept, Content-Type, etc)

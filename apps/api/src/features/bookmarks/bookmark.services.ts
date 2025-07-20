@@ -1,5 +1,6 @@
 import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
 import { scrapper } from "../../core/puppeteer.scrapper.js";
+import { logger } from "../../core/logger.js";
 import { type DBTransaction } from "../../db/types.js";
 import { MalFormedRequestError, NotFoundError } from "../../errors/errors.js";
 import { parseHtmlbookmarks } from "../../utils/html-bookmarks-parser.js";
@@ -127,16 +128,25 @@ export class BookmarkService {
   }
 
   async importFromHtmlFile(html: string, folderName?: string) {
+    const serviceLogger = logger.child({ context: 'BookmarkService', method: 'importFromHtmlFile' });
+    serviceLogger.info(`Starting HTML bookmark import${folderName ? ` for folder: ${folderName}` : ''}`);
+    
     const bookmarks = parseHtmlbookmarks(html, folderName);
+    serviceLogger.debug(`Parsed ${bookmarks.length} bookmarks from HTML`);
+    
     const importedBookmarks = [];
 
     for (const bookmark of bookmarks) {
       let bookmarkData: CreateBookmarkModel;
       try {
         bookmarkData = await scrapper(bookmark.url);
+        serviceLogger.debug(`Successfully scraped bookmark: ${bookmark.url}`);
       } catch (error) {
-        // TODO use the logging system
-        console.error(`Error importing bookmark ${bookmark.url}: ${error}`);
+        serviceLogger.warn({
+          url: bookmark.url,
+          error: error instanceof Error ? error.message : error,
+          msg: `Failed to scrape bookmark, skipping: ${bookmark.url}`
+        });
         continue;
       }
 
@@ -155,10 +165,14 @@ export class BookmarkService {
       importedBookmarks.push(await this.getBookmark(createdBookmark.id));
     }
 
+    serviceLogger.info(`Successfully imported ${importedBookmarks.length} of ${bookmarks.length} bookmarks from HTML`);
     return importedBookmarks;
   }
 
   async importFromOmnivore(data: OmnivoreBookmarkModel[]) {
+    const serviceLogger = logger.child({ context: 'BookmarkService', method: 'importFromOmnivore' });
+    serviceLogger.info(`Starting Omnivore bookmark import with ${data.length} items`);
+    
     const importedBookmarks = [];
 
     for (const bookmark of data) {
@@ -167,6 +181,8 @@ export class BookmarkService {
       const createdBookmark = await this.createBookmark(bookmarkData);
 
       if (bookmark.labels && bookmark.labels.length > 0) {
+        serviceLogger.debug(`Processing ${bookmark.labels.length} labels for bookmark: ${bookmark.title || bookmark.url}`);
+        
         for (const labelName of bookmark.labels) {
           const label = await this.bookmarkUnitOfWork.labelRepository.findByName(labelName);
           const labelData = label || await this.bookmarkUnitOfWork.labelRepository.create(mapCreateLabelModelToInsertLabelDTO({
@@ -181,20 +197,29 @@ export class BookmarkService {
 
       importedBookmarks.push(await this.getBookmark(createdBookmark.id));
     }
+    
+    serviceLogger.info(`Successfully imported ${importedBookmarks.length} bookmarks from Omnivore`);
     return importedBookmarks;
   }
 
   async importFromTextFile(data: string) {
-    const importedBookmarks = [];
+    const serviceLogger = logger.child({ context: 'BookmarkService', method: 'importFromTextFile' });
     const urls = data.split('\n').filter(url => url.trim().length > 0);
+    serviceLogger.info(`Starting text file bookmark import with ${urls.length} URLs`);
+    
+    const importedBookmarks = [];
 
     for (const url of urls) {
       let bookmarkData: CreateBookmarkModel;
       try {
         bookmarkData = await scrapper(url.trim());
+        serviceLogger.debug(`Successfully scraped bookmark: ${url.trim()}`);
       } catch (error) {
-        // TODO use the logging system
-        console.error(`Error importing bookmark ${url}: ${error}`);
+        serviceLogger.warn({
+          url: url.trim(),
+          error: error instanceof Error ? error.message : error,
+          msg: `Failed to scrape bookmark, skipping: ${url.trim()}`
+        });
         continue;
       }
 
@@ -202,6 +227,7 @@ export class BookmarkService {
       importedBookmarks.push(await this.getBookmark(createdBookmark.id));
     }
 
+    serviceLogger.info(`Successfully imported ${importedBookmarks.length} of ${urls.length} bookmarks from text file`);
     return importedBookmarks;
   }
 }

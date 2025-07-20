@@ -1,5 +1,6 @@
 import { ErrorHandler } from "hono/types";
 import { env, NodeEnvs } from "../env.js";
+import { logger } from "../core/logger.js";
 import { APIError, UnexpectedError } from "./errors.js";
 import type { ErrorResponse } from "./errors.types.js";
 import { Context } from "hono";
@@ -37,17 +38,33 @@ export const errorHandler = (errorHandlers: Function[], customHandler: ResponseH
       errorObj = err;
     }
 
-    // TODO: Add Log with error
-    // console.error({
-    //   timestamp: new Date().toISOString(),
-    //   error: err.message,
-    //   stack: err.stack,
-    //   path: c.req.path,
-    //   method: c.req.method
-    // });
+    // Get request context for logging
+    const requestId = c.get('requestId');
+    const requestLogger = logger.child({ 
+      requestId,
+      context: 'error-handler'
+    });
+
+    // Log error with appropriate level
+    const logLevel = (errorObj.httpStatusCode ?? 500) >= 500 ? 'error' : 'warn';
+    requestLogger[logLevel]({
+      error: {
+        name: err.name,
+        message: err.message,
+        code: errorObj.code,
+        httpStatusCode: errorObj.httpStatusCode,
+        stack: err.stack
+      },
+      request: {
+        method: c.req.method,
+        path: c.req.path,
+        headers: env.NODE_ENV === NodeEnvs.DEVELOPMENT ? c.req.header() : undefined
+      },
+      msg: `${logLevel === 'error' ? 'Server error' : 'Client error'} occurred`
+    });
 
     if (Array.isArray(errorHandlers) && errorHandlers.length > 0) {
-      if (!errorObj.message || !errorObj.httpStatusCode && errorObj) {
+      if (!errorObj.message || !errorObj.httpStatusCode) {
         for (const handleError of errorHandlers) {
           errorObj = handleError(errorObj);
 

@@ -5,6 +5,8 @@ import { Hono } from "hono";
 import { requestId } from "hono/request-id";
 import { Container } from './core/dependency-injection/di.container.js';
 import { addCacheHeaders, addCorsHeaders, addSecurityHeaders, parseAPIVersion, setContentTypeHeaders } from './core/http.headers.js';
+import { loggerMiddleware } from './core/http.logger.js';
+import { logger } from './core/logger.js';
 import { db } from './db/index.js';
 import { errorHandler } from './errors/errors.handlers.js';
 import { repositoryErrorsHandler, serviceErrorsHandler } from './errors/errors.mappers.js';
@@ -45,7 +47,10 @@ const routes = {
 
 const app = new Hono();
 
+// Request ID must be first to be available in other middleware
 app.use('*', requestId());
+// Add HTTP logging middleware
+app.use('*', loggerMiddleware());
 app.use('*', addCorsHeaders());
 app.use('*', setContentTypeHeaders());
 app.use('*', parseAPIVersion());
@@ -68,8 +73,8 @@ app.get('/health', (c) => c.text('OK'));
 
 // Start the server
 serve(app, (info) => {
-  console.log(`Server is running on http://localhost:${info.port}`);
-  console.log(`API documentation available at http://localhost:${info.port}/api/docs`);
+  logger.info(`Server is running on http://localhost:${info.port}`);
+  logger.info(`API documentation available at http://localhost:${info.port}/api/docs`);
 });
 
 export default app;
