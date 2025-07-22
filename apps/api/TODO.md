@@ -8,6 +8,47 @@ TODO:
   - <https://javascript.plainenglish.io/the-node-js-microservices-masterclass-84c0329ad2d6>
   - <https://article.arunangshudas.com/8-essential-steps-for-safe-node-js-authentication-4858fecdea41>
   - Add user to bookmarks and labels  
+- Decide where to host DB
+  - NEON TECH
+    PostgreSQL. 500MB. 190 horas de computación
+    → neon․tech
+  - TURSO
+    SQLite, 5GB, mil millones de lecturas
+    → turso․com
+  - XATA
+    PostgreSQL, 15GB, transferencia ilimitada
+    → lite․xata․io
+  - COCKROACHDB
+    10 GB de almacenamiento, 50M de requests
+    → cockroachlabs․com
+  - SUPABASE
+    PostgreSQL, 500MB, 5GB de transferencia
+    → supabase․com
+- Decide where to deploy API
+  - VERCEL
+    Webs de JavaScript, Next, Vue, etc.
+    Proyectos ilimitados (100GB de transferencia)
+    → vercel․com
+
+  - NORTHFLANK
+    Proyectos de Go, Rust, Java... (Compatible Dockerfile)
+    Sin coste para 2 servicios y 2 cronjobs
+    → northflank․com
+
+  - ZEABUR
+    Compatible con cualquier lenguaje y framework
+    1 proyecto gratis (no requiere tarjeta de crédito)
+    → zeabur․com
+
+  - RENDER
+    Bases de datos PostgreSQL, sitios estáticos y Dockerfiles
+    100GB de ancho de banda
+    → render․com
+
+  - NETLIFY
+    Webs de JavaScript, Next, Vue, etc.
+    Proyectos ilimitados (100GB de transferencia)
+    → netlify․com
 - Add endpoint to backup/export bookmarks (Worker?)
   - <https://medium.com/@mehdibafdil/thread-safe-architecture-in-node-js-from-theory-to-implementation-12aa03b09b4e>
 - Add Lint / Prettier / Biome / Knip
@@ -34,6 +75,7 @@ TODO:
 
 REVIEW When almost ready:
 
+- <https://github.com/colinhacks/zshy>
 - <https://github.com/goldbergyoni/nodejs-testing-best-practices?ck_subscriber_id=2107974869#readme>
 - <https://levelup.gitconnected.com/your-express-app-isnt-great-here-s-why-84003bbce092>
 - <https://medium.com/javarevisited/16-common-rest-api-status-code-mistakes-to-avoid-in-2025-f703c656deb0#3b1d>
