@@ -1,0 +1,42 @@
+meta {
+  name: Bookmarks - Update
+  type: http
+  seq: 8
+}
+
+patch {
+  url: http://localhost:3000/api/bookmarks
+  body: json
+  auth: none
+}
+
+body:json {
+  [{
+    "id": "32212506554847232",
+    "state": "active",
+    "labels": [{
+      "id": "32212590357041152",
+      "name": "Thiago",
+      "color": "red"
+    }, {
+          "id": "32216898751045632",
+          "name": "Thiago2",
+          "color": "#864400",
+          "createdAt": "2025-03-30T21:38:27.000Z",
+          "updatedAt": "2025-03-30T21:38:27.000Z"
+        }]
+  }, {
+        "id": "33667752388472832",
+        "url": "https://expressjs.com/a",
+        "slug": "a-comprehensive-guide-to-expressjs-framework",
+        "title": "Learn Express.js",
+        "description": "A comprehensive guide to Express.js framework",
+        "author": "Node.jss Foundation",
+        "thumbnail": "https://expressjs.com/images/express-facebook-share.png",
+        "publishedAt": "2024-07-24T07:58:03.811Z",
+        "createdAt": "2025-04-03T21:43:37.000Z",
+        "updatedAt": "2025-04-15T09:21:38.994Z",
+        "state": "active",
+        "labels": []
+  }]
+}

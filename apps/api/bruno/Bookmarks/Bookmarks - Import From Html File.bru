@@ -1,0 +1,26 @@
+meta {
+  name: Bookmarks - Import From Html File
+  type: http
+  seq: 10
+}
+
+post {
+  url: http://localhost:3000/api/bookmarks/import/html
+  body: file
+  auth: none
+}
+
+body:json {
+  {
+      "title": "Learn Express.js",
+      "description": "A comprehensive guide to Express.js framework",
+      "slug": "a-comprehensive-guide-to-expressjs-framework",
+      "author": "Node.js Foundation",
+      "url": "https://expressjs.com/a",
+      "thumbnail": "https://expressjs.com/images/express-facebook-share.png"
+  }
+}
+
+body:file {
+  file: @file(/Users/trystan2k/Downloads/bookmarks.html) @contentType(text/html; charset=utf-8)
+}

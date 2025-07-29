@@ -1,0 +1,18 @@
+meta {
+  name: Label - Create
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/api/labels
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "name": "Thiago",
+      "color": "red"
+  }
+}

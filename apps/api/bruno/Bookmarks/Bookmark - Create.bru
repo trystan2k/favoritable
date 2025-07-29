@@ -1,0 +1,27 @@
+meta {
+  name: Bookmark - Create
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/api/bookmarks
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "titlea": "Learn Express.js",
+      "description": "A comprehensive guide to Express.js framework",
+      "slug": "a-comprehensive-guide-to-expressjs-framework",
+      "author": "Node.js Foundation",
+      "url": "https://expressjs.com/a",
+      "thumbnail": "https://expressjs.com/images/express-facebook-share.png",
+      "publishedAt": "2024-07-24T07:58:03.811Z"
+  }
+}
+
+body:multipart-form {
+  : @file()
+}

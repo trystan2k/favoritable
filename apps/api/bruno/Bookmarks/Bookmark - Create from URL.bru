@@ -1,0 +1,21 @@
+meta {
+  name: Bookmark - Create from URL
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/bookmarks/from-url
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "url": "https://marvinh.dev/blog/speeding-up-javascript-ecosystem/"
+  }
+}
+
+body:form-urlencoded {
+  url: https://reparaciones.phonehouse.es/averias?marca=xiaomi&modelo=21176&idaveria=&otra_averia=20408#reparacion
+}

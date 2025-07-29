@@ -1,0 +1,17 @@
+meta {
+  name: Bookmarks - Delete
+  type: http
+  seq: 6
+}
+
+delete {
+  url: http://localhost:3000/api/bookmarks
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "ids": ["27525307548332032", "27525307015655424", "27525306780774400", "29"]
+  }
+}

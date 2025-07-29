@@ -1,0 +1,66 @@
+{
+  "name": "@favoritable/api",
+  "description": "API to handle favorites links",
+  "version": "0.0.1",
+  "author": "Thiago Mendonca",
+  "private": true,
+  "type": "module",
+  "homepage": "https://github.com/trystan2k/favoritable#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trystan2k/favoritable"
+  },
+  "bugs": {
+    "url": "https://github.com/trystan2k/favoritable/issues"
+  },
+  "keywords": [
+    "hono",
+    "bookmarks",
+    "favoritable",
+    "API",
+    "node"
+  ],
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@dotenvx/dotenvx": "~1.38.4",
+    "@hono/node-server": "~1.13.8",
+    "@hono/zod-openapi": "~0.19.2",
+    "@hono/zod-validator": "~0.4.3",
+    "@libsql/client": "~0.14.0",
+    "cheerio": "~1.0.0",
+    "drizzle-orm": "~0.40.0",
+    "drizzle-zod": "~0.7.0",
+    "hono": "~4.7.2",
+    "pino": "~9.7.0",
+    "pino-http": "~10.5.0",
+    "pino-pretty": "~13.0.0",
+    "puppeteer": "~24.5.0",
+    "reflect-metadata": "~0.2.2",
+    "zod": "~3.24.2"
+  },
+  "devDependencies": {
+    "@favoritable/typescript-config": "workspace:*",
+    "@types/node": "~22.13.8",
+    "@types/pino": "~7.0.5",
+    "@types/pino-http": "~5.8.4",
+    "drizzle-kit": "~0.30.5",
+    "tsx": "~4.19.3"
+  },
+  "peerDependencies": {
+    "domhandler": "~5.0.3",
+    "typescript": "~5.7.3"
+  }
+}

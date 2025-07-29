@@ -1,0 +1,32 @@
+meta {
+  name: Bookmark - Update
+  type: http
+  seq: 7
+}
+
+patch {
+  url: http://localhost:3000/api/bookmarks/33667752388472832
+  body: json
+  auth: none
+}
+
+headers {
+  If-Match: "09edf3e736811f919b053b4216980ebb4fa727fb"
+}
+
+body:json {
+  {
+    "id": "33667752388472832",
+    "url": "https://expressjs.com/a",
+    "slug": "a-comprehensive-guide-to-expressjs-framework",
+    "title": "Learn Express.js",
+    "description": "A comprehensive guide to Express.js framework",
+    "author": "Node.jss Foundation",
+    "thumbnail": "https://expressjs.com/images/express-facebook-share.png",
+    "publishedAt": "2024-07-24T07:58:03.811Z",
+    "createdAt": "2025-04-03T21:43:37.000Z",
+    "updatedAt": "2025-04-03T21:43:37.000Z",
+    "state": "active",
+    "labels": []
+  }
+}

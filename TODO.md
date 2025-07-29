@@ -1,3 +1,0 @@
-- Review Nodejs Example from turbo: <https://turbo.build/repo/docs/getting-started/examples>
-- Configure ESLint
-  - <https://turbo.build/repo/docs/reference/eslint-config-turbo>
