@@ -2,6 +2,10 @@
 
 ## Core Features
 
+- **Security:**
+  - Add secureHeaders middleware for Hono
+  - *Reference:* <https://hono.dev/middleware/builtin/secure-headers>
+
 - **Authentication:**
   - Passport.js
   - Auth.js (<https://authjs.dev/>)
