@@ -18,6 +18,5 @@
     "types": ["node"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
-
   }
 }

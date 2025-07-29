@@ -96,8 +96,8 @@
           ],
           "isUnique": true
         },
-        "bookamrk_id_index": {
-          "name": "bookamrk_id_index",
+        "bookmark_id_index": {
+          "name": "bookmark_id_index",
           "columns": [
             "id"
           ],

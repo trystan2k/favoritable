@@ -13,7 +13,8 @@ CREATE TABLE `bookmarks` (
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `bookmarks_url_unique` ON `bookmarks` (`url`);--> statement-breakpoint
-CREATE INDEX `bookamrk_id_index` ON `bookmarks` (`id`);--> statement-breakpoint
+CREATE INDEX `bookmark_id_index` ON `bookmarks` (`id`);
+--> statement-breakpoint
 CREATE TABLE `bookmarks_labels` (
 	`id` text PRIMARY KEY NOT NULL,
 	`bookmark_id` text NOT NULL,

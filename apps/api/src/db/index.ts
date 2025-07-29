@@ -1,10 +1,9 @@
-import { bookmarkSchema } from './../features/bookmarks/bookmark.models';
-import { env } from '../env.js';
-import { drizzle, LibSQLDatabase } from 'drizzle-orm/libsql';
 import { createClient } from '@libsql/client';
+import { drizzle } from 'drizzle-orm/libsql';
+import { env } from '../env.js';
 
-import * as bookmarkSchemas from './schema/bookmark.schema.js';
 import * as bookmarkLabelSchemas from './schema/bookmark-label.schema.js';
+import * as bookmarkSchemas from './schema/bookmark.schema.js';
 import * as labelSchemas from './schema/label.schema.js';
 
 const client = createClient({ url: env.DATABASE_URL });

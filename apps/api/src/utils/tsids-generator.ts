@@ -66,7 +66,7 @@ class TsidGenerator {
                 (BigInt(this.nodeId) << BigInt(TsidGenerator.SEQUENCE_BITS)) |
                 BigInt(this.sequence);
 
-    return String(tsid!);
+    return String(tsid);
   }
 
   /**

@@ -18,7 +18,7 @@ export const bookmark = sqliteTable('bookmarks', {
   publishedAt: integer('published_at', { mode: 'timestamp_ms' }),
   ...trackingDates,
 }, (table) => [
-  index('bookamrk_id_index').on(table.id)
+  index('bookmark_id_index').on(table.id)
 ]);
 
 export const bookmarksRelation = relations(bookmark, ({ many }) => ({

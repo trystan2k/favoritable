@@ -27,7 +27,7 @@ const API_VERSIONS = {
 
 type APIVersion = typeof API_VERSIONS[keyof typeof API_VERSIONS];
 
-const DEPRICATED_VERSIONS: APIVersion[] = [];
+const DEPRECATED_VERSIONS: APIVersion[] = [];
 const VERSION_REGEX = /application\/vnd\.favoritable\.v(\d+)\+json/;
 
 export const parseAPIVersion = () => {
@@ -43,8 +43,8 @@ export const parseAPIVersion = () => {
     const versionMatch = accept.match(VERSION_REGEX);
     if (versionMatch) {
       const version = `v${versionMatch[1]}` as APIVersion;
-      if (DEPRICATED_VERSIONS.includes(version)) {
-        throw new NotAcceptedError('Depricated API version', `Use ${API_VERSIONS.LATEST} instead or a newer one`);
+      if (DEPRECATED_VERSIONS.includes(version)) {
+        throw new NotAcceptedError('Deprecated API version', `Use ${API_VERSIONS.LATEST} instead or a newer one`);
       }
 
       if (Object.values(API_VERSIONS).includes(version)) {
