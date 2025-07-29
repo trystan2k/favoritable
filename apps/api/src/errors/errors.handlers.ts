@@ -11,7 +11,7 @@ const defaultResponseHandler = (err: APIError, c: Context): Response => {
   c.header('Content-Type', 'application/json');
 
   // Sanitize error message for production
-  const publicMessage = process.env.NODE_ENV === 'production'
+  const publicMessage = env.NODE_ENV === NodeEnvs.PRODUCTION
     ? 'An unexpected error occurred'
     : err.message
 
@@ -40,7 +40,7 @@ export const errorHandler = (errorHandlers: Function[], customHandler: ResponseH
 
     // Get request context for logging
     const requestId = c.get('requestId');
-    const requestLogger = logger.child({ 
+    const requestLogger = logger.child({
       requestId,
       context: 'error-handler'
     });

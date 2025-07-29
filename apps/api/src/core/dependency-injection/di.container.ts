@@ -1,6 +1,6 @@
 // Reflection metadata is needed for decorator metadata
 import 'reflect-metadata';
-import { INJECT_METADATA_KEY } from './di.constants';
+import { INJECT_METADATA_KEY } from './di.constants.js';
 
 // Type for constructor function
 type Constructor<T = any> = new (...args: any[]) => T;
@@ -35,7 +35,7 @@ export class Container {
   initialize(args: any[]) {
     args.forEach(arg => {
       if (typeof arg !== 'function' || !arg.prototype || !(arg.prototype.constructor === arg)) {
-        throw new Error(`Argument "${arg}" is not a valid class constructors`);
+        throw new Error(`Argument "${arg}" is not a valid class constructor`);
       }
     });
   }

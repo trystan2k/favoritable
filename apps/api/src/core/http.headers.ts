@@ -1,6 +1,6 @@
 import { Context, Next } from 'hono';
 import { cors } from 'hono/cors';
-import { NotAcceptedError } from '../errors/errors';
+import { NotAcceptedError } from '../errors/errors.js';
 
 export const addCorsHeaders = () => {
   return cors({
