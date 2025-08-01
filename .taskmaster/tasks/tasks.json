@@ -830,11 +830,24 @@
         ],
         "status": "pending",
         "subtasks": []
+      },
+      {
+        "id": 62,
+        "title": "Configure Husky for Git Hooks",
+        "description": "Set up Husky to manage Git hooks, ensuring that code quality checks like linting and formatting are run automatically before commits.",
+        "details": "Install and configure Husky to automate code quality checks. Use `lint-staged` to run linters and formatters only on staged files for efficiency. First, install the necessary dev dependencies: `npm install husky lint-staged --save-dev`. Then, initialize Husky with `npx husky init`. Configure `lint-staged` in the `package.json` file to specify the commands to run on different file types (e.g., run Prettier and ESLint on `.ts`, `.tsx`, `.js`, `.jsx` files). Finally, create the pre-commit hook by running `npx husky add .husky/pre-commit \"npx lint-staged\"`. This will ensure that every commit is checked for code style and quality before it enters the codebase.",
+        "testStrategy": "To test, modify a source file to introduce a clear linting or formatting error (e.g., remove a semicolon or add unused variables). Stage the modified file using `git add`. Attempt to create a commit with `git commit -m 'test: trigger pre-commit hook'`. Verify that the commit is blocked by Husky and that the output shows the errors from the linter/formatter. After fixing the errors, stage the file again and re-attempt the commit. The commit should now succeed, confirming the hook is configured correctly.",
+        "status": "pending",
+        "dependencies": [
+          4
+        ],
+        "priority": "medium",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-07-29T14:00:25.533Z",
+      "updated": "2025-08-01T16:30:02.912Z",
       "description": "Tasks for master context"
     }
   },

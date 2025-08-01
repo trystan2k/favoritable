@@ -61,11 +61,11 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 
 ### 5. 🔍 INITIAL QUALITY VERIFICATION
 
-- **Action**: Run `npm run complete-check` before starting development
+- **Action**: Run `pnpm run complete-check` before starting development
 - **If problems are reported**:
   - ⚠️ **STOP** - do not proceed with development
   - Resolve ALL identified problems
-  - Run `npm run complete-check` again until clean
+  - Run `pnpm run complete-check` again until clean
   - Only then proceed to implementation
 
 ### 6. ⚙️ IMPLEMENTATION
@@ -82,7 +82,7 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 
 ### 7. 🔍 FINAL QUALITY VERIFICATION
 
-- **Action**: Run `npm run complete-check` after completion
+- **Action**: Run `pnpm run complete-check` after completion
 - **If problems are reported**:
   - ⚠️ **MANDATORY** - resolve ALL problems
   - Do not proceed to commit until QA is clean
@@ -176,13 +176,13 @@ update-task-status --id [TASK_ID] --status [in-progress|done]
 
 ```bash
 # Full QA execution
-npm run complete-check
+pnpm run complete-check
 
 # Individual checks (if available)
-npm run lint
-npm run typecheck
-npm run test
-npm run build
+pnpm run lint
+pnpm run typecheck
+pnpm run test
+pnpm run build
 ```
 
 ### Basic Memory MCP

@@ -1,5 +1,6 @@
 {
-  "servers": {
+  "selectedAuthType": "gemini-api-key",
+  "mcpServers": {
     "task-master-ai": {
       "command": "npx",
       "args": [
@@ -7,7 +8,7 @@
         "--package=task-master-ai",
         "task-master-ai"
       ],
-      "type": "stdio"
+      "trust": true
     },
     "basic-memory": {
       "command": "uvx",
@@ -19,8 +20,7 @@
       ]
     },
     "context7": {
-      "type": "http",
-      "url": "https://mcp.context7.com/mcp"
+      "httpUrl": "https://mcp.context7.com/mcp"
     },
     "repomix": {
       "command": "repomix",
