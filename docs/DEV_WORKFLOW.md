@@ -88,31 +88,13 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
   - Do not proceed to commit until QA is clean
   - Run again until it passes completely
 
-### 8. 💾 COMMIT
-
-- Commit only when QA is 100% clean
-- Always use `git add --all`
-- **Commit message pattern**:
-
-```
-type(scope): description
-
-- Implements feature X as per task #ID
-- Resolves dependencies Y and Z
-- Adds tests for scenarios A, B, C
-
-Closes #TaskID
-```
-
-**Valid types**: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
-
-### 9. ✅ STATUS UPDATE - COMPLETION
+### 8. ✅ STATUS UPDATE - COMPLETION
 
 - **Action**: Mark the task/subtask as `done` in Task Master
 - Confirm that the status has been updated correctly
 - Update the task with implementation details
 
-### 10. 📝 DEVELOPMENT LOGGING
+### 9. 📝 DEVELOPMENT LOGGING
 
 - **Action**: Use **Basic Memory MCP** to log development
 - **Log template**:
@@ -138,6 +120,28 @@ Closes #TaskID
 - [Technical decisions made]
 - [Possible future improvements]
 ```
+
+Once it is stored in Basic Memory, use its MCP to write the development log in the memories folder at docs/memories/development-logs, using the pattern `task-[ID]-[title].md`
+
+### 10. 💾 COMMIT AND PUSH
+
+- Commit only when QA is 100% clean
+- Always use `git add --all`
+- **Commit message pattern**:
+
+```
+type(scope): description
+
+- Implements feature X as per task #ID
+- Resolves dependencies Y and Z
+- Adds tests for scenarios A, B, C
+
+Closes #TaskID
+```
+
+**Valid types**: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+
+- Push it to the feature branch
 
 ### 11. ⛄ OPENING THE PULL REQUEST
 
