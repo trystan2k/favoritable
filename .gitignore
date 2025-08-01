@@ -3,10 +3,6 @@
 # Vscode
 !.vscode/*
 
-# Opencode
-.opencode
-OpenCode.md
-
 # Local Dev DB
 local.db
 
@@ -42,6 +38,7 @@ dist
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+dev-debug.log
 
 # Misc
 .DS_Store
