@@ -837,5 +837,946 @@
       "updated": "2025-07-29T14:00:25.533Z",
       "description": "Tasks for master context"
     }
+  },
+  "main": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Project Repositories",
+        "description": "Initialize the monorepo structure for frontend and backend components.",
+        "details": "Create root directory, frontend (TanStack Start) and backend (Hono) subdirectories. Configure shared TypeScript settings.",
+        "testStrategy": "Verify project structure and basic compilation.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Monorepo Root Directory",
+            "description": "Establish the main project directory for the monorepo and initialize basic project metadata.",
+            "dependencies": [],
+            "details": "Create the root directory for the project (e.g., 'my-monorepo'). Initialize a `package.json` file in this directory.",
+            "status": "done",
+            "testStrategy": "Verify the root directory exists and contains a `package.json` file."
+          },
+          {
+            "id": 2,
+            "title": "Configure Monorepo Workspaces",
+            "description": "Set up the monorepo management tool to define project workspaces for frontend and backend applications.",
+            "dependencies": [],
+            "details": "Configure `pnpm-workspace.yaml` (or `package.json` workspaces for npm/yarn) to include `apps/frontend` and `apps/backend` as workspace paths.",
+            "status": "done",
+            "testStrategy": "Verify the workspace configuration file exists and correctly lists the intended workspace paths."
+          },
+          {
+            "id": 3,
+            "title": "Create Frontend Project Subdirectory",
+            "description": "Create the dedicated directory for the frontend application within the monorepo structure.",
+            "dependencies": [],
+            "details": "Create the `apps/frontend` directory inside the monorepo root. This directory will house the TanStack Start project.",
+            "status": "pending",
+            "testStrategy": "Verify the `apps/frontend` directory exists."
+          },
+          {
+            "id": 4,
+            "title": "Create Backend Project Subdirectory",
+            "description": "Create the dedicated directory for the backend application within the monorepo structure.",
+            "dependencies": [],
+            "details": "Create the `apps/backend` directory inside the monorepo root. This directory will house the Hono project.",
+            "status": "done",
+            "testStrategy": "Verify the `apps/backend` directory exists."
+          },
+          {
+            "id": 5,
+            "title": "Configure Shared TypeScript Settings",
+            "description": "Establish a common TypeScript configuration file at the monorepo root for all projects to extend.",
+            "dependencies": [],
+            "details": "Create a `tsconfig.base.json` file at the monorepo root. Define common TypeScript compiler options (e.g., `target`, `module`, `strict`, `esModuleInterop`, `paths`) that both frontend and backend projects will inherit.",
+            "status": "done",
+            "testStrategy": "Verify `tsconfig.base.json` exists, contains valid JSON, and includes essential shared compiler options."
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Initialize Frontend Project",
+        "description": "Set up the TanStack Start project with TypeScript, Shadcn UI, Vitest, React Testing Library.",
+        "details": "Install all specified frontend dependencies. Configure TanStack Start for SSR. Integrate Shadcn UI components.",
+        "testStrategy": "Run initial dev server, verify Shadcn UI components render correctly. Run Vitest setup tests.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Initialize Backend Project",
+        "description": "Set up the Hono (Node.js) project with TypeScript and Vitest.",
+        "details": "Install Hono, Node.js types, and Vitest. Create a basic Hono server endpoint.",
+        "testStrategy": "Run initial dev server, verify a simple 'hello world' endpoint works. Run Vitest setup tests.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "in-progress",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Initialize Node.js Project and Install Core Dependencies",
+            "description": "Create the backend project directory, initialize a Node.js project, and install essential packages like Hono, Node.js types, and Vitest.",
+            "dependencies": [],
+            "details": "Use `npm init -y` or `pnpm init` to create `package.json`. Install `hono`, `@types/node` (as dev dependency), and `vitest` (as dev dependency).",
+            "status": "done",
+            "testStrategy": "Verify `package.json` contains the installed dependencies."
+          },
+          {
+            "id": 2,
+            "title": "Configure TypeScript for Backend",
+            "description": "Set up the `tsconfig.json` file for the Hono backend project, ensuring proper compilation and type checking.",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "Create `tsconfig.json` in the backend root with appropriate settings for Node.js, Hono, and Vitest, including `target`, `module`, `outDir`, `esModuleInterop`, `strict`, etc. Ensure `rootDir` and `outDir` are correctly configured.",
+            "status": "done",
+            "testStrategy": "Attempt to compile a simple TypeScript file (e.g., `tsc src/index.ts`) to ensure `tsconfig.json` is valid and works without errors."
+          },
+          {
+            "id": 3,
+            "title": "Implement Basic Hono Server Endpoint",
+            "description": "Develop a minimal Hono server application with a single 'Hello World' endpoint to confirm basic server functionality.",
+            "dependencies": [
+              "3.1",
+              "3.2"
+            ],
+            "details": "Create an `src/index.ts` file. Instantiate a Hono app and define a GET route (e.g., `/`) that returns a simple JSON or text response like `{\"message\": \"Hello, Hono!\"}`. Add a `start` or `dev` script to `package.json` to run the server.",
+            "status": "done",
+            "testStrategy": "Manually run the server using the defined script and use `curl http://localhost:<port>/` or a web browser to access the endpoint and verify the 'Hello, Hono!' response."
+          },
+          {
+            "id": 4,
+            "title": "Configure Vitest and Add Placeholder Test",
+            "description": "Set up Vitest for unit testing within the backend project and create a basic, passing test file to validate the setup.",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "Configure `vitest` in `package.json` scripts (e.g., `\"test\": \"vitest\"`) or create a `vitest.config.ts` file if more complex configuration is needed. Create a `src/test/example.test.ts` file with a simple passing test, such as `import { expect, test } from 'vitest'; test('basic setup', () => { expect(true).toBe(true); });`.",
+            "status": "pending",
+            "testStrategy": "Run the `vitest` command (e.g., `npm run test` or `pnpm test`) and ensure the placeholder test passes successfully."
+          },
+          {
+            "id": 5,
+            "title": "Verify Initial Backend Setup",
+            "description": "Perform a final verification of the backend project by running the development server and executing the initial Vitest tests to confirm all setup steps are complete and functional.",
+            "dependencies": [
+              "3.3",
+              "3.4"
+            ],
+            "details": "Ensure the `dev` script for the Hono server and the `test` script for Vitest are correctly configured in `package.json`.",
+            "status": "pending",
+            "testStrategy": "Run `npm run dev` (or `pnpm dev`) and confirm the server starts without errors and the 'Hello, Hono!' endpoint is accessible. Then, run `npm run test` (or `pnpm test`) and confirm all Vitest tests pass successfully."
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Configure Linting & Formatting",
+        "description": "Set up ESLint, Prettier, Biome, and Knip for both frontend and backend.",
+        "details": "Install necessary packages. Configure `.eslintrc`, `.prettierrc`, `biome.json`, and `knip.json` files. Add lint/format scripts to package.json.",
+        "testStrategy": "Run lint and format scripts on sample code; verify issues are reported and fixed.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Select & Setup Database",
+        "description": "Choose SQLite (Turso) as the database and configure its connection.",
+        "details": "Sign up for Turso, create a database instance. Configure backend to connect to Turso via `drizzle-orm` or similar ORM.",
+        "testStrategy": "Write a simple script to connect to the database and perform a basic query (e.g., create a test table).",
+        "priority": "high",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Select & Setup API Deployment",
+        "description": "Choose a deployment platform (Vercel/Render/Zeabur) and configure initial deployment for the backend API.",
+        "details": "Select one platform (e.g., Vercel for Hono). Configure `vercel.json` or equivalent deployment settings. Set up CI/CD for automatic deployments.",
+        "testStrategy": "Deploy a simple 'hello world' Hono API and verify it's accessible publicly.",
+        "priority": "high",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Implement Secure Headers Middleware",
+        "description": "Add secureHeaders middleware to the Hono backend for enhanced security.",
+        "details": "Integrate `hono/middleware/secure-headers` or similar. Configure appropriate security headers (CSP, X-Frame-Options, etc.).",
+        "testStrategy": "Inspect HTTP response headers using browser dev tools or `curl` to confirm secure headers are present.",
+        "priority": "high",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Define & Implement User Data Model",
+        "description": "Create the database schema and ORM definitions for the User entity.",
+        "details": "Define `User` table with `id`, `email`, `name`, `avatarUrl`, `provider` fields. Implement Drizzle schema and migrations.",
+        "testStrategy": "Write unit tests for ORM operations (create, read user).",
+        "priority": "high",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Define & Implement Label Data Model",
+        "description": "Create the database schema and ORM definitions for the Label entity.",
+        "details": "Define `Label` table with `id`, `name`, `color`, `createdAt`, `updatedAt`, `userId` fields. Implement Drizzle schema and migrations.",
+        "testStrategy": "Write unit tests for ORM operations (create, read label).",
+        "priority": "high",
+        "dependencies": [
+          5,
+          8
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Define & Implement Bookmark Data Model",
+        "description": "Create the database schema and ORM definitions for the Bookmark entity.",
+        "details": "Define `Bookmark` table with `id`, `url`, `slug`, `title`, `description`, `author`, `thumbnail`, `state`, `publishedAt`, `createdAt`, `updatedAt`, `userId` fields. Implement Drizzle schema and migrations.",
+        "testStrategy": "Write unit tests for ORM operations (create, read bookmark).",
+        "priority": "high",
+        "dependencies": [
+          5,
+          8
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Define & Implement BookmarkLabel Data Model",
+        "description": "Create the database schema and ORM definitions for the Many-to-Many relationship between Bookmarks and Labels.",
+        "details": "Define `BookmarkLabel` table with `id`, `bookmarkId`, `labelId`, `createdAt`, `updatedAt` fields. Implement Drizzle schema and migrations.",
+        "testStrategy": "Write unit tests for ORM operations (linking/unlinking bookmarks and labels).",
+        "priority": "high",
+        "dependencies": [
+          9,
+          10
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Integrate Auth.js",
+        "description": "Set up Auth.js with the Hono backend for authentication.",
+        "details": "Install Auth.js and configure it to work with Hono. Define session and JWT strategies.",
+        "testStrategy": "Verify Auth.js middleware is active and protects routes. Test session creation.",
+        "priority": "high",
+        "dependencies": [
+          3,
+          8
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 13,
+        "title": "Configure OAuth Providers",
+        "description": "Integrate Google, Facebook, GitHub, and Twitter OAuth providers with Auth.js.",
+        "details": "Obtain API keys/secrets for each provider. Configure Auth.js providers array. Set up callback URLs.",
+        "testStrategy": "Manually test login flow for each configured OAuth provider.",
+        "priority": "high",
+        "dependencies": [
+          12
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 14,
+        "title": "Implement Persistent User Sessions",
+        "description": "Ensure user sessions are persistent using JWT or Auth.js session storage.",
+        "details": "Configure Auth.js to manage persistent sessions. Implement session validation logic on backend routes.",
+        "testStrategy": "Log in, close browser, reopen, and verify user is still logged in. Test session expiration.",
+        "priority": "high",
+        "dependencies": [
+          12
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "Develop Login/Signup UI",
+        "description": "Create frontend components for unauthenticated users to log in or sign up via social providers.",
+        "details": "Design a login page with buttons for Google, Facebook, GitHub, Twitter. Handle redirection to Auth.js endpoints.",
+        "testStrategy": "Verify UI renders correctly. Click login buttons and ensure redirection to OAuth providers.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          13
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 16,
+        "title": "Implement Automatic User Creation",
+        "description": "Develop backend logic to automatically create a new user record upon their first social login.",
+        "details": "Modify Auth.js callback handler to check for existing user; if not found, create a new `User` record.",
+        "testStrategy": "Perform a first-time login with a new social account and verify a new user record is created in the database.",
+        "priority": "high",
+        "dependencies": [
+          8,
+          13
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 17,
+        "title": "Associate User with Bookmarks & Labels",
+        "description": "Ensure `userId` is correctly linked in data models and operations for bookmarks and labels.",
+        "details": "Modify bookmark and label creation/update endpoints to automatically assign the current authenticated user's ID.",
+        "testStrategy": "Create bookmarks and labels as a logged-in user; verify `userId` is correctly populated in the database.",
+        "priority": "high",
+        "dependencies": [
+          9,
+          10,
+          16
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 18,
+        "title": "Backend: Implement Bookmark CRUD Endpoints",
+        "description": "Develop REST API endpoints for creating, reading, updating, and deleting single bookmarks.",
+        "details": "Implement `GET /bookmarks`, `GET /bookmarks/:id`, `POST /bookmarks`, `PATCH /bookmarks/:id`, `DELETE /bookmarks/:id`.",
+        "testStrategy": "Write API integration tests for each endpoint (create, retrieve, update, delete).",
+        "priority": "high",
+        "dependencies": [
+          10,
+          17
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 19,
+        "title": "Frontend: Develop Bookmark List/Grid View",
+        "description": "Create the UI component to display saved bookmarks in a list or grid layout.",
+        "details": "Use Shadcn UI components for cards/list items. Fetch bookmarks from `GET /bookmarks` endpoint.",
+        "testStrategy": "Verify bookmarks are displayed correctly. Test responsiveness of the layout.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 20,
+        "title": "Frontend: Implement Add New Bookmark UI",
+        "description": "Develop the user interface for adding a new bookmark.",
+        "details": "Create a form with input fields for URL, and potentially labels. Implement form submission to `POST /bookmarks`.",
+        "testStrategy": "Test adding a new bookmark and verify it appears in the list/grid view.",
+        "priority": "medium",
+        "dependencies": [
+          19
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 21,
+        "title": "Backend: Implement URL Metadata Fetching",
+        "description": "Develop a service to auto-fetch title, description, published date, author, and thumbnail from a given URL.",
+        "details": "Create an endpoint `POST /bookmarks/from-url` that takes a URL and returns its metadata. Use a library like `link-preview-generator` or `metascraper`.",
+        "testStrategy": "Write unit tests for the metadata fetching logic with various URL types (articles, videos, blogs).",
+        "priority": "high",
+        "dependencies": [
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 22,
+        "title": "Frontend: Display Auto-fetched Metadata",
+        "description": "Integrate the auto-fetched metadata into the bookmark cards and add/edit forms.",
+        "details": "Show title, description, author on hover or directly on the card. Display the thumbnail image. Pre-fill add/edit forms with fetched data.",
+        "testStrategy": "Add a new bookmark and verify metadata is correctly displayed on the card and in edit mode.",
+        "priority": "medium",
+        "dependencies": [
+          20,
+          21
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 23,
+        "title": "Backend: Implement Favorite/Unfavorite Endpoint",
+        "description": "Add an endpoint to toggle the favorite status of a bookmark.",
+        "details": "Implement `PATCH /bookmarks/:id` to update a `isFavorite` field (or similar) on the bookmark.",
+        "testStrategy": "Write API tests to verify favorite status can be toggled and persists.",
+        "priority": "medium",
+        "dependencies": [
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 24,
+        "title": "Frontend: Implement Favorite/Unfavorite UI",
+        "description": "Add a UI element (e.g., star icon) to bookmark cards to favorite/unfavorite them.",
+        "details": "Implement click handler to call the favorite/unfavorite API endpoint. Update UI state accordingly.",
+        "testStrategy": "Click the favorite button and verify the status changes visually and persists on refresh.",
+        "priority": "medium",
+        "dependencies": [
+          19,
+          23
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 25,
+        "title": "Backend: Implement Archive/Unarchive Endpoint",
+        "description": "Add an endpoint to toggle the archive status of a bookmark.",
+        "details": "Implement `PATCH /bookmarks/:id` to update the `state` field ('active'/'archived') on the bookmark.",
+        "testStrategy": "Write API tests to verify archive status can be toggled and persists.",
+        "priority": "medium",
+        "dependencies": [
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 26,
+        "title": "Frontend: Implement Archive/Unarchive UI",
+        "description": "Add UI elements (e.g., archive button) to bookmark cards or a context menu.",
+        "details": "Implement click handler to call the archive/unarchive API endpoint. Update UI state accordingly.",
+        "testStrategy": "Archive a bookmark and verify it moves to the 'Archived' collection and is removed from 'All'.",
+        "priority": "medium",
+        "dependencies": [
+          19,
+          25
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 27,
+        "title": "Backend: Implement Label CRUD Endpoints",
+        "description": "Develop REST API endpoints for creating, reading, updating, and deleting labels.",
+        "details": "Implement `GET /labels`, `GET /labels/:id`, `POST /labels`, `PUT /labels/:id`, `DELETE /labels/:id`.",
+        "testStrategy": "Write API integration tests for each label endpoint.",
+        "priority": "medium",
+        "dependencies": [
+          9,
+          17
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 28,
+        "title": "Frontend: Develop Labels Sidebar Navigation",
+        "description": "Create a left-side vertical navigation component to display label categories.",
+        "details": "Fetch labels from `GET /labels`. Display them as clickable links/buttons in a sidebar.",
+        "testStrategy": "Verify sidebar renders correctly and lists all user's labels.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          27
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 29,
+        "title": "Frontend: Implement Create, Rename, Delete Labels UI",
+        "description": "Develop a management interface for users to create, rename, and delete their labels.",
+        "details": "Add forms/modals for label creation/renaming. Implement delete confirmation.",
+        "testStrategy": "Test creating a new label, renaming an existing one, and deleting a label. Verify changes persist.",
+        "priority": "medium",
+        "dependencies": [
+          28
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 30,
+        "title": "Backend: Implement Filter Bookmarks by Label Endpoint",
+        "description": "Modify the `GET /bookmarks` endpoint to support filtering by label.",
+        "details": "Add a query parameter (e.g., `?labelId=xyz`) to filter bookmarks based on associated labels.",
+        "testStrategy": "Write API tests to verify filtering by single and multiple labels.",
+        "priority": "medium",
+        "dependencies": [
+          18,
+          11
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 31,
+        "title": "Frontend: Implement Filter Bookmarks by Label UI",
+        "description": "Integrate label filtering functionality with the sidebar navigation.",
+        "details": "When a label in the sidebar is clicked, update the bookmark list to show only bookmarks with that label.",
+        "testStrategy": "Click on different labels in the sidebar and verify the displayed bookmarks change accordingly.",
+        "priority": "medium",
+        "dependencies": [
+          19,
+          28,
+          30
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 32,
+        "title": "Frontend: Implement Default Collections UI",
+        "description": "Create UI elements for 'All', 'Favorites', and 'Archived' default collections.",
+        "details": "Integrate these as navigation options, potentially in the sidebar or a separate filter bar. Use existing favorite/archive status.",
+        "testStrategy": "Verify clicking on 'Favorites' shows only favorited bookmarks, 'Archived' shows only archived, and 'All' shows all active bookmarks.",
+        "priority": "medium",
+        "dependencies": [
+          19,
+          24,
+          26
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 33,
+        "title": "Backend: Implement Search Bookmarks Endpoint",
+        "description": "Add search capability to the `GET /bookmarks` endpoint, allowing search by title, description, or URL.",
+        "details": "Implement full-text search or `LIKE` queries on relevant fields. Add a query parameter (e.g., `?q=keyword`).",
+        "testStrategy": "Write API tests to verify search functionality returns correct results for various keywords.",
+        "priority": "medium",
+        "dependencies": [
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 34,
+        "title": "Frontend: Implement Search Bookmarks UI",
+        "description": "Add a search bar component to the main bookmark view.",
+        "details": "Implement input field and trigger search API call on input change or submit. Display search results.",
+        "testStrategy": "Enter search terms and verify the bookmark list updates to show matching results.",
+        "priority": "medium",
+        "dependencies": [
+          19,
+          33
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 35,
+        "title": "Backend: Implement Sort Bookmarks Endpoint",
+        "description": "Enhance the `GET /bookmarks` endpoint to support sorting by date added, date updated, and title.",
+        "details": "Add query parameters (e.g., `?sortBy=createdAt&order=desc`). Implement database sorting logic.",
+        "testStrategy": "Write API tests to verify sorting works correctly for all specified criteria.",
+        "priority": "medium",
+        "dependencies": [
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 36,
+        "title": "Frontend: Implement Sort Bookmarks UI",
+        "description": "Add a dropdown or set of options to the bookmark view for sorting.",
+        "details": "Implement UI elements to select sorting criteria and order. Trigger API calls with sort parameters.",
+        "testStrategy": "Change sorting options and verify the order of bookmarks in the UI updates correctly.",
+        "priority": "medium",
+        "dependencies": [
+          19,
+          35
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 37,
+        "title": "Backend: Implement Import from Omnivore Endpoint",
+        "description": "Develop an endpoint to import bookmarks from an Omnivore export file.",
+        "details": "Implement `POST /bookmarks/import/omnivore`. Parse the Omnivore JSON/CSV format and create new bookmark records.",
+        "testStrategy": "Write E2E tests using sample Omnivore export files to verify successful import.",
+        "priority": "medium",
+        "dependencies": [
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 38,
+        "title": "Backend: Implement Import from HTML File Endpoint",
+        "description": "Develop an endpoint to import bookmarks from a browser's HTML export file.",
+        "details": "Implement `POST /bookmarks/import/html`. Parse the Netscape Bookmark File Format (HTML) and create new bookmark records.",
+        "testStrategy": "Write E2E tests using sample browser HTML export files to verify successful import.",
+        "priority": "medium",
+        "dependencies": [
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 39,
+        "title": "Backend: Implement Import from Text File Endpoint",
+        "description": "Develop an endpoint to import bookmarks from a text file with line-separated URLs.",
+        "details": "Implement `POST /bookmarks/import/text`. Parse each line as a URL and create new bookmark records.",
+        "testStrategy": "Write E2E tests using sample text files with URLs to verify successful import.",
+        "priority": "medium",
+        "dependencies": [
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 40,
+        "title": "Frontend: Develop Import Bookmarks UI",
+        "description": "Create a user interface for uploading and importing bookmark files from different sources.",
+        "details": "Provide file upload inputs for Omnivore, HTML, and text files. Display import progress/status.",
+        "testStrategy": "Test uploading each file type and verify bookmarks appear in the UI after import.",
+        "priority": "medium",
+        "dependencies": [
+          19,
+          37,
+          38,
+          39
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 41,
+        "title": "Backend: Implement Export/Backup Bookmarks Endpoint",
+        "description": "Develop an endpoint to export all user's bookmarks into a downloadable file.",
+        "details": "Implement `GET /bookmarks/export` (or similar). Generate a JSON, HTML, or text file containing all bookmarks.",
+        "testStrategy": "Write API tests to verify the export endpoint generates a valid file with correct data.",
+        "priority": "medium",
+        "dependencies": [
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 42,
+        "title": "Frontend: Develop Export/Backup Bookmarks UI",
+        "description": "Create a UI element (e.g., button) to trigger the bookmark export.",
+        "details": "Implement a button that initiates the download of the exported bookmark file.",
+        "testStrategy": "Click the export button and verify a file is downloaded containing the user's bookmarks.",
+        "priority": "medium",
+        "dependencies": [
+          41
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 43,
+        "title": "Backend: Implement Batch Delete Bookmarks Endpoint",
+        "description": "Develop an endpoint to delete multiple bookmarks simultaneously.",
+        "details": "Implement `POST /bookmarks/batch-delete` that accepts an array of bookmark IDs.",
+        "testStrategy": "Write API tests to verify multiple bookmarks can be deleted in a single request.",
+        "priority": "medium",
+        "dependencies": [
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 44,
+        "title": "Frontend: Implement Batch Delete Bookmarks UI",
+        "description": "Add functionality to select multiple bookmarks and delete them in bulk.",
+        "details": "Implement checkboxes or multi-select options on bookmark cards. Add a 'Delete Selected' button.",
+        "testStrategy": "Select multiple bookmarks, click delete, and verify they are removed from the UI and database.",
+        "priority": "medium",
+        "dependencies": [
+          19,
+          43
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 45,
+        "title": "Implement Dark and Light UI Themes",
+        "description": "Develop a theme toggling mechanism for dark and light UI modes.",
+        "details": "Use Shadcn UI's theme capabilities. Implement a global theme context and a toggle button.",
+        "testStrategy": "Toggle between themes and verify all UI components adapt correctly.",
+        "priority": "medium",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 46,
+        "title": "Implement Left-side Vertical Navigation",
+        "description": "Create the main left-side vertical navigation layout component.",
+        "details": "Design and implement the sidebar structure, including logo, user info, and navigation links (e.g., collections, labels).",
+        "testStrategy": "Verify navigation renders correctly and links are functional.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          15,
+          28,
+          32
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 47,
+        "title": "Ensure Responsive Layout",
+        "description": "Ensure the entire web application layout is responsive for mobile and desktop devices.",
+        "details": "Use CSS media queries and flexible layouts (flexbox/grid). Test on various screen sizes and devices.",
+        "testStrategy": "Resize browser window, use device emulation in dev tools, and test on actual mobile devices.",
+        "priority": "high",
+        "dependencies": [
+          19,
+          46
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 48,
+        "title": "Ensure WCAG AA Accessibility",
+        "description": "Review and implement Web Content Accessibility Guidelines (WCAG) AA standards across the application.",
+        "details": "Use semantic HTML, provide alt text for images, ensure keyboard navigation, sufficient color contrast, and ARIA attributes where necessary.",
+        "testStrategy": "Use accessibility audit tools (Lighthouse, Axe DevTools) and manual keyboard/screen reader testing.",
+        "priority": "high",
+        "dependencies": [
+          19,
+          46
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 49,
+        "title": "Implement Component-level Tests",
+        "description": "Write unit and integration tests for key frontend UI components using Vitest and React Testing Library.",
+        "details": "Focus on critical components like login form, bookmark card, label management, search bar.",
+        "testStrategy": "Achieve minimum 80% code coverage for core UI components. Run tests regularly in CI.",
+        "priority": "medium",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 50,
+        "title": "Implement API Tests",
+        "description": "Write comprehensive integration tests for all backend API endpoints using Vitest.",
+        "details": "Test all CRUD operations, authentication flows, search, sort, and import/export endpoints.",
+        "testStrategy": "Achieve minimum 90% code coverage for backend API routes. Run tests regularly in CI.",
+        "priority": "high",
+        "dependencies": [
+          3,
+          18,
+          27
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 51,
+        "title": "Implement E2E Tests for Scrappers",
+        "description": "Develop end-to-end tests specifically for the bookmark import functionalities (Omnivore, HTML, Text).",
+        "details": "Use a tool like Playwright or Cypress to simulate file uploads and verify data persistence in the database.",
+        "testStrategy": "Run E2E tests with various valid and invalid import files to ensure robustness.",
+        "priority": "medium",
+        "dependencies": [
+          40
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 52,
+        "title": "Generate API Documentation",
+        "description": "Add Open API documentation (Swagger) for all backend endpoints.",
+        "details": "Integrate Swagger UI or similar tool. Annotate Hono routes with JSDoc or OpenAPI specifications.",
+        "testStrategy": "Verify API documentation is accessible and accurately reflects all endpoints, parameters, and responses.",
+        "priority": "low",
+        "dependencies": [
+          18,
+          27
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 53,
+        "title": "Review Logging & Monitoring Strategy",
+        "description": "Define and integrate a logging and monitoring solution for the application.",
+        "details": "Choose a logging library (e.g., Pino, Winston). Configure error logging, request logging. Consider a monitoring service (e.g., Sentry, Datadog).",
+        "testStrategy": "Generate errors and verify logs are captured. Monitor application performance metrics.",
+        "priority": "medium",
+        "dependencies": [
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 54,
+        "title": "Conduct Production Readiness Review",
+        "description": "Perform a comprehensive review of the application for production deployment.",
+        "details": "Check environment variables, security best practices, error handling, performance, scalability considerations, and backup strategies.",
+        "testStrategy": "Use a checklist to ensure all production requirements are met.",
+        "priority": "high",
+        "dependencies": [
+          6,
+          7,
+          53
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 55,
+        "title": "Configure Dependency Management",
+        "description": "Set up Dependabot or similar tool for automated dependency updates and security alerts.",
+        "details": "Configure Dependabot in the GitHub repository. Define update frequency and scope.",
+        "testStrategy": "Verify Dependabot creates pull requests for outdated dependencies.",
+        "priority": "low",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 56,
+        "title": "Investigate & Address URL Scrapping Issues",
+        "description": "Research common URL scrapping failures and implement robust solutions.",
+        "details": "Investigate issues like dynamic content, anti-bot measures, and malformed metadata. Implement retry mechanisms or alternative scrapping methods.",
+        "testStrategy": "Test with a diverse set of problematic URLs and verify improved scrapping success rates.",
+        "priority": "medium",
+        "dependencies": [
+          21
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 57,
+        "title": "Investigate Performance Improvements",
+        "description": "Research and identify areas for performance optimization in both frontend and backend.",
+        "details": "Analyze database queries, API response times, frontend rendering performance. Implement caching, indexing, or lazy loading where beneficial.",
+        "testStrategy": "Conduct load testing and performance profiling. Measure improvements in key metrics.",
+        "priority": "low",
+        "dependencies": [
+          19,
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 58,
+        "title": "Investigate Server-Sent Events (SSE)",
+        "description": "Research the applicability of Server-Sent Events (SSE) for real-time updates or streaming data.",
+        "details": "Explore Hono's SSE capabilities and potential use cases (e.g., import progress, live notifications).",
+        "testStrategy": "Develop a small proof-of-concept for SSE if deemed beneficial.",
+        "priority": "low",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 59,
+        "title": "Define & Implement Frontend Folder Structure",
+        "description": "Establish and implement a clean and scalable folder structure for the frontend project.",
+        "details": "Organize components, hooks, utilities, pages, and styles logically. Follow best practices for maintainability.",
+        "testStrategy": "Review code organization and ensure consistency across the project.",
+        "priority": "low",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 60,
+        "title": "Review General Frontend Best Practices",
+        "description": "Conduct a review of general frontend best practices for code quality, performance, and maintainability.",
+        "details": "Review component design patterns, state management, error boundaries, and code splitting.",
+        "testStrategy": "Perform code reviews and apply identified best practices.",
+        "priority": "low",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 61,
+        "title": "Backend: AI Suggest Labels Endpoint",
+        "description": "Implement an endpoint that uses AI to suggest labels for a given bookmark URL/metadata.",
+        "details": "Integrate with a natural language processing (NLP) API or a local model to analyze bookmark content and suggest relevant labels.",
+        "testStrategy": "Write unit tests for the AI suggestion logic with various bookmark contents. Evaluate suggestion accuracy.",
+        "priority": "low",
+        "dependencies": [
+          18,
+          21
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-29T14:00:25.533Z",
+      "updated": "2025-07-29T14:43:51.928Z",
+      "description": "Tasks for master context"
+    }
   }
 }

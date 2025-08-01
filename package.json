@@ -19,6 +19,7 @@
   ],
   "license": "MIT",
   "scripts": {
+    "complete-check": "npm run typecheck && npm run lint",
     "preinstall": "npx only-allow pnpm",
     "build": "turbo run build",
     "dev": "turbo run dev",
