@@ -4,6 +4,9 @@
 
 THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout development. No item can be neglected. NEVER ASSUME ANYTHING - ALWAYS ASK IF IN DOUBT.
 
+- **Attention**: NEVER, NEVER start to implement a task without been requested to do so.
+- Also always start the task from the `main` branch and ensure it is up-to-date with remote.
+
 ## 🔄 STANDARD WORKFLOW
 
 ### 1. 📋 TASK RECEPTION
@@ -71,6 +74,7 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 ### 6. ⚙️ IMPLEMENTATION
 
 - Follow the plan created in deepthink
+- Ensure that local `main` branch is up-to-date with remote, otherwise update it
 - Create a feature branch based on `main` and do your work on this feature branch
 - Feature branch should follow the pattern `feature/FAV-[ID]-[title]`
 - Keep commits small and frequent during development
@@ -87,12 +91,13 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
   - ⚠️ **MANDATORY** - resolve ALL problems
   - Do not proceed to commit until QA is clean
   - Run again until it passes completely
+  - If you are still struguling to fix it (cannot fix in 5 interactions, for example), ask for help
 
 ### 8. ✅ STATUS UPDATE - COMPLETION
 
+- **Action**: Update the task with implementation details
 - **Action**: Mark the task/subtask as `done` in Task Master
 - Confirm that the status has been updated correctly
-- Update the task with implementation details
 
 ### 9. 📝 DEVELOPMENT LOGGING
 
@@ -141,7 +146,7 @@ Closes #TaskID
 
 **Valid types**: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 
-- Push it to the feature branch
+- Ask me if you should push the code to the feature branch and only continue after I approve
 
 ### 11. ⛄ OPENING THE PULL REQUEST
 

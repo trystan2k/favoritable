@@ -1,5 +1,6 @@
 import { Context, Next } from 'hono';
 import { cors } from 'hono/cors';
+import { secureHeaders } from 'hono/secure-headers';
 import { NotAcceptedError } from '../errors/errors.js';
 
 export const addCorsHeaders = () => {
@@ -61,14 +62,23 @@ export const parseAPIVersion = () => {
 };
 
 export const addSecurityHeaders = () => {
-  return async (c: Context, next: Next) => {
-    // Security headers
-    c.header('X-Content-Type-Options', 'nosniff');
-    c.header('X-Frame-Options', 'DENY');
-    c.header('X-XSS-Protection', '1; mode=block');
-    c.header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-    await next();
-  };
+  return secureHeaders({
+    contentSecurityPolicy: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", 'data:'],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      frameAncestors: ["'none'"],
+    },
+    strictTransportSecurity: 'max-age=31536000; includeSubDomains',
+    xContentTypeOptions: 'nosniff',
+    xFrameOptions: 'DENY',
+    xXssProtection: '1; mode=block',
+    referrerPolicy: 'strict-origin-when-cross-origin',
+  });
 };
 
 export const addCacheHeaders = () => {

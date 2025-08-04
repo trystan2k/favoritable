@@ -412,6 +412,10 @@ These commands make AI calls and may take up to a minute:
 - Provides more informed task creation and updates
 - Recommended for complex technical tasks
 
+### Expanding tasks
+
+- When request to expand tasks, using task-master, please ensure to return 'details' field as a string not an object
+
 ---
 
 _This guide ensures Claude Code has immediate access to Task Master's essential functionality for agentic development workflows._
