@@ -204,11 +204,11 @@
         "subtasks": [
           {
             "id": 1,
-            "title": "",
+            "title": "Integrate hono/secure-headers middleware",
             "description": "Replace the custom `addSecurityHeaders` function with the `hono/secure-headers` middleware in `apps/api/src/core/http.headers.ts`.",
             "status": "done",
             "dependencies": [],
-            "details": "",
+            "details": "Replaced the custom `addSecurityHeaders` function in `apps/api/src/core/http.headers.ts` with the `secureHeaders` middleware from `hono/secure-headers`.",
             "testStrategy": ""
           },
           {
