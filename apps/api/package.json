@@ -29,6 +29,8 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
+    "test": "vitest --run",
+    "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "lint": "echo \"No linting configured\"",
     "db:generate": "drizzle-kit generate",
@@ -58,7 +60,8 @@
     "@types/pino": "~7.0.5",
     "@types/pino-http": "~5.8.4",
     "drizzle-kit": "~0.30.5",
-    "tsx": "~4.19.3"
+    "tsx": "~4.19.3",
+    "vitest": "~3.2.4"
   },
   "peerDependencies": {
     "domhandler": "~5.0.3",

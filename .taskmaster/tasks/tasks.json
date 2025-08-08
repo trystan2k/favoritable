@@ -91,7 +91,7 @@
         "dependencies": [
           1
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -133,7 +133,7 @@
               "3.1"
             ],
             "details": "Configure `vitest` in `package.json` scripts (e.g., `\"test\": \"vitest\"`) or create a `vitest.config.ts` file if more complex configuration is needed. Create a `src/test/example.test.ts` file with a simple passing test, such as `import { expect, test } from 'vitest'; test('basic setup', () => { expect(true).toBe(true); });`.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run the `vitest` command (e.g., `npm run test` or `pnpm test`) and ensure the placeholder test passes successfully."
           },
           {
@@ -145,7 +145,7 @@
               "3.4"
             ],
             "details": "Ensure the `dev` script for the Hono server and the `test` script for Vitest are correctly configured in `package.json`.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run `npm run dev` (or `pnpm dev`) and confirm the server starts without errors and the 'Hello, Hono!' endpoint is accessible. Then, run `npm run test` (or `pnpm test`) and confirm all Vitest tests pass successfully."
           }
         ]
@@ -996,7 +996,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-05T07:26:27.621Z",
+      "updated": "2025-08-08T22:41:29.618Z",
       "description": "Tasks for master context"
     }
   }

@@ -102,7 +102,7 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 
 ### 9. 📝 DEVELOPMENT LOGGING
 
-- **Action**: Use **Basic Memory MCP** to log development
+- **Action**: Use **Basic Memory MCP** to log development AND create physical file
 - **Log template**:
 
 ```
@@ -127,11 +127,15 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 - [Possible future improvements]
 ```
 
-Once it is stored in Basic Memory, use its MCP to write the development log in the memories folder at docs/memories/development-logs, using the pattern `task-[ID]-[title].md`
+**MANDATORY**: Complete BOTH steps:
+1. Store in Basic Memory MCP using `write_note` with folder "development-logs"
+2. **ALSO** create the physical file using the `write` tool at `docs/memories/development-logs/task-[ID]-[title].md`
+3. Use `read_note` from Basic Memory to get the content and copy it to the physical file
 
 ### 10. 💾 COMMIT AND PUSH
 
 - Commit only when QA is 100% clean
+- Before do the commit (and after check QA is fine), ask me to review the changes and only commit after I confirm.
 - Always use `git add --all`
 - **Commit message pattern**:
 
@@ -232,6 +236,7 @@ log-development --task-id [TASK_ID] --details "[details]"
 
 - [ ] Status updated to `done`
 - [ ] Log recorded in Basic Memory MCP
+- [ ] Physical development log file created in docs/memories/development-logs/
 - [ ] Completion notification sent
 - [ ] Commit made with appropriate message
 
