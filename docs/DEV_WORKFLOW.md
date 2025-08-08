@@ -76,6 +76,7 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 - Follow the plan created in deepthink
 - Ensure that local `main` branch is up-to-date with remote, otherwise update it
 - Create a feature branch based on `main` and do your work on this feature branch
+- Create one feature branch per task ID and commit all subtasks in this same branch (do not create branch for subtasks)
 - Feature branch should follow the pattern `feature/FAV-[ID]-[title]`
 - Keep commits small and frequent during development
 - **Principles during implementation**:
