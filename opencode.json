@@ -19,6 +19,10 @@
     "basic-memory": {
       "type": "local",
       "command": ["uvx", "basic-memory", "--project", "favoritable", "mcp"]
+    },
+    "shadcn-ui": {
+      "type": "local",
+      "command": ["npx", "@jpisnice/shadcn-ui-mcp-server"]
     }
   }
 }

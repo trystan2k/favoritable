@@ -242,15 +242,67 @@ log-development --task-id [TASK_ID] --details "[details]"
 
 ---
 
-## 🚫 WHAT NEVER TO DO
+## 🚫 NO NO Actions (Development Guidelines)
 
-- ❌ Skip QA checks
-- ❌ Commit with quality issues
-- ❌ Assume unspecified requirements
-- ❌ Overengineer solutions
-- ❌ Proceed without updating task statuses
-- ❌ Forget to record development logs
-- ❌ Implement without a deepthink plan
+Based on your development guidelines, here are the **NO NO actions**:
+
+---
+
+## 🔴 Development Workflow Violations
+
+- **NEVER** skip steps in the mandatory development workflow  
+- **NEVER** commit when QA fails (`pnpm typecheck`, `pnpm lint`, `pnpm test` and `pnpm build` must all pass)  
+- **NEVER** work without marking task in-progress first  
+- **NEVER** complete task without documentation (development memory logging)  
+- **NEVER** commit failing QA – Quality gates are mandatory  
+- **NEVER** Assume unspecified requirements
+- **NEVER** Overengineer solutions
+- **NEVER** Include any agent information in the commit message (like Co-Authored-By:)
+- Under **NO** circumstance commit code when there are issues from QA scripts (even warnings)  
+
+---
+
+## 📁 File Creation Violations
+
+- **NEVER** create files unless absolutely necessary for achieving your goal  
+- **NEVER** proactively create documentation files (`*.md`) or README files  
+- **ALWAYS** prefer editing existing files to creating a new one  
+
+---
+
+## 🧪 Testing Violations
+
+- **NEVER** use `.spec.ts` extensions – Use `.test.ts` only  
+- **NEVER** use `specs` directories – Use `tests` only  
+- **NEVER** use `fireEvent` – **ALWAYS** use [`@testing-library/user-event`](https://testing-library.com/docs/user-event/intro)  
+- **NEVER** wrap `userEvent` calls in manual `act()` blocks  
+- **NEVER** commit tests with warnings  
+
+---
+
+## 🏗 Architecture Violations
+
+- **NEVER** assume libraries are available – Always check existing usage first  
+- **NEVER** add comments unless explicitly asked  
+- **NEVER** skip existing patterns – Follow codebase conventions  
+- **NEVER** commit secrets or keys to repository  
+
+---
+
+## 📋 TaskMaster Violations
+
+- **NEVER** use `force` when creating new tasks (keep historical reasons)  
+- **NEVER** work on tasks without proper status tracking  
+
+---
+
+## ✅ The Golden Rule
+
+> Do what has been asked; nothing more, nothing less.
+
+---
+
+These are the absolute prohibitions that will break your development workflow, code quality, or project standards.
 
 ---
 
