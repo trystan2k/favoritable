@@ -150,12 +150,14 @@ Closes #TaskID
 ```
 
 **Valid types**: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+**NEVER** Amend and force push commits (unless explicit requested by me)
 
 - Ask me if you should push the code to the feature branch and only continue after I approve
 
 ### 11. ⛄ OPENING THE PULL REQUEST
 
 Use the Github CLI to open a PR with a comprehensive and accurate description of the implementation.
+**NEVER** Add any comment releated to the Agent doing the Pull request (for example, avoid any reference to opencode, claude code, gemini, etc)
 
 ### 12. 📢 COMPLETION NOTIFICATION
 
