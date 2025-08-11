@@ -20,11 +20,13 @@ Build a personal bookmark management web application where users can log in with
 ## 3. Tech Stack
 
 ### Frontend
-- **UI Library:** [Shadcn UI](https://ui.shadcn.com/) for all components
-- **Framework:** TanStack Start
+- **Architecture:** React SPA (Single Page Application)
+- **Routing:** [TanStack Router](https://tanstack.com/router) for type-safe routing (as per ADR 006)
+- **Bundler:** [Rsbuild](https://rsbuild.dev/) for fast build performance (as per ADR 004)
+- **UI Library:** [Radix UI](https://www.radix-ui.com/) for unstyled components with CSS modules for styling (as per ADR 003)
 - **Language:** TypeScript
 - **Testing:** Vitest, React Testing Library
-- **Quality Tools:** ESLint, Prettier, Type-checking
+- **Quality Tools:** [Biome](https://biomejs.dev/) for linting and formatting (as per ADR 005)
 
 ### Backend
 - **Framework:** Hono (on Node.js)
@@ -98,13 +100,14 @@ Build a personal bookmark management web application where users can log in with
 ---
 
 ## 5. Development & Tooling
-- Linting & Formatting: Add Lint / Prettier / Biome / Knip
-- Middlewares: Review Middlewares
-- API Documentation: Add Open API docs (Swagger)
-- Testing: Add tests (E2E - Test scrapper for omnivore import files, E2E - Test scrapper for HTML files, E2E - Test scrapper for Text files)
-- Logging & Monitoring: Review Logging Monitoring
-- Production Readiness: Review for Prod
-- Dependency Management: Review dependabot
+- **Linting & Formatting:** [Biome](https://biomejs.dev/) for unified code quality (as per ADR 005)
+- **Dependency Analysis:** Knip for unused file and dependency detection
+- **Middlewares:** Review Middlewares
+- **API Documentation:** Add Open API docs (Swagger)
+- **Testing:** Add tests (E2E - Test scrapper for omnivore import files, E2E - Test scrapper for HTML files, E2E - Test scrapper for Text files)
+- **Logging & Monitoring:** Review Logging Monitoring
+- **Production Readiness:** Review for Prod
+- **Dependency Management:** Review dependabot
 
 ---
 
@@ -218,7 +221,7 @@ Build a personal bookmark management web application where users can log in with
 ## 10. Non-Functional Requirements
 - Clean code structure, typed end-to-end
 - Component-level tests and API tests
-- SSR via TanStack Start (if desired)
+- Client-side SPA with TanStack Router for navigation
 - Responsive and accessible design (WCAG AA)
 
 ---

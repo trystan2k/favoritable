@@ -12,14 +12,15 @@ For context about the API project (apps/api), see document [CONTEXT.md](apps/api
   - Build: `pnpm build` (TypeScript)
   - Dev: `pnpm dev`
   - Typecheck: `pnpm typecheck`
-  - Lint: `pnpm lint` (no linting configured)
+  - Lint: `pnpm lint` (Biome)
+  - Format: `pnpm format` (Biome)
 - **Frontend**
   - Build: `pnpm build` (Rsbuild)
   - Dev: `pnpm dev`
   - Typecheck: `pnpm typecheck`
-  - Lint: `pnpm lint` (ESLint)
-  - Format: `pnpm format` (Prettier)
-- **Testing**: No test runner configured; add Jest/Vitest for tests if needed.
+  - Lint: `pnpm lint` (Biome)
+  - Format: `pnpm format` (Biome)
+- **Testing**: Vitest for unit and integration tests
 
 ## Code Style Guidelines
 
@@ -28,8 +29,8 @@ For context about the API project (apps/api), see document [CONTEXT.md](apps/api
 - **Imports**: Use ES module syntax (`import ... from ...`)
 - **TypeScript**: Strict mode, use explicit types, enable decorators
 - **Naming**: camelCase for variables/functions, PascalCase for types/classes
-- **Formatting**: Use Prettier (`pnpm format`)
-- **Linting**: Use ESLint (frontend only, recommended configs)
+- **Formatting**: Use Biome (`pnpm format`) - unified tool as per ADR 005
+- **Linting**: Use Biome (`pnpm lint`) - unified tool as per ADR 005
 - **Error Handling**: Prefer explicit error types, use TypeScript safety
 - **File structure**: Organize by feature/module, keep related files together
 - **No Cursor/Copilot rules present**
