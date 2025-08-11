@@ -1372,7 +1372,7 @@
         "description": "Create and populate Architecture Decision Record (ADR) files for key technology choices. This includes the backend stack (Hono, SQLite, Drizzle), project structure (Monorepo, Turbo), testing frameworks (Vitest, React Testing Library), and other critical tools like Zod, TypeScript, Bruno, Puppeteer, and Pino.",
         "details": "Create a new directory `docs/adr` in the project root. Within this directory, create individual markdown files for each of the following technology decisions:\n1. Backend Framework & DB: Hono, SQLite, and Drizzle ORM.\n2. Project Structure: Monorepo with Turborepo.\n3. Testing: Vitest and React Testing Library.\n4. Validation: Zod for schema validation.\n5. Language: TypeScript for static typing.\n6. API Testing: Bruno for API client and testing.\n7. Web Scraping: Puppeteer for metadata fetching.\n8. Logging: Pino for structured logging.\nEach ADR file must follow the standard template, including 'Context', 'Decision', 'Status' (set to 'Accepted'), and 'Consequences' sections, clearly articulating the rationale for each choice.",
         "testStrategy": "Navigate to the `docs/adr` directory in the repository. Verify that a separate markdown file exists for each of the 8 specified technology decisions. Open each file and confirm that it contains the four required sections: Context, Decision, Status, and Consequences. Ensure the content is populated and relevant to the technology being documented.",
-        "status": "in-progress",
+        "status": "done",
         "dependencies": [],
         "priority": "medium",
         "subtasks": [
@@ -1382,7 +1382,7 @@
             "description": "Create the `docs/adr` directory and a standard markdown template file to ensure consistency across all Architecture Decision Records.",
             "dependencies": [],
             "details": "Create a new directory `docs/adr` at the project root. Inside this directory, create a file named `000-template.md`. This file should contain the boilerplate structure for an ADR, including markdown headers for 'Context', 'Decision', 'Status', and 'Consequences'.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -1393,7 +1393,7 @@
               "64.1"
             ],
             "details": "Using the template from subtask 64.1, create a new file `001-backend-stack.md`. Populate the sections to justify the choice of Hono for its performance, SQLite for its embedded nature, and Drizzle for its TypeScript-first approach.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -1404,7 +1404,7 @@
               "64.1"
             ],
             "details": "Create a new file `002-project-structure.md`. Explain the context of managing multiple related packages and the decision to use a monorepo. Detail why Turborepo was chosen for its build caching and task orchestration capabilities.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -1415,7 +1415,7 @@
               "64.1"
             ],
             "details": "Create a new file `003-testing-frameworks.md`. Justify the selection of Vitest for its speed and compatibility with Vite, and React Testing Library for its user-centric testing philosophy for UI components.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -1426,7 +1426,7 @@
               "64.1"
             ],
             "details": "Create a new file `004-typing-and-validation.md`. Explain the benefits of using TypeScript across the monorepo and the rationale for choosing Zod for schema declaration and validation.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -1437,7 +1437,7 @@
               "64.1"
             ],
             "details": "Create a new file `005-developer-tooling.md`. Describe the reasons for choosing Bruno for its git-friendly format and Puppeteer for its robust browser automation capabilities for fetching metadata.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -1448,7 +1448,7 @@
               "64.1"
             ],
             "details": "Create a new file `006-logging.md`. Explain the importance of structured logging for observability and justify the selection of Pino based on its performance benchmarks and simple API.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -1464,7 +1464,7 @@
               "64.7"
             ],
             "details": "Review each ADR file in the `docs/adr` directory. Check for grammatical errors, clarity in the 'Context' and 'Consequences' sections, and ensure the 'Status' is set to 'Accepted' in all final documents. Verify file naming conventions are consistent.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           }
         ]
@@ -1472,7 +1472,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-11T10:13:18.892Z",
+      "updated": "2025-08-11T10:23:49.706Z",
       "description": "Tasks for master context"
     }
   }
