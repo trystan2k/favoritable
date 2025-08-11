@@ -1,0 +1,22 @@
+{
+  "name": "@favoritable/config-biome",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Shared Biome configuration for the favoritable monorepo",
+  "files": [
+    "biome.json"
+  ],
+  "exports": {
+    ".": "./biome.json"
+  },
+  "scripts": {
+    "knip": "knip"
+  },
+  "dependencies": {
+    "@biomejs/biome": "~2.1.4"
+  },
+  "devDependencies": {
+    "knip": "~5.62.0"
+  }
+}

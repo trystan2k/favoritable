@@ -3,17 +3,21 @@ import 'reflect-metadata';
 import { INJECT_METADATA_KEY } from './di.constants.js';
 
 // Type for constructor function
+// biome-ignore lint/suspicious/noExplicitAny: Type for constructor function
 type Constructor<T = any> = new (...args: any[]) => T;
 
-type Registration<T = any> = {
-  type: 'class';
-  value: Constructor<T>;
-  singleton?: boolean;
-} | {
-  type: 'instance';
-  value: T;
-  singleton?: boolean;
-};
+// biome-ignore lint/suspicious/noExplicitAny: Type for registration
+type Registration<T = any> =
+  | {
+      type: 'class';
+      value: Constructor<T>;
+      singleton?: boolean;
+    }
+  | {
+      type: 'instance';
+      value: T;
+      singleton?: boolean;
+    };
 
 /**
  * IoC Container class
@@ -23,7 +27,7 @@ export class Container {
   private registry = new Map<string, Registration>();
   private singletons: Map<string, Registration> = new Map();
 
-  private constructor() { }
+  private constructor() {}
 
   static getInstance(): Container {
     if (!Container.instance) {
@@ -32,9 +36,14 @@ export class Container {
     return Container.instance;
   }
 
+  // biome-ignore lint/suspicious/noExplicitAny: Initialize container with class constructors
   initialize(args: any[]) {
-    args.forEach(arg => {
-      if (typeof arg !== 'function' || !arg.prototype || !(arg.prototype.constructor === arg)) {
+    args.forEach((arg) => {
+      if (
+        typeof arg !== 'function' ||
+        !arg.prototype ||
+        !(arg.prototype.constructor === arg)
+      ) {
         throw new Error(`Argument "${arg}" is not a valid class constructor`);
       }
     });
@@ -43,12 +52,20 @@ export class Container {
   /**
    * Register a class implementation for a token
    */
-  registerClass<T>(token: string, classDefinition: Constructor<T>, singleton?: boolean): void {
+  registerClass<T>(
+    token: string,
+    classDefinition: Constructor<T>,
+    singleton?: boolean
+  ): void {
     if (this.registry.has(token)) {
       throw new Error(`Instance with key '${token}' already exists.`);
     }
 
-    this.registry.set(token, { type: 'class', value: classDefinition, singleton });
+    this.registry.set(token, {
+      type: 'class',
+      value: classDefinition,
+      singleton,
+    });
   }
 
   registerInstance<T>(token: string, instance: T, singleton?: boolean): void {
@@ -62,7 +79,6 @@ export class Container {
    * Get an instance of the requested token
    */
   resolve<T>(token: string): T {
-
     const registration = this.registry.get(token);
 
     if (!registration) {
@@ -80,10 +96,11 @@ export class Container {
     const ClassDefinition = registration.value;
 
     // Get the injected parameters metadata
-    const injectMetadata: string[] = Reflect.getMetadata(INJECT_METADATA_KEY, ClassDefinition) || [];
+    const injectMetadata: string[] =
+      Reflect.getMetadata(INJECT_METADATA_KEY, ClassDefinition) || [];
 
     // Resolve each parameter
-    const params = injectMetadata.map(paramToken => this.resolve(paramToken));
+    const params = injectMetadata.map((paramToken) => this.resolve(paramToken));
 
     const instance = new ClassDefinition(...params);
 
@@ -94,5 +111,3 @@ export class Container {
     return instance;
   }
 }
-
-

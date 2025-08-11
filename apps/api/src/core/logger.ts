@@ -1,17 +1,15 @@
 import pino from 'pino';
 import { env, NodeEnvs } from '../env.js';
 
-export const LogLevels = {
+const LogLevels = {
   FATAL: 'fatal',
   ERROR: 'error',
   WARN: 'warn',
   INFO: 'info',
   DEBUG: 'debug',
   TRACE: 'trace',
-  SILENT: 'silent'
+  SILENT: 'silent',
 } as const;
-
-export type LogLevel = (typeof LogLevels)[keyof typeof LogLevels];
 
 // Define sensitive fields that should be redacted in logs
 const REDACT_FIELDS = [
@@ -28,7 +26,7 @@ const REDACT_FIELDS = [
   'credit_card',
   'creditCard',
   'req.headers.authorization',
-  'req.headers.cookie'
+  'req.headers.cookie',
 ];
 
 // Configure logger based on environment
@@ -37,10 +35,12 @@ const getLoggerConfig = () => {
   const isDevelopment = env.NODE_ENV === NodeEnvs.DEVELOPMENT;
 
   return {
-    level: process.env.LOG_LEVEL || (isProduction ? LogLevels.INFO : LogLevels.DEBUG),
+    level:
+      process.env.LOG_LEVEL ||
+      (isProduction ? LogLevels.INFO : LogLevels.DEBUG),
     redact: {
       paths: REDACT_FIELDS,
-      censor: '[REDACTED]'
+      censor: '[REDACTED]',
     },
     timestamp: pino.stdTimeFunctions.isoTime,
     formatters: {
@@ -62,7 +62,7 @@ const getLoggerConfig = () => {
 };
 
 // Create the base logger instance
-export const baseLogger = pino(getLoggerConfig());
+const baseLogger = pino(getLoggerConfig());
 
 // Create a logger with context
 export const createLogger = (context: string) => {
@@ -71,6 +71,3 @@ export const createLogger = (context: string) => {
 
 // Centralized logger instance for application-wide use
 export const logger = createLogger('app');
-
-// Export a default logger for general use
-export default logger;

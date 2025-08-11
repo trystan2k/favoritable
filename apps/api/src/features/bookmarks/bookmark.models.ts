@@ -1,13 +1,16 @@
-import { z } from "zod";
-import { labelSchema, updateLabelSchema } from "../labels/label.models.js";
-import { BOOKMARK_STATES } from "./bookmark.constants.js";
-import { dateSchema } from "../../core/validators.wrapper.js";
+import { z } from 'zod';
+import { dateSchema } from '../../core/validators.wrapper.js';
+import { labelSchema, updateLabelSchema } from '../labels/label.models.js';
+import { BOOKMARK_STATES } from './bookmark.constants.js';
 
 type BookmarkStateKey = keyof typeof BOOKMARK_STATES;
 
-const bookmarkStateValues = Object.keys(BOOKMARK_STATES) as [BookmarkStateKey, ...BookmarkStateKey[]];
+const bookmarkStateValues = Object.keys(BOOKMARK_STATES) as [
+  BookmarkStateKey,
+  ...BookmarkStateKey[],
+];
 
-export const bookmarkSchema = z.object({
+const bookmarkSchema = z.object({
   id: z.string().nonempty(),
   title: z.string().nonempty(),
   slug: z.string().nonempty(),
@@ -23,16 +26,20 @@ export const bookmarkSchema = z.object({
 });
 export type BookmarkModel = z.infer<typeof bookmarkSchema>;
 
-export const getBookmarksQueryParamsSchema = z.object({
-  limit: z.coerce.number().int().positive().optional().default(10),
-  q: z.string().optional(),
-  cursor: z.string().optional(),
-}).extend({
-  label: bookmarkSchema.shape.labels.optional(),
-  state: bookmarkSchema.shape.state.optional(),
-});
+export const getBookmarksQueryParamsSchema = z
+  .object({
+    limit: z.coerce.number().int().positive().optional().default(10),
+    q: z.string().optional(),
+    cursor: z.string().optional(),
+  })
+  .extend({
+    label: bookmarkSchema.shape.labels.optional(),
+    state: bookmarkSchema.shape.state.optional(),
+  });
 
-export type GetBookmarksQueryParamsModel = z.infer<typeof getBookmarksQueryParamsSchema>;
+export type GetBookmarksQueryParamsModel = z.infer<
+  typeof getBookmarksQueryParamsSchema
+>;
 
 export type BookmarksModel = {
   data: BookmarkModel[];
@@ -52,31 +59,34 @@ export type CreateBookmarkModel = z.infer<typeof createBookmarkSchema>;
 export const createBookmarkFromURLSchema = z.object({
   url: z.string().url().nonempty(),
 });
-export type CreateBookmarkFromURLModel = z.infer<typeof createBookmarkFromURLSchema>;
 
 export const bookmarkIdParamSchema = bookmarkSchema.pick({
   id: true,
 });
 
-export type BookmarkIdParamModel = z.infer<typeof bookmarkIdParamSchema>;
-
 export const deleteBookmarksSchema = z.object({
   ids: z.string().array().nonempty(),
 });
-export type DeleteBookmarksModel = z.infer<typeof deleteBookmarksSchema>;
 
-export const updateBookmarkSchema = bookmarkSchema.partial().omit({
-  createdAt: true,
-  updatedAt: true,
-}).extend({
-  labels: updateLabelSchema
-    .refine(data => Boolean('id' in data || 'name' in data), { message: 'Either id or name must be provided' })
-    .array().optional().nullable().default([]),
-});
+export const updateBookmarkSchema = bookmarkSchema
+  .partial()
+  .omit({
+    createdAt: true,
+    updatedAt: true,
+  })
+  .extend({
+    labels: updateLabelSchema
+      .refine((data) => Boolean('id' in data || 'name' in data), {
+        message: 'Either id or name must be provided',
+      })
+      .array()
+      .optional()
+      .nullable()
+      .default([]),
+  });
 
-export const updateBookmarksSchema = updateBookmarkSchema.required({ id: true }).array();
-
-export type UpdateBookmarkModel = z.infer<typeof updateBookmarkSchema> & Pick<BookmarkModel, 'id'>;
+export type UpdateBookmarkModel = z.infer<typeof updateBookmarkSchema> &
+  Pick<BookmarkModel, 'id'>;
 
 export const importOmnivoreBookmarksSchema = z.object({
   id: z.string().nonempty(),
@@ -94,8 +104,10 @@ export const importOmnivoreBookmarksSchema = z.object({
   publishedAt: dateSchema.optional().nullable().default(null),
 });
 
-export type OmnivoreBookmarkModel = z.infer<typeof importOmnivoreBookmarksSchema>;
+export type OmnivoreBookmarkModel = z.infer<
+  typeof importOmnivoreBookmarksSchema
+>;
 
 export const importFromHTMLFileQueryParamsSchema = z.object({
   folderName: z.string().optional(),
-})
+});

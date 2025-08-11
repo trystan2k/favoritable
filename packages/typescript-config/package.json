@@ -3,10 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
+  "scripts": {
+    "knip": "knip"
   },
   "devDependencies": {
+    "knip": "~5.62.0",
     "typescript": "~5.7.3"
   }
 }

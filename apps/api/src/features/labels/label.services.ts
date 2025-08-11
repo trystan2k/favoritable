@@ -1,23 +1,33 @@
-import { Inject, Service } from "../../core/dependency-injection/di.decorators.js";
-import { NotFoundError } from "../../errors/errors.js";
-import { type BookmarkLabelRepository } from "../bookmarkLabel/bookmarkLabel.repository.js";
-import { mapCreateLabelModelToInsertLabelDTO, mapLabelDTOToLabelModel, mapUpdateLabelModelToLabelDTO } from "./label.mappers.js";
-import { CreateLabelModel, GetLabelsQueryParamsModel, UpdateLabelModel } from "./label.models.js";
-import { type LabelRepository } from "./label.repository.js";
+import {
+  Inject,
+  Service,
+} from '../../core/dependency-injection/di.decorators.js';
+import { NotFoundError } from '../../errors/errors.js';
+import type { BookmarkLabelRepository } from '../bookmarkLabel/bookmarkLabel.repository.js';
+import {
+  mapCreateLabelModelToInsertLabelDTO,
+  mapLabelDTOToLabelModel,
+  mapUpdateLabelModelToLabelDTO,
+} from './label.mappers.js';
+import type {
+  CreateLabelModel,
+  GetLabelsQueryParamsModel,
+  UpdateLabelModel,
+} from './label.models.js';
+import type { LabelRepository } from './label.repository.js';
 
 @Service({ name: 'LabelService' })
 export class LabelService {
-
   constructor(
     @Inject('LabelRepository') private labelRepository: LabelRepository,
-    @Inject('BookmarkLabelRepository') private bookmarkLabelRepository: BookmarkLabelRepository,
-  ) { }
+    @Inject('BookmarkLabelRepository')
+    private bookmarkLabelRepository: BookmarkLabelRepository
+  ) {}
 
   async getLabels(queryParams: GetLabelsQueryParamsModel) {
     const { q: searchQuery } = queryParams;
     const labels = await this.labelRepository.findAll(searchQuery);
     return labels.map(mapLabelDTOToLabelModel);
-
   }
 
   async getLabel(id: string) {

@@ -1,13 +1,17 @@
 import * as cheerio from 'cheerio';
+import type { Element } from 'domhandler';
 import { isValidUrl } from './url.js';
-import { Element } from 'domhandler';
 
 interface HTMLBookmark {
   url: string;
   folderName: string;
 }
 
-const parseBookmarksFromFolder = ($: cheerio.CheerioAPI, element: Element, currentFolder: string): HTMLBookmark[] => {
+const parseBookmarksFromFolder = (
+  $: cheerio.CheerioAPI,
+  element: Element,
+  currentFolder: string
+): HTMLBookmark[] => {
   const bookmarks: HTMLBookmark[] = [];
   const directDL = $(element).next('dl');
   const bookmarkList = directDL.children().filter('dt').children('a');
@@ -17,14 +21,17 @@ const parseBookmarksFromFolder = ($: cheerio.CheerioAPI, element: Element, curre
     if (url && isValidUrl(url)) {
       bookmarks.push({
         url,
-        folderName: currentFolder
+        folderName: currentFolder,
       });
     }
   });
   return bookmarks;
 };
 
-export const parseHtmlbookmarks = (html: string, folderName?: string): HTMLBookmark[] => {
+export const parseHtmlbookmarks = (
+  html: string,
+  folderName?: string
+): HTMLBookmark[] => {
   const $ = cheerio.load(html);
   const bookmarks: HTMLBookmark[] = [];
 
