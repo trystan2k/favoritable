@@ -1,5 +1,11 @@
 # AGENTS.md – Coding Agent Guide for favoritable
 
+## Project context
+
+### API
+
+For context about the API project (apps/api), see document [CONTEXT.md](apps/api/docs/CONTEXT.md)
+
 ## Build, Lint, and Test Commands
 
 - **API**
