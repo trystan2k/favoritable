@@ -19,17 +19,27 @@
   ],
   "license": "MIT",
   "scripts": {
-    "complete-check": "npm run typecheck && npm run lint && npm run build",
+    "complete-check": "pnpm typecheck && pnpm lint && pnpm format && pnpm check && pnpm knip && pnpm build",
     "preinstall": "npx only-allow pnpm",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint:fix": "turbo run lint:fix",
+    "lint:fix:unsafe": "turbo run lint:fix:unsafe",
+    "format": "turbo run format",
+    "format:fix": "turbo run format:fix",
+    "check": "turbo run check",
+    "check:fix": "turbo run check:fix",
+    "knip": "turbo run knip",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test"
   },
   "devDependencies": {
+    "@favoritable/config-biome": "workspace:*",
     "turbo": "~2.4.4"
+  },
+  "peerDependencies": {
+    "@biomejs/biome": "~2.1.4"
   },
   "packageManager": "pnpm@10.8.0",
   "engines": {
@@ -39,7 +49,9 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "better-sqlite3",
+      "core-js",
       "esbuild",
+      "oxc-resolver",
       "puppeteer",
       "sqlite3"
     ]

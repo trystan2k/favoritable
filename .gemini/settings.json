@@ -3,34 +3,27 @@
   "mcpServers": {
     "task-master-ai": {
       "command": "npx",
-      "args": [
-        "-y",
-        "--package=task-master-ai",
-        "task-master-ai"
-      ],
+      "args": ["-y", "--package=task-master-ai", "task-master-ai"],
       "trust": true
     },
     "basic-memory": {
       "command": "uvx",
-      "args": [
-        "basic-memory",
-        "--project",
-        "favoritable",
-        "mcp"
-      ]
+      "args": ["basic-memory", "--project", "favoritable", "mcp"]
     },
     "context7": {
       "httpUrl": "https://mcp.context7.com/mcp"
     },
     "repomix": {
       "command": "repomix",
-      "args": [
-        "--mcp"
-      ]
+      "args": ["--mcp"]
     },
     "shadcn-ui": {
       "command": "npx",
-      "args": ["@jpisnice/shadcn-ui-mcp-server", "--github-api-key", "ghp_your_token_here"]
+      "args": [
+        "@jpisnice/shadcn-ui-mcp-server",
+        "--github-api-key",
+        "ghp_your_token_here"
+      ]
     }
   }
 }

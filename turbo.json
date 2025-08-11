@@ -7,10 +7,40 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
+    },
+    "lint:fix": {
+      "dependsOn": ["^lint:fix"],
+      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
+    },
+    "lint:fix:unsafe": {
+      "dependsOn": ["^lint:fix:unsafe"],
+      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
+    },
+    "format": {
+      "dependsOn": ["^format"],
+      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
+    },
+    "format:fix": {
+      "dependsOn": ["^format:fix"],
+      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
+    },
+    "check": {
+      "dependsOn": ["^check"],
+      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
+    },
+    "check:fix": {
+      "dependsOn": ["^check:fix"],
+      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
     },
     "typecheck": {
-      "dependsOn": ["^typecheck"]
+      "dependsOn": ["^typecheck"],
+      "inputs": ["$TURBO_DEFAULT$", "**/tsconfig.json"]
+    },
+    "knip": {
+      "dependsOn": ["^knip"],
+      "inputs": ["$TURBO_DEFAULT$", "**/knip.json"]
     },
     "test": {
       "dependsOn": ["^test"]

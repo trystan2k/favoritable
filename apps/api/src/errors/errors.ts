@@ -1,23 +1,17 @@
-import { ContentfulStatusCode } from "hono/utils/http-status";
+import type { ContentfulStatusCode } from 'hono/utils/http-status';
 
 export class APIError extends Error {
-  name: string
-  code?: string
-  httpStatusCode?: ContentfulStatusCode
+  name: string;
+  code?: string;
+  httpStatusCode?: ContentfulStatusCode;
   cause?: unknown;
 
   constructor(message: string, cause?: unknown) {
-    super(message)
+    super(message);
     this.name = 'UndefinedError';
     this.code = '00000';
     this.cause = cause;
   }
-}
-
-export class ValidationError extends APIError {
-  code = '00002';
-  name = 'ValidationError';
-  httpStatusCode = 422 as ContentfulStatusCode;
 }
 
 export class NotFoundError extends APIError {

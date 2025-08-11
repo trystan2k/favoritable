@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 /**
  * TSID (Time-Sorted Identifier) Generator
@@ -23,7 +23,9 @@ class TsidGenerator {
   constructor(nodeId?: number) {
     if (nodeId !== undefined) {
       if (nodeId < 0 || nodeId > TsidGenerator.MAX_NODE_ID) {
-        throw new Error(`Node ID must be between 0 and ${TsidGenerator.MAX_NODE_ID}`);
+        throw new Error(
+          `Node ID must be between 0 and ${TsidGenerator.MAX_NODE_ID}`
+        );
       }
       this.nodeId = nodeId;
     } else {
@@ -62,9 +64,11 @@ class TsidGenerator {
     this.lastTimestamp = timestamp;
 
     // Construct the 64-bit TSID
-    const tsid = (BigInt(timestamp) << BigInt(TsidGenerator.SEQUENCE_BITS + TsidGenerator.NODE_BITS)) |
-                (BigInt(this.nodeId) << BigInt(TsidGenerator.SEQUENCE_BITS)) |
-                BigInt(this.sequence);
+    const tsid =
+      (BigInt(timestamp) <<
+        BigInt(TsidGenerator.SEQUENCE_BITS + TsidGenerator.NODE_BITS)) |
+      (BigInt(this.nodeId) << BigInt(TsidGenerator.SEQUENCE_BITS)) |
+      BigInt(this.sequence);
 
     return String(tsid);
   }
@@ -76,7 +80,9 @@ class TsidGenerator {
    */
   static extractDate(tsid: string): Date {
     const num = BigInt(tsid);
-    const timestamp = Number(num >> BigInt(TsidGenerator.SEQUENCE_BITS + TsidGenerator.NODE_BITS));
+    const timestamp = Number(
+      num >> BigInt(TsidGenerator.SEQUENCE_BITS + TsidGenerator.NODE_BITS)
+    );
     return new Date(timestamp + TsidGenerator.EPOCH);
   }
 }

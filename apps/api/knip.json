@@ -1,0 +1,13 @@
+{
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
+  "project": ["src/**/*.ts"],
+  "ignore": ["dist/**"],
+  "ignoreBinaries": ["biome", "tsc", "only-allow"],
+  "ignoreDependencies": [
+    "@favoritable/config-biome",
+    "@favoritable/typescript-config",
+    "@types/*",
+    "pino-pretty"
+  ],
+  "treatConfigHintsAsErrors": true
+}

@@ -2,21 +2,12 @@
   "servers": {
     "task-master-ai": {
       "command": "npx",
-      "args": [
-        "-y",
-        "--package=task-master-ai",
-        "task-master-ai"
-      ],
+      "args": ["-y", "--package=task-master-ai", "task-master-ai"],
       "type": "stdio"
     },
     "basic-memory": {
       "command": "uvx",
-      "args": [
-        "basic-memory",
-        "--project",
-        "favoritable",
-        "mcp"
-      ]
+      "args": ["basic-memory", "--project", "favoritable", "mcp"]
     },
     "context7": {
       "type": "http",
@@ -24,9 +15,7 @@
     },
     "repomix": {
       "command": "repomix",
-      "args": [
-        "--mcp"
-      ]
+      "args": ["--mcp"]
     },
     "shadcn-ui": {
       "command": "npx",

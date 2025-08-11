@@ -1,17 +1,17 @@
-export const cleanableString = (input = "") => {
+export const cleanableString = (input = '') => {
   let value = input ?? '';
 
   const chain = {
     removeTabs() {
-      value = value.replace(/\t/g, "");
+      value = value.replace(/\t/g, '');
       return chain;
     },
     removeLineBreaks() {
-      value = value.replace(/\n/g, "");
+      value = value.replace(/\n/g, '');
       return chain;
     },
     removeCarriageReturns() {
-      value = value.replace(/\r/g, "");
+      value = value.replace(/\r/g, '');
       return chain;
     },
     toLowerCase() {
@@ -19,10 +19,11 @@ export const cleanableString = (input = "") => {
       return chain;
     },
     convertToSlug() {
-      value = value.toLowerCase()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-');
+      value = value
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
       return chain;
     },
     getResult() {
@@ -31,4 +32,4 @@ export const cleanableString = (input = "") => {
   };
 
   return chain;
-}
+};

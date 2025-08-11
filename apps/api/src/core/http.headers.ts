@@ -1,4 +1,4 @@
-import { Context, Next } from 'hono';
+import type { Context, Next } from 'hono';
 import { cors } from 'hono/cors';
 import { secureHeaders } from 'hono/secure-headers';
 import { NotAcceptedError } from '../errors/errors.js';
@@ -10,8 +10,8 @@ export const addCorsHeaders = () => {
     allowHeaders: ['Content-Type', 'Authorization'],
     exposeHeaders: ['Content-Length', 'X-Request-Id'],
     maxAge: 86400,
-  })
-}
+  });
+};
 
 export const setContentTypeHeaders = (contentType = 'application/json') => {
   return async (c: Context, next: Next) => {
@@ -23,10 +23,10 @@ export const setContentTypeHeaders = (contentType = 'application/json') => {
 
 const API_VERSIONS = {
   LATEST: 'v1',
-  V1: 'v1'
+  V1: 'v1',
 } as const;
 
-type APIVersion = typeof API_VERSIONS[keyof typeof API_VERSIONS];
+type APIVersion = (typeof API_VERSIONS)[keyof typeof API_VERSIONS];
 
 const DEPRECATED_VERSIONS: APIVersion[] = [];
 const VERSION_REGEX = /application\/vnd\.favoritable\.v(\d+)\+json/;
@@ -45,7 +45,10 @@ export const parseAPIVersion = () => {
     if (versionMatch) {
       const version = `v${versionMatch[1]}` as APIVersion;
       if (DEPRECATED_VERSIONS.includes(version)) {
-        throw new NotAcceptedError('Deprecated API version', `Use ${API_VERSIONS.LATEST} instead or a newer one`);
+        throw new NotAcceptedError(
+          'Deprecated API version',
+          `Use ${API_VERSIONS.LATEST} instead or a newer one`
+        );
       }
 
       if (Object.values(API_VERSIONS).includes(version)) {
