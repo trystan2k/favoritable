@@ -1,509 +1,93 @@
 {
 	"meta": {
-		"generatedAt": "2025-08-01T16:32:14.290Z",
-		"tasksAnalyzed": 62,
-		"totalTasks": 62,
-		"analysisCount": 62,
+		"generatedAt": "2025-08-11T01:11:06.655Z",
+		"tasksAnalyzed": 1,
+		"totalTasks": 63,
+		"analysisCount": 10,
 		"thresholdScore": 5,
 		"projectName": "Taskmaster",
-		"usedResearch": true
+		"usedResearch": false
 	},
 	"complexityAnalysis": [
 		{
-			"taskId": 1,
-			"taskTitle": "Setup Project Repositories",
-			"complexityScore": 3,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break down the task 'Setup Project Repositories' into subtasks for initializing the pnpm monorepo workspace, creating the frontend and backend package stubs, configuring a shared TypeScript `tsconfig.base.json`, and setting up root-level scripts for managing the workspace.",
-			"reasoning": "This is a foundational configuration task. While not logically complex, getting the monorepo structure, shared configurations (like TypeScript), and workspace tooling (pnpm) right is crucial and involves several distinct steps. The complexity is low-to-medium as it's primarily configuration, but critical for the project's health."
-		},
-		{
-			"taskId": 2,
-			"taskTitle": "Initialize Frontend Project",
-			"complexityScore": 5,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Expand the task 'Initialize Frontend Project' into subtasks for scaffolding the TanStack Start project, installing core dependencies, configuring SSR and file-based routing, integrating and configuring Shadcn UI, and setting up Vitest with React Testing Library.",
-			"reasoning": "This task involves integrating multiple modern tools (TanStack Start, Shadcn, Vitest). Each has its own setup and configuration process. Ensuring they work together seamlessly, especially with SSR, adds moderate complexity beyond a simple 'create-react-app'."
-		},
-		{
-			"taskId": 3,
-			"taskTitle": "Initialize Backend Project",
+			"taskId": 63,
+			"taskTitle": "Fix Logger Error Handler Order Issue",
 			"complexityScore": 2,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Decompose the task 'Initialize Backend Project' into subtasks for initializing the Node.js/TypeScript project, installing Hono and Vitest, creating a basic 'hello world' server endpoint, and configuring the initial Vitest test setup.",
-			"reasoning": "The complexity is low as Hono is a minimal framework and the initial setup is straightforward. The task is well-defined and follows standard Node.js/TypeScript project initialization patterns. Breaking it down ensures a clean and testable starting point."
-		},
-		{
-			"taskId": 20,
-			"taskTitle": "Frontend: Implement Add New Bookmark UI",
-			"complexityScore": 5,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break down the task 'Implement Add New Bookmark UI' into subtasks for creating the form component using Shadcn UI, implementing form state management and validation (e.g., with React Hook Form), developing the API submission logic with TanStack Query to handle loading and error states, and integrating the form into the main UI, possibly as a dialog/modal.",
-			"reasoning": "This is a standard but multi-faceted UI task. It requires combining UI components, client-side state management, validation, and asynchronous API communication. Properly handling loading, error, and success states adds to the complexity."
-		},
-		{
-			"taskId": 22,
-			"taskTitle": "Frontend: Display Auto-fetched Metadata",
-			"complexityScore": 4,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Expand the task 'Display Auto-fetched Metadata' into subtasks for updating the bookmark card component to display the fetched metadata (title, description, thumbnail), modifying the 'Add Bookmark' UI to show a preview and pre-fill form fields after URL analysis, and ensuring the 'Edit Bookmark' form also displays this metadata.",
-			"reasoning": "The complexity lies in integrating new data points into multiple existing components (card, add form, edit form). It requires careful handling of the data flow and conditional rendering, but the core logic is not overly complex."
-		},
-		{
-			"taskId": 24,
-			"taskTitle": "Frontend: Implement Favorite/Unfavorite UI",
-			"complexityScore": 4,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break down the task 'Implement Favorite/Unfavorite UI' into subtasks for adding a favorite toggle button (e.g., a star icon) to the bookmark card component, creating a TanStack Query mutation to call the favorite/unfavorite API endpoint, implementing an optimistic update for instant UI feedback, and ensuring the main bookmark list query is invalidated upon success.",
-			"reasoning": "While the feature seems simple, a high-quality implementation involves more than just an API call. Implementing optimistic updates for a smooth UX and correct cache invalidation with TanStack Query adds a layer of moderate complexity."
-		},
-		{
-			"taskId": 26,
-			"taskTitle": "Frontend: Implement Archive/Unarchive UI",
-			"complexityScore": 4,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Decompose the task 'Implement Archive/Unarchive UI' into subtasks for adding an archive button to the bookmark card, creating a TanStack Query mutation for the archive API endpoint, implementing the UI logic to remove the archived item from the active view, and ensuring relevant queries (e.g., 'All' and 'Archived' collections) are invalidated to reflect the change.",
-			"reasoning": "This is functionally similar to the 'Favorite' task. The complexity comes from managing the client-side state correctly, especially removing the item from one list and ensuring it's available in another, which requires robust cache invalidation logic."
-		},
-		{
-			"taskId": 32,
-			"taskTitle": "Frontend: Implement Default Collections UI",
-			"complexityScore": 6,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Expand the task 'Implement Default Collections UI' into subtasks for creating the navigation component in the sidebar for 'All', 'Favorites', and 'Archived', implementing state management to track the currently selected collection (preferably using URL parameters), modifying the main bookmark fetching logic to apply the correct filters based on the selected collection, and adding visual indicators for the active collection.",
-			"reasoning": "This task is central to the app's navigation and data display. It requires architecting a clean filtering system that coordinates UI, global state (or URL state), and data fetching. The complexity score reflects the need to manage this application-wide state effectively."
-		},
-		{
-			"taskId": 34,
-			"taskTitle": "Frontend: Implement Search Bookmarks UI",
-			"complexityScore": 5,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break down the task 'Implement Search Bookmarks UI' into subtasks for creating the search input component, managing the search query state, implementing debouncing for the input to optimize API calls, integrating the search query into the bookmark data fetching hook, and designing a UI state for 'no results found'.",
-			"reasoning": "A performant and user-friendly search requires more than a simple input field. Implementing debouncing to prevent excessive API requests is a key requirement that adds complexity. Coordinating the UI, state, debouncing logic, and API integration justifies the moderate complexity score."
-		},
-		{
-			"taskId": 36,
-			"taskTitle": "Frontend: Implement Sort Bookmarks UI",
-			"complexityScore": 4,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Decompose the task 'Implement Sort Bookmarks UI' into subtasks for creating a dropdown/select component for sorting options (e.g., 'Date Added', 'Title'), managing the state of the current sort selection (ideally via URL params), updating the data fetching logic to include the selected sort parameters in the API request, and ensuring the selected sort option is reflected in the UI.",
-			"reasoning": "This is a standard feature that enhances usability. The complexity is moderate, as it involves coordinating UI components, state management, and data-fetching logic. It's a well-understood pattern but requires careful implementation to work seamlessly with other filters and pagination."
-		},
-		{
-			"taskId": 4,
-			"taskTitle": "Configure Linting & Formatting",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on configure linting & formatting.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 5,
-			"taskTitle": "Select & Setup Database",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on select & setup database.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 6,
-			"taskTitle": "Select & Setup API Deployment",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on select & setup api deployment.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 7,
-			"taskTitle": "Implement Secure Headers Middleware",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on implement secure headers middleware.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 8,
-			"taskTitle": "Define & Implement User Data Model",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on define & implement user data model.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 9,
-			"taskTitle": "Define & Implement Label Data Model",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on define & implement label data model.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 10,
-			"taskTitle": "Define & Implement Bookmark Data Model",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on define & implement bookmark data model.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 11,
-			"taskTitle": "Define & Implement BookmarkLabel Data Model",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on define & implement bookmarklabel data model.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 12,
-			"taskTitle": "Integrate Auth.js",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on integrate auth.js.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 13,
-			"taskTitle": "Configure OAuth Providers",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on configure oauth providers.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 14,
-			"taskTitle": "Implement Persistent User Sessions",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on implement persistent user sessions.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 15,
-			"taskTitle": "Develop Login/Signup UI",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on develop login/signup ui.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 16,
-			"taskTitle": "Implement Automatic User Creation",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on implement automatic user creation.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 17,
-			"taskTitle": "Associate User with Bookmarks & Labels",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on associate user with bookmarks & labels.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 18,
-			"taskTitle": "Backend: Implement Bookmark CRUD Endpoints",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: implement bookmark crud endpoints.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 19,
-			"taskTitle": "Frontend: Develop Bookmark List/Grid View",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on frontend: develop bookmark list/grid view.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 21,
-			"taskTitle": "Backend: Implement URL Metadata Fetching",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: implement url metadata fetching.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 23,
-			"taskTitle": "Backend: Implement Favorite/Unfavorite Endpoint",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: implement favorite/unfavorite endpoint.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 25,
-			"taskTitle": "Backend: Implement Archive/Unarchive Endpoint",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: implement archive/unarchive endpoint.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 27,
-			"taskTitle": "Backend: Implement Label CRUD Endpoints",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: implement label crud endpoints.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 28,
-			"taskTitle": "Frontend: Develop Labels Sidebar Navigation",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on frontend: develop labels sidebar navigation.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 29,
-			"taskTitle": "Frontend: Implement Create, Rename, Delete Labels UI",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on frontend: implement create, rename, delete labels ui.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 30,
-			"taskTitle": "Backend: Implement Filter Bookmarks by Label Endpoint",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: implement filter bookmarks by label endpoint.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 31,
-			"taskTitle": "Frontend: Implement Filter Bookmarks by Label UI",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on frontend: implement filter bookmarks by label ui.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 33,
-			"taskTitle": "Backend: Implement Search Bookmarks Endpoint",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: implement search bookmarks endpoint.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 35,
-			"taskTitle": "Backend: Implement Sort Bookmarks Endpoint",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: implement sort bookmarks endpoint.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 37,
-			"taskTitle": "Backend: Implement Import from Omnivore Endpoint",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: implement import from omnivore endpoint.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 38,
-			"taskTitle": "Backend: Implement Import from HTML File Endpoint",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: implement import from html file endpoint.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 39,
-			"taskTitle": "Backend: Implement Import from Text File Endpoint",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: implement import from text file endpoint.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 40,
-			"taskTitle": "Frontend: Develop Import Bookmarks UI",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on frontend: develop import bookmarks ui.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 41,
-			"taskTitle": "Backend: Implement Export/Backup Bookmarks Endpoint",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: implement export/backup bookmarks endpoint.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 42,
-			"taskTitle": "Frontend: Develop Export/Backup Bookmarks UI",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on frontend: develop export/backup bookmarks ui.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 43,
-			"taskTitle": "Backend: Implement Batch Delete Bookmarks Endpoint",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: implement batch delete bookmarks endpoint.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
+			"expansionPrompt": "Break down the task 'Fix Logger Error Handler Order Issue' into subtasks for implementation, unit testing, and manual verification.",
+			"reasoning": "This is a well-defined, low-risk bug fix localized to a single function. The logic change is simple, and the path to verification is clear, making the complexity low."
 		},
 		{
 			"taskId": 44,
 			"taskTitle": "Frontend: Implement Batch Delete Bookmarks UI",
 			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on frontend: implement batch delete bookmarks ui.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 45,
-			"taskTitle": "Implement Dark and Light UI Themes",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on implement dark and light ui themes.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 46,
-			"taskTitle": "Implement Left-side Vertical Navigation",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on implement left-side vertical navigation.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Expand the task 'Implement Batch Delete Bookmarks UI' into subtasks covering UI component creation for selection, the main action button, state management for selected items, and the API integration for deletion.",
+			"reasoning": "This task involves moderate complexity as it requires coordinated changes across multiple frontend layers: UI components, client-side state management, and API communication."
 		},
 		{
 			"taskId": 47,
 			"taskTitle": "Ensure Responsive Layout",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on ensure responsive layout.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
+			"complexityScore": 8,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Decompose the task 'Ensure Responsive Layout' into subtasks for auditing and implementing responsiveness for key areas of the application, such as the main navigation, dashboard, item list view, and settings pages.",
+			"reasoning": "This is a high-complexity task due to its broad scope, affecting the entire application. It requires extensive refactoring and testing across numerous components and screen sizes."
 		},
 		{
 			"taskId": 48,
 			"taskTitle": "Ensure WCAG AA Accessibility",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on ensure wcag aa accessibility.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
+			"complexityScore": 9,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down the task 'Ensure WCAG AA Accessibility' into subtasks focused on key accessibility pillars: conduct an initial audit, ensure full keyboard navigability, add ARIA attributes and semantic HTML, verify color contrast, and perform manual screen reader testing.",
+			"reasoning": "This task has very high complexity. It requires specialized knowledge of WCAG standards, impacts the entire codebase, and necessitates meticulous manual and automated testing to ensure compliance."
 		},
 		{
-			"taskId": 49,
-			"taskTitle": "Implement Component-level Tests",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on implement component-level tests.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
+			"taskId": 14,
+			"taskTitle": "Implement Persistent User Sessions",
+			"complexityScore": 3,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Decompose the task 'Implement Persistent User Sessions' into subtasks for configuring the Lucia Auth database adapter, setting up the session cookie middleware, creating a test route to verify authentication, and writing end-to-end tests for session persistence and expiration.",
+			"reasoning": "The complexity is low-to-medium as the task primarily involves configuring a third-party library's built-in features rather than implementing complex logic from scratch."
 		},
 		{
-			"taskId": 50,
-			"taskTitle": "Implement API Tests",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on implement api tests.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 51,
-			"taskTitle": "Implement E2E Tests for Scrappers",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on implement e2e tests for scrappers.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
+			"taskId": 5,
+			"taskTitle": "Select & Setup Database",
+			"complexityScore": 3,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the task 'Select & Setup Database' into subtasks for creating the Turso database instance, installing and configuring Drizzle ORM, implementing the database connection client, and creating a test script to verify the connection.",
+			"reasoning": "This is a foundational setup task with low-to-medium complexity. While critical, the steps are well-documented, and the effort is concentrated on configuration and integration, not complex coding."
 		},
 		{
 			"taskId": 52,
 			"taskTitle": "Generate API Documentation",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on generate api documentation.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 53,
-			"taskTitle": "Review Logging & Monitoring Strategy",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on review logging & monitoring strategy.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Expand the task 'Generate API Documentation' into subtasks: first, integrate the OpenAPI/Swagger library and configure the UI. Then, create subtasks for documenting each major API resource, such as Users, Bookmarks, and Authentication.",
+			"reasoning": "Moderate complexity. While the initial tool setup is straightforward, the task's scope is large, requiring meticulous annotation of every API endpoint, which can be time-consuming and detail-oriented."
 		},
 		{
 			"taskId": 54,
 			"taskTitle": "Conduct Production Readiness Review",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on conduct production readiness review.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 55,
-			"taskTitle": "Configure Dependency Management",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on configure dependency management.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 56,
-			"taskTitle": "Investigate & Address URL Scrapping Issues",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on investigate & address url scrapping issues.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 57,
-			"taskTitle": "Investigate Performance Improvements",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on investigate performance improvements.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 58,
-			"taskTitle": "Investigate Server-Sent Events (SSE)",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on investigate server-sent events (sse).",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 59,
-			"taskTitle": "Define & Implement Frontend Folder Structure",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on define & implement frontend folder structure.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
+			"complexityScore": 8,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Decompose the 'Conduct Production Readiness Review' task into a checklist of subtasks covering key areas: Security audit (dependencies, secrets), Performance testing, Logging and Monitoring setup, Backup and Disaster Recovery plan, and final configuration review.",
+			"reasoning": "This is a high-complexity process task. Its difficulty lies in the immense breadth and criticality of the review, which covers multiple domains like security, infrastructure, and performance, requiring a holistic system understanding."
 		},
 		{
 			"taskId": 60,
 			"taskTitle": "Review General Frontend Best Practices",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on review general frontend best practices.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down the 'Review General Frontend Best Practices' task into subtasks for auditing specific areas: review component structure and props, analyze the state management implementation, assess bundle size and code splitting opportunities, and check for consistent error handling patterns.",
+			"reasoning": "This is a complex architectural review task. It requires senior-level expertise to audit the entire frontend codebase against best practices for maintainability, performance, and scalability."
 		},
 		{
-			"taskId": 61,
-			"taskTitle": "Backend: AI Suggest Labels Endpoint",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on backend: ai suggest labels endpoint.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
-		},
-		{
-			"taskId": 62,
-			"taskTitle": "Configure Husky for Git Hooks",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down this task with a focus on configure husky for git hooks.",
-			"reasoning": "Automatically added due to missing analysis in AI response."
+			"taskId": 4,
+			"taskTitle": "Configure Linting & Formatting",
+			"complexityScore": 4,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Decompose the task 'Configure Linting & Formatting' into subtasks: install dependencies, create a root biome.json configuration, configure Knip, add package.json scripts for linting/formatting/checking, and create a CI workflow step to run these checks.",
+			"reasoning": "This task has moderate complexity due to the intricacies of setting up tooling in a monorepo. Ensuring configurations are correctly inherited and scripts target all workspaces properly can be challenging."
 		}
 	]
 }
