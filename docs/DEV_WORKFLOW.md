@@ -6,6 +6,8 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 
 - **Attention**: NEVER, NEVER start to implement a task without been requested to do so.
 - Also always start the task from the `main` branch and ensure it is up-to-date with remote.
+- **Important**: Remember that this project use `pnpm`.
+
 
 ## 🔄 STANDARD WORKFLOW
 

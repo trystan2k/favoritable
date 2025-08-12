@@ -43,7 +43,17 @@
       "inputs": ["$TURBO_DEFAULT$", "**/knip.json"]
     },
     "test": {
-      "dependsOn": ["^test"]
+      "dependsOn": ["^test"],
+      "inputs": ["$TURBO_DEFAULT$", "**/vitest.config.ts"]
+    },
+    "test:watch": {
+      "dependsOn": ["^test:watch"],
+      "inputs": ["$TURBO_DEFAULT$", "**/vitest.config.ts"]
+    },
+    "test:coverage": {
+      "dependsOn": ["^test:coverage"],
+      "inputs": ["$TURBO_DEFAULT$", "**/vitest.config.ts"],
+      "outputs": ["coverage/**"]
     },
     "dev": {
       "cache": false,
