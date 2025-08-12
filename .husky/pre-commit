@@ -1,3 +1,3 @@
 # Pre-commit hook: Run type checking and lint/format on staged files
 pnpm typecheck
-npx lint-staged
+pnpm exec lint-staged
