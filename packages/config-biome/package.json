@@ -19,10 +19,8 @@
     "check": "biome check",
     "check:fix": "pnpm check --write"
   },
-  "dependencies": {
-    "@biomejs/biome": "~2.1.4"
-  },
   "devDependencies": {
+    "@biomejs/biome": "~2.1.4",
     "knip": "~5.62.0"
   }
 }

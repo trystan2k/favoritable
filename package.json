@@ -39,6 +39,7 @@
   "devDependencies": {
     "@favoritable/config-biome": "workspace:*",
     "husky": "~9.1.7",
+    "knip": "~5.62.0",
     "lint-staged": "~16.1.5",
     "turbo": "~2.4.4"
   },

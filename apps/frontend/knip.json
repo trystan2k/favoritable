@@ -8,7 +8,7 @@
     "coverage/**",
     "src/**/routeTree.gen.ts"
   ],
-  "ignoreBinaries": ["biome", "only-allow"],
-  "ignoreDependencies": ["@favoritable/config-biome"],
+  "ignoreBinaries": ["only-allow"],
+  "ignoreDependencies": ["@favoritable/test-config"],
   "treatConfigHintsAsErrors": true
 }

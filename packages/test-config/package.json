@@ -1,8 +1,15 @@
 {
-  "name": "@favoritable/typescript-config",
+  "name": "@favoritable/test-config",
   "version": "0.0.1",
   "private": true,
   "license": "MIT",
+  "type": "module",
+  "main": "./vitest.config.ts",
+  "types": "./vitest.config.ts",
+  "exports": {
+    ".": "./vitest.config.ts",
+    "./vitest.config": "./vitest.config.ts"
+  },
   "scripts": {
     "knip": "knip",
     "lint": "biome lint --error-on-warnings",
@@ -15,7 +22,8 @@
   "devDependencies": {
     "@favoritable/config-biome": "workspace:*",
     "@biomejs/biome": "~2.1.4",
+    "@vitest/coverage-v8": "~3.2.4",
     "knip": "~5.62.0",
-    "typescript": "~5.7.3"
+    "vitest": "~3.2.4"
   }
 }
