@@ -174,6 +174,9 @@ importers:
 
   packages/typescript-config:
     devDependencies:
+      '@favoritable/config-biome':
+        specifier: workspace:*
+        version: link:../config-biome
       knip:
         specifier: ~5.62.0
         version: 5.62.0(@types/node@22.13.8)(typescript@5.7.3)
@@ -3047,7 +3050,6 @@ packages:
 
   libsql@0.4.7:
     resolution: {integrity: sha512-T9eIRCs6b0J1SHKYIvD8+KCJMcWZ900iZyxdnSCdqxN12Z1ijzT+jY5nrk72Jw4B0HGzms2NgpryArlJqvc3Lw==}
-    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   lilconfig@3.1.3:
