@@ -11,7 +11,13 @@
     ".": "./biome.json"
   },
   "scripts": {
-    "knip": "knip"
+    "knip": "knip",
+    "lint": "biome lint --error-on-warnings",
+    "lint:fix": "pnpm lint --write",
+    "format": "biome format",
+    "format:fix": "pnpm format --write",
+    "check": "biome check",
+    "check:fix": "pnpm check --write"
   },
   "dependencies": {
     "@biomejs/biome": "~2.1.4"

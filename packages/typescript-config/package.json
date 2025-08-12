@@ -4,9 +4,16 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "knip": "knip"
+    "knip": "knip",
+    "lint": "biome lint --error-on-warnings",
+    "lint:fix": "pnpm lint --write",
+    "format": "biome format",
+    "format:fix": "pnpm format --write",
+    "check": "biome check",
+    "check:fix": "pnpm check --write"
   },
   "devDependencies": {
+    "@favoritable/config-biome": "workspace:*",
     "knip": "~5.62.0",
     "typescript": "~5.7.3"
   }

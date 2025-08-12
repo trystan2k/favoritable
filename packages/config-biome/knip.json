@@ -1,8 +1,5 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
   "entry": ["biome.json"],
-  "ignoreDependencies": [
-    "@biomejs/biome"
-  ],
   "treatConfigHintsAsErrors": true
 }

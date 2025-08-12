@@ -46,8 +46,8 @@
     "@biomejs/biome": "~2.1.4"
   },
   "lint-staged": {
-    "*": [
-      "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+      "pnpm exec biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
     ]
   },
   "packageManager": "pnpm@10.8.0",
