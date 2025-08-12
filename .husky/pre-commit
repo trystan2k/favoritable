@@ -1,8 +1,2 @@
 # Pre-commit hook: Run type checking and lint/format on staged files
-pnpm typecheck
-
-# Only run biome if there are staged JS/TS/JSON files
-staged_files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(js|jsx|ts|tsx|json)$' || true)
-if [ -n "$staged_files" ]; then
-  pnpm biome check --write --staged
-fi
+pnpm typecheck && npx lint-staged
