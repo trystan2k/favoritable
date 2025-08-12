@@ -12,9 +12,9 @@ importers:
         specifier: ~2.1.4
         version: 2.1.4
     devDependencies:
-      '@favoritable/config-biome':
+      '@favoritable/lint-config':
         specifier: workspace:*
-        version: link:packages/config-biome
+        version: link:packages/development/lint-config
       husky:
         specifier: ~9.1.7
         version: 9.1.7
@@ -70,15 +70,15 @@ importers:
       '@biomejs/biome':
         specifier: ~2.1.4
         version: 2.1.4
-      '@favoritable/config-biome':
+      '@favoritable/lint-config':
         specifier: workspace:*
-        version: link:../../packages/config-biome
+        version: link:../../packages/development/lint-config
       '@favoritable/test-config':
         specifier: workspace:*
-        version: link:../../packages/test-config
+        version: link:../../packages/development/test-config
       '@favoritable/typescript-config':
         specifier: workspace:*
-        version: link:../../packages/typescript-config
+        version: link:../../packages/development/typescript-config
       '@types/node':
         specifier: ~22.13.8
         version: 22.13.8
@@ -122,15 +122,15 @@ importers:
       '@biomejs/biome':
         specifier: ~2.1.4
         version: 2.1.4
-      '@favoritable/config-biome':
+      '@favoritable/lint-config':
         specifier: workspace:*
-        version: link:../../packages/config-biome
+        version: link:../../packages/development/lint-config
       '@favoritable/test-config':
         specifier: workspace:*
-        version: link:../../packages/test-config
+        version: link:../../packages/development/test-config
       '@favoritable/typescript-config':
         specifier: workspace:*
-        version: link:../../packages/typescript-config
+        version: link:../../packages/development/typescript-config
       '@rsbuild/core':
         specifier: ~1.4.3
         version: 1.4.12
@@ -174,7 +174,7 @@ importers:
         specifier: ~3.2.4
         version: 3.2.4(@types/node@22.13.8)(jiti@2.5.1)(jsdom@26.1.0)(tsx@4.19.3)(yaml@2.8.1)
 
-  packages/config-biome:
+  packages/development/lint-config:
     devDependencies:
       '@biomejs/biome':
         specifier: ~2.1.4
@@ -183,14 +183,14 @@ importers:
         specifier: ~5.62.0
         version: 5.62.0(@types/node@22.13.8)(typescript@5.9.2)
 
-  packages/test-config:
+  packages/development/test-config:
     devDependencies:
       '@biomejs/biome':
         specifier: ~2.1.4
         version: 2.1.4
-      '@favoritable/config-biome':
+      '@favoritable/lint-config':
         specifier: workspace:*
-        version: link:../config-biome
+        version: link:../lint-config
       '@vitest/coverage-v8':
         specifier: ~3.2.4
         version: 3.2.4(vitest@3.2.4(@types/node@22.13.8)(jiti@2.5.1)(jsdom@26.1.0)(tsx@4.19.3)(yaml@2.8.1))
@@ -201,14 +201,14 @@ importers:
         specifier: ~3.2.4
         version: 3.2.4(@types/node@22.13.8)(jiti@2.5.1)(jsdom@26.1.0)(tsx@4.19.3)(yaml@2.8.1)
 
-  packages/typescript-config:
+  packages/development/typescript-config:
     devDependencies:
       '@biomejs/biome':
         specifier: ~2.1.4
         version: 2.1.4
-      '@favoritable/config-biome':
+      '@favoritable/lint-config':
         specifier: workspace:*
-        version: link:../config-biome
+        version: link:../lint-config
       knip:
         specifier: ~5.62.0
         version: 5.62.0(@types/node@22.13.8)(typescript@5.7.3)

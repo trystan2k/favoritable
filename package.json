@@ -37,7 +37,7 @@
     "test:coverage": "turbo run test:coverage"
   },
   "devDependencies": {
-    "@favoritable/config-biome": "workspace:*",
+    "@favoritable/lint-config": "workspace:*",
     "husky": "~9.1.7",
     "knip": "~5.62.0",
     "lint-staged": "~16.1.5",

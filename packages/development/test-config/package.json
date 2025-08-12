@@ -1,14 +1,14 @@
 {
-  "name": "@favoritable/config-biome",
+  "name": "@favoritable/test-config",
   "version": "0.0.1",
   "private": true,
+  "license": "MIT",
   "type": "module",
-  "description": "Shared Biome configuration for the favoritable monorepo",
-  "files": [
-    "biome.json"
-  ],
+  "main": "./vitest.config.ts",
+  "types": "./vitest.config.ts",
   "exports": {
-    ".": "./biome.json"
+    ".": "./vitest.config.ts",
+    "./vitest.config": "./vitest.config.ts"
   },
   "scripts": {
     "knip": "knip",
@@ -20,7 +20,10 @@
     "check:fix": "pnpm check --write"
   },
   "devDependencies": {
+    "@favoritable/lint-config": "workspace:*",
     "@biomejs/biome": "~2.1.4",
-    "knip": "~5.62.0"
+    "@vitest/coverage-v8": "~3.2.4",
+    "knip": "~5.62.0",
+    "vitest": "~3.2.4"
   }
 }
