@@ -72,14 +72,104 @@
         "id": 2,
         "title": "Initialize Frontend Project",
         "description": "Set up the SPA Application project with Rsbuild, TypeScript, TanStack Router, Radix UI, CSS modules, Vitest, and React Testing Library, as per ADR 004.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           1
         ],
         "priority": "high",
         "details": "Initialize an Rsbuild-based React SPA project with TypeScript. Install and configure TanStack Router for client-side routing. Set up Radix UI for unstyled components and CSS modules for styling. The testing framework will be Vitest with React Testing Library. A basic example component using Radix UI and CSS modules should be created, and a basic route structure should be implemented to validate the setup.",
         "testStrategy": "Run the initial Rsbuild dev server. Verify a basic Radix UI component renders correctly with its associated CSS module styles applied. Test the basic client-side routing setup by navigating between a couple of example routes. Ensure all Vitest setup tests pass successfully.",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Initialize Rsbuild Project with React and TypeScript",
+            "description": "Use the Rsbuild CLI to scaffold a new Single Page Application project configured for React and TypeScript, establishing the project's base structure.",
+            "dependencies": [],
+            "details": "Run `npm create rsbuild@latest` and select the React + TypeScript template. Verify the basic project structure is created and the development server (`npm run dev`) runs successfully with the default template.\n<info added on 2025-08-11T22:20:31.766Z>\nRun pnpm create rsbuild@latest and select the React + TypeScript template. Verify the basic project structure is created and the development server (pnpm run dev) runs successfully with the default template.\n</info added on 2025-08-11T22:20:31.766Z>",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Install Core Application Dependencies",
+            "description": "Install TanStack Router for routing, Radix UI for accessible components, and a utility for managing CSS class names.",
+            "dependencies": [
+              "2.1"
+            ],
+            "details": "Run `npm install @tanstack/react-router @radix-ui/react-primitive clsx` to add the necessary libraries for routing, UI components, and class name management to the project's `package.json`.\n<info added on 2025-08-11T22:20:44.907Z>\nRun `pnpm install @tanstack/react-router @radix-ui/react-primitive clsx` to add the necessary libraries for routing, UI components, and class name management to the project's `package.json`.\n</info added on 2025-08-11T22:20:44.907Z>",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Configure TanStack Router and Define Initial Routes",
+            "description": "Set up the basic routing structure using TanStack Router, including creating a root route and at least two child routes for validation purposes.",
+            "dependencies": [
+              "2.2"
+            ],
+            "details": "Configure the TanStack Router Vite plugin to generate the route tree. Define a root layout route and two simple page routes (e.g., a Home page at `/` and an About page at `/about`). Integrate the router provider into the main application entry point (`src/main.tsx`).",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Validate CSS Modules Integration",
+            "description": "Confirm that CSS Modules are correctly configured and working as expected for component-scoped styling.",
+            "dependencies": [
+              "2.1"
+            ],
+            "details": "Rsbuild enables CSS Modules by default for `*.module.css` files. Create a simple component and an associated `*.module.css` file. Apply a class from the module to an element and verify in the browser that the class name is hashed and styles are applied correctly.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Install and Configure Vitest with React Testing Library",
+            "description": "Set up the testing framework by installing Vitest, JSDOM, and React Testing Library, and creating the necessary configuration files.",
+            "dependencies": [
+              "2.1"
+            ],
+            "details": "Run `npm install -D vitest jsdom @testing-library/react @testing-library/jest-dom @vitejs/plugin-react`. Create a `vitest.config.ts` file to configure the test environment (jsdom), globals, and test file matching patterns.\n<info added on 2025-08-11T22:21:12.658Z>\nRun pnpm install -D vitest jsdom @testing-library/react @testing-library/jest-dom @vitejs/plugin-react. Create a vitest.config.ts file to configure the test environment (jsdom), globals, and test file matching patterns.\n</info added on 2025-08-11T22:21:12.658Z>",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Create a Validation Component with Radix UI and CSS Modules",
+            "description": "Develop a simple, reusable component (e.g., a Button) using a Radix UI primitive and styled with CSS Modules to serve as an integration test point.",
+            "dependencies": [
+              "2.2",
+              "2.4"
+            ],
+            "details": "Create a new component file, `src/components/ui/Button.tsx`. Use a Radix UI primitive like `<Slot>`. Create a corresponding `Button.module.css` file and apply styles to the component. This component will be used to validate the integration of the UI and styling libraries.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement Validation Pages Using the New Component",
+            "description": "Create page components for the routes defined in the TanStack Router setup and use the validation component to ensure routing, components, and styling work together.",
+            "dependencies": [
+              "2.3",
+              "2.6"
+            ],
+            "details": "Create components for the `/` and `/about` routes. Import and render the validation `Button` component on at least one of these pages. Verify that navigation between pages works and the component renders correctly with its styles.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Write Initial Component Test",
+            "description": "Write a basic unit test for the validation component using Vitest and React Testing Library to confirm the entire testing setup is functional.",
+            "dependencies": [
+              "2.5",
+              "2.6"
+            ],
+            "details": "Create a test file, `src/components/ui/Button.test.tsx`. Write a simple test that renders the `Button` component and asserts that it is present in the document. Run `npm test` to ensure the test passes.\n<info added on 2025-08-11T22:23:00.430Z>\nThe command to run the test is `pnpm test`.\n</info added on 2025-08-11T22:23:00.430Z>",
+            "status": "done",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 3,
@@ -1472,7 +1562,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-11T10:23:49.706Z",
+      "updated": "2025-08-11T22:34:12.189Z",
       "description": "Tasks for master context"
     }
   }

@@ -2,7 +2,12 @@
   "$schema": "https://unpkg.com/knip@latest/schema.json",
   "entry": ["src/index.tsx"],
   "project": ["src/**/*.{ts,tsx}"],
-  "ignore": ["dist/**", ".rsbuild/**"],
+  "ignore": [
+    "dist/**",
+    ".rsbuild/**",
+    "coverage/**",
+    "src/**/routeTree.gen.ts"
+  ],
   "ignoreBinaries": ["biome", "only-allow"],
   "ignoreDependencies": ["@favoritable/config-biome"],
   "treatConfigHintsAsErrors": true

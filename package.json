@@ -19,7 +19,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "complete-check": "pnpm typecheck && pnpm lint && pnpm format && pnpm check && pnpm knip && pnpm build",
+    "complete-check": "pnpm typecheck && pnpm lint:fix && pnpm format:fix && pnpm check:fix && pnpm knip && pnpm test:coverage && pnpm build",
     "preinstall": "npx only-allow pnpm",
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -32,7 +32,9 @@
     "check:fix": "turbo run check:fix",
     "knip": "turbo run knip",
     "typecheck": "turbo run typecheck",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
+    "test:coverage": "turbo run test:coverage"
   },
   "devDependencies": {
     "@favoritable/config-biome": "workspace:*",
