@@ -35,7 +35,8 @@ Implemented all 4 subtasks:
 4. **62.4**: Create Pre-push Hook for Testing ✅ (created pre-push hook with test coverage)
 
 ### Final Configuration
-- **Pre-commit hook**: `npx lint-staged` with proper TypeScript/React configuration
+
+- **Pre-commit hook**: `pnpm exec lint-staged` with proper TypeScript/React configuration
 - **Pre-push hook**: `pnpm test:coverage`
 - **Strategy**: Uses lint-staged for selective file processing with workspace integration
 - **Safety**: Only safe fixes applied automatically (no --unsafe flag)

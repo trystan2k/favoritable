@@ -26,18 +26,19 @@ The project already has Biome configured with comprehensive rules and a `complet
 
 ## Decision
 
-### Git Hooks Strategy: Husky with Biome Native Staging
+### Git Hooks Strategy: Husky with lint-staged Integration
 
-**Choice**: [Husky](https://typicode.github.io/husky/) with Biome's native `--staged` flag for pre-commit quality checks and test execution on pre-push.
+**Choice**: [Husky](https://typicode.github.io/husky/) with [lint-staged](https://github.com/lint-staged/lint-staged) for pre-commit quality checks and test execution on pre-push.
 
 **Rationale**:
-- **Native Integration**: Biome's `--staged` flag eliminates need for lint-staged dependency
+- **Monorepo Optimization**: lint-staged provides better workspace integration for pnpm monorepos
+- **Selective Processing**: Advanced file filtering and task execution for different file types
 - **Safety First**: Only safe fixes applied automatically, unsafe changes require manual review
 - **Performance**: Processes only staged files, significantly faster than full project checks
 - **Type Safety**: TypeScript checking ensures type errors are caught before commit
 - **Team Consistency**: Husky ensures all team members get identical git hooks
 - **Test Safety**: Pre-push tests prevent broken code from reaching remote repository
-- **Simplicity**: Minimal dependencies with maximum functionality
+- **Mature Solution**: Well-established tool with extensive documentation and community support
 
 ## Architecture Overview
 
@@ -50,7 +51,7 @@ The project already has Biome configured with comprehensive rules and a `complet
          ▼                       ▼                       ▼
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
 │  Staged Files   │    │  Pre-commit:     │    │  Pre-push:      │
-│  (Changed)      │    │  - Biome check   │    │  - Run tests    │
+│  (Changed)      │    │  - lint-staged   │    │  - Run tests    │
 │                 │    │  - TypeScript    │    │  - Validate     │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
 ```
@@ -58,14 +59,15 @@ The project already has Biome configured with comprehensive rules and a `complet
 ## Implementation Strategy
 
 ### Phase 1: Dependency Installation
-1. Install Husky as development dependency
+1. Install Husky and lint-staged as development dependencies
 2. Add prepare script to package.json for automatic setup
 3. Initialize Husky in project
 
 ### Phase 2: Pre-commit Hook Setup
-1. Create pre-commit hook with Biome staged file processing
-2. Include TypeScript checking for type safety
-3. Configure safe-only fixes to require manual review of risky changes
+1. Create pre-commit hook with lint-staged for selective file processing
+2. Configure lint-staged for TypeScript/React files with Biome integration
+3. Include TypeScript checking for type safety
+4. Configure safe-only fixes to require manual review of risky changes
 
 ### Phase 3: Pre-push Hook Setup
 1. Create pre-push hook that runs test suite
@@ -78,9 +80,9 @@ The project already has Biome configured with comprehensive rules and a `complet
 
 | Option | Pros | Cons | Decision |
 |--------|------|------|----------|
-| **Husky + Biome --staged** | Native Biome integration, team consistency, minimal deps | Requires Husky dependency | ✅ **Selected** |
+| **Husky + lint-staged** | Mature solution, excellent monorepo support, advanced file filtering | Additional dependency | ✅ **Selected** |
+| **Husky + Biome --staged** | Native Biome integration, minimal deps | Limited monorepo workspace integration | ❌ Insufficient workspace support |
 | **Pure Git Hooks** | No dependencies, simple setup | Not shared across team, manual setup for each developer | ❌ Team consistency issues |
-| **Husky + lint-staged** | Traditional approach, well-documented | Extra dependency when Biome has native support | ❌ Unnecessary complexity |
 | **GitHub Actions only** | No local setup needed | Slow feedback, allows bad code in commits | ❌ Poor developer experience |
 
 ### Pre-commit Scope Alternatives
@@ -122,8 +124,8 @@ The project already has Biome configured with comprehensive rules and a `complet
 # Type checking for early error detection
 pnpm typecheck
 
-# Biome check with safe fixes on staged files only
-pnpm biome check --write --staged
+# lint-staged execution for selective file processing
+pnpm exec lint-staged
 ```
 
 ### Pre-push Hook Commands
@@ -132,18 +134,30 @@ pnpm biome check --write --staged
 pnpm test:coverage
 ```
 
-### Key Flags Used
-- `--write`: Apply safe fixes automatically
-- `--staged`: Process only git-staged files
-- No `--unsafe`: Require manual review for potentially risky fixes
+### lint-staged Configuration
+```json
+{
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json}": [
+      "biome check --write"
+    ]
+  }
+}
+```
+
+### Key Features
+- **Selective Processing**: Only staged files are processed for optimal performance
+- **Safe Fixes**: Only safe fixes applied automatically via `--write` flag
+- **Workspace Integration**: Proper handling of pnpm monorepo structure
+- **Type Safety**: TypeScript checking runs on all staged changes
 
 ## References
 
 - [Husky Documentation](https://typicode.github.io/husky/)
+- [lint-staged Documentation](https://github.com/lint-staged/lint-staged)
 - [Biome CLI Reference](https://biomejs.dev/reference/cli/)
-- [Biome Git Hooks Recipe](https://biomejs.dev/recipes/git-hooks/)
 - [Git Hooks Documentation](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks)
 
 ---
 
-**Next Steps**: Install Husky, configure hooks, and test with team development workflow
+**Next Steps**: Install Husky and lint-staged, configure hooks, and test with team development workflow
