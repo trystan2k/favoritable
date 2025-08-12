@@ -18,6 +18,9 @@ importers:
       husky:
         specifier: ~9.1.7
         version: 9.1.7
+      knip:
+        specifier: ~5.62.0
+        version: 5.62.0(@types/node@22.13.8)(typescript@5.9.2)
       lint-staged:
         specifier: ~16.1.5
         version: 16.1.5
@@ -55,30 +58,30 @@ importers:
         specifier: ~9.7.0
         version: 9.7.0
       puppeteer:
-        specifier: ~24.5.0
-        version: 24.5.0(typescript@5.7.3)
+        specifier: ~24.16.1
+        version: 24.16.1(typescript@5.7.3)
       reflect-metadata:
         specifier: ~0.2.2
         version: 0.2.2
-      typescript:
-        specifier: ~5.7.3
-        version: 5.7.3
       zod:
         specifier: ~3.25.76
         version: 3.25.76
     devDependencies:
+      '@biomejs/biome':
+        specifier: ~2.1.4
+        version: 2.1.4
       '@favoritable/config-biome':
         specifier: workspace:*
         version: link:../../packages/config-biome
+      '@favoritable/test-config':
+        specifier: workspace:*
+        version: link:../../packages/test-config
       '@favoritable/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
       '@types/node':
         specifier: ~22.13.8
         version: 22.13.8
-      '@types/pino':
-        specifier: ~7.0.5
-        version: 7.0.5
       '@vitest/coverage-v8':
         specifier: ~3.2.4
         version: 3.2.4(vitest@3.2.4(@types/node@22.13.8)(jiti@2.5.1)(jsdom@26.1.0)(tsx@4.19.3)(yaml@2.8.1))
@@ -94,6 +97,9 @@ importers:
       tsx:
         specifier: ~4.19.3
         version: 4.19.3
+      typescript:
+        specifier: ~5.7.3
+        version: 5.7.3
       vitest:
         specifier: ~3.2.4
         version: 3.2.4(@types/node@22.13.8)(jiti@2.5.1)(jsdom@26.1.0)(tsx@4.19.3)(yaml@2.8.1)
@@ -113,9 +119,15 @@ importers:
         specifier: ~19.1.0
         version: 19.1.1(react@19.1.1)
     devDependencies:
+      '@biomejs/biome':
+        specifier: ~2.1.4
+        version: 2.1.4
       '@favoritable/config-biome':
         specifier: workspace:*
         version: link:../../packages/config-biome
+      '@favoritable/test-config':
+        specifier: workspace:*
+        version: link:../../packages/test-config
       '@favoritable/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -154,26 +166,46 @@ importers:
         version: 26.1.0
       knip:
         specifier: ~5.62.0
-        version: 5.62.0(@types/node@22.13.8)(typescript@5.8.3)
+        version: 5.62.0(@types/node@22.13.8)(typescript@5.7.3)
       typescript:
-        specifier: ~5.8.3
-        version: 5.8.3
+        specifier: ~5.7.3
+        version: 5.7.3
       vitest:
         specifier: ~3.2.4
         version: 3.2.4(@types/node@22.13.8)(jiti@2.5.1)(jsdom@26.1.0)(tsx@4.19.3)(yaml@2.8.1)
 
   packages/config-biome:
-    dependencies:
+    devDependencies:
       '@biomejs/biome':
         specifier: ~2.1.4
         version: 2.1.4
-    devDependencies:
       knip:
         specifier: ~5.62.0
-        version: 5.62.0(@types/node@22.13.8)(typescript@5.8.3)
+        version: 5.62.0(@types/node@22.13.8)(typescript@5.9.2)
+
+  packages/test-config:
+    devDependencies:
+      '@biomejs/biome':
+        specifier: ~2.1.4
+        version: 2.1.4
+      '@favoritable/config-biome':
+        specifier: workspace:*
+        version: link:../config-biome
+      '@vitest/coverage-v8':
+        specifier: ~3.2.4
+        version: 3.2.4(vitest@3.2.4(@types/node@22.13.8)(jiti@2.5.1)(jsdom@26.1.0)(tsx@4.19.3)(yaml@2.8.1))
+      knip:
+        specifier: ~5.62.0
+        version: 5.62.0(@types/node@22.13.8)(typescript@5.9.2)
+      vitest:
+        specifier: ~3.2.4
+        version: 3.2.4(@types/node@22.13.8)(jiti@2.5.1)(jsdom@26.1.0)(tsx@4.19.3)(yaml@2.8.1)
 
   packages/typescript-config:
     devDependencies:
+      '@biomejs/biome':
+        specifier: ~2.1.4
+        version: 2.1.4
       '@favoritable/config-biome':
         specifier: workspace:*
         version: link:../config-biome
@@ -195,10 +227,6 @@ packages:
 
   '@asamuzakjp/css-color@3.2.0':
     resolution: {integrity: sha512-K1A6z8tS3XsmCMM86xoWdn7Fkdn9m6RSVtocUrJYIwZnFVkng/PvkEoWtOWmP+Scc6saYWHWZYbndEEXxl24jw==}
-
-  '@babel/code-frame@7.26.2':
-    resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
-    engines: {node: '>=6.9.0'}
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -268,10 +296,6 @@ packages:
 
   '@babel/helper-string-parser@7.27.1':
     resolution: {integrity: sha512-qMlSxKbpRlAridDExk92nSobyDdpPijUq2DW6oDnUqd0iOGxmQjyqhMIihI9+zv4LPyZdRje2cavWPbCbWm3eA==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/helper-validator-identifier@7.25.9':
-    resolution: {integrity: sha512-Ed61U6XJc3CVRfkERJWDz4dJwKe7iLmmJsbOGu9wSloNSFttHV0I8g6UAgb7qnK5ly5bGLPd4oXZlxCdANBOWQ==}
     engines: {node: '>=6.9.0'}
 
   '@babel/helper-validator-identifier@7.27.1':
@@ -1121,8 +1145,8 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@puppeteer/browsers@2.9.0':
-    resolution: {integrity: sha512-8+xM+cFydYET4X/5/3yZMHs7sjS6c9I6H5I3xJdb6cinzxWUT/I2QVw4avxCQ8QDndwdHkG/FiSZIrCjAbaKvQ==}
+  '@puppeteer/browsers@2.10.6':
+    resolution: {integrity: sha512-pHUn6ZRt39bP3698HFQlu2ZHCkS/lPcpv7fVQcGBSzNNygw171UXAKrCUhy+TEMw4lEttOKDgNpb04hwUAJeiQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -2146,10 +2170,6 @@ packages:
   '@types/node@22.13.8':
     resolution: {integrity: sha512-G3EfaZS+iOGYWLLRCEAXdWK9my08oHNZ+FHluRiggIYJPOXzhOiDgpVCUHaUvyIC5/fj7C/p637jdzC666AOKQ==}
 
-  '@types/pino@7.0.5':
-    resolution: {integrity: sha512-wKoab31pknvILkxAF8ss+v9iNyhw5Iu/0jLtRkUD74cNfOOLJNnqfFKAv0r7wVaTQxRZtWrMpGfShwwBjOcgcg==}
-    deprecated: This is a stub types definition. pino provides its own type definitions, so you do not need this installed.
-
   '@types/react-dom@19.1.7':
     resolution: {integrity: sha512-i5ZzwYpqjmrKenzkoLM2Ibzt6mAsM7pxB6BCIouEVVmgiqaMj1TjaK7hnA36hbW5aZv20kx7Lw6hWzPWg0Rurw==}
     peerDependencies:
@@ -2378,8 +2398,8 @@ packages:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
 
-  chromium-bidi@3.0.0:
-    resolution: {integrity: sha512-ZOGRDAhBMX1uxL2Cm2TDuhImbrsEz5A/tTcVU6RpXEWaTNUNwsHW6njUXizh51Ir6iqHbKAfhA2XK33uBcLo5A==}
+  chromium-bidi@7.3.1:
+    resolution: {integrity: sha512-i+BMGluhZZc4Jic9L1aHJBTfaopxmCqQxGklyMcqFx4fvF3nI4BJ3bCe1ad474nvYRIo/ZN/VrdA4eOaRZua4Q==}
     peerDependencies:
       devtools-protocol: '*'
 
@@ -2514,8 +2534,8 @@ packages:
   detect-node-es@1.1.0:
     resolution: {integrity: sha512-ypdmJU/TbBby2Dxibuv7ZLW3Bs1QEmM7nHjEANfohJLvE0XVujisn1qPJcZxg+qDucsr+bP6fLD1rPS3AhJ7EQ==}
 
-  devtools-protocol@0.0.1413902:
-    resolution: {integrity: sha512-yRtvFD8Oyk7C9Os3GmnFZLu53yAfsnyw1s+mLmHHUK0GQEc9zthHWvS1r67Zqzm5t7v56PILHIVZ7kmFMaL2yQ==}
+  devtools-protocol@0.0.1475386:
+    resolution: {integrity: sha512-RQ809ykTfJ+dgj9bftdeL2vRVxASAuGU+I9LEx9Ij5TXU5HrgAQVmzi72VA+mkzscE12uzlRv5/tWWv9R9J1SA==}
 
   diff@8.0.2:
     resolution: {integrity: sha512-sSuxWU5j5SR9QQji/o2qMvqRNYRDOcBTgsJ/DeCf4iSN4gW+gNMXM7wFIP+fdXZxoNiAnHUTGjCr+TSWXdRDKg==}
@@ -3325,14 +3345,13 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
-  puppeteer-core@24.5.0:
-    resolution: {integrity: sha512-vqibSk7xGOoqOlPUk3H+Iz02b4jCEd5QxaiuXclqyyBrJ6ZK22mXkg9HBSpyZePq6vKWh5ZAqUilSnbF2bv4Jg==}
+  puppeteer-core@24.16.1:
+    resolution: {integrity: sha512-0dGD2kxoH9jqj/xiz4KZLcPKpqWygs+VSEBzvuVbU3KoT2cCw4HnMT9r/7NvYl1lIa+JCa5yIyRqi+4R3UyYfQ==}
     engines: {node: '>=18'}
 
-  puppeteer@24.5.0:
-    resolution: {integrity: sha512-3m0B48gj1A8cK01ma49WwjE8mg4i9UmnR2lP64rwBiLacJ2V20FpT67MgSUyzfz9BcHMQQweuF6Q854mnIYTqg==}
+  puppeteer@24.16.1:
+    resolution: {integrity: sha512-3jrx2BrOBb8yr3+KE7OyxVtI2fjPNZi46/SQGxFvlKZX4/56i2LbdArEhNvlQw/xxmsZfpjFRbGtkMavgh3I+g==}
     engines: {node: '>=18'}
-    deprecated: < 24.9.0 is no longer supported
     hasBin: true
 
   queue-microtask@1.2.3:
@@ -3475,6 +3494,11 @@ packages:
 
   semver@7.7.1:
     resolution: {integrity: sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==}
+    engines: {node: '>=10'}
+    hasBin: true
+
+  semver@7.7.2:
+    resolution: {integrity: sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -3624,8 +3648,8 @@ packages:
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
-  tar-fs@3.0.8:
-    resolution: {integrity: sha512-ZoROL70jptorGAlgAYiLoBLItEKw/fUxg9BSYK/dF/GAGYFJOJJJMvjPAKDJraCXFwadD456FCuvLWgfhMsPwg==}
+  tar-fs@3.1.0:
+    resolution: {integrity: sha512-5Mty5y/sOF1YWj1J6GiBodjlDc05CUR8PKXrsnFAiSG0xA+GHeWLovaZPYUDXkH/1iKRf2+M5+OrRgzC7O9b7w==}
 
   tar-stream@3.1.7:
     resolution: {integrity: sha512-qJj60CXt7IU1Ffyc3NJMjh6EkuCFej46zUqJ4J7pqYlThyd9bO0XBTmcOIhSzZJVWfsLks0+nle/j538YAW9RQ==}
@@ -3737,8 +3761,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typescript@5.8.3:
-    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
+  typescript@5.9.2:
+    resolution: {integrity: sha512-CWBzXQrc/qOkhidw1OzBTQuYRbfyxDXJMVJ1XNwUHGROVmuaeiEm3OslpZ1RV96d7SKKjZKrSJu3+t/xlw3R9A==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -3930,6 +3954,18 @@ packages:
       utf-8-validate:
         optional: true
 
+  ws@8.18.3:
+    resolution: {integrity: sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
   xml-name-validator@5.0.0:
     resolution: {integrity: sha512-EvGK8EJ3DhaHfbRlETOWAS5pO9MZITeauHKJyb8wyajUfQUenkIg2MvLDTZ4T/TgIcm3HU0TFBgWWboAZ30UHg==}
     engines: {node: '>=18'}
@@ -3985,12 +4021,6 @@ snapshots:
       '@csstools/css-parser-algorithms': 3.0.5(@csstools/css-tokenizer@3.0.4)
       '@csstools/css-tokenizer': 3.0.4
       lru-cache: 10.4.3
-
-  '@babel/code-frame@7.26.2':
-    dependencies:
-      '@babel/helper-validator-identifier': 7.25.9
-      js-tokens: 4.0.0
-      picocolors: 1.1.1
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -4101,8 +4131,6 @@ snapshots:
       - supports-color
 
   '@babel/helper-string-parser@7.27.1': {}
-
-  '@babel/helper-validator-identifier@7.25.9': {}
 
   '@babel/helper-validator-identifier@7.27.1': {}
 
@@ -4718,14 +4746,14 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@puppeteer/browsers@2.9.0':
+  '@puppeteer/browsers@2.10.6':
     dependencies:
-      debug: 4.4.0
+      debug: 4.4.1
       extract-zip: 2.0.1
       progress: 2.0.3
       proxy-agent: 6.5.0
-      semver: 7.7.1
-      tar-fs: 3.0.8
+      semver: 7.7.2
+      tar-fs: 3.1.0
       yargs: 17.7.2
     transitivePeerDependencies:
       - bare-buffer
@@ -5792,10 +5820,6 @@ snapshots:
     dependencies:
       undici-types: 6.20.0
 
-  '@types/pino@7.0.5':
-    dependencies:
-      pino: 9.7.0
-
   '@types/react-dom@19.1.7(@types/react@19.1.9)':
     dependencies:
       '@types/react': 19.1.9
@@ -6047,9 +6071,9 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  chromium-bidi@3.0.0(devtools-protocol@0.0.1413902):
+  chromium-bidi@7.3.1(devtools-protocol@0.0.1475386):
     dependencies:
-      devtools-protocol: 0.0.1413902
+      devtools-protocol: 0.0.1475386
       mitt: 3.0.1
       zod: 3.25.76
 
@@ -6159,7 +6183,7 @@ snapshots:
 
   detect-node-es@1.1.0: {}
 
-  devtools-protocol@0.0.1413902: {}
+  devtools-protocol@0.0.1475386: {}
 
   diff@8.0.2: {}
 
@@ -6680,7 +6704,7 @@ snapshots:
       zod: 3.25.76
       zod-validation-error: 3.5.3(zod@3.25.76)
 
-  knip@5.62.0(@types/node@22.13.8)(typescript@5.8.3):
+  knip@5.62.0(@types/node@22.13.8)(typescript@5.9.2):
     dependencies:
       '@nodelib/fs.walk': 1.2.8
       '@types/node': 22.13.8
@@ -6694,7 +6718,7 @@ snapshots:
       picomatch: 4.0.3
       smol-toml: 1.4.2
       strip-json-comments: 5.0.2
-      typescript: 5.8.3
+      typescript: 5.9.2
       zod: 3.25.76
       zod-validation-error: 3.5.3(zod@3.25.76)
 
@@ -6898,7 +6922,7 @@ snapshots:
 
   parse-json@5.2.0:
     dependencies:
-      '@babel/code-frame': 7.26.2
+      '@babel/code-frame': 7.27.1
       error-ex: 1.3.2
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
@@ -7017,27 +7041,27 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  puppeteer-core@24.5.0:
+  puppeteer-core@24.16.1:
     dependencies:
-      '@puppeteer/browsers': 2.9.0
-      chromium-bidi: 3.0.0(devtools-protocol@0.0.1413902)
-      debug: 4.4.0
-      devtools-protocol: 0.0.1413902
+      '@puppeteer/browsers': 2.10.6
+      chromium-bidi: 7.3.1(devtools-protocol@0.0.1475386)
+      debug: 4.4.1
+      devtools-protocol: 0.0.1475386
       typed-query-selector: 2.12.0
-      ws: 8.18.1
+      ws: 8.18.3
     transitivePeerDependencies:
       - bare-buffer
       - bufferutil
       - supports-color
       - utf-8-validate
 
-  puppeteer@24.5.0(typescript@5.7.3):
+  puppeteer@24.16.1(typescript@5.7.3):
     dependencies:
-      '@puppeteer/browsers': 2.9.0
-      chromium-bidi: 3.0.0(devtools-protocol@0.0.1413902)
+      '@puppeteer/browsers': 2.10.6
+      chromium-bidi: 7.3.1(devtools-protocol@0.0.1475386)
       cosmiconfig: 9.0.0(typescript@5.7.3)
-      devtools-protocol: 0.0.1413902
-      puppeteer-core: 24.5.0
+      devtools-protocol: 0.0.1475386
+      puppeteer-core: 24.16.1
       typed-query-selector: 2.12.0
     transitivePeerDependencies:
       - bare-buffer
@@ -7235,6 +7259,8 @@ snapshots:
 
   semver@7.7.1: {}
 
+  semver@7.7.2: {}
+
   seroval-plugins@1.3.2(seroval@1.3.2):
     dependencies:
       seroval: 1.3.2
@@ -7368,7 +7394,7 @@ snapshots:
 
   symbol-tree@3.2.4: {}
 
-  tar-fs@3.0.8:
+  tar-fs@3.1.0:
     dependencies:
       pump: 3.0.2
       tar-stream: 3.1.7
@@ -7475,7 +7501,7 @@ snapshots:
 
   typescript@5.7.3: {}
 
-  typescript@5.8.3: {}
+  typescript@5.9.2: {}
 
   undici-types@6.20.0: {}
 
@@ -7647,6 +7673,8 @@ snapshots:
   wrappy@1.0.2: {}
 
   ws@8.18.1: {}
+
+  ws@8.18.3: {}
 
   xml-name-validator@5.0.0: {}
 

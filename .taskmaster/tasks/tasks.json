@@ -1601,11 +1601,79 @@
             "testStrategy": ""
           }
         ]
+      },
+      {
+        "id": 65,
+        "title": "Create Shared Test Configuration Package (`test-config`)",
+        "description": "Create a new shared test configuration package under 'packages/test-config' to provide a centralized vitest.config.ts. This will allow all apps and packages to extend a base test configuration, simplifying test setup across the monorepo.",
+        "details": "Create a new directory `packages/test-config`. Inside, initialize a `package.json` with the name `@repo/test-config`. Add necessary dev dependencies like `vitest`, `@vitejs/plugin-react`, and `jsdom`. Create a `vitest.config.ts` file that exports a base configuration object using `defineConfig`. This base config should include common settings such as `globals: true`, `environment: 'jsdom'`, and a path to a global setup file (e.g., `src/setup.ts`). Update at least one existing application or package (e.g., `apps/web`) to use this new shared config by adding `@repo/test-config` as a dev dependency and modifying its local `vitest.config.ts` to import and extend the base configuration.",
+        "testStrategy": "Verify that the `packages/test-config` directory and its `package.json` exist and are correctly configured. Inspect the `packages/test-config/vitest.config.ts` file to ensure it exports a reusable Vitest configuration. Check the `package.json` of another package (e.g., `apps/web`) to confirm `@repo/test-config` is listed as a dev dependency. Finally, run the test suite for the consuming package (e.g., `pnpm --filter @repo/web test`) and ensure all tests pass, confirming the shared configuration is being applied correctly.",
+        "status": "done",
+        "dependencies": [
+          1,
+          64
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Scaffold `test-config` Package Structure and `package.json`",
+            "description": "Create the basic directory structure and `package.json` file for the new shared `@repo/test-config` package.",
+            "dependencies": [],
+            "details": "Create a new directory `packages/test-config`. Inside this directory, create a `package.json` file with the following content:\n{\n  \"name\": \"@repo/test-config\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"main\": \"./vitest.config.ts\",\n  \"types\": \"./vitest.config.ts\",\n  \"scripts\": {\n    \"clean\": \"rm -rf .turbo node_modules\"\n  }\n}\nAlso, create an empty `src` directory inside `packages/test-config`.",
+            "status": "done",
+            "testStrategy": "Verify that the `packages/test-config` directory and its `package.json` file exist and match the specified content. Ensure the `src` directory is also present."
+          },
+          {
+            "id": 2,
+            "title": "Install Dependencies for `test-config` Package",
+            "description": "Add all necessary development dependencies to the `@repo/test-config` package to support Vitest, React, and JSDOM.",
+            "dependencies": [
+              "65.1"
+            ],
+            "details": "Using your package manager (e.g., pnpm), add the following packages as development dependencies to the `@repo/test-config` workspace:\n- `vitest`\n- `@vitejs/plugin-react`\n- `jsdom`\n- `typescript`\n- `@testing-library/jest-dom`\nExample command: `pnpm add -D vitest @vitejs/plugin-react jsdom typescript @testing-library/jest-dom --filter @repo/test-config`",
+            "status": "done",
+            "testStrategy": "Check the `devDependencies` section of `packages/test-config/package.json` to confirm that all specified packages have been added."
+          },
+          {
+            "id": 3,
+            "title": "Create Base `vitest.config.ts` and Global Setup File",
+            "description": "Create the reusable `vitest.config.ts` file that exports the base test configuration, and the global setup file it references.",
+            "dependencies": [
+              "65.2"
+            ],
+            "details": "In `packages/test-config`, create a `vitest.config.ts` file. This file should import `defineConfig` from `vitest/config` and `react` from `@vitejs/plugin-react`. Export a default configuration object with `globals: true`, `environment: 'jsdom'`, `plugins: [react()]`, and `setupFiles: ['./src/setup.ts']`. \n\nNext, create the setup file at `packages/test-config/src/setup.ts`. In this file, import `@testing-library/jest-dom/vitest` to extend Vitest's `expect` with DOM assertions.",
+            "status": "done",
+            "testStrategy": "Inspect the `packages/test-config/vitest.config.ts` file to ensure it correctly exports a Vitest configuration with the specified settings. Verify the `packages/test-config/src/setup.ts` file exists and contains the necessary import."
+          },
+          {
+            "id": 4,
+            "title": "Integrate `@repo/test-config` into an Existing Application",
+            "description": "Update an existing application, such as `apps/web`, to use the new shared test configuration package.",
+            "dependencies": [
+              "65.3"
+            ],
+            "details": "1. Add `@repo/test-config` as a development dependency to an existing application (e.g., `apps/web`) using `pnpm add -D @repo/test-config --filter web`.\n2. Modify the `vitest.config.ts` file in `apps/web`. Import the base configuration from `@repo/test-config` and use `mergeConfig` from `vitest/config` to extend it. The file should look similar to this:\n\nimport { defineConfig, mergeConfig } from 'vitest/config';\nimport baseConfig from '@repo/test-config/vitest.config';\n\nexport default mergeConfig(baseConfig, defineConfig({\n  // App-specific overrides can go here\n}));",
+            "status": "done",
+            "testStrategy": "Check the `package.json` of the target application (`apps/web`) to confirm `@repo/test-config` is listed as a dev dependency. Review its `vitest.config.ts` to ensure it imports and extends the base configuration."
+          },
+          {
+            "id": 5,
+            "title": "Verify Shared Configuration by Running Tests in Consuming App",
+            "description": "Run the test suite for the application that was updated to use the shared config to ensure everything works as expected.",
+            "dependencies": [
+              "65.4"
+            ],
+            "details": "Navigate to the directory of the application updated in the previous step (e.g., `apps/web`). Run its test script (e.g., `pnpm test`). The tests should execute successfully without any configuration-related errors. Confirm that global setups, such as `jest-dom` matchers, are available in the tests without needing to be imported in every test file.",
+            "status": "done",
+            "testStrategy": "Execute the test command within the `apps/web` package. The primary success criteria is that all existing tests pass. A secondary check is to temporarily remove the `setupFiles` line from the shared config and confirm that tests relying on `jest-dom` matchers now fail, proving the config is being correctly inherited."
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-12T14:46:49.158Z",
+      "updated": "2025-08-12T21:34:08.729Z",
       "description": "Tasks for master context"
     }
   }
