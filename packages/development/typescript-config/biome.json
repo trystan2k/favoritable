@@ -1,7 +1,7 @@
 {
   "root": false,
   "$schema": "https://biomejs.dev/schemas/2.1.4/schema.json",
-  "extends": ["@favoritable/config-biome"],
+  "extends": ["@favoritable/lint-config"],
   "files": {
     "includes": ["**/*.json"]
   }

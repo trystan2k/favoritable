@@ -1669,11 +1669,81 @@
             "testStrategy": "Execute the test command within the `apps/web` package. The primary success criteria is that all existing tests pass. A secondary check is to temporarily remove the `setupFiles` line from the shared config and confirm that tests relying on `jest-dom` matchers now fail, proving the config is being correctly inherited."
           }
         ]
+      },
+      {
+        "id": 66,
+        "title": "Refactor and Relocate Tooling Configuration Packages",
+        "description": "Rename the `config-biome` package to `lint-config` for tool agnosticism and reorganize all tooling configuration packages into a new `packages/development/` directory to improve monorepo structure.",
+        "status": "done",
+        "dependencies": [
+          4,
+          62,
+          65
+        ],
+        "priority": "medium",
+        "details": "This task involves a structural refactor of the monorepo's tooling configuration. First, create a new directory `packages/development`. Move the existing `packages/config-biome` and `packages/test-config` directories into this new `packages/development` directory. Rename the `config-biome` folder to `lint-config`. Update the `package.json` within `packages/development/lint-config` to change its name from `@favoritable/config-biome` to `@favoritable/lint-config`. Next, update the root `pnpm-workspace.yaml` to include the `packages/development/*` path. Conduct a global search-and-replace across the entire project to update all imports and `package.json` dependencies from `@favoritable/config-biome` to `@favoritable/lint-config`. Also, verify and update any references to `@favoritable/test-config` to ensure they resolve correctly. Finally, check and update any scripts, such as the Husky pre-commit hook, that may have hardcoded paths or dependencies on the old package names or locations. Run `pnpm install` to regenerate the lockfile and reflect the workspace changes.",
+        "testStrategy": "1. Verify the new directory structure exists: `packages/development/lint-config` and `packages/development/test-config`. 2. Check the `package.json` in `lint-config` to confirm its name is `@favoritable/lint-config`. 3. Run `pnpm lint` and `pnpm format` from the root to ensure the linter and formatter still execute correctly across all workspaces using the new shared configuration package. 4. Run `pnpm test` to confirm that all tests still pass and correctly extend the shared configuration from `@favoritable/test-config` in its new location. 5. Trigger the pre-commit hook by making a change that violates a lint rule; verify that the hook runs successfully and blocks the commit, confirming it can find the new config. 6. Delete all `node_modules` and `pnpm-lock.yaml` and run `pnpm install` to ensure a clean setup works correctly.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create `packages/development` and Relocate Config Packages",
+            "description": "Create the new `packages/development/` directory and move the existing `packages/config-biome` and `packages/test-config` packages into it.",
+            "dependencies": [],
+            "details": "Create a new directory named `development` inside the `packages` directory. Move the `config-biome` and `test-config` folders from `packages/` into `packages/development/`.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Rename `config-biome` Package to `lint-config`",
+            "description": "Rename the `packages/development/config-biome` directory to `lint-config` and update the `name` field in its `package.json` from `@favoritable/config-biome` to `@favoritable/lint-config`.",
+            "dependencies": [
+              "66.1"
+            ],
+            "details": "In the new `packages/development` directory, rename the `config-biome` folder to `lint-config`. Then, edit the `package.json` file inside this folder to change its name property to `@favoritable/lint-config`.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Update `pnpm-workspace.yaml`",
+            "description": "Modify the root `pnpm-workspace.yaml` file to include the new `packages/development/*` path, ensuring pnpm can find the relocated packages.",
+            "dependencies": [
+              "66.1"
+            ],
+            "details": "Add the path `packages/development/*` to the `packages` list in the root `pnpm-workspace.yaml` file to make the package manager aware of the new package locations.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Update All Project References to Relocated Packages",
+            "description": "Perform a global search-and-replace across the entire monorepo to update all imports and `package.json` dependencies from `@favoritable/config-biome` to `@favoritable/lint-config`.",
+            "dependencies": [
+              "66.2",
+              "66.3"
+            ],
+            "details": "Search the entire codebase for the string `@favoritable/config-biome` and replace it with `@favoritable/lint-config`. This includes all `package.json` files and any import statements. Also, verify and update any scripts that may have hardcoded paths to the old locations.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Verify Toolchain Integrity and Finalize Changes",
+            "description": "Run `pnpm install` to update the lockfile and reflect workspace changes. Then, execute all root-level scripts (e.g., `lint`, `test`) to ensure the entire toolchain is functioning correctly after the refactor.",
+            "dependencies": [
+              "66.4"
+            ],
+            "details": "After all file changes are complete, run `pnpm install` from the project root. Subsequently, run `pnpm lint`, `pnpm test`, and any other relevant CI/CD or pre-commit hook scripts to confirm that the tooling configurations are correctly applied and functional.",
+            "status": "done",
+            "testStrategy": ""
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-12T21:34:08.729Z",
+      "updated": "2025-08-12T23:09:23.143Z",
       "description": "Tasks for master context"
     }
   }

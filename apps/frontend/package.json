@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "~2.1.4",
-    "@favoritable/config-biome": "workspace:*",
+    "@favoritable/lint-config": "workspace:*",
     "@favoritable/test-config": "workspace:*",
     "@favoritable/typescript-config": "workspace:*",
     "@rsbuild/core": "~1.4.3",

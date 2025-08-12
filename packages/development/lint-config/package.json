@@ -1,8 +1,15 @@
 {
-  "name": "@favoritable/typescript-config",
+  "name": "@favoritable/lint-config",
   "version": "0.0.1",
   "private": true,
-  "license": "MIT",
+  "type": "module",
+  "description": "Shared linting configuration for the favoritable monorepo",
+  "files": [
+    "biome.json"
+  ],
+  "exports": {
+    ".": "./biome.json"
+  },
   "scripts": {
     "knip": "knip",
     "lint": "biome lint --error-on-warnings",
@@ -13,9 +20,7 @@
     "check:fix": "pnpm check --write"
   },
   "devDependencies": {
-    "@favoritable/config-biome": "workspace:*",
     "@biomejs/biome": "~2.1.4",
-    "knip": "~5.62.0",
-    "typescript": "~5.7.3"
+    "knip": "~5.62.0"
   }
 }
