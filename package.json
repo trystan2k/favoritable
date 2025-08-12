@@ -39,10 +39,16 @@
   "devDependencies": {
     "@favoritable/config-biome": "workspace:*",
     "husky": "~9.1.7",
+    "lint-staged": "~16.1.5",
     "turbo": "~2.4.4"
   },
   "peerDependencies": {
     "@biomejs/biome": "~2.1.4"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json}": [
+      "biome check --write"
+    ]
   },
   "packageManager": "pnpm@10.8.0",
   "engines": {
