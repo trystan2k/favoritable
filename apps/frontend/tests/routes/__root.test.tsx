@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test } from 'vitest';
 import { createTestRouter, renderWithRouter } from '../test-utils';
@@ -143,10 +143,8 @@ describe('Root Layout', () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
-    const links = screen.getAllByRole('link');
-    // Filter out any potential links from child components and get navigation links
-    const navLinks = links.filter(
-      (link) => link.textContent === 'Home' || link.textContent === 'About'
+    const navLinks = within(screen.getByRole('navigation')).getAllByRole(
+      'link'
     );
 
     expect(navLinks).toHaveLength(2);
