@@ -85,7 +85,7 @@
             "title": "Initialize Rsbuild Project with React and TypeScript",
             "description": "Use the Rsbuild CLI to scaffold a new Single Page Application project configured for React and TypeScript, establishing the project's base structure.",
             "dependencies": [],
-            "details": "Run `npm create rsbuild@latest` and select the React + TypeScript template. Verify the basic project structure is created and the development server (`npm run dev`) runs successfully with the default template.\n<info added on 2025-08-11T22:20:31.766Z>\nRun pnpm create rsbuild@latest and select the React + TypeScript template. Verify the basic project structure is created and the development server (pnpm run dev) runs successfully with the default template.\n</info added on 2025-08-11T22:20:31.766Z>",
+            "details": "Run `npm create rsbuild@latest` and select the React + TypeScript template. Verify the basic project structure is created and the development server (`pnpm dev`) runs successfully with the default template.\n<info added on 2025-08-11T22:20:31.766Z>\nRun pnpm create rsbuild@latest and select the React + TypeScript template. Verify the basic project structure is created and the development server (pnpm dev) runs successfully with the default template.\n</info added on 2025-08-11T22:20:31.766Z>",
             "status": "done",
             "testStrategy": ""
           },
@@ -224,7 +224,7 @@
             ],
             "details": "Configure `vitest` in `package.json` scripts (e.g., `\"test\": \"vitest\"`) or create a `vitest.config.ts` file if more complex configuration is needed. Create a `src/test/example.test.ts` file with a simple passing test, such as `import { expect, test } from 'vitest'; test('basic setup', () => { expect(true).toBe(true); });`.",
             "status": "done",
-            "testStrategy": "Run the `vitest` command (e.g., `npm run test` or `pnpm test`) and ensure the placeholder test passes successfully."
+            "testStrategy": "Run the `vitest` command (e.g., `pnpm test`) and ensure the placeholder test passes successfully."
           },
           {
             "id": 5,
@@ -236,7 +236,7 @@
             ],
             "details": "Ensure the `dev` script for the Hono server and the `test` script for Vitest are correctly configured in `package.json`.",
             "status": "done",
-            "testStrategy": "Run `npm run dev` (or `pnpm dev`) and confirm the server starts without errors and the 'Hello, Hono!' endpoint is accessible. Then, run `npm run test` (or `pnpm test`) and confirm all Vitest tests pass successfully."
+            "testStrategy": "Run `pnpm dev` and confirm the server starts without errors and the 'Hello, Hono!' endpoint is accessible. Then, run `pnpm test` and confirm all Vitest tests pass successfully."
           }
         ]
       },
@@ -1433,15 +1433,58 @@
       {
         "id": 62,
         "title": "Configure Husky for Git Hooks",
-        "description": "Set up Husky to manage Git hooks, ensuring that code quality checks using Biome for linting and formatting are run automatically before commits, as per ADR 005.",
-        "status": "pending",
+        "description": "Set up Husky to manage Git hooks, ensuring that code quality checks (type checking, linting, formatting) and tests are run automatically before commits and pushes, as per ADR-013.",
+        "status": "done",
         "dependencies": [
           4
         ],
         "priority": "medium",
-        "details": "Install and configure Husky to automate code quality checks with Biome. Use `lint-staged` to run Biome only on staged files for efficiency. First, install the necessary dev dependencies: `npm install husky lint-staged --save-dev`. Then, initialize Husky with `npx husky init`. Configure `lint-staged` in the `package.json` file to specify the Biome commands to run on different file types (e.g., run `biome format --write` and `biome lint --apply` on `.ts`, `.tsx`, `.js`, `.jsx` files). Finally, create the pre-commit hook by running `npx husky add .husky/pre-commit \"npx lint-staged\"`. This will ensure that every commit is checked for code style and quality before it enters the codebase.",
-        "testStrategy": "To test, modify a source file to introduce a clear formatting or linting error that Biome would catch (e.g., incorrect indentation or an unused variable). Stage the modified file using `git add`. Attempt to create a commit with `git commit -m 'test: trigger pre-commit hook'`. Verify that the commit is blocked by Husky and that the output shows the errors from Biome. After fixing the errors (which Biome may do automatically), stage the file again and re-attempt the commit. The commit should now succeed, confirming the hook is configured correctly.",
-        "subtasks": []
+        "details": "Implement the Git hooks strategy defined in ADR-013. This involves using Husky directly without `lint-staged`.\n\n1. **Installation**: Install Husky as a dev dependency: `pnpm install husky -D`.\n2. **Initialization**: Initialize Husky to create the `.husky/` directory: `npx husky init`.\n3. **Pre-commit Hook**: Create a pre-commit hook that runs type checking and Biome checks on staged files. This hook will apply safe fixes automatically. Use the command: `npx husky add .husky/pre-commit \"pnpm typecheck && pnpm check:write --staged\"`.\n4. **Pre-push Hook**: Create a pre-push hook that runs the test suite with coverage to prevent pushing broken code. Use the command: `npx husky add .husky/pre-push \"pnpm test:coverage\"`.\n\nRefer to ADR-013 for the complete implementation strategy.",
+        "testStrategy": "The test strategy involves verifying both hooks individually.\n\n**Pre-commit Hook Test:**\n1. Modify a source file to introduce a type error (e.g., assign a number to a string variable) and a separate formatting error that Biome can fix automatically.\n2. Stage the file with `git add`.\n3. Attempt to commit: `git commit -m 'test: trigger pre-commit hook'`.\n4. Verify that the commit is blocked and the output shows the type error. Check that the formatting error was automatically fixed by Biome.\n5. Fix the type error, stage the file again, and re-attempt the commit. It should now succeed.\n\n**Pre-push Hook Test:**\n1. Ensure you have at least one commit ready to be pushed.\n2. Introduce a change that causes a unit test to fail.\n3. Commit this change.\n4. Attempt to push the branch to the remote repository: `git push`.\n5. Verify that the push is blocked by Husky and the output shows the test failure from `pnpm test:coverage`.\n6. Fix the failing test, commit the fix, and attempt to push again. The push should now succeed.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install Husky Dependency",
+            "description": "Add Husky as a development dependency to the project using the pnpm package manager, as specified in the task requirements.",
+            "dependencies": [],
+            "details": "Run the command `pnpm install husky -D` in the project's root directory to install the necessary package.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Initialize Husky Configuration",
+            "description": "Run the Husky initialization script to create the `.husky/` directory. This step prepares the project to have Git hooks managed by Husky.",
+            "dependencies": [
+              "62.1"
+            ],
+            "details": "Execute the command `npx husky init` in the project root. This will create the `.husky` directory and a sample hook file.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Create Pre-commit Hook for Quality Checks",
+            "description": "Configure a pre-commit hook to run type checking and Biome checks on staged files. This hook will apply safe fixes automatically before each commit, enforcing code quality standards.",
+            "dependencies": [
+              "62.2"
+            ],
+            "details": "Use the Husky CLI to create the pre-commit hook file with the specified commands. Run: `npx husky add .husky/pre-commit \"pnpm typecheck && pnpm check:write --staged\"`.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Create Pre-push Hook for Testing",
+            "description": "Configure a pre-push hook that runs the full test suite with coverage. This acts as a final safeguard to prevent pushing broken code or code with failing tests to the remote repository.",
+            "dependencies": [
+              "62.2"
+            ],
+            "details": "Use the Husky CLI to create the pre-push hook file with the test command. Run: `npx husky add .husky/pre-push \"pnpm test:coverage\"`.",
+            "status": "done",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 63,
@@ -1562,7 +1605,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-11T22:34:12.189Z",
+      "updated": "2025-08-12T14:46:49.158Z",
       "description": "Tasks for master context"
     }
   }

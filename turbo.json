@@ -14,10 +14,6 @@
       "dependsOn": ["^lint:fix"],
       "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
     },
-    "lint:fix:unsafe": {
-      "dependsOn": ["^lint:fix:unsafe"],
-      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
-    },
     "format": {
       "dependsOn": ["^format"],
       "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]

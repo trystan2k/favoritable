@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Pre-commit hook: Run type checking and lint/format on staged files
+pnpm typecheck
+pnpm biome check --write --staged

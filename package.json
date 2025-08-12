@@ -19,13 +19,13 @@
   ],
   "license": "MIT",
   "scripts": {
-    "complete-check": "pnpm typecheck && pnpm lint:fix && pnpm format:fix && pnpm check:fix && pnpm knip && pnpm test:coverage && pnpm build",
+    "complete-check": "pnpm typecheck && pnpm check:fix && pnpm knip && pnpm test:coverage && pnpm build",
+    "prepare": "husky",
     "preinstall": "npx only-allow pnpm",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
-    "lint:fix:unsafe": "turbo run lint:fix:unsafe",
     "format": "turbo run format",
     "format:fix": "turbo run format:fix",
     "check": "turbo run check",
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@favoritable/config-biome": "workspace:*",
+    "husky": "~9.1.7",
     "turbo": "~2.4.4"
   },
   "peerDependencies": {
