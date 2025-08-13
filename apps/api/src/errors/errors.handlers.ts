@@ -31,11 +31,15 @@ const defaultResponseHandler = (err: APIError, c: Context): Response => {
 };
 
 const isAPIErrorInstance = (processedError: unknown) => {
-  return processedError instanceof APIError && processedError.httpStatusCode;
+  return (
+    processedError instanceof APIError &&
+    processedError.httpStatusCode !== undefined &&
+    processedError.httpStatusCode !== null
+  );
 };
 
 export const errorHandler = (
-  errorHandlers: ((error: Error | APIError) => APIError | typeof error)[],
+  errorHandlers: ((error: Error) => APIError)[],
   customHandler: ResponseHandler = defaultResponseHandler
 ): ErrorHandler => {
   return (err: Error, c) => {
@@ -59,7 +63,7 @@ export const errorHandler = (
         }
       }
 
-      if (!(errorObj instanceof APIError) || !errorObj.httpStatusCode) {
+      if (!isAPIErrorInstance(errorObj)) {
         // If no specific handler matched, use UnexpectedError as fallback
         errorObj = new UnexpectedError('An unexpected error has ocurred');
       }
