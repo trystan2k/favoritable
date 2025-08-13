@@ -31,15 +31,38 @@ const defaultResponseHandler = (err: APIError, c: Context): Response => {
 };
 
 export const errorHandler = (
-  errorHandlers: ((error: APIError) => APIError)[],
+  errorHandlers: ((error: unknown) => APIError | unknown)[],
   customHandler: ResponseHandler = defaultResponseHandler
 ): ErrorHandler => {
   return (err: Error, c) => {
     let errorObj: APIError;
-    if (!(err instanceof APIError)) {
-      errorObj = new UnexpectedError('An unexpected error has ocurred');
-    } else {
+
+    if (err instanceof APIError) {
+      // First, check if it's already an APIError
       errorObj = err;
+    } else {
+      // If not an APIError, try to process it with specific error handlers first
+      errorObj = err;
+
+      if (Array.isArray(errorHandlers) && errorHandlers.length > 0) {
+        for (const handleError of errorHandlers) {
+          const processedError = handleError(err);
+
+          // If the handler successfully converted it to a specific APIError
+          if (
+            processedError instanceof APIError &&
+            processedError.httpStatusCode
+          ) {
+            errorObj = processedError;
+            break;
+          }
+        }
+      }
+
+      if (!(errorObj instanceof APIError) || !errorObj.httpStatusCode) {
+        // If no specific handler matched, use UnexpectedError as fallback
+        errorObj = new UnexpectedError('An unexpected error has ocurred');
+      }
     }
 
     // Get request context for logging
@@ -68,18 +91,6 @@ export const errorHandler = (
       msg: `${logLevel === 'error' ? 'Server error' : 'Client error'} occurred`,
     });
 
-    if (Array.isArray(errorHandlers) && errorHandlers.length > 0) {
-      if (!errorObj.message || !errorObj.httpStatusCode) {
-        for (const handleError of errorHandlers) {
-          errorObj = handleError(errorObj);
-
-          if (errorObj.httpStatusCode) {
-            break;
-          }
-        }
-      }
-    }
-
-    return customHandler(errorObj as APIError, c);
+    return customHandler(errorObj, c);
   };
 };

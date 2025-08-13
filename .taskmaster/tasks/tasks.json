@@ -1492,12 +1492,55 @@
         "description": "Correct the execution order of error handlers in the API's main error handler function to ensure specific error types are logged accurately before the generic fallback.",
         "details": "In the `apps/api/src/errors/errors.handlers.ts` file, locate the primary `errorHandler` function. This function processes a sequence of error-specific handlers. The current implementation incorrectly places the generic `UnexpectedError` handler before more specific handlers like `ValidationError` or `NotFoundError`. Modify the logic to ensure the handlers are checked in order of specificity, from most specific to least specific. The `UnexpectedError` handler must be the final check in the sequence, acting as a catch-all for any errors not previously matched.",
         "testStrategy": "To verify the fix, first create unit tests that throw specific error types (e.g., `ValidationError`, `NotFoundError`) and assert that the error handler correctly identifies and logs them with their specific type. Manually, trigger errors by making API calls: 1) Request a non-existent resource to trigger a `NotFoundError`. 2) Send an invalid request body to trigger a `ValidationError`. In both cases, inspect the application logs to confirm the error is logged with its correct, specific type and not as a generic 'UnexpectedError'.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           3
         ],
         "priority": "high",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Analyze Current Error Handler Order",
+            "description": "Review the `errorHandler` function in `apps/api/src/errors/errors.handlers.ts` to identify the current sequence of error checks and confirm that the generic `UnexpectedError` handler is incorrectly prioritized.",
+            "dependencies": [],
+            "details": "Locate the `errorHandler` function in `apps/api/src/errors/errors.handlers.ts`. Document the existing `if/else if` or `switch` statement order to map out how different error types are currently processed.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Refactor Error Handler Logic to Correct Order",
+            "description": "Modify the `errorHandler` function to process specific error handlers (e.g., `ValidationError`, `NotFoundError`) before the generic `UnexpectedError` handler.",
+            "dependencies": [
+              "63.1"
+            ],
+            "details": "In `apps/api/src/errors/errors.handlers.ts`, reorder the conditional checks within the `errorHandler` function. Ensure the check for `UnexpectedError` or the default `else` block is the very last one in the sequence, acting as a catch-all.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement Comprehensive Unit Tests for Error Handling",
+            "description": "Create new unit tests to verify the corrected error handler logic. This includes testing for specific errors like `ValidationError` and ensuring the generic fallback case for a standard `Error` works as expected.",
+            "dependencies": [
+              "63.2"
+            ],
+            "details": "Write a unit test that throws a `ValidationError` and asserts the logger captures it with the correct type. Write a second unit test that throws a standard `Error` and asserts the logger correctly falls back to logging it as an `UnexpectedError`.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Perform Manual Testing and Verification",
+            "description": "Manually trigger different types of errors through API calls to confirm the logger is capturing them correctly in the application logs and that the API responds appropriately.",
+            "dependencies": [
+              "63.2"
+            ],
+            "details": "Make API calls designed to fail in specific ways. For example, send a request with invalid data to trigger a `ValidationError` and request a non-existent resource to trigger a `NotFoundError`. Check the server logs to verify that the errors are logged with the correct, specific types.",
+            "status": "done",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 64,
@@ -1743,7 +1786,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-12T23:09:23.143Z",
+      "updated": "2025-08-12T23:22:32.446Z",
       "description": "Tasks for master context"
     }
   }
