@@ -160,6 +160,7 @@ Closes #TaskID
 
 ### 11. ⛄ OPENING THE PULL REQUEST
 
+- **Action**: Before create the PR, ask for my approval.
 Use the Github CLI to open a PR with a comprehensive and accurate description of the implementation.
 **NEVER** Add any comment releated to the Agent doing the Pull request (for example, avoid any reference to opencode, claude code, gemini, etc)
 
