@@ -11,16 +11,14 @@ export const serviceErrorsHandler = (error: unknown) => {
     return error;
   }
 
-  const errorObj = error as Error;
-
-  if (errorObj.name === 'SyntaxError') {
-    return new MalFormedRequestError('Input data is invalid', errorObj.message);
+  if ((error as Error).name === 'SyntaxError') {
+    return new MalFormedRequestError(
+      'Input data is invalid',
+      (error as Error).message
+    );
   }
 
-  return new UnexpectedError(
-    'An unexpected error has ocurred',
-    errorObj.message
-  );
+  return error;
 };
 
 export const repositoryErrorsHandler = (error: unknown) => {
@@ -50,8 +48,5 @@ export const repositoryErrorsHandler = (error: unknown) => {
     }
   }
 
-  return new UnexpectedError(
-    'An unexpected error has ocurred',
-    (error as Error).message
-  );
+  return error;
 };

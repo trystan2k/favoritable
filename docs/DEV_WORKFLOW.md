@@ -98,6 +98,8 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 
 ### 8. ✅ STATUS UPDATE - COMPLETION
 
+- **Action**: Before start this step, please ask me to review the changes and only continue after my ok.
+- **Action**: Ask me if I did any code change. If so, review the changes done and use this info for the next steps.
 - **Action**: Update the task with implementation details
 - **Action**: Mark the task/subtask as `done` in Task Master
 - Confirm that the status has been updated correctly
