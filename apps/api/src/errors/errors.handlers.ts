@@ -30,8 +30,12 @@ const defaultResponseHandler = (err: APIError, c: Context): Response => {
   return c.json(response, err.httpStatusCode || 500);
 };
 
+const isAPIErrorInstance = (processedError: unknown) => {
+  return processedError instanceof APIError && processedError.httpStatusCode;
+};
+
 export const errorHandler = (
-  errorHandlers: ((error: unknown) => APIError | unknown)[],
+  errorHandlers: ((error: Error | APIError) => APIError | typeof error)[],
   customHandler: ResponseHandler = defaultResponseHandler
 ): ErrorHandler => {
   return (err: Error, c) => {
@@ -48,11 +52,7 @@ export const errorHandler = (
         for (const handleError of errorHandlers) {
           const processedError = handleError(err);
 
-          // If the handler successfully converted it to a specific APIError
-          if (
-            processedError instanceof APIError &&
-            processedError.httpStatusCode
-          ) {
+          if (isAPIErrorInstance(processedError)) {
             errorObj = processedError;
             break;
           }
