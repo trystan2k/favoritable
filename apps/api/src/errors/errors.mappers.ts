@@ -11,11 +11,8 @@ export const serviceErrorsHandler = (error: Error) => {
     return error;
   }
 
-  if ((error as Error).name === 'SyntaxError') {
-    return new MalFormedRequestError(
-      'Input data is invalid',
-      (error as Error).message
-    );
+  if (error.name === 'SyntaxError') {
+    return new MalFormedRequestError('Input data is invalid', error.message);
   }
 
   return error;
