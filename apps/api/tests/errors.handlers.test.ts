@@ -3,6 +3,7 @@ import type { Context } from 'hono';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { errorHandler } from '../src/errors/errors.handlers.js';
 import {
+  type APIError,
   MalFormedRequestError,
   NotFoundError,
   UnexpectedError,
@@ -196,12 +197,13 @@ describe('errorHandler', () => {
     const syntaxError = new SyntaxError('Invalid JSON');
 
     // Mock handlers where first one doesn't match, second one does
-    const firstHandler = vi.fn((error: unknown) => error);
+    const firstHandler = vi.fn((error: Error | APIError) => error);
     const secondHandler = vi.fn(
-      (_error: unknown) => new MalFormedRequestError('Handled by second')
+      (_error: Error | APIError) =>
+        new MalFormedRequestError('Handled by second')
     );
     const thirdHandler = vi.fn(
-      (_error: unknown) => new UnexpectedError('Should not be called')
+      (_error: Error | APIError) => new UnexpectedError('Should not be called')
     );
 
     const handler = errorHandler([firstHandler, secondHandler, thirdHandler]);
