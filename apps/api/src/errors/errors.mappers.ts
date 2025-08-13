@@ -6,7 +6,7 @@ import {
   UnexpectedError,
 } from './errors.js';
 
-export const serviceErrorsHandler = (error: Error) => {
+export const serviceErrorsHandler = (error: Error): Error | APIError => {
   if (error instanceof APIError) {
     return error;
   }
@@ -18,7 +18,7 @@ export const serviceErrorsHandler = (error: Error) => {
   return error;
 };
 
-export const repositoryErrorsHandler = (error: Error) => {
+export const repositoryErrorsHandler = (error: Error): Error | APIError => {
   if (error instanceof APIError) {
     return error;
   }
