@@ -7,15 +7,34 @@ export const NodeEnvs = {
   PRODUCTION: 'production',
 } as const;
 
-const EnvSchema = z.object({
-  NODE_ENV: z
-    .enum([NodeEnvs.DEVELOPMENT, NodeEnvs.TEST, NodeEnvs.PRODUCTION])
-    .default(NodeEnvs.DEVELOPMENT),
-  DATABASE_TYPE: z.enum(['local', 'turso']).default('local'),
-  LOCAL_DATABASE_URL: z.string().default('file:local.db'),
-  TURSO_DATABASE_URL: z.string().optional(),
-  TURSO_AUTH_TOKEN: z.string().optional(),
-});
+const EnvSchema = z
+  .object({
+    NODE_ENV: z
+      .enum([NodeEnvs.DEVELOPMENT, NodeEnvs.TEST, NodeEnvs.PRODUCTION])
+      .default(NodeEnvs.DEVELOPMENT),
+    DATABASE_TYPE: z.enum(['local', 'turso']).default('local'),
+    LOCAL_DATABASE_URL: z.string().default('file:local.db'),
+    TURSO_DATABASE_URL: z.string().optional(),
+    TURSO_AUTH_TOKEN: z.string().optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.DATABASE_TYPE === 'turso') {
+      if (!data.TURSO_DATABASE_URL) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'TURSO_DATABASE_URL is required when DATABASE_TYPE is turso',
+          path: ['TURSO_DATABASE_URL'],
+        });
+      }
+      if (!data.TURSO_AUTH_TOKEN) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'TURSO_AUTH_TOKEN is required when DATABASE_TYPE is turso',
+          path: ['TURSO_AUTH_TOKEN'],
+        });
+      }
+    }
+  });
 
 config();
 
