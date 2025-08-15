@@ -41,7 +41,8 @@
     "check:fix": "pnpm check --write",
     "knip": "knip",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "db:health": "tsx src/db/utils/db-health-check.ts"
   },
   "license": "MIT",
   "dependencies": {
