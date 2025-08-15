@@ -10,8 +10,8 @@ export default defineConfig({
   dbCredentials: isLocalDatabase
     ? { url: env.LOCAL_DATABASE_URL }
     : {
-        url: env.TURSO_DATABASE_URL as string,
-        authToken: env.TURSO_AUTH_TOKEN as string,
+        url: env.TURSO_DATABASE_URL ?? '',
+        authToken: env.TURSO_AUTH_TOKEN,
       },
   verbose: true,
   strict: true,
