@@ -6,7 +6,7 @@ export async function checkDatabaseConnection(): Promise<boolean> {
   try {
     logger.info('Testing database connection...');
 
-    await db.run(sql`SELECT 1 as test`);
+    await db.get(sql`SELECT 1 as test`);
 
     logger.info('✅ Database connection successful');
     return true;

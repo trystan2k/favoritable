@@ -1,6 +1,5 @@
 import { config } from '@dotenvx/dotenvx';
 import { ZodError, z } from 'zod';
-import { logger } from './core/logger';
 
 export const NodeEnvs = {
   DEVELOPMENT: 'development',
@@ -47,14 +46,13 @@ try {
   if (error instanceof ZodError) {
     let message = 'Environment validation errors:\n';
     error.issues.forEach((issue) => {
-      message += `- ${issue.message}\n`;
+      message += `Environment variable "${issue.path.join('.')}" is invalid -> ${issue.message}\n`;
     });
     const e = new Error(message);
     e.stack = '';
     throw e;
   } else {
-    logger.error('Unexpected error during environment validation:', error);
-    throw error; // Re-throw to prevent app from starting with invalid config
+    throw error;
   }
 }
 
