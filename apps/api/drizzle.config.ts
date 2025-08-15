@@ -3,7 +3,7 @@ import { env } from './src/env';
 
 export default defineConfig({
   out: './src/db/migrations',
-  schema: './src/db/schema/*.ts',
+  schema: './dist/db/schema/*.js',
   dialect: env.DATABASE_TYPE === 'local' ? 'sqlite' : 'turso',
   dbCredentials:
     env.DATABASE_TYPE === 'local'

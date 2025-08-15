@@ -21,7 +21,7 @@ const BaseEnvSchema = z.object({
 // Discriminated union for type-safe environment based on DATABASE_TYPE
 const LocalEnvSchema = BaseEnvSchema.extend({
   DATABASE_TYPE: z.literal('local'),
-  LOCAL_DATABASE_URL: z.string().default('file:local.db'),
+  LOCAL_DATABASE_URL: z.string(),
 });
 
 const TursoEnvSchema = BaseEnvSchema.extend({
