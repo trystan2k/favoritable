@@ -5,16 +5,13 @@ import * as bookmarkSchemas from './schema/bookmark.schema.js';
 import * as bookmarkLabelSchemas from './schema/bookmark-label.schema.js';
 import * as labelSchemas from './schema/label.schema.js';
 
-let client: Client;
-
-if (env.DATABASE_TYPE === 'local') {
-  client = createClient({ url: env.LOCAL_DATABASE_URL });
-} else {
-  client = createClient({
-    url: env.TURSO_DATABASE_URL,
-    authToken: env.TURSO_AUTH_TOKEN,
-  });
-}
+const client: Client =
+  env.DATABASE_TYPE === 'local'
+    ? createClient({ url: env.LOCAL_DATABASE_URL })
+    : createClient({
+        url: env.TURSO_DATABASE_URL,
+        authToken: env.TURSO_AUTH_TOKEN,
+      });
 
 export const db = drizzle(client, {
   schema: { ...bookmarkSchemas, ...bookmarkLabelSchemas, ...labelSchemas },
