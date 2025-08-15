@@ -11,7 +11,10 @@ const EnvSchema = z.object({
   NODE_ENV: z
     .enum([NodeEnvs.DEVELOPMENT, NodeEnvs.TEST, NodeEnvs.PRODUCTION])
     .default(NodeEnvs.DEVELOPMENT),
-  DATABASE_URL: z.string(),
+  DATABASE_TYPE: z.enum(['local', 'turso']).default('local'),
+  LOCAL_DATABASE_URL: z.string().default('file:local.db'),
+  TURSO_DATABASE_URL: z.string().optional(),
+  TURSO_AUTH_TOKEN: z.string().optional(),
 });
 
 config();

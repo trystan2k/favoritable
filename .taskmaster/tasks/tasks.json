@@ -330,7 +330,7 @@
         "dependencies": [
           3
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -349,7 +349,7 @@
               "5.1"
             ],
             "details": "Follow the Turso getting-started guide. Name the database instance according to project conventions and select a primary region.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -360,7 +360,7 @@
               "5.2"
             ],
             "details": "Use a `.env` file for local development (e.g., `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`) and ensure it is added to `.gitignore`. Configure secrets for deployment environments.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -371,7 +371,7 @@
               "5.3"
             ],
             "details": "Create a singleton or a shared module for the database client to ensure efficient connection management throughout the application.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -382,7 +382,7 @@
               "5.4"
             ],
             "details": "The script should connect, execute the query, and log a success or failure message. This can serve as a basic health check.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -393,7 +393,7 @@
               "5.5"
             ],
             "details": "Include steps for signing up, creating a database, and configuring the necessary environment variables so new developers can quickly set up their environment.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           }
         ]
@@ -1557,7 +1557,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-15T16:52:11.319Z",
+      "updated": "2025-08-15T17:27:18.034Z",
       "description": "Tasks for master context"
     }
   }

@@ -1,5 +1,58 @@
 # Favoritable API
 
+## Database Setup (Turso)
+
+The API uses Turso (managed SQLite) as the primary database. Follow these steps to set up the database for local development:
+
+### 1. Sign up for Turso
+
+1. Go to [https://turso.tech/](https://turso.tech/)
+2. Create a new account
+3. Create a new database instance for your project
+
+### 2. Get Database Credentials
+
+After creating your database instance:
+
+1. Get your database URL (format: `libsql://your-db-name.region.turso.io`)
+2. Generate an authentication token from the Turso dashboard
+
+### 3. Configure Environment Variables
+
+Create or update the `.env` file in the API directory:
+
+```env
+TURSO_DATABASE_URL=libsql://your-db-name.region.turso.io
+TURSO_AUTH_TOKEN=your_auth_token_here
+```
+
+⚠️ **Important**: The `.env` file is already included in `.gitignore` to prevent committing sensitive credentials.
+
+### 4. Verify Database Connection
+
+Test your database connection:
+
+```bash
+pnpm run db:health
+```
+
+This will run a connection test and confirm that your database setup is working correctly.
+
+### 5. Database Schema
+
+The database schema is managed using Drizzle ORM. Schema files are located in `src/db/schema/`. To push schema changes to Turso:
+
+```bash
+pnpm exec drizzle-kit push
+```
+
+### Available Database Commands
+
+- `pnpm run db:health` - Test database connection
+- `pnpm exec drizzle-kit push` - Push schema changes to database
+- `pnpm exec drizzle-kit generate` - Generate migration files
+- `pnpm exec drizzle-kit migrate` - Run migrations
+
 ## Logging System
 
 The API uses a structured logging system built on top of Pino for high-performance, structured JSON logging. The logger automatically handles sensitive data redaction, environment-specific formatting, and request tracing.
