@@ -401,15 +401,70 @@
       {
         "id": 6,
         "title": "Select & Setup API Deployment",
-        "description": "Choose a traditional backend deployment platform (Railway/Fly.io) and configure initial deployment for the Hono API service.",
+        "description": "Create a production-ready Docker container for the Hono API. This task focuses on building a multi-stage Dockerfile that includes all necessary dependencies for Puppeteer to support web scraping, and ensuring the container can be built and tested locally.",
         "status": "pending",
         "dependencies": [
           3
         ],
         "priority": "high",
-        "details": "Select either Railway or Fly.io for deploying the backend as a long-running service. The chosen platform should support persistent connections and Docker containers. Configure the deployment using a `Dockerfile` and the platform's configuration file (e.g., `railway.json`, `fly.toml`). Set up CI/CD for automatic deployments from the main branch.",
-        "testStrategy": "Deploy the Hono API service to the chosen platform (Railway/Fly.io) and verify its public endpoint is accessible and returns a successful response.",
-        "subtasks": []
+        "details": "Develop a multi-stage Dockerfile to create an optimized and secure production image for the Hono API. The build process should handle installing dependencies, building the TypeScript source, and copying only the necessary artifacts to a lean final image. A key requirement is to install all system-level dependencies needed for Puppeteer to run headless Chromium for web scraping tasks. The final container should be configured for a production environment and tested locally to ensure full functionality before deployment.",
+        "testStrategy": "Build the Docker image locally using the `docker build` command. Run the image as a container, mapping the necessary ports and providing required environment variables (e.g., database credentials). Test the running container by sending requests to its API endpoints using a tool like cURL or Postman. Specifically, verify that a standard endpoint returns a successful response and that an endpoint utilizing Puppeteer for web scraping executes without errors and returns the expected data.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Multi-Stage Dockerfile for Production",
+            "description": "Develop a multi-stage Dockerfile to build and run the Hono API efficiently, separating build-time dependencies from the final runtime image.",
+            "status": "pending",
+            "dependencies": [],
+            "details": "Use a `builder` stage with a Node.js base image to install all dependencies and build the application. Use a final, smaller production stage to copy the built application and production dependencies from the `builder` stage. This will minimize the final image size and improve security.",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Install Puppeteer System Dependencies in Docker Image",
+            "description": "Add the necessary system-level dependencies to the Dockerfile to ensure Puppeteer can run headless Chromium correctly within the container.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "In the final production stage of the Dockerfile, add commands to install required libraries for headless Chromium (e.g., `libnss3`, `libgconf-2-4`, etc.). Research the specific dependencies needed for the chosen base image (e.g., Debian-based).",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Configure Container Entrypoint and Environment",
+            "description": "Configure the Docker container's runtime environment variables, exposed port, and startup command for production.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "details": "In the Dockerfile, set the `NODE_ENV` environment variable to `production`. Use the `EXPOSE` instruction to document the application port (e.g., 3000). Define the `CMD` instruction to start the Hono server using the compiled JavaScript output.",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Document Local Docker Build and Run Process",
+            "description": "Create documentation or scripts for building the Docker image and running it locally for development and testing purposes.",
+            "status": "pending",
+            "dependencies": [
+              3
+            ],
+            "details": "Add a section to the `README.md` or create helper scripts in `package.json` that detail the `docker build` and `docker run` commands. The run command should include examples for port mapping (`-p`) and passing environment variables (`-e` or `--env-file`).",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Validate API Functionality in Local Container",
+            "description": "Build and run the container locally to test that all API endpoints, especially those using Puppeteer, are fully functional.",
+            "status": "pending",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "Follow the documented process to build the image and run the container. Use cURL or Postman to send requests to the API on `localhost`. Confirm that a basic endpoint works and that the web scraping endpoint successfully executes a Puppeteer job and returns data without crashing.",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 7,
@@ -1553,11 +1608,95 @@
             "testStrategy": ""
           }
         ]
+      },
+      {
+        "id": 67,
+        "title": "Deploy Containerized API to Render",
+        "description": "Configure and deploy the containerized Hono API to the Render platform. This includes creating the necessary Render configuration, setting up the CI/CD pipeline for automatic deployments, and performing post-deployment validation.",
+        "details": "Create a `render.yaml` file in the project root to define the infrastructure as code. In this file, configure a 'Web Service' for the API, specifying the Docker build context and pointing to the Dockerfile created in Task #6. Set up environment variables for the production database URL (from Task #5) and other secrets using Render's secret management. Configure the build command to use Turborepo to efficiently build the API service (e.g., `npx turbo build --filter=api`). Connect the project's Git repository to Render and configure the service to use the `render.yaml` file, enabling auto-deploy on pushes to the main branch.",
+        "testStrategy": "Once the initial deployment is complete, verify the service is live by accessing its public URL provided by Render. Use an API client like Bruno or cURL to hit a health check endpoint and confirm a successful response. Perform a test on an endpoint that requires database interaction to validate the production database connection is working correctly. Crucially, test the web scraping endpoint by providing a sample URL to ensure the Puppeteer instance within the deployed container has the necessary permissions and dependencies to function in the Render environment.",
+        "status": "pending",
+        "dependencies": [
+          5,
+          6
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create render.yaml for Docker-based Web Service",
+            "description": "Define the infrastructure as code for the Hono API deployment on Render. This file will specify the service type, build configuration using the existing Dockerfile, and runtime environment.",
+            "dependencies": [],
+            "details": "In the project root, create a `render.yaml` file. Inside, define a service of type `web` with a descriptive name like `hono-api`. Set the environment to `docker` (`env: docker`). Configure the `dockerContext` to `.` and the `dockerfilePath` to point to the API's Dockerfile (e.g., `./apps/api/Dockerfile`). Add a `healthCheckPath` pointing to a health check endpoint (e.g., `/health`) to enable Render's monitoring.",
+            "status": "pending",
+            "testStrategy": "Commit the `render.yaml` file to a feature branch. Validate its syntax using a local YAML linter or by attempting to create a 'Blueprint Instance' in the Render UI to see if it parses correctly."
+          },
+          {
+            "id": 2,
+            "title": "Configure Environment Variables and Secrets on Render",
+            "description": "Set up all necessary environment variables for the production API service within the Render dashboard. This keeps sensitive data like database credentials and API keys separate from the codebase.",
+            "dependencies": [
+              "67.1"
+            ],
+            "details": "Navigate to the Render dashboard and create a new 'Environment Group' for the project. Add all required environment variables, including the `DATABASE_URL` from the production database (Task #5), `JWT_SECRET`, and any OAuth provider keys (Task #13). In the `render.yaml` file, link this group to the web service using the `envVars.fromGroup` key.",
+            "status": "pending",
+            "testStrategy": "Review the list of environment variables used in local development (`.env` file) and ensure a corresponding secret has been created for each one in the Render Environment Group."
+          },
+          {
+            "id": 3,
+            "title": "Create Render Service and Enable Auto-Deploy (CI/CD)",
+            "description": "Create the Web Service on the Render platform by connecting the GitHub repository and using the `render.yaml` file. This will trigger the first deployment and set up the CI/CD pipeline.",
+            "dependencies": [
+              "67.1",
+              "67.2"
+            ],
+            "details": "In the Render dashboard, create a new 'Blueprint Instance'. Connect the project's GitHub repository and select the branch containing the `render.yaml` file (e.g., `main`). Render will parse the file and prompt to create the defined web service. Approve the plan to start the initial build and deployment. Verify that the 'Auto-Deploy' setting is enabled to automatically deploy new commits pushed to the main branch.",
+            "status": "pending",
+            "testStrategy": "Monitor the initial deployment logs in the Render dashboard for any build or startup errors. Once the service status changes to 'Live', access its public URL to confirm it is running and not showing a deployment error page."
+          },
+          {
+            "id": 4,
+            "title": "Validate Production Database Connectivity",
+            "description": "After a successful deployment, perform live tests to confirm that the deployed API can successfully connect to the production database and execute basic data operations.",
+            "dependencies": [
+              "67.3"
+            ],
+            "details": "Using an API client like Bruno or cURL, send requests to the deployed service's public URL. Target at least one endpoint that reads from the database (e.g., fetching a list of public items) and one that writes to it (e.g., a user registration endpoint). Confirm that the requests succeed and the data is persisted correctly. Check the service logs on Render for any database connection errors.",
+            "status": "pending",
+            "testStrategy": "Execute a test request to an endpoint that requires a database read. The test passes if it returns a 200-level status code and expected data. Execute a second test to an endpoint that writes data; verify success with a 201 status code and by subsequently fetching the created resource."
+          },
+          {
+            "id": 5,
+            "title": "Verify Production Web Scraping Functionality",
+            "description": "Test the web scraping endpoint on the deployed service to ensure that Puppeteer and its underlying headless Chromium dependencies are correctly installed and functional within the Render container.",
+            "dependencies": [
+              "67.3"
+            ],
+            "details": "Send a request from an API client to the specific endpoint designed for web scraping. The request should target a simple, reliable website to minimize external failures. Monitor the API response and, more importantly, the real-time service logs in the Render dashboard. Look for any errors related to Puppeteer initialization, browser launch failures, or sandbox issues, which are common in containerized environments.",
+            "status": "pending",
+            "testStrategy": "Make a POST request to the scraping endpoint (e.g., `/api/scrape`) with a target URL. The test is successful if the API returns a 200 OK status with the expected scraped content and no Puppeteer-related errors appear in the Render logs."
+          },
+          {
+            "id": 6,
+            "title": "Document Deployment Process and Configuration",
+            "description": "Create comprehensive documentation covering the Render deployment setup. This guide will serve as a reference for team members to understand the infrastructure, manage the environment, and troubleshoot issues.",
+            "dependencies": [
+              "67.1",
+              "67.2",
+              "67.3",
+              "67.4",
+              "67.5"
+            ],
+            "details": "Create a `DEPLOYMENT.md` file in the project's root or `docs/` directory. In this file, explain the structure and purpose of the `render.yaml` file. List all required environment variables with a brief description for each (do not include secret values). Provide a step-by-step guide on how the CI/CD pipeline works (push to main triggers deploy) and how to perform manual deployments or rollbacks via the Render dashboard.",
+            "status": "pending",
+            "testStrategy": "Have a team member who was not involved in the setup review the documentation. They should be able to understand the entire deployment architecture and process from the document alone."
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-15T17:27:18.034Z",
+      "updated": "2025-08-15T23:24:29.426Z",
       "description": "Tasks for master context"
     }
   }
