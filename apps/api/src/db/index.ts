@@ -11,7 +11,7 @@ if (env.DATABASE_TYPE === 'local') {
   client = createClient({ url: env.LOCAL_DATABASE_URL });
 } else {
   client = createClient({
-    url: env.TURSO_DATABASE_URL ?? '',
+    url: env.TURSO_DATABASE_URL,
     authToken: env.TURSO_AUTH_TOKEN,
   });
 }
