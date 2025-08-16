@@ -19,7 +19,7 @@
 		},
 		{
 			"taskId": 6,
-			"taskTitle": "Select & Setup API Deployment",
+			"taskTitle": "Implement Docker Image creation for future deployment",
 			"complexityScore": 7,
 			"recommendedSubtasks": 4,
 			"expansionPrompt": "Refine the existing subtasks to be more specific: 1. Evaluate Railway and Fly.io based on pricing, Docker support, and ease of CI/CD integration, and document the final decision. 2. Create a multi-stage Dockerfile for the Hono API to optimize for small image size and security. 3. Configure the chosen platform's deployment file (e.g., `fly.toml`) and set up GitHub Actions for automated deployment on pushes to the main branch. 4. Perform an initial deployment and write a health check endpoint to verify the service is live and accessible.",

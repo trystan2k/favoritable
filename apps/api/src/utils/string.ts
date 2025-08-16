@@ -7,7 +7,7 @@ export const cleanableString = (input = '') => {
       return chain;
     },
     removeTrailingLeadingSpaces() {
-      value = value.trimEnd().trimStart();
+      value = value.trim();
       return chain;
     },
     removeLineBreaks() {
