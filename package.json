@@ -20,7 +20,7 @@
   "license": "MIT",
   "scripts": {
     "complete-check": "pnpm typecheck && pnpm check:fix && pnpm knip && pnpm test:coverage && pnpm build",
-    "prepare": "husky",
+    "prepare": "[ -d '.git' ] && husky install || echo 'skipping husky'",
     "preinstall": "npx only-allow pnpm",
     "build": "turbo run build",
     "dev": "turbo run dev",

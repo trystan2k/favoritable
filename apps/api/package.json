@@ -27,7 +27,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
     "start": "node dist/index.js",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -42,7 +42,11 @@
     "knip": "knip",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:health": "tsx src/db/utils/db-health-check.ts"
+    "db:health": "tsx src/db/utils/db-health-check.ts",
+    "docker:build": "docker build -f Dockerfile -t favoritable-api ../../",
+    "docker:run": "docker run -d --name favoritable-api -p 3000:3000 -e NODE_ENV=production -e DATABASE_TYPE=local -e LOCAL_DATABASE_URL=file:/app/data/local.db -v $(pwd)/data:/app/data favoritable-api:latest",
+    "docker:stop": "docker stop favoritable-api && docker rm favoritable-api",
+    "docker:logs": "docker logs favoritable-api"
   },
   "license": "MIT",
   "dependencies": {
