@@ -28,7 +28,8 @@ const getTitle = async (page: Page) => {
   return cleanableString(title)
     .removeCarriageReturns()
     .removeLineBreaks()
-    .removeTabs();
+    .removeTabs()
+    .removeTrailingLeadingSpaces();
 };
 
 const getDescription = async (page: Page) => {
@@ -64,8 +65,9 @@ const getDescription = async (page: Page) => {
 
   return cleanableString(description)
     .removeCarriageReturns()
-    .removeLineBreaks()
     .removeTabs()
+    .removeTrailingLeadingSpaces()
+    .removeLineBreaks()
     .getResult();
 };
 
@@ -94,10 +96,17 @@ const getAuthor = async (page: Page) => {
       .catch(() => null);
   }
 
+  if (!author) {
+    author = await page
+      .$eval('.author', (el) => el.textContent)
+      .catch(() => null);
+  }
+
   return cleanableString(author)
     .removeCarriageReturns()
-    .removeLineBreaks()
     .removeTabs()
+    .removeTrailingLeadingSpaces()
+    .removeLineBreaks()
     .getResult();
 };
 
@@ -196,8 +205,9 @@ export const scrapper = async (url: string): Promise<CreateBookmarkModel> => {
       url,
       title: title
         .removeCarriageReturns()
-        .removeLineBreaks()
         .removeTabs()
+        .removeTrailingLeadingSpaces()
+        .removeLineBreaks()
         .getResult(),
       slug: title.convertToSlug().getResult(),
       description: await getDescription(page),

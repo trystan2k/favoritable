@@ -161,3 +161,117 @@ The logger adapts based on the environment:
 4. **Don't log sensitive data** - The system handles this automatically, but be mindful of what you include in log context.
 
 For detailed implementation information, see [docs/logging.md](../docs/logging.md).
+
+## Docker Deployment
+
+The API includes a production-ready Docker configuration with multi-stage builds and Puppeteer support.
+
+### Building the Docker Image
+
+Build the Docker image from the project root:
+
+```bash
+# Build the image
+docker build -f apps/api/Dockerfile -t favoritable-api .
+
+# Build with a specific tag
+docker build -f apps/api/Dockerfile -t favoritable-api:latest .
+```
+
+### Running the Container
+
+#### Local Development with SQLite
+
+```bash
+# Run with local SQLite database
+docker run -d \
+  --name favoritable-api \
+  -p 3000:3000 \
+  -e NODE_ENV=production \
+  -e DATABASE_TYPE=local \
+  -e LOCAL_DATABASE_URL=file:/app/data/local.db \
+  -v $(pwd)/data:/app/data \
+  favoritable-api:latest
+```
+
+#### Production with Turso
+
+```bash
+# Run with Turso database
+docker run -d \
+  --name favoritable-api \
+  -p 3000:3000 \
+  -e NODE_ENV=production \
+  -e DATABASE_TYPE=turso \
+  -e TURSO_DATABASE_URL=libsql://your-db-name.region.turso.io \
+  -e TURSO_AUTH_TOKEN=your_auth_token_here \
+  favoritable-api:latest
+```
+
+#### Using Environment File
+
+Create a `.env.production` file:
+
+```env
+NODE_ENV=production
+DATABASE_TYPE=turso
+TURSO_DATABASE_URL=libsql://your-db-name.region.turso.io
+TURSO_AUTH_TOKEN=your_auth_token_here
+```
+
+Then run with the environment file:
+
+```bash
+docker run -d \
+  --name favoritable-api \
+  -p 3000:3000 \
+  --env-file .env.production \
+  favoritable-api:latest
+```
+
+### Docker Commands
+
+Available npm scripts for Docker operations:
+
+```bash
+# Build Docker image
+pnpm docker:build
+
+# Run Docker container locally
+pnpm docker:run
+
+# Stop and remove container
+pnpm docker:stop
+
+# View container logs
+pnpm docker:logs
+```
+
+### Container Health Check
+
+The container includes a built-in health check that verifies the API is responding:
+
+```bash
+# Check container health status
+docker inspect --format='{{.State.Health.Status}}' favoritable-api
+```
+
+### Testing the Container
+
+After starting the container, test that it's working correctly:
+
+```bash
+# Test health endpoint
+curl http://localhost:3000/health
+
+# Test API endpoint
+curl http://localhost:3000/api/bookmarks
+```
+
+### Container Features
+
+- **Multi-stage build**: Optimized final image size
+- **Puppeteer support**: All system dependencies included for web scraping
+- **Security**: Runs as non-root user
+- **Health checks**: Built-in container health monitoring
+- **Production optimized**: Only production dependencies included

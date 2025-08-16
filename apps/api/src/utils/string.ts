@@ -6,6 +6,10 @@ export const cleanableString = (input = '') => {
       value = value.replace(/\t/g, '');
       return chain;
     },
+    removeTrailingLeadingSpaces() {
+      value = value.trimEnd().trimStart();
+      return chain;
+    },
     removeLineBreaks() {
       value = value.replace(/\n/g, '');
       return chain;

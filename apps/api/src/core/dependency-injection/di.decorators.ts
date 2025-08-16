@@ -1,5 +1,5 @@
-import { INJECT_METADATA_KEY } from './di.constants';
-import { Container } from './di.container';
+import { INJECT_METADATA_KEY } from './di.constants.js';
+import { Container } from './di.container.js';
 
 type ServiceOptions = {
   name: string;
