@@ -1,6 +1,6 @@
 ## Task Development #6
 **Date**: 2025-08-16_03:26:33
-**Title**: Select & Setup API Deployment
+**Title**: Implement Docker Image creation for future deployment
 
 ### Summary
 - Status: Completed

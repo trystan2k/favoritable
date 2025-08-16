@@ -51,10 +51,10 @@
 		},
 		{
 			"taskId": 6,
-			"taskTitle": "Select & Setup API Deployment",
+			"taskTitle": "Implement Docker Image creation for future deployment",
 			"complexityScore": 6,
 			"recommendedSubtasks": 5,
-			"expansionPrompt": "Outline the subtasks for 'Select & Setup API Deployment', covering the selection of a deployment platform, configuration of deployment settings (e.g., `vercel.json`), setting up CI/CD, and verifying a basic deployment.",
+			"expansionPrompt": "Outline the subtasks for 'Implement Docker Image creation for future deployment', covering the selection of a deployment platform, configuration of deployment settings (e.g., `vercel.json`), setting up CI/CD, and verifying a basic deployment.",
 			"reasoning": "This task involves choosing a deployment platform, configuring platform-specific files, and setting up CI/CD, which are critical infrastructure steps that can have various nuances depending on the chosen platform."
 		},
 		{
