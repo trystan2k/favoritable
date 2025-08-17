@@ -686,8 +686,51 @@
           9,
           10
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define BookmarkLabel Join Table Schema",
+            "description": "Create the Drizzle schema for the `bookmarks_to_labels` join table. This table will include foreign keys referencing the `bookmarks` and `labels` tables to establish the many-to-many relationship.",
+            "dependencies": [],
+            "details": "The schema should define columns for `bookmarkId` and `labelId`, along with a composite primary key. It should also include `createdAt` and `updatedAt` timestamps. Foreign key constraints with `onDelete: 'cascade'` should be configured.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Update Bookmark and Label Schemas for Relations",
+            "description": "Update the existing `Bookmark` and `Label` Drizzle schemas to define the many-to-many relationship using the newly created `bookmarks_to_labels` join table.",
+            "dependencies": [
+              "11.1"
+            ],
+            "details": "Use Drizzle's `relations` helper to define the relationship on both the `bookmarks` and `labels` schemas. This will enable querying a bookmark's labels and a label's bookmarks through the ORM.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Generate and Apply Database Migration",
+            "description": "Use Drizzle Kit to generate a new SQL migration file based on the schema changes. Review the generated migration and apply it to the development database.",
+            "dependencies": [
+              "11.2"
+            ],
+            "details": "Run the `drizzle-kit generate` command to create the migration script. Verify the SQL statements for creating the join table, foreign keys, and any necessary indexes. Apply the migration to the database.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Write Unit Tests for Bookmark-Label Relationship",
+            "description": "Write unit tests to verify that a label can be correctly added to and removed from a bookmark, and that queries for related items work as expected.",
+            "dependencies": [
+              "11.3"
+            ],
+            "details": "Create test cases that: 1. Create a bookmark and a label. 2. Associate the label with the bookmark. 3. Verify the association by querying the bookmark's labels. 4. Remove the association. 5. Verify the label has been removed from the bookmark.",
+            "status": "done",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 12,
@@ -1814,7 +1857,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-17T17:17:37.741Z",
+      "updated": "2025-08-17T18:03:41.047Z",
       "description": "Tasks for master context"
     }
   }
