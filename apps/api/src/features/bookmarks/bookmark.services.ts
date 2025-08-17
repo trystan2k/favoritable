@@ -83,7 +83,10 @@ export class BookmarkService {
   }
 
   async createBookmark(data: CreateBookmarkModel) {
-    const newBookmark = mapCreateBookmarkModelToInsertBookmarkDTO(data);
+    const newBookmark = mapCreateBookmarkModelToInsertBookmarkDTO(
+      data,
+      PLACEHOLDER_USER_ID
+    );
     const bookmark =
       await this.bookmarkUnitOfWork.bookmarkRepository.create(newBookmark);
     return mapBookmarkDTOToBookmarkModel(bookmark);

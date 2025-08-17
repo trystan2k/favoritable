@@ -7,7 +7,7 @@
 **/local.db
 
 # Test DB
-**/tests/**/test.db
+**/tests/**/test-**.db
 
 # Dependencies
 node_modules

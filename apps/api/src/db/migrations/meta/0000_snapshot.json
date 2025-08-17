@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "ea126b17-5c3e-4c0e-9f2b-b51845e5fbe1",
+  "id": "1fadb84d-1c34-4188-9aad-bc02a7ad9364",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "bookmarks_labels": {
@@ -143,6 +143,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "integer",
@@ -161,18 +168,28 @@
         }
       },
       "indexes": {
-        "bookmarks_url_unique": {
-          "name": "bookmarks_url_unique",
-          "columns": ["url"],
-          "isUnique": true
-        },
         "bookmark_id_index": {
           "name": "bookmark_id_index",
           "columns": ["id"],
           "isUnique": false
+        },
+        "bookmark_user_id_index": {
+          "name": "bookmark_user_id_index",
+          "columns": ["user_id"],
+          "isUnique": false
         }
       },
-      "foreignKeys": {},
+      "foreignKeys": {
+        "bookmarks_user_id_users_id_fk": {
+          "name": "bookmarks_user_id_users_id_fk",
+          "tableFrom": "bookmarks",
+          "tableTo": "users",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
@@ -235,6 +252,11 @@
           "name": "label_user_id_index",
           "columns": ["user_id"],
           "isUnique": false
+        },
+        "label_name_user_unique": {
+          "name": "label_name_user_unique",
+          "columns": ["name", "user_id"],
+          "isUnique": true
         }
       },
       "foreignKeys": {
