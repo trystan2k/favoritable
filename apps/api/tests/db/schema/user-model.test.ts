@@ -1,13 +1,32 @@
 import { eq, like } from 'drizzle-orm';
-import { beforeEach, describe, expect, test } from 'vitest';
-import { db } from '../src/db/index.js';
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  test,
+} from 'vitest';
+import { db } from '../../../src/db/index.js';
 import {
   type InsertUserDTO,
   type UserDTO,
   user,
-} from '../src/db/schema/user.schema.js';
+} from '../../../src/db/schema/user.schema.js';
+import {
+  setupTestDatabase,
+  teardownTestDatabase,
+} from '../../test-db-setup.js';
 
 describe('User Model Tests', () => {
+  beforeAll(async () => {
+    await setupTestDatabase();
+  });
+
+  afterAll(async () => {
+    await teardownTestDatabase();
+  });
+
   beforeEach(async () => {
     // Clean up any test users before each test
     await db.delete(user).where(like(user.email, '%@example.com'));

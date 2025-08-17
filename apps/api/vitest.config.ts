@@ -5,6 +5,9 @@ export default mergeConfig(
   baseConfig,
   defineConfig({
     test: {
+      env: {
+        NODE_ENV: 'test',
+      },
       coverage: {
         exclude: ['src/db/migrations/**', 'src/env.ts', 'src/index.ts'],
         thresholds: {

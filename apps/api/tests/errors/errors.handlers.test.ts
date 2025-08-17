@@ -1,19 +1,19 @@
 import { LibsqlError } from '@libsql/client';
 import type { Context } from 'hono';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
-import { errorHandler } from '../src/errors/errors.handlers.js';
+import { errorHandler } from '../../src/errors/errors.handlers.js';
 import {
   MalFormedRequestError,
   NotFoundError,
   UnexpectedError,
-} from '../src/errors/errors.js';
+} from '../../src/errors/errors.js';
 import {
   repositoryErrorsHandler,
   serviceErrorsHandler,
-} from '../src/errors/errors.mappers.js';
+} from '../../src/errors/errors.mappers.js';
 
 // Mock the logger
-vi.mock('../src/core/logger.js', () => ({
+vi.mock('../../src/core/logger.js', () => ({
   logger: {
     child: vi.fn(() => ({
       error: vi.fn(),
@@ -23,7 +23,7 @@ vi.mock('../src/core/logger.js', () => ({
 }));
 
 // Mock the env
-vi.mock('../src/env.js', () => ({
+vi.mock('../../src/env.js', () => ({
   env: {
     NODE_ENV: 'development',
   },

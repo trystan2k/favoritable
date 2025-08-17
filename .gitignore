@@ -6,6 +6,10 @@
 # Local Dev DB
 local.db
 
+# Test DB
+tests/.db/
+test.db
+
 # Dependencies
 node_modules
 .pnp
@@ -13,10 +17,7 @@ node_modules
 
 # Local env files
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+!.env.test
 
 # Testing
 coverage

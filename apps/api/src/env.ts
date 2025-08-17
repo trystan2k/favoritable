@@ -35,8 +35,11 @@ const EnvSchema = z.discriminatedUnion('DATABASE_TYPE', [
   TursoEnvSchema,
 ]);
 
-// Load environment variables
-config();
+if (process.env.NODE_ENV === 'test') {
+  config({ path: ['.env.test'] });
+} else {
+  config();
+}
 
 // Parse environment once and export the validated result
 let parsedEnv: z.infer<typeof EnvSchema>;
