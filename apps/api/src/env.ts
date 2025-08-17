@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 import { config } from '@dotenvx/dotenvx';
 import { ZodError, z } from 'zod';
 
@@ -36,7 +38,14 @@ const EnvSchema = z.discriminatedUnion('DATABASE_TYPE', [
 ]);
 
 if (process.env.NODE_ENV === 'test') {
-  config({ path: ['.env.test'] });
+  const envFileName = '.env.test';
+  const envTestPath = path.resolve(process.cwd(), envFileName);
+  if (!existsSync(envTestPath)) {
+    throw new Error(
+      `Missing ${envFileName} file. Please create one for test environment variables.`
+    );
+  }
+  config({ path: [envFileName] });
 } else {
   config();
 }
