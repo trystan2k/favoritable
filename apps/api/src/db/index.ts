@@ -4,6 +4,7 @@ import { env } from '../env.js';
 import * as bookmarkSchemas from './schema/bookmark.schema.js';
 import * as bookmarkLabelSchemas from './schema/bookmark-label.schema.js';
 import * as labelSchemas from './schema/label.schema.js';
+import * as userSchemas from './schema/user.schema.js';
 
 const client: Client =
   env.DATABASE_TYPE === 'local'
@@ -14,6 +15,11 @@ const client: Client =
       });
 
 export const db = drizzle(client, {
-  schema: { ...bookmarkSchemas, ...bookmarkLabelSchemas, ...labelSchemas },
+  schema: {
+    ...bookmarkSchemas,
+    ...bookmarkLabelSchemas,
+    ...labelSchemas,
+    ...userSchemas,
+  },
   logger: false,
 });
