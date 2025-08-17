@@ -18,6 +18,7 @@ export const mapCreateLabelModelToInsertLabelDTO = (
     id: tsidGenerator.generate(),
     name: label.name,
     color: label.color || generateRandomColor(),
+    userId: label.userId,
   };
 };
 
@@ -26,6 +27,7 @@ export const mapLabelDTOToLabelModel = (label: LabelDTO): LabelModel => {
     id: label.id,
     name: label.name,
     color: label.color,
+    userId: label.userId,
     createdAt: label.createdAt,
     updatedAt: label.updatedAt,
   };
@@ -38,6 +40,7 @@ export const mapUpdateLabelModelToLabelDTO = (
     id: label.id,
     name: label.name,
     color: label.color,
+    userId: label.userId,
     createdAt: label.createdAt,
     updatedAt: label.updatedAt,
   };

@@ -224,6 +224,7 @@ export class BookmarkService {
           mapCreateLabelModelToInsertLabelDTO({
             name: bookmark.folderName,
             color: null,
+            userId: 'temp-user', // TODO: Replace with actual user ID when authentication is implemented
           })
         ));
 
@@ -272,6 +273,7 @@ export class BookmarkService {
               mapCreateLabelModelToInsertLabelDTO({
                 name: labelName,
                 color: null,
+                userId: 'temp-user', // TODO: Replace with actual user ID when authentication is implemented
               })
             ));
 

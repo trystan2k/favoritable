@@ -5,6 +5,7 @@ export const labelSchema = z.object({
   id: z.string().nonempty(),
   name: z.string().nonempty(),
   color: z.string().optional().nullable().default(null),
+  userId: z.string().nonempty(),
   createdAt: dateSchema,
   updatedAt: dateSchema,
 });
