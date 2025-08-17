@@ -9,6 +9,7 @@
 The favoritable project is a bookmark management application with the following requirements:
 - **Backend**: Hono API with TypeScript
 - **Frontend**: React SPA 
+- **Mobile Apps**: Future React Native and/or native iOS/Android apps
 - **Current Database**: SQLite with Drizzle ORM
 - **Authentication**: Need for user authentication with session management
 - **OAuth**: Support for Google, Apple, GitHub login
@@ -35,6 +36,7 @@ We need to make architectural decisions for:
 - **Security-focused**: Modern security practices with CSRF protection
 - **Lightweight**: Minimal overhead, focuses on core authentication needs
 - **No vendor lock-in**: We own our auth data and logic
+- **Mobile-ready**: HTTP-only cookies work seamlessly with React Native and native mobile apps
 
 ### Database: Turso (LibSQL)
 
@@ -71,20 +73,27 @@ We need to make architectural decisions for:
 │   React SPA     │    │   Hono API       │    │   Turso DB      │
 │  (Vercel CDN)   │◄──►│ (Railway/Fly.io) │◄──►│ (Global Edge)   │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
-                              │
-                              ▼
-                       ┌──────────────┐
-                       │ Lucia Auth   │
-                       │ (Sessions)   │
-                       └──────────────┘
-                              │
-                              ▼
-                       ┌──────────────┐
-                       │ OAuth        │
-                       │ Providers    │
-                       └──────────────┘
+                               │
+┌─────────────────┐            │
+│ React Native    │◄───────────┤
+│   (iOS/Android) │            │
+└─────────────────┘            │
+                               │
+┌─────────────────┐            │
+│ Native Apps     │◄───────────┤
+│ (Swift/Kotlin)  │            │
+└─────────────────┘            ▼
+                        ┌──────────────┐
+                        │ Lucia Auth   │
+                        │ (Sessions)   │
+                        └──────────────┘
+                               │
+                               ▼
+                        ┌──────────────┐
+                        │ OAuth        │
+                        │ Providers    │
+                        └──────────────┘
 ```
-
 ## Implementation Strategy
 
 ### Phase 1: Authentication Setup
@@ -111,13 +120,19 @@ We need to make architectural decisions for:
 3. Configure environment variables and secrets
 4. Set up OAuth callback URLs for production
 
+### Phase 5: Mobile App Support (Future)
+1. React Native app using same Hono API endpoints
+2. Native iOS/Android apps with HTTP-only cookie authentication
+3. OAuth flows using system webview or in-app browser
+4. Biometric authentication for enhanced security
+
 ## Considered Alternatives
 
 ### Authentication Alternatives
 
 | Option | Pros | Cons | Decision |
 |--------|------|------|----------|
-| **NextAuth.js** | Popular, feature-rich | Next.js focused, overkill for API-first | ❌ Not suitable |
+| **NextAuth.js** | Popular, feature-rich | Next.js focused, overkill for API-first, complex mobile integration | ❌ Not suitable |
 | **Passport.js** | Mature, many strategies | Complex setup, less TypeScript-friendly | ❌ Too complex |
 | **Supabase Auth** | Easy setup, managed | Vendor lock-in, doesn't fit self-hosted | ❌ Lock-in concerns |
 | **Custom JWT** | Full control | Security complexity, session management | ❌ Reinventing wheel |
@@ -150,6 +165,27 @@ We need to make architectural decisions for:
 5. **Cost Efficiency**: Predictable pricing for dedicated backend resources
 6. **Maintainability**: Minimal vendor lock-in, own our data and logic
 7. **Future-proof**: Modern stack with active development and community
+8. **Mobile-ready**: Single API for all platforms with secure session management
+
+## Mobile App Compatibility
+
+### React Native Support
+- **✅ Excellent compatibility**: Uses same HTTP endpoints as web SPA
+- **✅ Cookie management**: Works with `@react-native-cookies/cookies` or built-in fetch
+- **✅ OAuth flows**: Supports `expo-auth-session` and `react-native-app-auth`
+- **✅ Component reuse**: Can share UI components between web and mobile
+
+### Native iOS/Android Support
+- **✅ HTTP-only cookies**: Automatically handled by `URLSession` (iOS) and `OkHttp` (Android)
+- **✅ OAuth integration**: System webview or in-app browser for OAuth flows
+- **✅ Security**: More secure than JWT token storage in device storage
+- **✅ Session persistence**: Platform handles cookie persistence across app restarts
+
+### Mobile vs. Auth.js Comparison
+- **Lucia advantage**: HTTP-only cookies are more secure than manually stored JWT tokens
+- **Lucia advantage**: Platform-native cookie handling vs. custom token management
+- **Lucia advantage**: Same session-based approach across all platforms
+- **Auth.js disadvantage**: Would require custom JWT handling and secure storage in mobile apps
 
 ## Risks and Mitigations
 
