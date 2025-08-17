@@ -640,8 +640,40 @@
           5,
           8
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define Drizzle Schema for Bookmark Table",
+            "description": "Create the Drizzle ORM schema definition for the `Bookmark` table, including all specified fields and a foreign key relationship to the `User` table.",
+            "dependencies": [],
+            "details": "Define the table using Drizzle's `pgTable` function. Include fields: `id`, `url`, `slug`, `title`, `description`, `author`, `thumbnail`, `state`, `publishedAt`, `createdAt`, `updatedAt`. Add the `userId` field with a foreign key constraint referencing the `users` table's `id`.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Generate SQL Migration for Bookmark Schema",
+            "description": "Use the Drizzle Kit command-line tool to generate a new SQL migration file based on the schema definition created in the previous subtask.",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Run the `drizzle-kit generate:pg` command. Review the generated SQL file to ensure it accurately creates the `bookmarks` table with all the correct columns, data types, and foreign key constraints.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Apply Migration and Write Unit Test",
+            "description": "Apply the generated migration to the test database and write a unit test to confirm the Bookmark data model works as expected by creating and reading a bookmark record.",
+            "dependencies": [
+              "10.2"
+            ],
+            "details": "Execute the migration script to update the database schema. Create a new test file for the bookmark model. Write a test case that uses the Drizzle ORM to insert a new bookmark and then retrieves it, asserting that the returned data is correct.",
+            "status": "done",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 11,
@@ -1782,7 +1814,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-17T16:40:34.157Z",
+      "updated": "2025-08-17T17:17:37.741Z",
       "description": "Tasks for master context"
     }
   }

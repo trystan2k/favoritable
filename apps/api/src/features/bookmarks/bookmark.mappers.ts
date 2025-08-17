@@ -13,7 +13,8 @@ import type {
 } from './bookmark.repository.js';
 
 export const mapCreateBookmarkModelToInsertBookmarkDTO = (
-  bookmark: CreateBookmarkModel
+  bookmark: CreateBookmarkModel,
+  userId: string
 ): InsertBookmarkDTO => {
   return {
     id: tsidGenerator.generate(),
@@ -25,6 +26,7 @@ export const mapCreateBookmarkModelToInsertBookmarkDTO = (
     thumbnail: bookmark.thumbnail,
     publishedAt: bookmark.publishedAt ? new Date(bookmark.publishedAt) : null,
     state: bookmark.state,
+    userId,
   };
 };
 
