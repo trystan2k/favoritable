@@ -403,7 +403,9 @@
         "title": "Implement Docker Image creation for future deployment",
         "description": "Create a production-ready Docker container for the Hono API. This task focuses on building a multi-stage Dockerfile that includes all necessary dependencies for Puppeteer to support web scraping, and ensuring the container can be built and tested locally.",
         "status": "done",
-        "dependencies": [3],
+        "dependencies": [
+          3
+        ],
         "priority": "high",
         "details": "Develop a multi-stage Dockerfile to create an optimized and secure production image for the Hono API. The build process should handle installing dependencies, building the TypeScript source, and copying only the necessary artifacts to a lean final image. A key requirement is to install all system-level dependencies needed for Puppeteer to run headless Chromium for web scraping tasks. The final container should be configured for a production environment and tested locally to ensure full functionality before deployment.",
         "testStrategy": "Build the Docker image locally using the `docker build` command. Run the image as a container, mapping the necessary ports and providing required environment variables (e.g., database credentials). Test the running container by sending requests to its API endpoints using a tool like cURL or Postman. Specifically, verify that a standard endpoint returns a successful response and that an endpoint utilizing Puppeteer for web scraping executes without errors and returns the expected data.",
@@ -422,7 +424,9 @@
             "title": "Install Puppeteer System Dependencies in Docker Image",
             "description": "Add the necessary system-level dependencies to the Dockerfile to ensure Puppeteer can run headless Chromium correctly within the container.",
             "status": "done",
-            "dependencies": [1],
+            "dependencies": [
+              1
+            ],
             "details": "In the final production stage of the Dockerfile, add commands to install required libraries for headless Chromium (e.g., `libnss3`, `libgconf-2-4`, etc.). Research the specific dependencies needed for the chosen base image (e.g., Debian-based).",
             "testStrategy": ""
           },
@@ -431,7 +435,9 @@
             "title": "Configure Container Entrypoint and Environment",
             "description": "Configure the Docker container's runtime environment variables, exposed port, and startup command for production.",
             "status": "done",
-            "dependencies": [1],
+            "dependencies": [
+              1
+            ],
             "details": "In the Dockerfile, set the `NODE_ENV` environment variable to `production`. Use the `EXPOSE` instruction to document the application port (e.g., 3000). Define the `CMD` instruction to start the Hono server using the compiled JavaScript output.",
             "testStrategy": ""
           },
@@ -440,7 +446,9 @@
             "title": "Document Local Docker Build and Run Process",
             "description": "Create documentation or scripts for building the Docker image and running it locally for development and testing purposes.",
             "status": "done",
-            "dependencies": [3],
+            "dependencies": [
+              3
+            ],
             "details": "Add a section to the `README.md` or create helper scripts in `package.json` that detail the `docker build` and `docker run` commands. The run command should include examples for port mapping (`-p`) and passing environment variables (`-e` or `--env-file`).",
             "testStrategy": ""
           },
@@ -449,7 +457,10 @@
             "title": "Validate API Functionality in Local Container",
             "description": "Build and run the container locally to test that all API endpoints, especially those using Puppeteer, are fully functional.",
             "status": "done",
-            "dependencies": [2, 4],
+            "dependencies": [
+              2,
+              4
+            ],
             "details": "Follow the documented process to build the image and run the container. Use cURL or Postman to send requests to the API on `localhost`. Confirm that a basic endpoint works and that the web scraping endpoint successfully executes a Puppeteer job and returns data without crashing.\n<info added on 2025-08-15T23:31:35.127Z>\nThe Docker setup is complete. This includes a multi-stage Dockerfile with all necessary Puppeteer dependencies, an optimized .dockerignore file, and documented commands in the README. For local validation, use the npm scripts: 'pnpm docker:build' and 'pnpm docker:run'.\n</info added on 2025-08-15T23:31:35.127Z>",
             "testStrategy": ""
           }
@@ -515,8 +526,62 @@
         "dependencies": [
           5
         ],
-        "status": "pending",
-        "subtasks": []
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define Drizzle Schema for User Table",
+            "description": "Create the TypeScript file defining the `users` table schema using Drizzle ORM. Include fields for `id`, `email`, `name`, `avatarUrl`, and `provider` with appropriate data types and constraints.",
+            "dependencies": [],
+            "details": "In a new file, e.g., `src/db/schema/users.ts`, use `pgTable` to define the table. Ensure `id` is the primary key, `email` is unique, and other fields have correct types (e.g., `text`, `varchar`).",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Generate TypeScript Types from User Schema",
+            "description": "Use Drizzle's `typeof` and `InferSelectModel`/`InferInsertModel` utilities to create and export TypeScript types for the User entity. This will ensure type safety across the application.",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "In the same schema file (`src/db/schema/users.ts`), add and export types like `export type User = typeof users.$inferSelect;` and `export type NewUser = typeof users.$inferInsert;`.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Generate SQL Migration File for User Table",
+            "description": "Run the Drizzle Kit `generate` command to create a new SQL migration file based on the defined User schema. This file will contain the `CREATE TABLE` statement.",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Execute the command `pnpm drizzle-kit generate:pg` (or equivalent) and inspect the generated `.sql` file to ensure it accurately reflects the schema for the `users` table.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Apply Database Migration",
+            "description": "Execute the migration script to apply the newly generated SQL migration to the development database, which will create the actual `users` table.",
+            "dependencies": [
+              "8.3"
+            ],
+            "details": "Run the Drizzle Kit `migrate` command. After execution, connect to the development database using a client to verify that the `users` table and its columns have been successfully created.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement Unit Tests for User ORM Operations",
+            "description": "Write unit tests to verify the User data model implementation. The tests should cover creating a new user and reading that user back from the database to ensure the schema and ORM are working correctly.",
+            "dependencies": [
+              "8.4"
+            ],
+            "details": "Using a testing framework like Vitest or Jest, create a test suite for the User model. Write at least two tests: one for inserting a user record and another for selecting that user record by its ID or email.",
+            "status": "done",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 9,
@@ -1685,7 +1750,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-15T23:31:41.413Z",
+      "updated": "2025-08-17T15:17:48.512Z",
       "description": "Tasks for master context"
     }
   }
