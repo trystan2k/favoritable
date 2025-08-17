@@ -4,11 +4,10 @@
 !.vscode/*
 
 # Local Dev DB
-local.db
+**/local.db
 
 # Test DB
-tests/.db/
-test.db
+**/tests/**/test.db
 
 # Dependencies
 node_modules
