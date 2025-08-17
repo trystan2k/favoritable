@@ -25,7 +25,8 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noConsole": "error"
+        "noConsole": "error",
+        "noExplicitAny": "error"
       },
       "correctness": {
         "noUnusedImports": {

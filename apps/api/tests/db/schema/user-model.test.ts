@@ -7,7 +7,6 @@ import {
   expect,
   test,
 } from 'vitest';
-import { db } from '../../../src/db/index.js';
 import {
   type InsertUserDTO,
   type UserDTO,
@@ -19,8 +18,10 @@ import {
 } from '../../test-db-setup.js';
 
 describe('User Model Tests', () => {
+  let db: Awaited<ReturnType<typeof setupTestDatabase>>;
+
   beforeAll(async () => {
-    await setupTestDatabase();
+    db = await setupTestDatabase();
   });
 
   afterAll(async () => {
