@@ -1,6 +1,8 @@
 import { index, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { trackingDates } from './common.schema.js';
 
+const providerEnum = ['github', 'google', 'discord'] as const;
+
 export const user = sqliteTable(
   'users',
   {
@@ -8,7 +10,7 @@ export const user = sqliteTable(
     email: text('email').notNull().unique(),
     name: text('name').notNull(),
     avatarUrl: text('avatar_url'),
-    provider: text('provider').notNull(),
+    provider: text('provider', { enum: providerEnum }).notNull(),
     ...trackingDates,
   },
   (table) => [

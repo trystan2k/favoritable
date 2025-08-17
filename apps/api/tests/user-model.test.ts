@@ -140,4 +140,28 @@ describe('User Model Tests', () => {
       createdUser.updatedAt.getTime()
     );
   });
+
+  test('should validate provider enum values at compile time', async () => {
+    // Test valid providers
+    const validProviders = ['github', 'google', 'discord'] as const;
+
+    for (const provider of validProviders) {
+      const newUser: InsertUserDTO = {
+        id: `test-user-provider-${provider}`,
+        email: `${provider}@example.com`,
+        name: `${provider} Test User`,
+        provider: provider,
+      };
+
+      const createdUser = await db
+        .insert(user)
+        .values(newUser)
+        .returning()
+        .get();
+      expect(createdUser.provider).toBe(provider);
+
+      // Clean up
+      await db.delete(user).where(eq(user.id, createdUser.id));
+    }
+  });
 });
