@@ -26,6 +26,10 @@ import type {
 } from './bookmark.models.js';
 import type { BookmarkUnitOfWork } from './bookmark-unit-of-work.js';
 
+// TODO: This is a temporary solution to get the tests running.
+// TODO: Replace with actual user ID when authentication is implemented
+const PLACEHOLDER_USER_ID = 'temp-user-id';
+
 @Service({ name: 'BookmarkService' })
 export class BookmarkService {
   private entityName = 'Bookmark';
@@ -224,7 +228,7 @@ export class BookmarkService {
           mapCreateLabelModelToInsertLabelDTO({
             name: bookmark.folderName,
             color: null,
-            userId: 'temp-user', // TODO: Replace with actual user ID when authentication is implemented
+            userId: PLACEHOLDER_USER_ID,
           })
         ));
 
@@ -273,7 +277,7 @@ export class BookmarkService {
               mapCreateLabelModelToInsertLabelDTO({
                 name: labelName,
                 color: null,
-                userId: 'temp-user', // TODO: Replace with actual user ID when authentication is implemented
+                userId: PLACEHOLDER_USER_ID,
               })
             ));
 
