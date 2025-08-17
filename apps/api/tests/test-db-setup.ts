@@ -7,7 +7,7 @@ import { env } from '../src/env.js';
 const TEST_DB_PATH = env.LOCAL_DATABASE_URL?.replace('file:', '');
 
 export async function setupTestDatabase() {
-  if (TEST_DB_PATH) {
+  if (typeof TEST_DB_PATH === 'string' && TEST_DB_PATH.length > 0) {
     await mkdir(dirname(TEST_DB_PATH), { recursive: true });
   }
 
@@ -16,7 +16,7 @@ export async function setupTestDatabase() {
 }
 
 export async function teardownTestDatabase() {
-  if (TEST_DB_PATH) {
+  if (typeof TEST_DB_PATH === 'string' && TEST_DB_PATH.length > 0) {
     await rm(TEST_DB_PATH, { force: true });
   }
 }
