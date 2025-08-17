@@ -1853,11 +1853,29 @@
             "testStrategy": "Have a team member who was not involved in the setup review the documentation. They should be able to understand the entire deployment architecture and process from the document alone."
           }
         ]
+      },
+      {
+        "id": 68,
+        "title": "Backend: Audit and Validate userId Handling Post-Lucia Auth Integration",
+        "description": "Conduct a comprehensive audit of the backend to ensure the `userId` from Lucia Auth is correctly and securely handled across all layers, from API routes to the database. This task verifies data ownership and prevents `userId` exposure in public API responses.",
+        "details": "Following the integration of Lucia Auth (Task 12), a full review of user identification handling is required. 1. **Route Handlers & Middleware:** Verify that all protected routes correctly extract the authenticated user's `userId` from the session context provided by Lucia. 2. **Service & Repository Layers:** Ensure that all functions operating on user-specific data (e.g., bookmarks) explicitly accept `userId` as a parameter. This `userId` must be used in all subsequent database queries to scope the operation correctly. 3. **Data Models & Queries:** Review Drizzle schemas for tables like `bookmarks` to confirm they contain a non-nullable `userId` foreign key. Audit all database queries (SELECT, INSERT, UPDATE, DELETE) to ensure they include a `WHERE userId = ?` clause to enforce strict data isolation between users. 4. **API Response Payloads:** Scrutinize all data transformation objects (DTOs) or response formatters to guarantee that the `userId` field is never included in JSON payloads sent to the client.",
+        "testStrategy": "1. **Automated Integration Tests:** Write new tests to cover authorization scenarios. For example, authenticate as User A, create a bookmark, and then authenticate as User B and attempt to read, update, or delete User A's bookmark, asserting that a 403 Forbidden or 404 Not Found error is returned. 2. **Payload Schema Validation:** Enhance existing API tests to assert that the `userId` field is absent from all response bodies for endpoints like `GET /bookmarks` and `GET /bookmarks/:id`. 3. **Manual Penetration Testing:** Using an API client like Postman, manually attempt to perform cross-user data access by manipulating resource IDs while authenticated as a different user. 4. **Code Review:** Conduct a focused code review of all routes and services that handle user-owned data, specifically checking for the correct propagation and application of the `userId` from the auth context down to the database query.",
+        "status": "pending",
+        "dependencies": [
+          8,
+          12,
+          18,
+          37,
+          38,
+          39
+        ],
+        "priority": "medium",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-17T18:03:41.047Z",
+      "updated": "2025-08-17T18:17:16.911Z",
       "description": "Tasks for master context"
     }
   }

@@ -1,477 +1,429 @@
 {
 	"meta": {
-		"generatedAt": "2025-08-12T23:02:59.304Z",
-		"tasksAnalyzed": 58,
-		"totalTasks": 66,
-		"analysisCount": 58,
+		"generatedAt": "2025-08-17T18:22:59.132Z",
+		"tasksAnalyzed": 52,
+		"totalTasks": 68,
+		"analysisCount": 52,
 		"thresholdScore": 5,
 		"projectName": "Taskmaster",
 		"usedResearch": false
 	},
 	"complexityAnalysis": [
 		{
-			"taskId": 5,
-			"taskTitle": "Select & Setup Database",
-			"complexityScore": 3,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break this task into four subtasks: 1. Sign up for a Turso account. 2. Create a new database instance and retrieve the connection URL and auth token. 3. Install the Turso SDK and Drizzle adapter, then configure the database connection in the backend application. 4. Create a simple test script to verify the connection by performing a basic query.",
-			"reasoning": "Low complexity. The technology (Turso) is pre-selected, and the work involves standard setup procedures: account creation, instance configuration, and adding connection code to the backend. The steps are well-defined and require minimal novel problem-solving."
-		},
-		{
-			"taskId": 6,
-			"taskTitle": "Implement Docker Image creation for future deployment",
-			"complexityScore": 7,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Refine the existing subtasks to be more specific: 1. Evaluate Railway and Fly.io based on pricing, Docker support, and ease of CI/CD integration, and document the final decision. 2. Create a multi-stage Dockerfile for the Hono API to optimize for small image size and security. 3. Configure the chosen platform's deployment file (e.g., `fly.toml`) and set up GitHub Actions for automated deployment on pushes to the main branch. 4. Perform an initial deployment and write a health check endpoint to verify the service is live and accessible.",
-			"reasoning": "High complexity. This task combines multiple distinct disciplines: technology research/selection, containerization (Dockerfile), platform-specific infrastructure-as-code (fly.toml), and CI/CD pipeline automation. Each step has its own learning curve and potential for issues."
-		},
-		{
-			"taskId": 8,
-			"taskTitle": "Define & Implement User Data Model",
-			"complexityScore": 3,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Define the `User` table schema in Drizzle, including fields for id, email, name, avatarUrl, and provider. 2. Generate the SQL migration file using Drizzle Kit. 3. Apply the migration to the database and write a unit test to create and read a user.",
-			"reasoning": "Moderate-low complexity. The schema is clearly defined in the task details. The work is a standard and repeatable ORM implementation task. The process (schema definition, migration generation, testing) is straightforward."
-		},
-		{
-			"taskId": 9,
-			"taskTitle": "Define & Implement Label Data Model",
-			"complexityScore": 2,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Define the `Label` table schema in Drizzle, including a foreign key reference to the `User` table. 2. Generate the SQL migration file using Drizzle Kit. 3. Apply the migration and write a unit test to create and read a label associated with a user.",
-			"reasoning": "Low complexity. This task repeats the established pattern from the User model creation. The schema is simpler, making the effort minimal and predictable."
-		},
-		{
-			"taskId": 10,
-			"taskTitle": "Define & Implement Bookmark Data Model",
-			"complexityScore": 3,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Define the `Bookmark` table schema in Drizzle with all specified fields, including a foreign key to the `User` table. 2. Generate the SQL migration file using Drizzle Kit. 3. Apply the migration and write a unit test to create and read a bookmark.",
-			"reasoning": "Moderate-low complexity. While the schema is larger than the other models, the task still follows the same standard and well-understood ORM implementation pattern."
-		},
-		{
-			"taskId": 11,
-			"taskTitle": "Define & Implement BookmarkLabel Data Model",
-			"complexityScore": 4,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break this task into four subtasks: 1. Define the `BookmarkLabel` join table schema in Drizzle with foreign keys to the `Bookmark` and `Label` tables. 2. Update the `Bookmark` and `Label` schemas in Drizzle to define the many-to-many relationship. 3. Generate and apply the SQL migration. 4. Write unit tests to verify that a label can be added to and removed from a bookmark.",
-			"reasoning": "Moderate complexity. Implementing many-to-many relationships is inherently more complex than simple tables. It requires careful definition of the join table and the relations in the ORM on both connected models, and testing is more involved."
-		},
-		{
 			"taskId": 12,
 			"taskTitle": "Integrate Auth.js",
-			"complexityScore": 8,
+			"complexityScore": 7,
 			"recommendedSubtasks": 5,
-			"expansionPrompt": "Refine the existing subtasks: 1. Install Lucia Auth and the Drizzle adapter. 2. Define and migrate the database schema for `session` and `key` tables, and update the `user` table as required by Lucia. 3. Initialize Lucia in a central auth module, configuring the adapter and secure cookie settings. 4. Implement API endpoints for user signup, login, and logout using Lucia's core functions. 5. Create Hono middleware to validate session cookies and protect routes.",
-			"reasoning": "High complexity. Authentication is a critical and complex system. Integrating a new auth library involves multiple steps: database schema changes, server-side initialization with security considerations (cookies), middleware creation, and implementing the logic for all auth-related routes."
+			"expansionPrompt": "Break down the task of integrating Lucia Auth into the following subtasks: 1. Install Lucia and Hono adapter dependencies. 2. Define and migrate database schemas for `User` and `Session` tables. 3. Initialize and configure the Lucia Auth instance in the Hono application. 4. Create and apply a middleware to validate sessions and attach user context to requests. 5. Implement basic protected and unprotected route examples to test the integration.",
+			"reasoning": "High complexity due to it being a foundational security component. It requires careful setup of the library, database schema changes for users and sessions, and integration into the Hono middleware stack. Breaking it down ensures each part (schema, config, middleware) is handled correctly."
 		},
 		{
 			"taskId": 13,
 			"taskTitle": "Configure OAuth Providers",
-			"complexityScore": 9,
-			"recommendedSubtasks": 8,
-			"expansionPrompt": "Break this task into a parent task for setup and one subtask per provider: 1. Install the necessary Lucia OAuth provider packages. 2. Implement the generic backend routes for initiating OAuth flow and handling the PKCE callback. 3. For Google: create developer app, get credentials, and configure the Lucia provider. 4. For GitHub: create developer app, get credentials, and configure the Lucia provider. 5. For Apple: create developer app, get credentials, and configure the Lucia provider. 6. For Facebook: create developer app, get credentials, and configure the Lucia provider. 7. For Twitter: create developer app, get credentials, and configure the Lucia provider. 8. Write integration tests for at least two providers to validate the end-to-end flow.",
-			"reasoning": "Very high complexity. This task involves managing five separate external service integrations. Each provider has a unique developer console, setup process, and potential quirks. The volume of configuration, credential management, and testing required is substantial."
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Expand the task of configuring OAuth providers into subtasks for each provider and a common handler: 1. Implement the common OAuth callback handler logic. 2. Integrate Google OAuth provider. 3. Integrate GitHub OAuth provider. 4. Integrate Facebook OAuth provider. 5. Integrate Twitter OAuth provider. 6. Integrate Apple OAuth provider.",
+			"reasoning": "Very high complexity due to the number of external integrations (5 providers). Each provider requires separate developer account setup, application configuration, and handling of unique callback data structures. Apple and Twitter can be particularly complex. A subtask per provider is a logical breakdown."
 		},
 		{
 			"taskId": 14,
 			"taskTitle": "Implement Persistent User Sessions",
-			"complexityScore": 3,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three validation subtasks: 1. Review and confirm Lucia's session cookie configuration for long-lived persistence and security (HttpOnly, Secure, SameSite). 2. Implement a protected `/api/me` endpoint that returns the current user's data if a valid session exists. 3. Write an E2E test: log in, close and reopen the client, and verify the `/api/me` endpoint still returns user data without re-authenticating.",
-			"reasoning": "Low complexity. This functionality is a core feature of Lucia Auth, which is being set up in Task 12. This task is primarily about correct configuration and writing tests to verify that the persistence feature works as expected, rather than building it from scratch."
+			"complexityScore": 2,
+			"recommendedSubtasks": 2,
+			"expansionPrompt": "Break down the task of implementing persistent sessions into two subtasks: 1. Configure session duration and cookie attributes in the Lucia Auth setup. 2. Write an automated test to verify a user remains logged in after a browser restart.",
+			"reasoning": "Low complexity because Lucia Auth's database adapter handles most of the persistence logic out-of-the-box. The work is primarily configuration (e.g., session duration) and verification, not building a system from scratch."
 		},
 		{
 			"taskId": 15,
 			"taskTitle": "Develop Login/Signup UI",
-			"complexityScore": 4,
+			"complexityScore": 3,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Create the main `LoginPage` component and its associated route. 2. Create a reusable `SocialLoginButton` component that accepts a provider name, icon, and backend URL as props. 3. Use the `SocialLoginButton` component to add all five providers to the `LoginPage` and ensure the layout is responsive.",
-			"reasoning": "Moderate-low complexity. This is primarily a UI layout and styling task. The logic is simple (buttons linking to backend URLs), so the main effort is in component creation and achieving a responsive design, not complex state management."
+			"expansionPrompt": "Expand the Login/Signup UI task into the following subtasks: 1. Create the main login page/route. 2. Develop a reusable `SocialLoginButton` component. 3. Implement the login page layout, displaying a button for each of the five configured OAuth providers.",
+			"reasoning": "Low complexity as it's a straightforward UI task. It involves creating a single component with five buttons that link to predefined backend endpoints. No complex state management is required at this stage."
 		},
 		{
 			"taskId": 16,
-			"title": "Implement Automatic User Creation",
-			"complexityScore": 6,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Refine the existing subtasks: 1. In the Lucia OAuth callback handler, extract the provider user ID and email. 2. Implement a database lookup function `findUserByProviderId`. 3. If the user doesn't exist, implement a `createUserFromOAuth` function that maps provider data to the `User` schema and saves it. 4. If the user already exists, retrieve their record. 5. In both cases (new or existing user), create a new session for the user and redirect them to the frontend.",
-			"reasoning": "Moderate complexity. This logic is at a critical point in the user journey. It requires careful, atomic database operations (query, then potentially create) and robust error handling to ensure a seamless experience for both new and returning users."
+			"taskTitle": "Implement Automatic User Creation",
+			"complexityScore": 5,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Break down the automatic user creation task into these subtasks: 1. In the OAuth callback, implement logic to query the database for an existing user based on the provider's user ID. 2. If the user does not exist, implement the logic to create a new user record using profile data from the provider. 3. If the user exists, or after creation, proceed with creating and setting the user's session.",
+			"reasoning": "Medium complexity. The logic inside the OAuth callback is critical for the user lifecycle. It requires careful database interaction: checking for an existing user based on provider ID, creating a new user record with data from the provider, and then creating a session for them."
 		},
 		{
 			"taskId": 17,
 			"taskTitle": "Associate User with Bookmarks & Labels",
-			"complexityScore": 3,
+			"complexityScore": 6,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Modify the `POST /bookmarks` and `POST /labels` endpoints to extract the authenticated `userId` from the request context and include it in the new record. 2. Update all `GET`, `PATCH`, and `DELETE` endpoints for bookmarks and labels to include a `WHERE userId = ?` clause to ensure users can only access their own data. 3. Update API tests to pass an authenticated user context and verify that the `userId` is correctly set and enforced.",
-			"reasoning": "Low complexity. This is a standard authorization pattern. The auth middleware makes the user ID available; this task is about applying that ID in database queries. It's a repetitive but straightforward change across several endpoints."
+			"expansionPrompt": "Expand this task into subtasks for each data model: 1. Add a `userId` foreign key to the `bookmarks` table and update all bookmark-related endpoints to be user-scoped. 2. Add a `userId` foreign key to the `labels` table and update all label-related endpoints to be user-scoped. 3. Write integration tests to verify that users can only access their own bookmarks and labels.",
+			"reasoning": "Medium complexity due to its cross-cutting nature. It requires modifying multiple database schemas (bookmarks, labels) and updating all related CRUD endpoints to enforce user ownership. This requires careful auditing to ensure no data access loopholes are left."
 		},
 		{
 			"taskId": 18,
 			"taskTitle": "Backend: Implement Bookmark CRUD Endpoints",
-			"complexityScore": 5,
+			"complexityScore": 4,
 			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break this task into five subtasks, one for each endpoint: 1. Implement `POST /bookmarks` with request body validation. 2. Implement `GET /bookmarks` for listing a user's bookmarks, with pagination. 3. Implement `GET /bookmarks/:id`. 4. Implement `PATCH /bookmarks/:id`. 5. Implement `DELETE /bookmarks/:id`. Each subtask must include corresponding API integration tests.",
-			"reasoning": "Moderate complexity. This is a foundational feature requiring the implementation of a full set of CRUD operations. While standard, it requires careful implementation of request handling, data validation, database interaction, and response formatting for five distinct endpoints."
+			"expansionPrompt": "Break down the Bookmark CRUD task into a subtask for each endpoint: 1. Implement `POST /bookmarks` (Create). 2. Implement `GET /bookmarks` (List). 3. Implement `GET /bookmarks/:id` (Read). 4. Implement `PATCH /bookmarks/:id` (Update). 5. Implement `DELETE /bookmarks/:id` (Delete).",
+			"reasoning": "Medium-low complexity. This is a standard implementation of RESTful CRUD endpoints. While straightforward, it involves creating five distinct routes, handlers, validation logic, and database interactions."
 		},
 		{
 			"taskId": 19,
 			"taskTitle": "Frontend: Develop Bookmark List/Grid View",
-			"complexityScore": 5,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break this task into four subtasks: 1. Create a data fetching hook using TanStack Query to call the `GET /bookmarks` endpoint. 2. Design and build a `BookmarkCard` component using Shadcn UI to display a single bookmark's details. 3. Create a `BookmarkList` component that uses the hook and maps data to `BookmarkCard` components, supporting both list and grid layouts. 4. Implement loading, empty, and error states for the `BookmarkList`.",
-			"reasoning": "Moderate complexity. This is a key UI view requiring integration of data fetching, state management for loading/error states, creation of a reusable `BookmarkCard` component, and arranging everything in a responsive layout."
+			"complexityScore": 3,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Expand the bookmark list view task into these subtasks: 1. Implement the data fetching logic using a hook (e.g., `useBookmarks`). 2. Create the individual `BookmarkCard` component to display a single bookmark. 3. Create the main `BookmarkList` component that uses the hook and maps the data to `BookmarkCard` components.",
+			"reasoning": "Low complexity. This involves creating a component to fetch data from an existing endpoint and render it. It's a common pattern in frontend development, involving state management for loading, error, and data states."
 		},
 		{
 			"taskId": 20,
 			"taskTitle": "Frontend: Implement Add New Bookmark UI",
-			"complexityScore": 4,
+			"complexityScore": 3,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Create a `NewBookmarkForm` component with controlled inputs for URL and labels. 2. Implement form submission logic using a library like React Hook Form, including validation and calling the `POST /bookmarks` API endpoint. 3. Provide user feedback on submission success or failure and ensure the bookmark list is refreshed.",
-			"reasoning": "Moderate-low complexity. This is a standard form implementation. The complexity lies in handling form state, validation, API submission, and updating the UI based on the result, which are common frontend patterns."
+			"expansionPrompt": "Break down the 'Add Bookmark UI' task into: 1. Design and build the 'Add Bookmark' form/modal component with necessary input fields. 2. Implement form state management and validation. 3. Implement the submission handler to call the `POST /bookmarks` API endpoint and update the UI on success.",
+			"reasoning": "Low complexity. This is a standard UI form implementation. It involves creating form inputs, managing their state, performing client-side validation, and handling the API call on submission."
 		},
 		{
 			"taskId": 21,
 			"taskTitle": "Backend: Implement URL Metadata Fetching",
-			"complexityScore": 7,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break this task into four subtasks: 1. Research and select a robust metadata scraping library like `metascraper`. 2. Create a new endpoint, e.g., `POST /metadata/scrape`, that accepts a URL. 3. Implement the core scraping logic within an asynchronous service, handling the success case. 4. Implement comprehensive error handling for common scraping issues like timeouts, 404s, and pages without standard metadata.",
-			"reasoning": "High complexity. Web scraping is inherently fragile and unreliable. The task requires not just calling a library, but building a robust service around it that can handle timeouts, various content types, and anti-scraping measures. This often requires an asynchronous approach for good UX."
+			"complexityScore": 6,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Expand the metadata fetching task into: 1. Create the `POST /bookmarks/from-url` endpoint. 2. Integrate a metadata scraping library (e.g., `metascraper`) to fetch data from the provided URL. 3. Implement comprehensive error handling for network failures, timeouts, and parsing errors.",
+			"reasoning": "Medium complexity. While libraries simplify HTML parsing, this task involves I/O with unpredictable external websites. It requires robust error handling for timeouts, non-HTML content, and malformed metadata. Performance is also a concern, making it more complex than a simple database endpoint."
 		},
 		{
 			"taskId": 22,
 			"taskTitle": "Frontend: Display Auto-fetched Metadata",
-			"complexityScore": 3,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Update the `BookmarkCard` component to display the fetched thumbnail, description, and author. 2. Modify the 'Add Bookmark' UI to pre-fill form fields with metadata after it's fetched. 3. Add tests to verify that metadata is correctly displayed on both the card and in the form.",
-			"reasoning": "Low complexity. This task involves updating existing components to display new data fields that are now available. The logic is straightforward data binding."
+			"complexityScore": 2,
+			"recommendedSubtasks": 2,
+			"expansionPrompt": "Break down this task into two subtasks: 1. Update the `BookmarkCard` component to display the fetched thumbnail, description, and author. 2. Modify the 'Add/Edit Bookmark' form to pre-fill with the auto-fetched metadata.",
+			"reasoning": "Low complexity. This task involves modifying existing UI components to display additional data fields that are now available. It's primarily a presentation layer change."
 		},
 		{
 			"taskId": 23,
 			"taskTitle": "Backend: Implement Favorite/Unfavorite Endpoint",
-			"complexityScore": 2,
-			"recommendedSubtasks": 2,
-			"expansionPrompt": "Break this task into two subtasks: 1. Add an `isFavorite` boolean field to the `Bookmark` database schema and run the migration. 2. Implement a `PATCH /bookmarks/:id/favorite` endpoint that toggles the `isFavorite` status for a bookmark.",
-			"reasoning": "Low complexity. This is a simple update operation on a single field. It requires a minor schema change and a single, straightforward API endpoint."
+			"complexityScore": 1,
+			"recommendedSubtasks": 1,
+			"expansionPrompt": "Implement the `PATCH /bookmarks/:id` endpoint to toggle the `isFavorite` boolean field for a specific bookmark.",
+			"reasoning": "Very low complexity. This is one of the simplest backend tasks: a single endpoint that performs a single field update on a database record based on its ID."
 		},
 		{
 			"taskId": 24,
 			"taskTitle": "Frontend: Implement Favorite/Unfavorite UI",
-			"complexityScore": 3,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Add a favorite (e.g., star) icon button to the `BookmarkCard` component. 2. Implement a click handler that calls the favorite/unfavorite API endpoint and optimistically updates the UI state. 3. Ensure the favorite status is reflected correctly in different views (e.g., 'Favorites' collection).",
-			"reasoning": "Low complexity. This involves adding a single interactive element to an existing component, making an API call, and updating the local state, which is a common UI pattern."
+			"complexityScore": 2,
+			"recommendedSubtasks": 2,
+			"expansionPrompt": "Break down the favorite UI task into: 1. Add a favorite (e.g., star) icon button to the `BookmarkCard` component. 2. Implement the click handler to call the favorite/unfavorite API endpoint and update the UI state.",
+			"reasoning": "Low complexity. This involves adding a single interactive element (an icon button) to an existing component and wiring it to an API call. Requires minimal state management."
 		},
 		{
 			"taskId": 25,
 			"taskTitle": "Backend: Implement Archive/Unarchive Endpoint",
-			"complexityScore": 2,
-			"recommendedSubtasks": 2,
-			"expansionPrompt": "Break this task into two subtasks: 1. Ensure the `state` field on the `Bookmark` model can support an 'archived' value. 2. Implement a `PATCH /bookmarks/:id/archive` endpoint that toggles the `state` between 'active' and 'archived'.",
-			"reasoning": "Low complexity. Similar to the favorite feature, this is a simple update operation on a single field via a dedicated, straightforward API endpoint."
+			"complexityScore": 1,
+			"recommendedSubtasks": 1,
+			"expansionPrompt": "Implement the `PATCH /bookmarks/:id` endpoint to toggle the `state` field between 'active' and 'archived' for a specific bookmark.",
+			"reasoning": "Very low complexity. This is functionally identical to the 'favorite' endpoint—a single endpoint that updates one field on a record."
 		},
 		{
 			"taskId": 26,
 			"taskTitle": "Frontend: Implement Archive/Unarchive UI",
-			"complexityScore": 3,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Add an archive button to the `BookmarkCard` component, possibly in a context menu. 2. Implement a click handler that calls the archive/unarchive API endpoint. 3. Ensure that archiving a bookmark removes it from the main list and makes it appear in the 'Archived' collection.",
-			"reasoning": "Low complexity. This is another standard UI interaction: adding a button, making an API call, and filtering the local data set based on the result."
+			"complexityScore": 2,
+			"recommendedSubtasks": 2,
+			"expansionPrompt": "Break down the archive UI task into: 1. Add an archive icon button to the `BookmarkCard` component. 2. Implement the click handler to call the archive/unarchive API endpoint and update the UI state, likely by refetching the list.",
+			"reasoning": "Low complexity. This is functionally identical to the 'favorite' UI task—adding an interactive element to a component and wiring it to an API call."
 		},
 		{
 			"taskId": 27,
 			"taskTitle": "Backend: Implement Label CRUD Endpoints",
-			"complexityScore": 5,
+			"complexityScore": 4,
 			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break this task into five subtasks, one for each endpoint: 1. Implement `POST /labels` with request body validation. 2. Implement `GET /labels` to list all of a user's labels. 3. Implement `PUT /labels/:id` to update a label. 4. Implement `DELETE /labels/:id`. 5. Implement `POST /bookmarks/:id/labels` to associate a label with a bookmark. Each subtask must include API tests.",
-			"reasoning": "Moderate complexity. Similar to the Bookmark CRUD task, this is a core feature requiring the implementation of a full set of standard operations with validation, database logic, and testing."
+			"expansionPrompt": "Break down the Label CRUD task into a subtask for each endpoint: 1. Implement `POST /labels` (Create). 2. Implement `GET /labels` (List). 3. Implement `GET /labels/:id` (Read). 4. Implement `PUT /labels/:id` (Update). 5. Implement `DELETE /labels/:id` (Delete).",
+			"reasoning": "Medium-low complexity. This is another standard implementation of RESTful CRUD endpoints, similar to the bookmark CRUD task."
 		},
 		{
 			"taskId": 28,
 			"taskTitle": "Frontend: Develop Labels Sidebar Navigation",
-			"complexityScore": 4,
+			"complexityScore": 3,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Create a data fetching hook using TanStack Query to call the `GET /labels` endpoint. 2. Build a `LabelListNav` component that displays the fetched labels as clickable navigation items. 3. Integrate the component into the main application sidebar and handle loading/error states.",
-			"reasoning": "Moderate-low complexity. This involves fetching a list of data and rendering it as a navigation menu. It's a standard data display and routing task."
+			"expansionPrompt": "Expand the labels sidebar task into: 1. Implement data fetching logic for labels (e.g., `useLabels` hook). 2. Create the main `LabelsSidebar` component. 3. Implement the click handlers on each label to trigger navigation or filtering.",
+			"reasoning": "Low complexity. This involves creating a component to fetch a list of labels and render them as navigation items. It's a common UI pattern."
 		},
 		{
 			"taskId": 29,
 			"taskTitle": "Frontend: Implement Create, Rename, Delete Labels UI",
-			"complexityScore": 5,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break this task into four subtasks: 1. Implement a UI for creating a new label (e.g., a small form in the sidebar). 2. Implement a UI for renaming an existing label (e.g., an inline edit or modal). 3. Implement a UI for deleting a label, including a confirmation dialog. 4. Integrate the UI elements with the corresponding API endpoints and ensure the label list refreshes on change.",
-			"reasoning": "Moderate complexity. This involves creating multiple UI interactions (create, rename, delete) with forms, modals, and confirmation steps. It requires managing more UI state than a simple display component."
+			"complexityScore": 4,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Break down the label management UI task into: 1. Implement a modal/form for creating a new label. 2. Implement a modal/form for renaming an existing label. 3. Implement the delete functionality, including a confirmation dialog.",
+			"reasoning": "Medium-low complexity. It involves creating UI for three separate actions (create, rename, delete), which likely means implementing modals, forms, and confirmation dialogs, making it slightly more involved than a single form."
 		},
 		{
 			"taskId": 30,
 			"taskTitle": "Backend: Implement Filter Bookmarks by Label Endpoint",
-			"complexityScore": 4,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Modify the `GET /bookmarks` endpoint to accept an optional `labelId` query parameter. 2. Update the database query logic to perform a join with the `BookmarkLabel` table and filter by the given `labelId`. 3. Write API tests to verify that filtering by label returns the correct subset of bookmarks.",
-			"reasoning": "Moderate complexity. This requires modifying an existing endpoint and implementing a more complex database query involving a join. Correctly handling the optional parameter and testing the logic is key."
+			"complexityScore": 3,
+			"recommendedSubtasks": 2,
+			"expansionPrompt": "Break down the filter endpoint task into: 1. Modify the `GET /bookmarks` route handler to accept a `labelId` query parameter. 2. Update the database access logic to filter bookmarks based on the provided `labelId`.",
+			"reasoning": "Low complexity. This involves adding a query parameter and modifying an existing database query to include a `JOIN` and/or `WHERE` clause. It's a common feature enhancement."
 		},
 		{
 			"taskId": 31,
 			"taskTitle": "Frontend: Implement Filter Bookmarks by Label UI",
-			"complexityScore": 3,
+			"complexityScore": 4,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Update the `LabelListNav` component to handle clicks on label items, likely by updating a route parameter or global state. 2. Modify the bookmark list's data fetching hook to include the selected `labelId` in the API request. 3. Ensure the UI correctly indicates which label is currently active.",
-			"reasoning": "Low complexity. This task connects two existing components. It involves managing a piece of filter state and passing it to an existing data fetching hook."
+			"expansionPrompt": "Expand the filter UI task into: 1. Implement state management for the active label filter (e.g., using URL query parameters). 2. Update the `LabelsSidebar` to set the active filter when a label is clicked. 3. Modify the `BookmarkList` data fetching logic to include the active filter in its API request.",
+			"reasoning": "Medium-low complexity. This requires coordinating state between two separate components (sidebar and bookmark list). This can be managed via URL routing or a global state manager, adding a layer of complexity over a self-contained component."
 		},
 		{
 			"taskId": 32,
 			"taskTitle": "Frontend: Implement Default Collections UI",
 			"complexityScore": 3,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Add 'All', 'Favorites', and 'Archived' as static navigation items in the sidebar. 2. Implement the client-side or server-side filtering logic that is triggered when these items are clicked. 3. Ensure the UI correctly highlights the active collection.",
-			"reasoning": "Low complexity. This task leverages existing data fields (`isFavorite`, `state`) to filter the main bookmark list. The logic is straightforward state management and filtering."
+			"expansionPrompt": "Break down the collections UI task into: 1. Add navigation elements for 'All', 'Favorites', and 'Archived' to the UI. 2. Implement state management for the active collection filter. 3. Update the bookmark fetching logic to pass the correct filter parameters to the API based on the selected collection.",
+			"reasoning": "Low complexity. This is very similar to the label filtering UI but likely simpler, as the filters are based on simple boolean/enum fields rather than relational data."
 		},
 		{
 			"taskId": 33,
 			"taskTitle": "Backend: Implement Search Bookmarks Endpoint",
-			"complexityScore": 6,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Decide on a search strategy (e.g., simple `LIKE` queries vs. database full-text search). 2. Modify the `GET /bookmarks` endpoint to accept a `q` query parameter and implement the search logic on title, description, and URL fields. 3. Write API tests with various search terms to verify relevance and correctness of results.",
-			"reasoning": "Moderate complexity. Implementing effective search is more complex than simple filtering. It involves decisions about search strategy and potentially requires database-specific features like full-text search indexes for good performance."
+			"complexityScore": 3,
+			"recommendedSubtasks": 2,
+			"expansionPrompt": "Expand the search endpoint task into: 1. Modify the `GET /bookmarks` handler to accept a `q` search query parameter. 2. Update the database query to perform a case-insensitive search (e.g., using `LIKE`) across the title, description, and URL fields.",
+			"reasoning": "Low complexity, assuming a basic implementation using `LIKE` queries. It's an enhancement to an existing endpoint, similar to filtering. If full-text search is required, complexity would be higher."
 		},
 		{
 			"taskId": 34,
 			"taskTitle": "Frontend: Implement Search Bookmarks UI",
 			"complexityScore": 4,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Create a `SearchBar` component with a text input. 2. Implement state management for the search query, including debouncing the input to avoid excessive API calls. 3. Integrate the debounced query with the bookmark list's data fetching hook.",
-			"reasoning": "Moderate-low complexity. This is a common UI pattern, but implementing input debouncing adds a small layer of complexity over a simple form."
+			"expansionPrompt": "Break down the search UI task into: 1. Create the `SearchBar` UI component. 2. Implement state management for the search input, including a debounce mechanism. 3. Integrate the debounced search term into the bookmark list's data fetching logic.",
+			"reasoning": "Medium-low complexity. While it's just an input field, a good implementation requires handling user input efficiently, typically with debouncing to prevent API spam, which adds a bit more complexity than a simple button click."
 		},
 		{
 			"taskId": 35,
 			"taskTitle": "Backend: Implement Sort Bookmarks Endpoint",
-			"complexityScore": 4,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Modify the `GET /bookmarks` endpoint to accept `sortBy` and `order` query parameters. 2. Implement logic to validate the sort parameters and apply the corresponding `ORDER BY` clause to the database query. 3. Write API tests to verify sorting by each criterion (date added, title) in both ascending and descending order.",
-			"reasoning": "Moderate-low complexity. This involves adding dynamic sorting to a database query, which is a standard feature. The main work is in safely handling and applying the user-provided parameters."
+			"complexityScore": 2,
+			"recommendedSubtasks": 2,
+			"expansionPrompt": "Expand the sort endpoint task into: 1. Modify the `GET /bookmarks` handler to accept `sortBy` and `order` query parameters. 2. Implement logic to validate the `sortBy` parameter against a whitelist of allowed fields and apply the corresponding `ORDER BY` clause to the database query.",
+			"reasoning": "Low complexity. This involves parsing a couple of query parameters and adding a dynamic `ORDER BY` clause to an existing database query. Input validation is the main consideration."
 		},
 		{
 			"taskId": 36,
 			"taskTitle": "Frontend: Implement Sort Bookmarks UI",
 			"complexityScore": 3,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Create a `SortOptions` dropdown component to select sort criteria and order. 2. Manage the selected sort options in the component's state. 3. Pass the sort state to the bookmark list's data fetching hook to be included in the API request.",
-			"reasoning": "Low complexity. This is a straightforward UI task of creating a dropdown, managing its state, and using that state to parameterize an existing API call."
+			"expansionPrompt": "Break down the sort UI task into: 1. Create the `SortOptions` dropdown UI component. 2. Implement state management for the selected sort criteria and order. 3. Integrate the sort state into the bookmark list's data fetching logic.",
+			"reasoning": "Low complexity. This involves adding a UI control (like a dropdown) to manage state and trigger a data re-fetch, which is a common and well-understood pattern."
 		},
 		{
 			"taskId": 37,
 			"taskTitle": "Backend: Implement Import from Omnivore Endpoint",
 			"complexityScore": 5,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Create a `POST /import/omnivore` endpoint that accepts a file upload. 2. Implement a parser for the Omnivore JSON/CSV export format. 3. Implement the logic to iterate through parsed records and create new bookmarks in the database, associating them with the current user.",
-			"reasoning": "Moderate complexity. This requires file handling, parsing a specific third-party format, and performing bulk database insertions. Error handling for malformed files is also a consideration."
+			"expansionPrompt": "Expand the Omnivore import task into: 1. Create the `POST /bookmarks/import/omnivore` endpoint for file uploads. 2. Implement a parser for the Omnivore JSON/CSV export format. 3. Implement logic to batch-create bookmarks in the database from the parsed data.",
+			"reasoning": "Medium complexity. File parsing is inherently complex. The implementation must be robust against malformed files and handle batch insertion of potentially large numbers of bookmarks efficiently."
 		},
 		{
 			"taskId": 38,
 			"taskTitle": "Backend: Implement Import from HTML File Endpoint",
 			"complexityScore": 5,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Create a `POST /import/html` endpoint that accepts a file upload. 2. Implement a parser for the Netscape Bookmark File Format (HTML). 3. Implement the logic to iterate through parsed records and create new bookmarks in the database.",
-			"reasoning": "Moderate complexity. Similar to other import tasks, this requires file handling and parsing. The HTML format can be inconsistent, adding to the parsing challenge."
+			"expansionPrompt": "Expand the HTML import task into: 1. Create the `POST /bookmarks/import/html` endpoint for file uploads. 2. Implement a parser for the Netscape Bookmark File Format. 3. Implement logic to batch-create bookmarks in the database from the parsed data.",
+			"reasoning": "Medium complexity. Parsing the Netscape HTML format requires a dedicated HTML parser and logic to traverse the specific structure. It must be robust against variations from different browsers."
 		},
 		{
 			"taskId": 39,
 			"taskTitle": "Backend: Implement Import from Text File Endpoint",
-			"complexityScore": 3,
+			"complexityScore": 5,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Create a `POST /import/text` endpoint that accepts a file upload. 2. Implement a simple parser that reads the file line by line. 3. Implement the logic to create a new bookmark for each valid URL found in the file.",
-			"reasoning": "Low complexity. This is the simplest import format. The parsing logic is trivial (reading lines), making it much easier than structured formats like JSON or HTML."
+			"expansionPrompt": "Expand the Text import task into: 1. Create the `POST /bookmarks/import/text` endpoint for file uploads. 2. Implement a parser for line-separated URLs from a text file. 3. Implement logic to batch-create bookmarks in the database from the parsed data.",
+			"reasoning": "Medium complexity. While simpler than HTML, it still requires robust file handling, validation of each line as a URL, and efficient batch insertion into the database."
 		},
 		{
 			"taskId": 40,
 			"taskTitle": "Frontend: Develop Import Bookmarks UI",
-			"complexityScore": 6,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break this task into four subtasks: 1. Design and build an 'Import' page or modal with distinct sections for each import source. 2. Create a reusable file upload component that handles file selection and validation. 3. Implement the logic to call the correct import API endpoint based on the selected source. 4. Provide feedback to the user on the import progress, success, or failure.",
-			"reasoning": "Moderate complexity. This task combines UI design, file handling on the frontend, multiple API integrations, and user feedback for a long-running process, making it more involved than a simple form."
+			"complexityScore": 5,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Break down the import UI task into: 1. Create the main import page or modal with distinct sections for each import source. 2. Implement a reusable file upload component that handles file selection and validation. 3. Implement the logic to upload the selected file to the correct backend endpoint and display progress, success, or error messages to the user.",
+			"reasoning": "Medium complexity. Handling file uploads on the frontend involves more than a standard form. It requires using the File API, constructing `FormData` objects, and providing user feedback on the status of a potentially long-running operation."
 		},
 		{
 			"taskId": 41,
 			"taskTitle": "Backend: Implement Export/Backup Bookmarks Endpoint",
 			"complexityScore": 4,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Create a `GET /export` endpoint. 2. Implement the logic to fetch all of a user's bookmarks from the database. 3. Implement the logic to format the data as a JSON file and return it with the correct headers to trigger a browser download.",
-			"reasoning": "Moderate-low complexity. This involves a simple data fetch and formatting it into a file. The main logic is straightforward, with some nuance in setting HTTP headers for file downloads."
+			"expansionPrompt": "Expand the export endpoint task into: 1. Create the `GET /bookmarks/export` endpoint. 2. Implement the logic to fetch all bookmarks for the authenticated user. 3. Implement data formatting (e.g., to JSON) and set the appropriate `Content-Disposition` and `Content-Type` headers to trigger a file download.",
+			"reasoning": "Medium-low complexity. The core logic involves fetching all of a user's data and formatting it. The complexity comes from ensuring it's performant and doesn't consume excessive memory if a user has thousands of bookmarks."
 		},
 		{
 			"taskId": 42,
 			"taskTitle": "Frontend: Develop Export/Backup Bookmarks UI",
-			"complexityScore": 2,
-			"recommendedSubtasks": 2,
-			"expansionPrompt": "Break this task into two subtasks: 1. Add an 'Export My Data' button to the settings page. 2. Wire the button to navigate to or trigger a download from the `GET /export` endpoint.",
-			"reasoning": "Low complexity. This is a very simple UI task, likely just creating a link or button that points to a backend endpoint."
+			"complexityScore": 1,
+			"recommendedSubtasks": 1,
+			"expansionPrompt": "Implement a button in the settings or user profile area that, when clicked, navigates to the `/bookmarks/export` endpoint to initiate the download.",
+			"reasoning": "Very low complexity. This is typically just a single button or anchor tag pointing to the backend export endpoint. The browser handles the download automatically."
 		},
 		{
 			"taskId": 43,
 			"taskTitle": "Backend: Implement Batch Delete Bookmarks Endpoint",
-			"complexityScore": 3,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Create a `POST /bookmarks/batch-delete` endpoint that accepts an array of bookmark IDs. 2. Implement validation to ensure the IDs are valid and belong to the authenticated user. 3. Implement the database logic to delete all specified bookmarks in a single transaction.",
-			"reasoning": "Low complexity. This is a straightforward backend endpoint. The logic involves validating an array of IDs and executing a `DELETE ... WHERE ID IN (...)` query."
+			"complexityScore": 2,
+			"recommendedSubtasks": 2,
+			"expansionPrompt": "Break down the batch delete task into: 1. Create the `POST /bookmarks/batch-delete` endpoint that accepts an array of bookmark IDs. 2. Implement the database logic to delete all bookmarks where the ID is in the provided array and belongs to the authenticated user.",
+			"reasoning": "Low complexity. The endpoint receives an array of IDs and executes a single database query to delete them. The main work is validating the input array."
 		},
 		{
 			"taskId": 44,
 			"taskTitle": "Frontend: Implement Batch Delete Bookmarks UI",
 			"complexityScore": 5,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break this task into four subtasks: 1. Add checkboxes to each `BookmarkCard` to allow selection. 2. Implement state management to track the set of selected bookmark IDs. 3. Display a 'Delete Selected' action button when one or more bookmarks are selected. 4. Implement the click handler for the button, which shows a confirmation dialog and then calls the batch delete API.",
-			"reasoning": "Moderate complexity. Implementing multi-select UI requires more complex state management than single-item actions. It involves tracking selected items, conditional UI, and a bulk action flow."
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Expand the batch delete UI task into: 1. Add a selection mechanism (e.g., checkboxes) to each `BookmarkCard` and a 'select all' option. 2. Implement state management to track the list of selected bookmark IDs. 3. Add a 'Delete Selected' button that becomes active when items are selected and triggers the batch delete API call after a confirmation.",
+			"reasoning": "Medium complexity. This introduces a new 'selection' mode or state to the main bookmark list. It requires managing an array of selected IDs, updating the UI to reflect selections, and handling the batch action, which is more involved than single-item actions."
 		},
 		{
 			"taskId": 45,
 			"taskTitle": "Implement Dark and Light UI Themes",
-			"complexityScore": 4,
+			"complexityScore": 3,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Configure Shadcn UI's theme provider and define color variables for both light and dark modes. 2. Implement a theme toggle button that allows the user to switch between themes and persists their preference. 3. Perform a visual review of all components in both themes to ensure proper styling and fix any issues.",
-			"reasoning": "Moderate-low complexity. Modern UI libraries like Shadcn make theming relatively easy. The main work is in the initial setup and the final visual audit across the application."
+			"expansionPrompt": "Break down the theming task into: 1. Configure the theme provider (e.g., from `next-themes`) at the root of the application. 2. Create a `ThemeToggle` component (e.g., a sun/moon icon button). 3. Add the toggle component to a persistent part of the layout, like the header or sidebar.",
+			"reasoning": "Low complexity, especially when using a modern UI library like Shadcn that has built-in theming support. The task is mostly configuration and implementing a simple toggle switch."
 		},
 		{
 			"taskId": 46,
 			"taskTitle": "Implement Left-side Vertical Navigation",
-			"complexityScore": 5,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break this task into four subtasks: 1. Create the main sidebar layout component. 2. Add a section for the user's profile/logout button. 3. Integrate the 'Default Collections' component for All, Favorites, Archived. 4. Integrate the dynamic 'Labels' navigation component.",
-			"reasoning": "Moderate complexity. This is a primary layout component that composes several other components. The task is to assemble these parts into a cohesive, functional, and well-styled navigation bar."
+			"complexityScore": 4,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Expand the vertical navigation task into: 1. Build the main structural layout of the sidebar component. 2. Add static navigation items like 'All', 'Favorites', and 'Archived'. 3. Integrate the dynamic `LabelsSidebar` component into the layout.",
+			"reasoning": "Medium-low complexity. This is a foundational layout component. While not complex in logic, it requires careful implementation of structure, styling, and responsiveness to serve as the main navigation hub."
 		},
 		{
 			"taskId": 47,
 			"taskTitle": "Ensure Responsive Layout",
 			"complexityScore": 7,
 			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break this task into a systematic review of major application views: 1. Refactor the main application layout (sidebar, header) to be fully responsive, including a mobile-friendly navigation. 2. Ensure the bookmark list/grid view adapts gracefully from multi-column desktop to single-column mobile. 3. Review and adjust all forms (add/edit bookmark, login) to be usable on small screens. 4. Perform a full-application audit using browser dev tools and real devices to find and fix remaining issues.",
-			"reasoning": "High complexity. This is a broad, cross-cutting concern that affects almost every UI component. It requires a systematic audit and modification of existing work, extensive testing across various screen sizes, and a good eye for design."
+			"expansionPrompt": "Break down the responsiveness task by application area: 1. Make the main two-column layout (sidebar + content) responsive for mobile screens. 2. Ensure the bookmark list/grid view adapts correctly to different screen widths. 3. Verify that all modals and forms are usable on small screens. 4. Test and fix navigation and header elements on mobile.",
+			"reasoning": "High complexity due to its broad scope. It's not a single feature but a quality that must be applied to the entire application. It requires testing and tweaking every component and layout across various screen sizes, which is time-consuming and detail-oriented."
 		},
 		{
 			"taskId": 48,
 			"taskTitle": "Ensure WCAG AA Accessibility",
 			"complexityScore": 8,
 			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break this task into a structured accessibility audit and remediation process: 1. Run automated audits (Lighthouse, Axe) on all major pages and log all issues. 2. Perform a full manual keyboard navigation audit. 3. Perform a manual screen reader (e.g., NVDA, VoiceOver) audit. 4. Review the application's color palette for WCAG AA contrast compliance. 5. Remediate all issues found in the audits, starting with the most critical.",
-			"reasoning": "High complexity. Achieving true accessibility is difficult and requires specialized knowledge beyond what automated tools can find. It involves manual testing with assistive technologies and affects the semantic structure and styling of nearly every component."
+			"expansionPrompt": "Expand the accessibility task based on WCAG principles: 1. Audit and ensure all interactive elements are keyboard accessible and have visible focus states. 2. Review the application for semantic HTML usage and add ARIA attributes where necessary. 3. Check and correct color contrast ratios across all themes. 4. Perform a full application test using a screen reader (e.g., NVDA, VoiceOver). 5. Add `alt` text to all meaningful images.",
+			"reasoning": "Very high complexity. Achieving WCAG AA compliance is a specialized skill. It requires a thorough audit and modification of every component for semantic HTML, ARIA roles, keyboard navigability, focus management, and color contrast. It's a large, detail-oriented effort."
 		},
 		{
 			"taskId": 49,
 			"taskTitle": "Implement Component-level Tests",
-			"complexityScore": 7,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break this task down by component type: 1. Set up Vitest and React Testing Library with shared configuration. 2. Write tests for all authentication-related components (Login page, buttons). 3. Write tests for core bookmark components (BookmarkCard, BookmarkList, Add/Edit forms). 4. Write tests for label management components. 5. Write tests for interactive components like search, sort, and filtering.",
-			"reasoning": "High complexity. This is a large-scale effort to build a comprehensive test suite for the frontend. It requires writing many individual tests covering UI rendering, user interactions, and state changes for a wide variety of components."
+			"complexityScore": 6,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the component testing task by feature: 1. Write tests for authentication components (Login page, buttons). 2. Write tests for core bookmark components (`BookmarkCard`, `BookmarkList`, forms). 3. Write tests for label management components. 4. Write tests for search, sort, and filter UI interactions.",
+			"reasoning": "Medium complexity. While writing individual tests is not hard, establishing good testing patterns and achieving significant coverage across a whole application is a substantial and ongoing effort."
 		},
 		{
 			"taskId": 50,
 			"taskTitle": "Implement API Tests",
 			"complexityScore": 7,
 			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break this task down by API feature area: 1. Set up the testing environment with Vitest, including a script to manage a test database. 2. Write integration tests for all authentication and user-related endpoints. 3. Write tests for the complete Bookmark CRUD API, including authorization checks. 4. Write tests for the complete Label CRUD API. 5. Write tests for advanced query endpoints (filtering, searching, sorting).",
-			"reasoning": "High complexity. This requires creating a complete integration test suite that covers the entire API surface. It involves significant setup for the test environment (database, seeding) and writing tests for numerous success, failure, and authorization scenarios."
+			"expansionPrompt": "Expand the API testing task by resource: 1. Write integration tests for all authentication and user management endpoints. 2. Write tests for the complete Bookmark CRUD and action endpoints (favorite, archive). 3. Write tests for the complete Label CRUD endpoints. 4. Write tests for filtering, sorting, and searching bookmarks. 5. Write tests for the import and export endpoints.",
+			"reasoning": "High complexity. Writing comprehensive API integration tests requires managing a test database, handling authentication, and testing every endpoint's logic, including authorization rules (e.g., user A cannot access user B's data). It's a large and critical task."
 		},
 		{
 			"taskId": 51,
 			"taskTitle": "Implement E2E Tests for Scrappers",
-			"complexityScore": 7,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break this task into four subtasks: 1. Set up an E2E testing framework like Playwright or Cypress. 2. Write an E2E test for the Omnivore import flow, simulating a file upload and verifying the result. 3. Write an E2E test for the HTML import flow. 4. Write an E2E test for the Text file import flow.",
-			"reasoning": "High complexity. E2E testing is complex to set up and maintain. This task involves automating browser interactions, including file uploads, and then verifying the outcome in the UI, which is inherently more brittle and time-consuming than unit or integration testing."
+			"complexityScore": 6,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Break down the E2E import testing task by source: 1. Create an E2E test that simulates uploading and importing an Omnivore file. 2. Create an E2E test that simulates uploading and importing an HTML bookmark file. 3. Create an E2E test that simulates uploading and importing a text file of URLs.",
+			"reasoning": "Medium complexity. E2E tests are powerful but can be brittle and slow. Setting up the test runner, simulating file uploads, and waiting for asynchronous backend processes to complete adds significant complexity compared to unit or integration tests."
 		},
 		{
 			"taskId": 52,
 			"taskTitle": "Generate API Documentation",
-			"complexityScore": 4,
+			"complexityScore": 3,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Choose and integrate an OpenAPI/Swagger library compatible with Hono. 2. Annotate all API routes with OpenAPI specifications for paths, parameters, request bodies, and responses. 3. Configure and deploy the Swagger UI so it's accessible to developers.",
-			"reasoning": "Moderate-low complexity. While tedious, the process of documenting an API with modern tools is well-established. The main effort is the systematic annotation of all existing endpoints."
+			"expansionPrompt": "Expand the API documentation task into: 1. Set up and configure an OpenAPI/Swagger library for the Hono application. 2. Annotate all bookmark-related endpoints with schemas and descriptions. 3. Annotate all label and user/auth-related endpoints.",
+			"reasoning": "Low complexity. Modern tools can often generate the bulk of the documentation from code annotations or route definitions. The work is mostly methodical annotation rather than complex problem-solving."
 		},
 		{
 			"taskId": 53,
 			"taskTitle": "Review Logging & Monitoring Strategy",
-			"complexityScore": 6,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break this task into four subtasks: 1. Research and select a logging library (e.g., Pino) and an error monitoring service (e.g., Sentry). 2. Integrate the logging library into the Hono backend, adding middleware for request logging. 3. Integrate the error monitoring service to automatically capture unhandled exceptions. 4. Configure basic dashboards or alerts in the chosen monitoring service.",
-			"reasoning": "Moderate complexity. This involves selecting and integrating third-party services that are critical for production health. It requires configuration in code, on external platforms, and an understanding of what metrics and logs are valuable to capture."
+			"complexityScore": 5,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Break down the logging/monitoring task into: 1. Research and select a structured logging library (e.g., Pino) and an error monitoring service (e.g., Sentry). 2. Integrate the logging library into the backend, ensuring all requests and important events are logged. 3. Integrate the monitoring service to automatically capture and report unhandled exceptions.",
+			"reasoning": "Medium complexity. This is an important architectural decision. It involves evaluating tools, integrating them into the application's core, and ensuring that logs are structured and useful, and that errors are correctly captured and reported."
 		},
 		{
 			"taskId": 54,
 			"taskTitle": "Conduct Production Readiness Review",
-			"complexityScore": 5,
+			"complexityScore": 6,
 			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break this task into four subtasks: 1. Create a production readiness checklist covering security, configuration, performance, and operations. 2. Conduct a security review, checking for common vulnerabilities and ensuring secrets are managed properly. 3. Review all environment configurations for production vs. development. 4. Review and document the backup and disaster recovery plan.",
-			"reasoning": "Moderate complexity. This is a process-oriented task, not a coding task. Its complexity comes from the breadth of topics to cover and the diligence required to perform a thorough review of the entire system before launch."
+			"expansionPrompt": "Expand the production readiness review into a checklist of subtasks: 1. Review all environment variable configurations and secrets management. 2. Conduct a final security review (e.g., check headers, dependencies, auth logic). 3. Verify backup and restore procedures for the database. 4. Confirm that logging and monitoring are correctly configured for the production environment.",
+			"reasoning": "Medium complexity. While not a coding task, a production readiness review is a critical process that requires a broad range of expertise to check for potential issues in security, scalability, configuration, and operations. Its complexity lies in its breadth and criticality."
 		},
 		{
 			"taskId": 55,
 			"taskTitle": "Configure Dependency Management",
-			"complexityScore": 2,
-			"recommendedSubtasks": 2,
-			"expansionPrompt": "Break this task into two subtasks: 1. Enable and configure Dependabot in the GitHub repository settings for the project. 2. Review and merge the first pull request generated by Dependabot to verify the workflow.",
-			"reasoning": "Low complexity. This is primarily a configuration task within the GitHub platform. The tool does all the heavy lifting."
+			"complexityScore": 1,
+			"recommendedSubtasks": 1,
+			"expansionPrompt": "Create a `dependabot.yml` file in the `.github` directory to configure automated dependency updates for the project.",
+			"reasoning": "Very low complexity. This typically involves creating a single, simple YAML configuration file in the `.github` directory of the repository."
 		},
 		{
 			"taskId": 56,
 			"taskTitle": "Investigate & Address URL Scrapping Issues",
-			"complexityScore": 7,
+			"complexityScore": 8,
 			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break this task into four subtasks: 1. Research and document common failure modes for web scraping (e.g., dynamic content, bot detection). 2. Implement a retry mechanism with exponential backoff for the scraping service. 3. Investigate using a more powerful tool like Puppeteer for client-side rendered pages as a fallback. 4. Create a test suite with known problematic URLs to validate improvements.",
-			"reasoning": "High complexity. This is an R&D and problem-solving task for a notoriously difficult problem (web scraping). It requires deep investigation, experimentation, and potentially integrating more complex tools like headless browsers."
+			"expansionPrompt": "Break down the scraping improvement task into: 1. Research and document common failure modes for the current scraping library. 2. Implement a retry mechanism with exponential backoff for transient network errors. 3. Investigate and prototype a solution using a headless browser (e.g., Puppeteer) for JavaScript-rendered pages. 4. Create a test suite of known problematic URLs to validate improvements.",
+			"reasoning": "Very high complexity. Web scraping is a cat-and-mouse game. Bypassing anti-bot measures, rendering JavaScript-heavy pages, and handling diverse HTML structures is a difficult, research-intensive problem that may not have a perfect solution."
 		},
 		{
 			"taskId": 57,
 			"taskTitle": "Investigate Performance Improvements",
-			"complexityScore": 8,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break this task into an investigation phase and an implementation phase: 1. Profile the application under load to identify the slowest API endpoints and database queries. 2. Based on findings, write a brief ADR to decide between in-memory and distributed (Redis) caching strategies. 3. Implement the chosen caching strategy on the backend. 4. Review and optimize critical database queries by adding necessary indexes. 5. Conduct before-and-after load tests to measure and document improvements.",
-			"reasoning": "High complexity. Performance optimization is a non-trivial engineering effort. It requires deep analysis and profiling to identify bottlenecks. Implementing a caching layer, especially a distributed one, is a significant architectural addition with complexities around cache invalidation and infrastructure."
+			"complexityScore": 7,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Expand the performance task into: 1. Profile the application to identify slow API endpoints and database queries. 2. Design a caching strategy, deciding between in-memory and distributed (Redis) caching. 3. Implement the chosen caching layer for key endpoints (e.g., bookmark list, metadata fetching). 4. Analyze and add necessary indexes to database tables based on query profiling.",
+			"reasoning": "High complexity. Performance optimization is a deep field. It requires profiling to identify bottlenecks, and implementing a correct and effective caching strategy with proper invalidation is one of the classic hard problems in computer science."
 		},
 		{
 			"taskId": 58,
 			"taskTitle": "Investigate Server-Sent Events (SSE)",
 			"complexityScore": 10,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break this task down by its architectural components: 1. Design and implement the SQLite-based job queue. 2. Create the scraping logic inside a separate script that can be run as a child process. 3. Implement the main process's job coordinator to manage the queue and workers. 4. Create the Hono SSE endpoint to stream job status updates to the client. 5. Integrate with the frontend to initiate jobs and display real-time progress from the SSE stream.",
-			"reasoning": "Highest complexity. This task introduces several advanced backend concepts simultaneously: background job processing, message queues, child processes for non-blocking execution, and real-time communication with SSE. Coordinating all these pieces correctly and robustly is a major engineering challenge."
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down the SSE background job system into: 1. Implement the SQLite-based job queue for persisting jobs. 2. Create the isolated Puppeteer worker in a child process. 3. Develop the job coordinator to manage the queue and dispatch jobs to workers. 4. Implement the Hono SSE endpoint to stream job status updates. 5. Implement the frontend client to consume the SSE stream and display real-time progress. 6. Write integration tests for the end-to-end job processing flow.",
+			"reasoning": "Highest complexity. This task introduces a new asynchronous architecture with multiple moving parts: a persistent job queue, child process management for isolation, inter-process communication, and a real-time streaming API. It's a significant engineering effort with many potential failure points."
 		},
 		{
 			"taskId": 59,
 			"taskTitle": "Define & Implement Frontend Folder Structure",
-			"complexityScore": 3,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Document the chosen folder structure (e.g., feature-based) in a new ADR. 2. Create the new folder structure. 3. Refactor existing components, hooks, and pages into the new structure.",
-			"reasoning": "Low complexity. This is an organizational task. While it can be tedious to move files and update imports, it doesn't involve complex logic. The main effort is in the initial decision and the systematic refactoring."
+			"complexityScore": 2,
+			"recommendedSubtasks": 2,
+			"expansionPrompt": "Break down the folder structure task into: 1. Propose and document a new folder structure (e.g., feature-based or atomic design). 2. Refactor existing components, hooks, and pages into the newly defined structure.",
+			"reasoning": "Low complexity. This is an organizational task that involves discussion and agreement on conventions, followed by moving files. It's not technically challenging but is important for maintainability."
 		},
 		{
 			"taskId": 60,
 			"taskTitle": "Review General Frontend Best Practices",
 			"complexityScore": 4,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. Conduct a series of code review sessions focused on specific topics (state management, component design, performance). 2. Document key findings and create a list of agreed-upon best practices for the project. 3. Create follow-up refactoring tasks for any major deviations identified.",
-			"reasoning": "Moderate-low complexity. This is a process and knowledge-sharing task. Its value is high, but the implementation effort is primarily in discussion, documentation, and planning rather than complex coding."
+			"expansionPrompt": "Expand the best practices review into: 1. Review and refactor components for better composition and reusability. 2. Audit the state management strategy for consistency and efficiency. 3. Implement error boundaries around key parts of the application.",
+			"reasoning": "Medium-low complexity. This is a review and refactoring task. It requires knowledge of best practices but the implementation is typically applying established patterns rather than inventing new solutions."
 		},
 		{
 			"taskId": 61,
 			"taskTitle": "Backend: AI Suggest Labels Endpoint",
+			"complexityScore": 6,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the AI label suggestion task into: 1. Research and select an appropriate NLP/AI service (e.g., OpenAI, Cohere). 2. Create the backend endpoint to receive a bookmark's content. 3. Implement the logic to call the AI service API with a well-formed prompt. 4. Implement logic to parse the AI response and format it as a list of suggested labels.",
+			"reasoning": "Medium complexity. Integrating with an external AI service involves API key management, prompt engineering to get useful results, and handling potentially slow or variable responses. It's more than a simple data lookup."
+		},
+		{
+			"taskId": 67,
+			"taskTitle": "Deploy Containerized API to Render",
+			"complexityScore": 7,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "The task is already well-defined with 6 subtasks. Use the existing subtasks to structure the work: 1. Create render.yaml. 2. Configure environment variables. 3. Create Render service and enable auto-deploy. 4. Validate database connectivity. 5. Verify web scraping functionality. 6. Document the deployment process.",
+			"reasoning": "High complexity. This is a critical DevOps task that bridges development and production. It requires correctly defining the infrastructure as code, managing production secrets securely, configuring a CI/CD pipeline, and debugging potential issues in a cloud environment (e.g., networking, permissions, dependencies like Puppeteer)."
+		},
+		{
+			"taskId": 68,
+			"taskTitle": "Backend: Audit and Validate userId Handling Post-Lucia Auth Integration",
 			"complexityScore": 8,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break this task into five subtasks: 1. Research and select an appropriate AI/NLP service (e.g., OpenAI, Cohere) and get API keys. 2. Design the prompt to be sent to the AI model for effective label suggestion. 3. Implement a new backend endpoint that takes a bookmark's content and calls the AI service. 4. Implement logic to parse the AI's response and format it as a list of suggested labels. 5. Integrate this endpoint with the frontend UI to display suggestions to the user.",
-			"reasoning": "High complexity. This involves integrating with an external AI service, which includes prompt engineering, API integration, and handling a non-deterministic response. It's a novel feature that requires experimentation to get right."
-		},
-		{
-			"taskId": 63,
-			"taskTitle": "Fix Logger Error Handler Order Issue",
-			"complexityScore": 2,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break this task into three subtasks: 1. In `errors.handlers.ts`, refactor the `errorHandler` to process specific error handlers before the generic `UnexpectedError` handler. 2. Write a unit test that throws a `ValidationError` and asserts the logger captures it with the correct type. 3. Write a unit test that throws a standard `Error` and asserts the logger correctly falls back to logging it as an `UnexpectedError`.",
-			"reasoning": "Low complexity. This is a small, localized bug fix. The problem and solution are clearly described. The effort is minimal and primarily involves reordering code and writing targeted tests for verification."
-		},
-		{
-			"taskId": 66,
-			"taskTitle": "Refactor and Relocate Tooling Configuration Packages",
-			"complexityScore": 4,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break this task into a sequence of refactoring steps: 1. Create the `packages/development` directory and move the config packages into it. 2. Rename `config-biome` to `lint-config` and update its `package.json` name. 3. Update `pnpm-workspace.yaml` to reflect the new directory structure. 4. Perform a global search-and-replace to update all references to the old package names/paths. 5. Run `pnpm install` and all root-level scripts (`lint`, `test`) to verify the toolchain is intact.",
-			"reasoning": "Moderate-low complexity. The task doesn't involve writing new logic but requires careful, repository-wide changes to configuration files and dependencies. The risk is in missing a reference, so the complexity lies in the diligence and verification required, not in the problem-solving."
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Expand the `userId` handling audit into: 1. Review all API route handlers and middleware to ensure `userId` is correctly extracted from the session. 2. Audit all service and repository functions to confirm `userId` is passed down and used in queries. 3. Write a suite of integration tests specifically designed to attempt cross-tenant data access and assert failure. 4. Review all API response DTOs to ensure `userId` is never exposed to the client.",
+			"reasoning": "Very high complexity. This is a critical security audit. Missing a single check could lead to a major data breach. It requires a meticulous, defense-in-depth review of every data-accessing part of the application and writing specific tests to prove that data isolation is enforced."
 		}
 	]
 }
