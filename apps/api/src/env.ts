@@ -42,7 +42,7 @@ if (process.env.NODE_ENV === 'test') {
   const envTestPath = path.resolve(process.cwd(), envFileName);
   if (!existsSync(envTestPath)) {
     throw new Error(
-      `Missing ${envFileName} file. Please create one for test environment variables.`
+      `Missing ${envFileName} file in project root. Please create ${envTestPath} for test environment variables.`
     );
   }
   config({ path: [envFileName] });
