@@ -37,6 +37,7 @@ CREATE TABLE `labels` (
 --> statement-breakpoint
 CREATE INDEX `label_id_index` ON `labels` (`id`);--> statement-breakpoint
 CREATE INDEX `label_user_id_index` ON `labels` (`user_id`);--> statement-breakpoint
+CREATE UNIQUE INDEX `label_name_user_unique` ON `labels` (`name`, `user_id`);--> statement-breakpoint
 CREATE TABLE `users` (
 	`id` text PRIMARY KEY NOT NULL,
 	`email` text NOT NULL,

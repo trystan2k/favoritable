@@ -130,7 +130,7 @@ describe('Label Model Tests', () => {
     await expect(
       db
         .insert(label)
-        .values(labelWithoutUserId as never)
+        .values(labelWithoutUserId as unknown as InsertLabelDTO)
         .returning()
         .get()
     ).rejects.toThrow();
@@ -209,5 +209,64 @@ describe('Label Model Tests', () => {
     });
 
     expect(deletedLabel).toBeUndefined();
+  });
+
+  test('should enforce unique label names per user', async () => {
+    // Create first label
+    const firstLabel: InsertLabelDTO = {
+      id: 'test-label-unique-1',
+      name: 'Duplicate Name',
+      color: '#ff0000',
+      userId: testUser.id,
+    };
+
+    await db.insert(label).values(firstLabel).returning().get();
+
+    // Try to create second label with same name for same user
+    const duplicateLabel: InsertLabelDTO = {
+      id: 'test-label-unique-2',
+      name: 'Duplicate Name', // Same name as first label
+      color: '#00ff00',
+      userId: testUser.id, // Same user as first label
+    };
+
+    // Should fail due to unique constraint on (name, userId)
+    await expect(
+      db.insert(label).values(duplicateLabel).returning().get()
+    ).rejects.toThrow();
+
+    // However, a different user should be able to create a label with the same name
+    const anotherUser: InsertUserDTO = {
+      id: 'test-user-duplicate',
+      email: 'duplicate@example.com',
+      name: 'Another User',
+      provider: 'google',
+    };
+
+    const createdAnotherUser = await db
+      .insert(user)
+      .values(anotherUser)
+      .returning()
+      .get();
+
+    const sameNameDifferentUser: InsertLabelDTO = {
+      id: 'test-label-unique-3',
+      name: 'Duplicate Name', // Same name but different user
+      color: '#0000ff',
+      userId: createdAnotherUser.id, // Different user
+    };
+
+    // This should succeed
+    const createdLabel = await db
+      .insert(label)
+      .values(sameNameDifferentUser)
+      .returning()
+      .get();
+
+    expect(createdLabel.name).toBe('Duplicate Name');
+    expect(createdLabel.userId).toBe(createdAnotherUser.id);
+
+    // Clean up the additional user
+    await db.delete(user).where(eq(user.id, createdAnotherUser.id));
   });
 });
