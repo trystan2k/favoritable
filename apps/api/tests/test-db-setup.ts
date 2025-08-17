@@ -2,8 +2,9 @@ import { mkdir, rm } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { migrate } from 'drizzle-orm/libsql/migrator';
 import { db } from '../src/db/index.js';
+import { env } from '../src/env.js';
 
-const TEST_DB_PATH = 'tests/.db/test.db';
+const TEST_DB_PATH = env.LOCAL_DATABASE_URL?.replace('file:', '') || 'test.db';
 
 export async function setupTestDatabase() {
   // Ensure test database directory exists
