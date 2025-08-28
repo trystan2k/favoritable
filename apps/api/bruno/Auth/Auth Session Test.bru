@@ -1,0 +1,15 @@
+meta {
+  name: Auth Session Test
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:3000/api/auth/session
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

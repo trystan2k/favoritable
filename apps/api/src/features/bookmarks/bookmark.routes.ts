@@ -5,6 +5,10 @@ import {
 } from '../../core/dependency-injection/di.decorators.js';
 import { zCustomValidator } from '../../core/validators.wrapper.js';
 import {
+  authMiddleware,
+  type HonoEnv,
+} from '../../middleware/auth.middleware.js';
+import {
   bookmarkIdParamSchema,
   createBookmarkFromURLSchema,
   createBookmarkSchema,
@@ -19,7 +23,7 @@ import type { BookmarkService } from './bookmark.services.js';
 
 @Service({ name: 'BookmarkRoutes' })
 export class BookmarkRoutes {
-  private bookmarkRoutes: Hono;
+  private bookmarkRoutes: Hono<HonoEnv>;
 
   constructor(
     @Inject('BookmarkService') private bookmarkService: BookmarkService
@@ -33,13 +37,23 @@ export class BookmarkRoutes {
   }
 
   private setupRoutes() {
+    // Apply authentication middleware to all bookmark routes
+    this.bookmarkRoutes.use('*', authMiddleware());
+
     // Bookmarks - Get
     this.bookmarkRoutes.get(
       '/',
       zCustomValidator('query', getBookmarksQueryParamsSchema),
       async (c) => {
         const queryParams = c.req.valid('query');
-        const bookmarks = await this.bookmarkService.getBookmarks(queryParams);
+        const user = c.get('user');
+        if (!user) {
+          return c.json({ error: 'Authentication required' }, 401);
+        }
+        const bookmarks = await this.bookmarkService.getBookmarks(
+          queryParams,
+          user.id
+        );
         return c.json(bookmarks, 200);
       }
     );
@@ -75,7 +89,14 @@ export class BookmarkRoutes {
       zCustomValidator('json', createBookmarkFromURLSchema),
       async (c) => {
         const { url } = c.req.valid('json');
-        const bookmark = await this.bookmarkService.createBookmarkFromUrl(url);
+        const user = c.get('user');
+        if (!user) {
+          return c.json({ error: 'Authentication required' }, 401);
+        }
+        const bookmark = await this.bookmarkService.createBookmarkFromUrl(
+          url,
+          user.id
+        );
         const location = c.req.url.replace('/from-url', '');
 
         // Add location header in response, with the url of the newly created bookmark

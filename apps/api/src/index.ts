@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { requestId } from 'hono/request-id';
+import { auth } from './auth.js';
 import { Container } from './core/dependency-injection/di.container.js';
 import {
   addCacheHeaders,
@@ -27,6 +28,7 @@ import { BookmarkUnitOfWork } from './features/bookmarks/bookmark-unit-of-work.j
 import { LabelRoutes } from './features/labels/label.routes.js';
 import { LabelService } from './features/labels/label.services.js';
 import { SQLiteLabelRepository } from './features/labels/label.sq-lite.repository.js';
+import { authMiddleware, type HonoEnv } from './middleware/auth.middleware.js';
 
 export function registerDependencies(): void {
   const container = Container.getInstance();
@@ -54,7 +56,7 @@ const routes = {
   labels: '/labels',
 };
 
-const app = new Hono();
+const app = new Hono<HonoEnv>();
 
 // Request ID must be first to be available in other middleware
 app.use('*', requestId());
@@ -65,6 +67,21 @@ app.use('*', setContentTypeHeaders());
 app.use('*', parseAPIVersion());
 app.use('*', addSecurityHeaders());
 app.use('*', addCacheHeaders());
+
+// Better Auth middleware - retrieve session and user information
+app.use('*', async (c, next) => {
+  const session = await auth.api.getSession({ headers: c.req.raw.headers });
+
+  if (!session) {
+    c.set('user', null);
+    c.set('session', null);
+    return next();
+  }
+
+  c.set('user', session.user);
+  c.set('session', session.session);
+  return next();
+});
 
 const errorHandlers = [serviceErrorsHandler, repositoryErrorsHandler];
 app.onError(errorHandler(errorHandlers));
@@ -77,6 +94,37 @@ const labelRoutes = Container.getInstance().resolve<LabelRoutes>('LabelRoutes');
 
 api.route(routes.bookmarks, bookmarkRoutes.routes);
 api.route(routes.labels, labelRoutes.routes);
+
+// Auth test routes
+app.get('/api/test/no-auth', (c) => {
+  return c.json({ message: 'This endpoint works without auth' });
+});
+
+app.get('/api/test/with-auth', authMiddleware(), (c) => {
+  const user = c.get('user');
+
+  return c.json({
+    message: 'This endpoint requires auth',
+    user: user ? user.email : null,
+  });
+});
+
+app.get('/api/auth/session', (c) => {
+  const session = c.get('session');
+  const user = c.get('user');
+
+  if (!user) return c.json({ error: 'Not authenticated' }, 401);
+
+  return c.json({
+    session,
+    user,
+  });
+});
+
+// Better Auth routes
+app.on(['POST', 'GET'], '/api/auth/*', (c) => {
+  return auth.handler(c.req.raw);
+});
 
 // Health check
 app.get('/health', (c) => c.text('OK'));

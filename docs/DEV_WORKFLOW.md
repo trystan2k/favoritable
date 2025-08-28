@@ -8,7 +8,6 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 - Also always start the task from the `main` branch and ensure it is up-to-date with remote.
 - **Important**: Remember that this project use `pnpm`.
 
-
 ## 🔄 STANDARD WORKFLOW
 
 ### 1. 📋 TASK RECEPTION
@@ -38,7 +37,7 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 
 **Deepthink plan template**:
 
-```
+```markdown
 ## Task Analysis
 - Main objective:
 - Identified dependencies:
@@ -80,36 +79,78 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 - Create a feature branch based on `main` and do your work on this feature branch
 - Create one feature branch per task ID and commit all subtasks in this same branch (do not create branch for subtasks)
 - Feature branch should follow the pattern `feature/FAV-[ID]-[title]`
-- Keep commits small and frequent during development
+
+#### 🔄 Subtask Development Cycle
+
+For tasks with subtasks, follow this cycle for each subtask:
+
+1. **Implement subtask** following the deepthink plan
+2. **Quality check** - Run `pnpm run complete-check` before commit
+3. **Review request** - Ask for code review before committing
+4. **Commit subtask** - Create one commit per completed subtask
+5. **Push request** - Ask for permission to push after commit
+6. **Repeat** for next subtask
+
+- **Each subtask = One commit** for better traceability
+- Keep commits focused and atomic per subtask
 - **Principles during implementation**:
   - 🎯 Focus on the essential
   - 📝 Comment code when necessary
   - 🧪 Write tests according to the defined strategy
   - 🔄 Perform incremental refactorings
 
-### 7. 🔍 FINAL QUALITY VERIFICATION
+### 7. 🔍 SUBTASK QUALITY VERIFICATION
 
-- **Action**: Run `pnpm run complete-check` after completion
+- **Action**: Run `pnpm run complete-check` before each subtask commit
 - **If problems are reported**:
   - ⚠️ **MANDATORY** - resolve ALL problems
   - Do not proceed to commit until QA is clean
   - Run again until it passes completely
-  - If you are still struguling to fix it (cannot fix in 5 interactions, for example), ask for help
+  - If you are still struggling to fix it (cannot fix in 5 interactions, for example), ask for help
 
-### 8. ✅ STATUS UPDATE - COMPLETION
+### 8. 📝 SUBTASK COMMIT CYCLE
 
-- **Action**: Before start this step, please ask me to review the changes and only continue after my ok.
-- **Action**: Ask me if I did any code change. If so, review the changes done and use this info for the next steps.
-- **Action**: Update the task with implementation details
-- **Action**: Mark the task/subtask as `done` in Task Master
+For each subtask completion:
+
+- **Action**: Before commit, ask me to review the changes and only continue after my ok
+- **Action**: Ask me if I did any code change during review. If so, review the changes and use this info for the commit
+- **Action**: Run `pnpm run complete-check` one final time before commit
+- **Action**: Commit with descriptive message following the pattern below
+- **Action**: Ask permission to push the subtask commit
+
+**Subtask commit message pattern**:
+
+```bash
+type(scope): implement subtask - brief description
+
+- Specific changes made in this subtask
+- Files modified/created
+- Tests added (if any)
+
+Part of #TaskID
+```
+
+### 9. 🔍 FINAL QUALITY VERIFICATION
+
+- **Action**: After ALL subtasks are complete, run `pnpm run complete-check` one final time
+- **Action**: Ensure entire task implementation works as expected
+- **If problems are reported**:
+  - ⚠️ **MANDATORY** - resolve ALL problems
+  - This is the final quality gate before task completion
+
+### 10. ✅ TASK STATUS UPDATE - COMPLETION
+
+- **Action**: Update the task with complete implementation details covering all subtasks
+- **Action**: Mark the task as `done` in Task Master
 - Confirm that the status has been updated correctly
+- Confirm that all subtasks are marked as complete
 
-### 9. 📝 DEVELOPMENT LOGGING
+### 11. 📝 DEVELOPMENT LOGGING
 
 - **Action**: Use **Basic Memory MCP** to log development AND create physical file
-- **Log template**:
+- **Log template** (should cover the entire task and all its subtasks):
 
-```
+```markdown
 ## Task Development #[ID]
 **Date**: [Current date] (use `date "+%Y-%m-%d_%H:%M:%S"` in shell to get timestamp)
 **Title**: [Task title]
@@ -119,11 +160,13 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 - Estimated time: [time]
 - Time spent: [time]
 - Approach used: [brief description]
+- Subtasks completed: [list of subtask numbers if applicable]
 
 ### Implementation
 - Modified files: [list]
 - Tests added: [yes/no - details]
 - Dependencies: [if applicable]
+- Commits made: [brief description of each commit]
 
 ### Observations
 - [Important points for future reference]
@@ -132,44 +175,29 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 ```
 
 **MANDATORY**: Complete BOTH steps:
+
 1. Store in Basic Memory MCP using `write_note` with folder "development-logs"
 2. **ALSO** create the physical file using the `write` tool at `docs/memories/development-logs/task-[ID]-[title].md`
 3. Use `read_note` from Basic Memory to get the content and copy it to the physical file
 
-### 10. 💾 COMMIT AND PUSH
+### 12. 💾 FINAL PUSH
 
-- Commit only when QA is 100% clean
-- Before do the commit (and after check QA is fine), ask me to review the changes and only commit after I confirm.
-- Always use `git add --all`
-- **Commit message pattern**:
+- **Action**: Ask permission for final push of all subtask commits to feature branch
+- Only push when all subtasks are complete and documented
+- This push should include all subtask commits made during the task
 
-```
-type(scope): description
-
-- Implements feature X as per task #ID
-- Resolves dependencies Y and Z
-- Adds tests for scenarios A, B, C
-
-Closes #TaskID
-```
-
-**Valid types**: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
-**NEVER** Amend and force push commits (unless explicit requested by me)
-
-- Ask me if you should push the code to the feature branch and only continue after I approve
-
-### 11. ⛄ OPENING THE PULL REQUEST
+### 13. ⛄ OPENING THE PULL REQUEST
 
 - **Action**: Before create the PR, ask for my approval.
 Use the Github CLI to open a PR with a comprehensive and accurate description of the implementation.
 **NEVER** Add any comment releated to the Agent doing the Pull request (for example, avoid any reference to opencode, claude code, gemini, etc)
 
-### 12. 📢 COMPLETION NOTIFICATION
+### 14. 📢 COMPLETION NOTIFICATION
 
 - **Action**: Notify about task completion
 - **Notification format**:
 
-```
+```markdown
 ✅ Task #[ID] completed successfully
 
 📋 [Task title]
@@ -228,24 +256,34 @@ log-development --task-id [TASK_ID] --details "[details]"
 ### ✅ During Development
 
 - [ ] Following established plan
-- [ ] Incremental commits being made
+- [ ] Each subtask gets individual commit after review
+- [ ] Quality check before each subtask commit
 - [ ] Tests being written as needed
 - [ ] Clean and well-structured code
 
-### ✅ Before Commit
+### ✅ Before Each Subtask Commit
 
-- [ ] Implementation complete as per task
-- [ ] QA executed and 100% clean
-- [ ] Tests passing
-- [ ] Code reviewed
+- [ ] Subtask implementation complete
+- [ ] QA executed and 100% clean for subtask
+- [ ] Code reviewed and approved
+- [ ] Commit message follows subtask pattern
+
+### ✅ Before Final Task Completion
+
+- [ ] All subtasks completed and committed
+- [ ] Final QA executed and 100% clean
+- [ ] Task status updated to `done`
+- [ ] Development log covers entire task
+- [ ] All commits ready for final push
 
 ### ✅ After Completion
 
-- [ ] Status updated to `done`
+- [ ] All subtasks committed individually
+- [ ] Task status updated to `done`
 - [ ] Log recorded in Basic Memory MCP
 - [ ] Physical development log file created in docs/memories/development-logs/
+- [ ] Final push completed with all subtask commits
 - [ ] Completion notification sent
-- [ ] Commit made with appropriate message
 
 ---
 
@@ -259,6 +297,7 @@ Based on your development guidelines, here are the **NO NO actions**:
 
 - **NEVER** skip steps in the mandatory development workflow  
 - **NEVER** commit when QA fails (`pnpm typecheck`, `pnpm lint`, `pnpm test` and `pnpm build` must all pass)  
+- **NEVER** continue if QA check fails because 'errors were already there'. In cases like this, ask me if you can skip or fix them.
 - **NEVER** work without marking task in-progress first  
 - **NEVER** complete task without documentation (development memory logging)  
 - **NEVER** commit failing QA – Quality gates are mandatory  
@@ -289,6 +328,7 @@ Based on your development guidelines, here are the **NO NO actions**:
 
 ## 🏗 Architecture Violations
 
+- **ALWAYS** get documentation information about libraries from Context7 MCP, before start to using them
 - **NEVER** assume libraries are available – Always check existing usage first  
 - **NEVER** add comments unless explicitly asked  
 - **NEVER** skip existing patterns – Follow codebase conventions  

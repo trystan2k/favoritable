@@ -22,13 +22,13 @@ We need to make architectural decisions for:
 
 ## Decision
 
-### Authentication: Lucia Auth
+### Authentication: Better Auth
 
-**Choice**: [Lucia](https://lucia-auth.com/) for authentication and session management
+**Choice**: [Better Auth](https://www.better-auth.com/) for authentication and session management
 
 **Rationale**:
 - **TypeScript-native**: Perfect alignment with our TypeScript-heavy stack
-- **Hono compatibility**: Official Hono middleware support via `@lucia-auth/adapter-hono`
+- **Hono compatibility**: Official Hono support and adapter
 - **Framework agnostic**: Not tied to specific frameworks, works with our API-first architecture
 - **Session-based**: Ideal for SPA applications with HTTP-only cookie security
 - **OAuth support**: Built-in support for Google, GitHub, Apple, and other providers
@@ -37,6 +37,7 @@ We need to make architectural decisions for:
 - **Lightweight**: Minimal overhead, focuses on core authentication needs
 - **No vendor lock-in**: We own our auth data and logic
 - **Mobile-ready**: HTTP-only cookies work seamlessly with React Native and native mobile apps
+- **Active development**: Modern, well-maintained alternative to deprecated options
 
 ### Database: Turso (LibSQL)
 
@@ -83,10 +84,10 @@ We need to make architectural decisions for:
 │ Native Apps     │◄───────────┤
 │ (Swift/Kotlin)  │            │
 └─────────────────┘            ▼
-                        ┌──────────────┐
-                        │ Lucia Auth   │
-                        │ (Sessions)   │
-                        └──────────────┘
+                         ┌──────────────┐
+                         │ Better Auth  │
+                         │ (Sessions)   │
+                         └──────────────┘
                                │
                                ▼
                         ┌──────────────┐
@@ -97,7 +98,7 @@ We need to make architectural decisions for:
 ## Implementation Strategy
 
 ### Phase 1: Authentication Setup
-1. Install Lucia with Hono adapter and SQLite support
+1. Install Better Auth with Hono adapter and SQLite support
 2. Implement session management with HTTP-only cookies
 3. Create auth middleware for protected routes
 4. Set up user registration and login endpoints
@@ -136,6 +137,7 @@ We need to make architectural decisions for:
 | **Passport.js** | Mature, many strategies | Complex setup, less TypeScript-friendly | ❌ Too complex |
 | **Supabase Auth** | Easy setup, managed | Vendor lock-in, doesn't fit self-hosted | ❌ Lock-in concerns |
 | **Custom JWT** | Full control | Security complexity, session management | ❌ Reinventing wheel |
+| **Lucia Auth** | TypeScript-native, lightweight | Deprecated, no longer maintained | ❌ Not actively maintained |
 
 ### Database Alternatives
 
@@ -182,15 +184,15 @@ We need to make architectural decisions for:
 - **✅ Session persistence**: Platform handles cookie persistence across app restarts
 
 ### Mobile vs. Auth.js Comparison
-- **Lucia advantage**: HTTP-only cookies are more secure than manually stored JWT tokens
-- **Lucia advantage**: Platform-native cookie handling vs. custom token management
-- **Lucia advantage**: Same session-based approach across all platforms
+- **Better Auth advantage**: HTTP-only cookies are more secure than manually stored JWT tokens
+- **Better Auth advantage**: Platform-native cookie handling vs. custom token management
+- **Better Auth advantage**: Same session-based approach across all platforms
 - **Auth.js disadvantage**: Would require custom JWT handling and secure storage in mobile apps
 
 ## Risks and Mitigations
 
-### Risk: Lucia adoption/community size
-- **Mitigation**: Well-documented, TypeScript-first, active development
+### Risk: Better Auth adoption/community size
+- **Mitigation**: Well-documented, TypeScript-first, active development, modern alternative
 - **Fallback**: Can migrate to other session-based auth if needed
 
 ### Risk: Turso vendor dependency
@@ -203,7 +205,7 @@ We need to make architectural decisions for:
 
 ## References
 
-- [Lucia Auth Documentation](https://lucia-auth.com/)
+- [Better Auth Documentation](https://www.better-auth.com/docs)
 - [Turso Documentation](https://docs.turso.tech/)
 - [Hono Documentation](https://hono.dev/)
 - [Railway Documentation](https://docs.railway.app/)

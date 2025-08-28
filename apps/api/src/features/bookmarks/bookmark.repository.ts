@@ -18,7 +18,8 @@ export type UpdateBookmarkDTO = Partial<InsertBookmarkDTO> &
 
 export interface BookmarkRepository {
   findAll(
-    queryParams: GetBookmarksQueryParamsModel
+    queryParams: GetBookmarksQueryParamsModel,
+    userId?: string
   ): Promise<BookmarkWithLabelsDTO[]>;
   findById(id: string): Promise<BookmarkWithLabelsDTO | undefined>;
   create(data: InsertBookmarkDTO): Promise<BookmarkDTO>;

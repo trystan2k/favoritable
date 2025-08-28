@@ -23,7 +23,8 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
   constructor(@Inject('db') private db: DBTransaction) {}
 
   async findAll(
-    queryParams: GetBookmarksQueryParamsModel
+    queryParams: GetBookmarksQueryParamsModel,
+    userId?: string
   ): Promise<BookmarkWithLabelsDTO[]> {
     const { limit, q: searchQuery, cursor } = queryParams;
 
@@ -59,6 +60,10 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
               ])
             )
           );
+        }
+
+        if (userId) {
+          conditions.push(eq(bookmark.userId, userId));
         }
 
         return conditions.length > 0 ? and(...conditions) : undefined;

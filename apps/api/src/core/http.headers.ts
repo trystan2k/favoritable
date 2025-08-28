@@ -9,7 +9,8 @@ export const addCorsHeaders = () => {
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowHeaders: ['Content-Type', 'Authorization'],
     exposeHeaders: ['Content-Length', 'X-Request-Id'],
-    maxAge: 86400,
+    maxAge: 600,
+    credentials: true,
   });
 };
 

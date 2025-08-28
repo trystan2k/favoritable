@@ -39,12 +39,15 @@ export class BookmarkService {
   ) {}
 
   async getBookmarks(
-    queryParams: GetBookmarksQueryParamsModel
+    queryParams: GetBookmarksQueryParamsModel,
+    userId: string
   ): Promise<BookmarksModel> {
     const { q: searchQuery, limit, cursor } = queryParams;
 
-    const bookmarks =
-      await this.bookmarkUnitOfWork.bookmarkRepository.findAll(queryParams);
+    const bookmarks = await this.bookmarkUnitOfWork.bookmarkRepository.findAll(
+      queryParams,
+      userId
+    );
 
     const mappedBookmarks = bookmarks.map((bookmark) =>
       mapBookmarkDTOToBookmarkModel(bookmark)
@@ -82,19 +85,19 @@ export class BookmarkService {
     return mapBookmarkDTOToBookmarkModel(bookmark);
   }
 
-  async createBookmark(data: CreateBookmarkModel) {
+  async createBookmark(data: CreateBookmarkModel, userId?: string) {
     const newBookmark = mapCreateBookmarkModelToInsertBookmarkDTO(
       data,
-      PLACEHOLDER_USER_ID
+      userId ?? PLACEHOLDER_USER_ID
     );
     const bookmark =
       await this.bookmarkUnitOfWork.bookmarkRepository.create(newBookmark);
     return mapBookmarkDTOToBookmarkModel(bookmark);
   }
 
-  async createBookmarkFromUrl(url: string) {
+  async createBookmarkFromUrl(url: string, userId: string) {
     const bookmarkData = await scrapper(url);
-    return this.createBookmark(bookmarkData);
+    return this.createBookmark(bookmarkData, userId);
   }
 
   async deleteBookmarks(ids: string[]) {

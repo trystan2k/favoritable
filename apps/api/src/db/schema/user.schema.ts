@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm/relations';
-import { index, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { trackingDates } from './common.schema.js';
 import { label } from './label.schema.js';
 
@@ -9,10 +9,14 @@ export const user = sqliteTable(
   'users',
   {
     id: text('id').primaryKey(),
-    email: text('email').notNull().unique(),
     name: text('name').notNull(),
+    email: text('email').notNull().unique(),
+    emailVerified: integer('email_verified', { mode: 'boolean' })
+      .$defaultFn(() => false)
+      .notNull(),
+    image: text('image'),
     avatarUrl: text('avatar_url'),
-    provider: text('provider', { enum: providerEnum }).notNull(),
+    provider: text('provider', { enum: providerEnum }),
     ...trackingDates,
   },
   (table) => [
