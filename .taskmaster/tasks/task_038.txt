@@ -1,0 +1,11 @@
+# Task ID: 38
+# Title: Backend: Implement Import from HTML File Endpoint
+# Status: pending
+# Dependencies: 18
+# Priority: medium
+# Description: Develop an endpoint to import bookmarks from a browser's HTML export file.
+# Details:
+Implement `POST /bookmarks/import/html`. Parse the Netscape Bookmark File Format (HTML) and create new bookmark records.
+
+# Test Strategy:
+Write E2E tests using sample browser HTML export files to verify successful import.

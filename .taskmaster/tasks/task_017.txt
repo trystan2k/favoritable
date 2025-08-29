@@ -1,0 +1,11 @@
+# Task ID: 17
+# Title: Associate User with Bookmarks & Labels
+# Status: pending
+# Dependencies: 9, 10, 16
+# Priority: high
+# Description: Ensure `userId` is correctly linked in data models and operations for bookmarks and labels.
+# Details:
+Modify bookmark and label creation/update endpoints to automatically assign the current authenticated user's ID.
+
+# Test Strategy:
+Create bookmarks and labels as a logged-in user; verify `userId` is correctly populated in the database.

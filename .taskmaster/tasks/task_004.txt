@@ -1,0 +1,49 @@
+# Task ID: 4
+# Title: Configure Linting & Formatting
+# Status: done
+# Dependencies: 2, 3
+# Priority: high
+# Description: Set up Biome V2 and Knip for linting, formatting, and dependency analysis across the monorepo.
+# Details:
+This task involves setting up a unified linting and formatting system for the entire monorepo using Biome V2 and Knip. A common configuration for Biome should be created in the `packages` folder and then extended by each application (e.g., `api`, `frontend`). Configure `biome.json` and `knip.json` files. Add `lint`, `format`, and `knip` scripts to the root `package.json` to run checks across all workspaces.
+
+# Test Strategy:
+Run `biome format --write` and `biome lint --apply` across the entire project to verify auto-fixing. Run `knip` to check for unused files, exports, and dependencies. Manually introduce an error (e.g., an unused variable) and confirm that `biome lint` reports it. Verify that the scripts work correctly from the monorepo root.
+
+# Subtasks:
+## 1. Install Biome and Knip Dependencies [done]
+### Dependencies: None
+### Description: Add Biome V2 and Knip as root-level development dependencies to the monorepo.
+### Details:
+In the root directory of the monorepo, run the appropriate command for the package manager (e.g., `npm install -D @biomejs/biome knip`) to install the necessary tools.
+
+## 2. Create Base Biome Configuration [done]
+### Dependencies: 4.1
+### Description: Create a common `biome.json` configuration file in a shared location (e.g., `packages/config-biome`) to define the project-wide formatting and linting rules.
+### Details:
+This base configuration should specify the desired formatter settings (e.g., indent style, line width) and enable the recommended set of linter rules. This file will be extended by individual workspaces.
+
+## 3. Extend Biome Configuration in Workspaces [done]
+### Dependencies: 4.2
+### Description: Create `biome.json` files in each application workspace (e.g., `api`, `frontend`) that extend the base configuration.
+### Details:
+In each application's root directory, add a `biome.json` file that uses the `extends` property to inherit from the base configuration file. This ensures consistent rules while allowing for future workspace-specific overrides.
+
+## 4. Configure Knip for Dependency Analysis [done]
+### Dependencies: 4.1
+### Description: Create a `knip.json` file at the monorepo root to configure unused file, export, and dependency analysis across all workspaces.
+### Details:
+Define the entry points for each workspace (e.g., `api/src/index.ts`, `frontend/src/main.tsx`) and configure any project-specific paths or patterns that Knip should ignore during its analysis.
+
+## 5. Add Root-Level NPM Scripts [done]
+### Dependencies: 4.3, 4.4
+### Description: Add `lint`, `format`, and `knip` scripts to the root `package.json` to run the tools across the entire monorepo.
+### Details:
+Define scripts in the root `package.json` like `"lint": "biome lint ."`, `"format": "biome format --write ."`, and `"knip": "knip"`. These scripts will provide a single point of entry for running code quality checks.
+
+## 6. Perform Initial Codebase Formatting and Linting [done]
+### Dependencies: 4.5
+### Description: Run the newly created format and lint scripts across the entire codebase to apply the new rules and fix any auto-fixable issues.
+### Details:
+Execute `npm run format` and `npm run lint -- --apply` from the root directory. Review the automated changes and commit them to establish a clean, consistent code style baseline for the project.
+

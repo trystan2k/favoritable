@@ -1,0 +1,11 @@
+# Task ID: 21
+# Title: Backend: Implement URL Metadata Fetching
+# Status: pending
+# Dependencies: 18
+# Priority: high
+# Description: Develop a service to auto-fetch title, description, published date, author, and thumbnail from a given URL.
+# Details:
+Create an endpoint `POST /bookmarks/from-url` that takes a URL and returns its metadata. Use a library like `link-preview-generator` or `metascraper`.
+
+# Test Strategy:
+Write unit tests for the metadata fetching logic with various URL types (articles, videos, blogs).

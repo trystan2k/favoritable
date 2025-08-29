@@ -38,4 +38,10 @@ export const auth = betterAuth({
     },
   },
   telemetry: { enabled: false },
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60, // Cache duration in seconds
+    },
+  },
 });

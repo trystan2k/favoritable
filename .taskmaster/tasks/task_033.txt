@@ -1,0 +1,11 @@
+# Task ID: 33
+# Title: Backend: Implement Search Bookmarks Endpoint
+# Status: pending
+# Dependencies: 18
+# Priority: medium
+# Description: Add search capability to the `GET /bookmarks` endpoint, allowing search by title, description, or URL.
+# Details:
+Implement full-text search or `LIKE` queries on relevant fields. Add a query parameter (e.g., `?q=keyword`).
+
+# Test Strategy:
+Write API tests to verify search functionality returns correct results for various keywords.

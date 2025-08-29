@@ -1,0 +1,11 @@
+# Task ID: 23
+# Title: Backend: Implement Favorite/Unfavorite Endpoint
+# Status: pending
+# Dependencies: 18
+# Priority: medium
+# Description: Add an endpoint to toggle the favorite status of a bookmark.
+# Details:
+Implement `PATCH /bookmarks/:id` to update a `isFavorite` field (or similar) on the bookmark.
+
+# Test Strategy:
+Write API tests to verify favorite status can be toggled and persists.

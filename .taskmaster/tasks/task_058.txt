@@ -1,0 +1,21 @@
+# Task ID: 58
+# Title: Investigate Server-Sent Events (SSE)
+# Status: pending
+# Dependencies: 3
+# Priority: high
+# Description: Implement a background job processing system using Server-Sent Events (SSE) to handle asynchronous URL scraping operations, as documented in ADR 002.
+# Details:
+This task involves building a robust, non-blocking architecture for URL scraping. The API will immediately accept bookmark import requests, queue them for background processing, and provide real-time progress updates to the client via SSE.
+
+Key components to implement:
+1.  **SQLite Job Queue:** A custom queue built on SQLite to persist and manage scraping jobs (pending, processing, completed, failed).
+2.  **Child Process Workers:** Isolate Puppeteer scraping tasks in dedicated child processes to prevent blocking the main Node.js event loop.
+3.  **Job Coordinator:** A central module in the main process to manage the job queue, dispatch jobs to available workers, and handle retries.
+4.  **EventEmitter for Status Updates:** Use Node.js's EventEmitter to communicate job status (e.g., 'progress', 'completed', 'error') from child workers back to the main process.
+5.  **Hono SSE Endpoint:** Create a `/api/jobs/:jobId/stream` endpoint that streams status updates for a specific job to the frontend.
+
+# Test Strategy:
+1.  **Unit Tests:** Write unit tests for the SQLite job queue logic (enqueue, dequeue, update status) and the core logic of the Puppeteer worker.
+2.  **Integration Tests:** Create integration tests for the entire flow: API call -> job creation -> worker processing -> status update via EventEmitter -> SSE message received by a test client.
+3.  **End-to-End (E2E) Tests:** Verify that the frontend correctly initiates an import, receives an immediate response, and displays real-time progress updates by consuming the SSE stream.
+4.  **Stress Tests:** Test the system with a large number of concurrent jobs to ensure stability and proper resource management of child processes.

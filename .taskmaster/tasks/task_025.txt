@@ -1,0 +1,11 @@
+# Task ID: 25
+# Title: Backend: Implement Archive/Unarchive Endpoint
+# Status: pending
+# Dependencies: 18
+# Priority: medium
+# Description: Add an endpoint to toggle the archive status of a bookmark.
+# Details:
+Implement `PATCH /bookmarks/:id` to update the `state` field ('active'/'archived') on the bookmark.
+
+# Test Strategy:
+Write API tests to verify archive status can be toggled and persists.

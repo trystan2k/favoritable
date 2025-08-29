@@ -1,0 +1,70 @@
+# Task ID: 64
+# Title: Create Architecture Decision Records (ADRs) for Key Technologies
+# Status: done
+# Dependencies: None
+# Priority: medium
+# Description: Create and populate Architecture Decision Record (ADR) files for key technology choices. This includes the backend stack (Hono, SQLite, Drizzle), project structure (Monorepo, Turbo), testing frameworks (Vitest, React Testing Library), and other critical tools like Zod, TypeScript, Bruno, Puppeteer, and Pino.
+# Details:
+Create a new directory `docs/adr` in the project root. Within this directory, create individual markdown files for each of the following technology decisions:
+1. Backend Framework & DB: Hono, SQLite, and Drizzle ORM.
+2. Project Structure: Monorepo with Turborepo.
+3. Testing: Vitest and React Testing Library.
+4. Validation: Zod for schema validation.
+5. Language: TypeScript for static typing.
+6. API Testing: Bruno for API client and testing.
+7. Web Scraping: Puppeteer for metadata fetching.
+8. Logging: Pino for structured logging.
+Each ADR file must follow the standard template, including 'Context', 'Decision', 'Status' (set to 'Accepted'), and 'Consequences' sections, clearly articulating the rationale for each choice.
+
+# Test Strategy:
+Navigate to the `docs/adr` directory in the repository. Verify that a separate markdown file exists for each of the 8 specified technology decisions. Open each file and confirm that it contains the four required sections: Context, Decision, Status, and Consequences. Ensure the content is populated and relevant to the technology being documented.
+
+# Subtasks:
+## 1. Initialize ADR Directory and Template [done]
+### Dependencies: None
+### Description: Create the `docs/adr` directory and a standard markdown template file to ensure consistency across all Architecture Decision Records.
+### Details:
+Create a new directory `docs/adr` at the project root. Inside this directory, create a file named `000-template.md`. This file should contain the boilerplate structure for an ADR, including markdown headers for 'Context', 'Decision', 'Status', and 'Consequences'.
+
+## 2. Write ADR for Backend Stack (Hono, SQLite, Drizzle) [done]
+### Dependencies: 64.1
+### Description: Document the decision to use Hono, SQLite, and Drizzle ORM for the backend, explaining the rationale and consequences.
+### Details:
+Using the template from subtask 64.1, create a new file `001-backend-stack.md`. Populate the sections to justify the choice of Hono for its performance, SQLite for its embedded nature, and Drizzle for its TypeScript-first approach.
+
+## 3. Write ADR for Project Structure (Monorepo, Turborepo) [done]
+### Dependencies: 64.1
+### Description: Document the decision to structure the project as a monorepo managed by Turborepo.
+### Details:
+Create a new file `002-project-structure.md`. Explain the context of managing multiple related packages and the decision to use a monorepo. Detail why Turborepo was chosen for its build caching and task orchestration capabilities.
+
+## 4. Write ADR for Testing Frameworks (Vitest, RTL) [done]
+### Dependencies: 64.1
+### Description: Document the choice of Vitest and React Testing Library as the primary frameworks for the project's testing strategy.
+### Details:
+Create a new file `003-testing-frameworks.md`. Justify the selection of Vitest for its speed and compatibility with Vite, and React Testing Library for its user-centric testing philosophy for UI components.
+
+## 5. Write ADR for Type Safety and Validation (TypeScript, Zod) [done]
+### Dependencies: 64.1
+### Description: Document the decisions to use TypeScript for static type safety and Zod for runtime data validation.
+### Details:
+Create a new file `004-typing-and-validation.md`. Explain the benefits of using TypeScript across the monorepo and the rationale for choosing Zod for schema declaration and validation.
+
+## 6. Write ADR for API Client and Web Scraping (Bruno, Puppeteer) [done]
+### Dependencies: 64.1
+### Description: Document the selection of Bruno as the API client and Puppeteer for web scraping metadata.
+### Details:
+Create a new file `005-developer-tooling.md`. Describe the reasons for choosing Bruno for its git-friendly format and Puppeteer for its robust browser automation capabilities for fetching metadata.
+
+## 7. Write ADR for Logging (Pino) [done]
+### Dependencies: 64.1
+### Description: Document the choice of Pino for high-performance, structured logging in the backend application.
+### Details:
+Create a new file `006-logging.md`. Explain the importance of structured logging for observability and justify the selection of Pino based on its performance benchmarks and simple API.
+
+## 8. Review and Finalize All ADRs [done]
+### Dependencies: 64.2, 64.3, 64.4, 64.5, 64.6, 64.7
+### Description: Conduct a final review of all created ADRs to ensure they are clear, complete, and consistently formatted before merging.
+### Details:
+Review each ADR file in the `docs/adr` directory. Check for grammatical errors, clarity in the 'Context' and 'Consequences' sections, and ensure the 'Status' is set to 'Accepted' in all final documents. Verify file naming conventions are consistent.
+

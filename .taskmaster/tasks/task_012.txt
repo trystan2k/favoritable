@@ -1,0 +1,82 @@
+# Task ID: 12
+# Title: Integrate Auth.js
+# Status: in-progress
+# Dependencies: 3, 8
+# Priority: high
+# Description: Update authentication strategy from Auth.js to Better Auth. Set up Better Auth with the Hono backend for authentication as per the new architectural decision.
+# Details:
+Install Better Auth and its official Hono adapter. Configure Better Auth for session-based authentication using HTTP-only cookies. This involves setting up the database adapter, defining the schema for users and sessions, and initializing Better Auth in the Hono application.
+
+# Test Strategy:
+Verify Better Auth middleware is active and correctly protects routes. Test session creation on login and session deletion on logout. Confirm that HTTP-only session cookies are being set and validated correctly on protected requests.
+
+# Subtasks:
+## 1. Install Better Auth and Adapter Dependencies [done]
+### Dependencies: None
+### Description: Add Better Auth, its official Hono adapter, and the relevant database driver to the backend project's dependencies to prepare for the integration.
+### Details:
+In the Hono backend workspace, execute the package manager command to install `lucia` and the appropriate adapter (e.g., `@lucia-auth/adapter-drizzle-sqlite`). Ensure these packages are correctly added to the `package.json` file.
+<info added on 2025-08-28T23:20:19.319Z>
+Better Auth v1.3.7 was installed as the authentication library, replacing the deprecated Better Auth. All lint issues were resolved using proper null checks instead of non-null assertions. All QA checks, including typecheck, lint, knip, tests, and build, are passing.
+</info added on 2025-08-28T23:20:19.319Z>
+
+## 2. Define and Migrate User and Session Database Schemas [done]
+### Dependencies: 12.1
+### Description: Update the database schema to include the `User` and `Session` tables required by Better Auth. Generate and apply a database migration to create these tables.
+### Details:
+Using the project's ORM (e.g., Drizzle), define the schema for the `user` and `session` tables according to Better Auth's documentation. The `user` table must have a unique ID, and the `session` table needs fields for ID, user ID, and expiration timestamp. Run the ORM's migration tool to apply these changes to the database.
+
+## 3. Initialize and Configure Better Auth in Hono [done]
+### Dependencies: 12.2
+### Description: Create and configure the main Better Auth instance within the Hono application. This involves connecting Better Auth to the database adapter and setting session cookie parameters.
+### Details:
+Create a new file (e.g., `src/lib/auth.ts`) to house the authentication logic. Initialize Better Auth by passing the database adapter. Configure the `getUserAttributes` function to define which user data is accessible on the session object. Set session cookie options, ensuring it is an HTTP-only cookie for security. Export the initialized `lucia` object.
+
+## 4. Implement Hono Middleware for Session Validation [done]
+### Dependencies: 12.3
+### Description: Develop a Hono middleware that intercepts incoming requests to validate the session cookie. If the session is valid, the middleware will attach user and session data to the request context.
+### Details:
+The middleware should read the session cookie from the request headers. Use `lucia.validateSession()` to verify the session's validity. If valid, attach the `user` and `session` to Hono's context (e.g., `c.set('user', user)`). If the session is invalid, clear the session cookie. This middleware should be applied to all routes that may require authentication.
+
+## 5. Implement and Test Protected and Unprotected Routes [done]
+### Dependencies: 12.4
+### Description: Create basic API endpoints to verify that the authentication and session middleware are functioning correctly. This includes one public route and one protected route.
+### Details:
+Create a public route (e.g., `/health`) that does not use the auth middleware. Create a protected route (e.g., `/api/me`) that uses the middleware. The protected route should attempt to read the user from the context and return user data if present, or a 401 Unauthorized status if the user is not authenticated.
+
+## 6. Implement Better Auth Error Handling [pending]
+### Dependencies: 12.5
+### Description: Implement proper error handling for Better Auth errors following the framework's error handling patterns, similar to how we currently handle errors for services and repositories.
+### Details:
+According to Better Auth documentation (https://www.better-auth.com/docs/concepts/api#error-handling), auth operations can throw specific error types that need to be handled appropriately. This subtask involves:
+
+1. Study Better Auth error types and structure
+2. Create auth error mappers similar to serviceErrorsHandler and repositoryErrorsHandler
+3. Integrate auth error handling into the main error handler chain
+4. Ensure auth errors are properly logged and return appropriate HTTP status codes
+5. Add unit tests for auth error handling scenarios
+
+The implementation should follow the existing error handling patterns in the codebase (errors.handlers.ts, errors.mappers.ts) to maintain consistency.
+
+## 7. Move Auth Routes to Dedicated File [pending]
+### Dependencies: 12.6
+### Description: Move authentication routes from index.ts to a dedicated auth routes file, following the same pattern as bookmark and label routes.
+### Details:
+Currently, the auth routes are defined directly in the main index.ts file:
+- `/api/test/no-auth` - Test endpoint without authentication
+- `/api/test/with-auth` - Test endpoint requiring authentication  
+- `/api/auth/session` - Get current session information
+- `/api/auth/*` - Better Auth handler routes
+
+This subtask involves:
+
+1. Create a new `AuthRoutes` class in `src/features/auth/auth.routes.ts` following the same pattern as BookmarkRoutes and LabelRoutes
+2. Move all auth-related routes from index.ts to the new AuthRoutes class
+3. Register the AuthRoutes class in the dependency injection container
+4. Update index.ts to use the new AuthRoutes via container resolution
+5. Ensure the auth routes are properly mounted with the correct base path
+6. Update any imports or dependencies as needed
+7. Verify all auth endpoints still work correctly after the refactor
+
+The implementation should maintain the existing functionality while improving code organization and following established patterns in the codebase.
+

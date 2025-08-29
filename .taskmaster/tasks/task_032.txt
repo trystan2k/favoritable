@@ -1,0 +1,11 @@
+# Task ID: 32
+# Title: Frontend: Implement Default Collections UI
+# Status: pending
+# Dependencies: 19, 24, 26
+# Priority: medium
+# Description: Create UI elements for 'All', 'Favorites', and 'Archived' default collections.
+# Details:
+Integrate these as navigation options, potentially in the sidebar or a separate filter bar. Use existing favorite/archive status.
+
+# Test Strategy:
+Verify clicking on 'Favorites' shows only favorited bookmarks, 'Archived' shows only archived, and 'All' shows all active bookmarks.

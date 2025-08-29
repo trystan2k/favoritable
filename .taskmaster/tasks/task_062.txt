@@ -1,0 +1,59 @@
+# Task ID: 62
+# Title: Configure Husky for Git Hooks
+# Status: done
+# Dependencies: 4
+# Priority: medium
+# Description: Set up Husky to manage Git hooks, ensuring that code quality checks (type checking, linting, formatting) and tests are run automatically before commits and pushes, as per ADR-013.
+# Details:
+Implement the Git hooks strategy defined in ADR-013. This involves using Husky directly without `lint-staged`.
+
+1. **Installation**: Install Husky as a dev dependency: `pnpm install husky -D`.
+2. **Initialization**: Initialize Husky to create the `.husky/` directory: `npx husky init`.
+3. **Pre-commit Hook**: Create a pre-commit hook that runs type checking and Biome checks on staged files. This hook will apply safe fixes automatically. Use the command: `npx husky add .husky/pre-commit "pnpm typecheck && pnpm check:write --staged"`.
+4. **Pre-push Hook**: Create a pre-push hook that runs the test suite with coverage to prevent pushing broken code. Use the command: `npx husky add .husky/pre-push "pnpm test:coverage"`.
+
+Refer to ADR-013 for the complete implementation strategy.
+
+# Test Strategy:
+The test strategy involves verifying both hooks individually.
+
+**Pre-commit Hook Test:**
+1. Modify a source file to introduce a type error (e.g., assign a number to a string variable) and a separate formatting error that Biome can fix automatically.
+2. Stage the file with `git add`.
+3. Attempt to commit: `git commit -m 'test: trigger pre-commit hook'`.
+4. Verify that the commit is blocked and the output shows the type error. Check that the formatting error was automatically fixed by Biome.
+5. Fix the type error, stage the file again, and re-attempt the commit. It should now succeed.
+
+**Pre-push Hook Test:**
+1. Ensure you have at least one commit ready to be pushed.
+2. Introduce a change that causes a unit test to fail.
+3. Commit this change.
+4. Attempt to push the branch to the remote repository: `git push`.
+5. Verify that the push is blocked by Husky and the output shows the test failure from `pnpm test:coverage`.
+6. Fix the failing test, commit the fix, and attempt to push again. The push should now succeed.
+
+# Subtasks:
+## 1. Install Husky Dependency [done]
+### Dependencies: None
+### Description: Add Husky as a development dependency to the project using the pnpm package manager, as specified in the task requirements.
+### Details:
+Run the command `pnpm install husky -D` in the project's root directory to install the necessary package.
+
+## 2. Initialize Husky Configuration [done]
+### Dependencies: 62.1
+### Description: Run the Husky initialization script to create the `.husky/` directory. This step prepares the project to have Git hooks managed by Husky.
+### Details:
+Execute the command `npx husky init` in the project root. This will create the `.husky` directory and a sample hook file.
+
+## 3. Create Pre-commit Hook for Quality Checks [done]
+### Dependencies: 62.2
+### Description: Configure a pre-commit hook to run type checking and Biome checks on staged files. This hook will apply safe fixes automatically before each commit, enforcing code quality standards.
+### Details:
+Use the Husky CLI to create the pre-commit hook file with the specified commands. Run: `npx husky add .husky/pre-commit "pnpm typecheck && pnpm check:write --staged"`.
+
+## 4. Create Pre-push Hook for Testing [done]
+### Dependencies: 62.2
+### Description: Configure a pre-push hook that runs the full test suite with coverage. This acts as a final safeguard to prevent pushing broken code or code with failing tests to the remote repository.
+### Details:
+Use the Husky CLI to create the pre-push hook file with the test command. Run: `npx husky add .husky/pre-push "pnpm test:coverage"`.
+

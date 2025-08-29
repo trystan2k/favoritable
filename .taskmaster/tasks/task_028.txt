@@ -1,0 +1,11 @@
+# Task ID: 28
+# Title: Frontend: Develop Labels Sidebar Navigation
+# Status: pending
+# Dependencies: 2, 27
+# Priority: medium
+# Description: Create a left-side vertical navigation component to display label categories.
+# Details:
+Fetch labels from `GET /labels`. Display them as clickable links/buttons in a sidebar.
+
+# Test Strategy:
+Verify sidebar renders correctly and lists all user's labels.

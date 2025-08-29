@@ -1,0 +1,46 @@
+# Task ID: 6
+# Title: Implement Docker Image creation for future deployment
+# Status: done
+# Dependencies: 3
+# Priority: high
+# Description: Create a production-ready Docker container for the Hono API. This task focuses on building a multi-stage Dockerfile that includes all necessary dependencies for Puppeteer to support web scraping, and ensuring the container can be built and tested locally.
+# Details:
+Develop a multi-stage Dockerfile to create an optimized and secure production image for the Hono API. The build process should handle installing dependencies, building the TypeScript source, and copying only the necessary artifacts to a lean final image. A key requirement is to install all system-level dependencies needed for Puppeteer to run headless Chromium for web scraping tasks. The final container should be configured for a production environment and tested locally to ensure full functionality before deployment.
+
+# Test Strategy:
+Build the Docker image locally using the `docker build` command. Run the image as a container, mapping the necessary ports and providing required environment variables (e.g., database credentials). Test the running container by sending requests to its API endpoints using a tool like cURL or Postman. Specifically, verify that a standard endpoint returns a successful response and that an endpoint utilizing Puppeteer for web scraping executes without errors and returns the expected data.
+
+# Subtasks:
+## 1. Create Multi-Stage Dockerfile for Production [done]
+### Dependencies: None
+### Description: Develop a multi-stage Dockerfile to build and run the Hono API efficiently, separating build-time dependencies from the final runtime image.
+### Details:
+Use a `builder` stage with a Node.js base image to install all dependencies and build the application. Use a final, smaller production stage to copy the built application and production dependencies from the `builder` stage. This will minimize the final image size and improve security.
+
+## 2. Install Puppeteer System Dependencies in Docker Image [done]
+### Dependencies: 6.1
+### Description: Add the necessary system-level dependencies to the Dockerfile to ensure Puppeteer can run headless Chromium correctly within the container.
+### Details:
+In the final production stage of the Dockerfile, add commands to install required libraries for headless Chromium (e.g., `libnss3`, `libgconf-2-4`, etc.). Research the specific dependencies needed for the chosen base image (e.g., Debian-based).
+
+## 3. Configure Container Entrypoint and Environment [done]
+### Dependencies: 6.1
+### Description: Configure the Docker container's runtime environment variables, exposed port, and startup command for production.
+### Details:
+In the Dockerfile, set the `NODE_ENV` environment variable to `production`. Use the `EXPOSE` instruction to document the application port (e.g., 3000). Define the `CMD` instruction to start the Hono server using the compiled JavaScript output.
+
+## 4. Document Local Docker Build and Run Process [done]
+### Dependencies: 6.3
+### Description: Create documentation or scripts for building the Docker image and running it locally for development and testing purposes.
+### Details:
+Add a section to the `README.md` or create helper scripts in `package.json` that detail the `docker build` and `docker run` commands. The run command should include examples for port mapping (`-p`) and passing environment variables (`-e` or `--env-file`).
+
+## 5. Validate API Functionality in Local Container [done]
+### Dependencies: 6.2, 6.4
+### Description: Build and run the container locally to test that all API endpoints, especially those using Puppeteer, are fully functional.
+### Details:
+Follow the documented process to build the image and run the container. Use cURL or Postman to send requests to the API on `localhost`. Confirm that a basic endpoint works and that the web scraping endpoint successfully executes a Puppeteer job and returns data without crashing.
+<info added on 2025-08-15T23:31:35.127Z>
+The Docker setup is complete. This includes a multi-stage Dockerfile with all necessary Puppeteer dependencies, an optimized .dockerignore file, and documented commands in the README. For local validation, use the npm scripts: 'pnpm docker:build' and 'pnpm docker:run'.
+</info added on 2025-08-15T23:31:35.127Z>
+

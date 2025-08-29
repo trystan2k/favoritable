@@ -1,0 +1,11 @@
+# Task ID: 45
+# Title: Implement Dark and Light UI Themes
+# Status: pending
+# Dependencies: 2
+# Priority: medium
+# Description: Develop a theme toggling mechanism for dark and light UI modes.
+# Details:
+Use Shadcn UI's theme capabilities. Implement a global theme context and a toggle button.
+
+# Test Strategy:
+Toggle between themes and verify all UI components adapt correctly.

@@ -1,0 +1,43 @@
+# Task ID: 66
+# Title: Refactor and Relocate Tooling Configuration Packages
+# Status: done
+# Dependencies: 4, 62, 65
+# Priority: medium
+# Description: Rename the `config-biome` package to `lint-config` for tool agnosticism and reorganize all tooling configuration packages into a new `packages/development/` directory to improve monorepo structure.
+# Details:
+This task involves a structural refactor of the monorepo's tooling configuration. First, create a new directory `packages/development`. Move the existing `packages/config-biome` and `packages/test-config` directories into this new `packages/development` directory. Rename the `config-biome` folder to `lint-config`. Update the `package.json` within `packages/development/lint-config` to change its name from `@favoritable/config-biome` to `@favoritable/lint-config`. Next, update the root `pnpm-workspace.yaml` to include the `packages/development/*` path. Conduct a global search-and-replace across the entire project to update all imports and `package.json` dependencies from `@favoritable/config-biome` to `@favoritable/lint-config`. Also, verify and update any references to `@favoritable/test-config` to ensure they resolve correctly. Finally, check and update any scripts, such as the Husky pre-commit hook, that may have hardcoded paths or dependencies on the old package names or locations. Run `pnpm install` to regenerate the lockfile and reflect the workspace changes.
+
+# Test Strategy:
+1. Verify the new directory structure exists: `packages/development/lint-config` and `packages/development/test-config`. 2. Check the `package.json` in `lint-config` to confirm its name is `@favoritable/lint-config`. 3. Run `pnpm lint` and `pnpm format` from the root to ensure the linter and formatter still execute correctly across all workspaces using the new shared configuration package. 4. Run `pnpm test` to confirm that all tests still pass and correctly extend the shared configuration from `@favoritable/test-config` in its new location. 5. Trigger the pre-commit hook by making a change that violates a lint rule; verify that the hook runs successfully and blocks the commit, confirming it can find the new config. 6. Delete all `node_modules` and `pnpm-lock.yaml` and run `pnpm install` to ensure a clean setup works correctly.
+
+# Subtasks:
+## 1. Create `packages/development` and Relocate Config Packages [done]
+### Dependencies: None
+### Description: Create the new `packages/development/` directory and move the existing `packages/config-biome` and `packages/test-config` packages into it.
+### Details:
+Create a new directory named `development` inside the `packages` directory. Move the `config-biome` and `test-config` folders from `packages/` into `packages/development/`.
+
+## 2. Rename `config-biome` Package to `lint-config` [done]
+### Dependencies: 66.1
+### Description: Rename the `packages/development/config-biome` directory to `lint-config` and update the `name` field in its `package.json` from `@favoritable/config-biome` to `@favoritable/lint-config`.
+### Details:
+In the new `packages/development` directory, rename the `config-biome` folder to `lint-config`. Then, edit the `package.json` file inside this folder to change its name property to `@favoritable/lint-config`.
+
+## 3. Update `pnpm-workspace.yaml` [done]
+### Dependencies: 66.1
+### Description: Modify the root `pnpm-workspace.yaml` file to include the new `packages/development/*` path, ensuring pnpm can find the relocated packages.
+### Details:
+Add the path `packages/development/*` to the `packages` list in the root `pnpm-workspace.yaml` file to make the package manager aware of the new package locations.
+
+## 4. Update All Project References to Relocated Packages [done]
+### Dependencies: 66.2, 66.3
+### Description: Perform a global search-and-replace across the entire monorepo to update all imports and `package.json` dependencies from `@favoritable/config-biome` to `@favoritable/lint-config`.
+### Details:
+Search the entire codebase for the string `@favoritable/config-biome` and replace it with `@favoritable/lint-config`. This includes all `package.json` files and any import statements. Also, verify and update any scripts that may have hardcoded paths to the old locations.
+
+## 5. Verify Toolchain Integrity and Finalize Changes [done]
+### Dependencies: 66.4
+### Description: Run `pnpm install` to update the lockfile and reflect workspace changes. Then, execute all root-level scripts (e.g., `lint`, `test`) to ensure the entire toolchain is functioning correctly after the refactor.
+### Details:
+After all file changes are complete, run `pnpm install` from the project root. Subsequently, run `pnpm lint`, `pnpm test`, and any other relevant CI/CD or pre-commit hook scripts to confirm that the tooling configurations are correctly applied and functional.
+

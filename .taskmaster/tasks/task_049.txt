@@ -1,0 +1,11 @@
+# Task ID: 49
+# Title: Implement Component-level Tests
+# Status: pending
+# Dependencies: 2
+# Priority: medium
+# Description: Write unit and integration tests for key frontend UI components using Vitest and React Testing Library.
+# Details:
+Focus on critical components like login form, bookmark card, label management, search bar.
+
+# Test Strategy:
+Achieve minimum 80% code coverage for core UI components. Run tests regularly in CI.

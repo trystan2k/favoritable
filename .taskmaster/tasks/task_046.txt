@@ -1,0 +1,11 @@
+# Task ID: 46
+# Title: Implement Left-side Vertical Navigation
+# Status: pending
+# Dependencies: 2, 15, 28, 32
+# Priority: medium
+# Description: Create the main left-side vertical navigation layout component.
+# Details:
+Design and implement the sidebar structure, including logo, user info, and navigation links (e.g., collections, labels).
+
+# Test Strategy:
+Verify navigation renders correctly and links are functional.

@@ -5,14 +5,6 @@ import { Hono } from 'hono';
 import { requestId } from 'hono/request-id';
 import { auth } from './auth.js';
 import { Container } from './core/dependency-injection/di.container.js';
-import {
-  addCacheHeaders,
-  addCorsHeaders,
-  addSecurityHeaders,
-  parseAPIVersion,
-  setContentTypeHeaders,
-} from './core/http.headers.js';
-import { loggerMiddleware } from './core/http.logger.js';
 import { logger } from './core/logger.js';
 import { db } from './db/index.js';
 import { errorHandler } from './errors/errors.handlers.js';
@@ -29,6 +21,14 @@ import { LabelRoutes } from './features/labels/label.routes.js';
 import { LabelService } from './features/labels/label.services.js';
 import { SQLiteLabelRepository } from './features/labels/label.sq-lite.repository.js';
 import { authMiddleware, type HonoEnv } from './middleware/auth.middleware.js';
+import {
+  addCacheHeaders,
+  addCorsHeaders,
+  addSecurityHeaders,
+  parseAPIVersion,
+  setContentTypeHeaders,
+} from './middleware/http.headers.middleware.js';
+import { loggerMiddleware } from './middleware/http.logger.middleware.js';
 
 export function registerDependencies(): void {
   const container = Container.getInstance();

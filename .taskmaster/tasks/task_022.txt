@@ -1,0 +1,11 @@
+# Task ID: 22
+# Title: Frontend: Display Auto-fetched Metadata
+# Status: pending
+# Dependencies: 20, 21
+# Priority: medium
+# Description: Integrate the auto-fetched metadata into the bookmark cards and add/edit forms.
+# Details:
+Show title, description, author on hover or directly on the card. Display the thumbnail image. Pre-fill add/edit forms with fetched data.
+
+# Test Strategy:
+Add a new bookmark and verify metadata is correctly displayed on the card and in edit mode.

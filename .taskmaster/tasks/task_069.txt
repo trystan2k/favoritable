@@ -1,0 +1,11 @@
+# Task ID: 69
+# Title: Backend: Implement Better Auth Error Handling
+# Status: pending
+# Dependencies: 12
+# Priority: high
+# Description: Integrate Better Auth's specific error handling mechanisms into the Hono application's global error handler. This will ensure that authentication and authorization errors are caught and formatted consistently with other application errors.
+# Details:
+Review the Better Auth error handling documentation to identify the specific error classes it throws (e.g., AuthenticationError, AuthorizationError). Modify the existing global error handling middleware in the Hono application to specifically catch these errors. When a Better Auth error is caught, map it to the application's standard JSON error response format, returning the appropriate HTTP status code (e.g., 401 for AuthenticationError, 403 for AuthorizationError). Ensure this new logic coexists with the current handling for service and repository errors, maintaining a uniform error response structure across the entire API.
+
+# Test Strategy:
+Create a suite of integration tests for protected API endpoints. Test cases should include: 1) making a request without a session token to verify a 401 Unauthorized response; 2) making a request with an invalid or expired token to verify a 401 Unauthorized response; and 3) if roles are implemented, making a request for a resource the user is not permitted to access to verify a 403 Forbidden response. All error responses must conform to the application's standard error JSON schema.

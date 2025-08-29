@@ -1,0 +1,49 @@
+# Task ID: 67
+# Title: Deploy Containerized API to Render
+# Status: pending
+# Dependencies: 5, 6
+# Priority: high
+# Description: Configure and deploy the containerized Hono API to the Render platform. This includes creating the necessary Render configuration, setting up the CI/CD pipeline for automatic deployments, and performing post-deployment validation.
+# Details:
+Create a `render.yaml` file in the project root to define the infrastructure as code. In this file, configure a 'Web Service' for the API, specifying the Docker build context and pointing to the Dockerfile created in Task #6. Set up environment variables for the production database URL (from Task #5) and other secrets using Render's secret management. Configure the build command to use Turborepo to efficiently build the API service (e.g., `npx turbo build --filter=api`). Connect the project's Git repository to Render and configure the service to use the `render.yaml` file, enabling auto-deploy on pushes to the main branch.
+
+# Test Strategy:
+Once the initial deployment is complete, verify the service is live by accessing its public URL provided by Render. Use an API client like Bruno or cURL to hit a health check endpoint and confirm a successful response. Perform a test on an endpoint that requires database interaction to validate the production database connection is working correctly. Crucially, test the web scraping endpoint by providing a sample URL to ensure the Puppeteer instance within the deployed container has the necessary permissions and dependencies to function in the Render environment.
+
+# Subtasks:
+## 1. Create render.yaml for Docker-based Web Service [pending]
+### Dependencies: None
+### Description: Define the infrastructure as code for the Hono API deployment on Render. This file will specify the service type, build configuration using the existing Dockerfile, and runtime environment.
+### Details:
+In the project root, create a `render.yaml` file. Inside, define a service of type `web` with a descriptive name like `hono-api`. Set the environment to `docker` (`env: docker`). Configure the `dockerContext` to `.` and the `dockerfilePath` to point to the API's Dockerfile (e.g., `./apps/api/Dockerfile`). Add a `healthCheckPath` pointing to a health check endpoint (e.g., `/health`) to enable Render's monitoring.
+
+## 2. Configure Environment Variables and Secrets on Render [pending]
+### Dependencies: 67.1
+### Description: Set up all necessary environment variables for the production API service within the Render dashboard. This keeps sensitive data like database credentials and API keys separate from the codebase.
+### Details:
+Navigate to the Render dashboard and create a new 'Environment Group' for the project. Add all required environment variables, including the `DATABASE_URL` from the production database (Task #5), `JWT_SECRET`, and any OAuth provider keys (Task #13). In the `render.yaml` file, link this group to the web service using the `envVars.fromGroup` key.
+
+## 3. Create Render Service and Enable Auto-Deploy (CI/CD) [pending]
+### Dependencies: 67.1, 67.2
+### Description: Create the Web Service on the Render platform by connecting the GitHub repository and using the `render.yaml` file. This will trigger the first deployment and set up the CI/CD pipeline.
+### Details:
+In the Render dashboard, create a new 'Blueprint Instance'. Connect the project's GitHub repository and select the branch containing the `render.yaml` file (e.g., `main`). Render will parse the file and prompt to create the defined web service. Approve the plan to start the initial build and deployment. Verify that the 'Auto-Deploy' setting is enabled to automatically deploy new commits pushed to the main branch.
+
+## 4. Validate Production Database Connectivity [pending]
+### Dependencies: 67.3
+### Description: After a successful deployment, perform live tests to confirm that the deployed API can successfully connect to the production database and execute basic data operations.
+### Details:
+Using an API client like Bruno or cURL, send requests to the deployed service's public URL. Target at least one endpoint that reads from the database (e.g., fetching a list of public items) and one that writes to it (e.g., a user registration endpoint). Confirm that the requests succeed and the data is persisted correctly. Check the service logs on Render for any database connection errors.
+
+## 5. Verify Production Web Scraping Functionality [pending]
+### Dependencies: 67.3
+### Description: Test the web scraping endpoint on the deployed service to ensure that Puppeteer and its underlying headless Chromium dependencies are correctly installed and functional within the Render container.
+### Details:
+Send a request from an API client to the specific endpoint designed for web scraping. The request should target a simple, reliable website to minimize external failures. Monitor the API response and, more importantly, the real-time service logs in the Render dashboard. Look for any errors related to Puppeteer initialization, browser launch failures, or sandbox issues, which are common in containerized environments.
+
+## 6. Document Deployment Process and Configuration [pending]
+### Dependencies: 67.1, 67.2, 67.3, 67.4, 67.5
+### Description: Create comprehensive documentation covering the Render deployment setup. This guide will serve as a reference for team members to understand the infrastructure, manage the environment, and troubleshoot issues.
+### Details:
+Create a `DEPLOYMENT.md` file in the project's root or `docs/` directory. In this file, explain the structure and purpose of the `render.yaml` file. List all required environment variables with a brief description for each (do not include secret values). Provide a step-by-step guide on how the CI/CD pipeline works (push to main triggers deploy) and how to perform manual deployments or rollbacks via the Render dashboard.
+

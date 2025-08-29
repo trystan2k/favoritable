@@ -1,0 +1,11 @@
+# Task ID: 35
+# Title: Backend: Implement Sort Bookmarks Endpoint
+# Status: pending
+# Dependencies: 18
+# Priority: medium
+# Description: Enhance the `GET /bookmarks` endpoint to support sorting by date added, date updated, and title.
+# Details:
+Add query parameters (e.g., `?sortBy=createdAt&order=desc`). Implement database sorting logic.
+
+# Test Strategy:
+Write API tests to verify sorting works correctly for all specified criteria.

@@ -1,0 +1,11 @@
+# Task ID: 51
+# Title: Implement E2E Tests for Scrappers
+# Status: pending
+# Dependencies: 40
+# Priority: medium
+# Description: Develop end-to-end tests specifically for the bookmark import functionalities (Omnivore, HTML, Text).
+# Details:
+Use a tool like Playwright or Cypress to simulate file uploads and verify data persistence in the database.
+
+# Test Strategy:
+Run E2E tests with various valid and invalid import files to ensure robustness.

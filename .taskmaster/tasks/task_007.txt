@@ -1,0 +1,37 @@
+# Task ID: 7
+# Title: Implement Secure Headers Middleware
+# Status: done
+# Dependencies: 3
+# Priority: high
+# Description: Updated the Hono backend to use the `hono/secure-headers` middleware, replacing the previous custom `addSecurityHeaders` function. This enhances API security by enforcing a strict Content Security Policy (CSP) and other standard security headers.
+# Details:
+The implementation involved replacing the contents of `apps/api/src/core/http.headers.ts` with a call to the `secureHeaders` middleware. The middleware is configured with a Content Security Policy (CSP), HTTP Strict-Transport-Security (HSTS), and other important security headers to harden the API against common web vulnerabilities like XSS and clickjacking.
+
+# Test Strategy:
+1. Manually inspect HTTP response headers using browser dev tools or `curl` to confirm the new secure headers are present and correctly configured. 2. Add automated integration tests to the API test suite (see Task 50) to assert the presence and correctness of these headers on an ongoing basis.
+
+# Subtasks:
+## 1. Integrate hono/secure-headers middleware [done]
+### Dependencies: None
+### Description: Replace the custom `addSecurityHeaders` function with the `hono/secure-headers` middleware in `apps/api/src/core/http.headers.ts`.
+### Details:
+Replaced the custom `addSecurityHeaders` function in `apps/api/src/core/http.headers.ts` with the `secureHeaders` middleware from `hono/secure-headers`.
+
+## 2.  [done]
+### Dependencies: None
+### Description: Configure the middleware with a strict Content Security Policy (CSP), HTTP Strict-Transport-Security (HSTS), and other standard security headers.
+### Details:
+
+
+## 3.  [done]
+### Dependencies: None
+### Description: Manually verify the presence and correctness of the new security headers using browser developer tools or `curl`.
+### Details:
+
+
+## 4.  [done]
+### Dependencies: None
+### Description: Add automated integration tests to the API test suite (as part of Task 50) to assert the presence and configuration of the security headers.
+### Details:
+
+

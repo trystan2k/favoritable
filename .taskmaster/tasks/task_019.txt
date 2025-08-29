@@ -1,0 +1,11 @@
+# Task ID: 19
+# Title: Frontend: Develop Bookmark List/Grid View
+# Status: pending
+# Dependencies: 2, 18
+# Priority: medium
+# Description: Create the UI component to display saved bookmarks in a list or grid layout.
+# Details:
+Use Shadcn UI components for cards/list items. Fetch bookmarks from `GET /bookmarks` endpoint.
+
+# Test Strategy:
+Verify bookmarks are displayed correctly. Test responsiveness of the layout.

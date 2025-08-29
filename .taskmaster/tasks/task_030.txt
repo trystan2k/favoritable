@@ -1,0 +1,11 @@
+# Task ID: 30
+# Title: Backend: Implement Filter Bookmarks by Label Endpoint
+# Status: pending
+# Dependencies: 18, 11
+# Priority: medium
+# Description: Modify the `GET /bookmarks` endpoint to support filtering by label.
+# Details:
+Add a query parameter (e.g., `?labelId=xyz`) to filter bookmarks based on associated labels.
+
+# Test Strategy:
+Write API tests to verify filtering by single and multiple labels.

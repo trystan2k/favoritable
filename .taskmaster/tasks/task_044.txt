@@ -1,0 +1,11 @@
+# Task ID: 44
+# Title: Frontend: Implement Batch Delete Bookmarks UI
+# Status: pending
+# Dependencies: 19, 43
+# Priority: medium
+# Description: Add functionality to select multiple bookmarks and delete them in bulk.
+# Details:
+Implement checkboxes or multi-select options on bookmark cards. Add a 'Delete Selected' button.
+
+# Test Strategy:
+Select multiple bookmarks, click delete, and verify they are removed from the UI and database.

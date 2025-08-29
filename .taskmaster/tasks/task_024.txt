@@ -1,0 +1,11 @@
+# Task ID: 24
+# Title: Frontend: Implement Favorite/Unfavorite UI
+# Status: pending
+# Dependencies: 19, 23
+# Priority: medium
+# Description: Add a UI element (e.g., star icon) to bookmark cards to favorite/unfavorite them.
+# Details:
+Implement click handler to call the favorite/unfavorite API endpoint. Update UI state accordingly.
+
+# Test Strategy:
+Click the favorite button and verify the status changes visually and persists on refresh.

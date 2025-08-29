@@ -1,0 +1,11 @@
+# Task ID: 52
+# Title: Generate API Documentation
+# Status: pending
+# Dependencies: 18, 27
+# Priority: low
+# Description: Add Open API documentation (Swagger) for all backend endpoints.
+# Details:
+Integrate Swagger UI or similar tool. Annotate Hono routes with JSDoc or OpenAPI specifications.
+
+# Test Strategy:
+Verify API documentation is accessible and accurately reflects all endpoints, parameters, and responses.

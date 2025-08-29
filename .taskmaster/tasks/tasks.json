@@ -762,7 +762,7 @@
               "12.1"
             ],
             "details": "Using the project's ORM (e.g., Drizzle), define the schema for the `user` and `session` tables according to Better Auth's documentation. The `user` table must have a unique ID, and the `session` table needs fields for ID, user ID, and expiration timestamp. Run the ORM's migration tool to apply these changes to the database.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -773,7 +773,7 @@
               "12.2"
             ],
             "details": "Create a new file (e.g., `src/lib/auth.ts`) to house the authentication logic. Initialize Better Auth by passing the database adapter. Configure the `getUserAttributes` function to define which user data is accessible on the session object. Set session cookie options, ensuring it is an HTTP-only cookie for security. Export the initialized `lucia` object.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -784,7 +784,7 @@
               "12.3"
             ],
             "details": "The middleware should read the session cookie from the request headers. Use `lucia.validateSession()` to verify the session's validity. If valid, attach the `user` and `session` to Hono's context (e.g., `c.set('user', user)`). If the session is invalid, clear the session cookie. This middleware should be applied to all routes that may require authentication.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -795,8 +795,30 @@
               "12.4"
             ],
             "details": "Create a public route (e.g., `/health`) that does not use the auth middleware. Create a protected route (e.g., `/api/me`) that uses the middleware. The protected route should attempt to read the user from the context and return user data if present, or a 401 Unauthorized status if the user is not authenticated.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement Better Auth Error Handling",
+            "description": "Implement proper error handling for Better Auth errors following the framework's error handling patterns, similar to how we currently handle errors for services and repositories.",
+            "details": "According to Better Auth documentation (https://www.better-auth.com/docs/concepts/api#error-handling), auth operations can throw specific error types that need to be handled appropriately. This subtask involves:\n\n1. Study Better Auth error types and structure\n2. Create auth error mappers similar to serviceErrorsHandler and repositoryErrorsHandler\n3. Integrate auth error handling into the main error handler chain\n4. Ensure auth errors are properly logged and return appropriate HTTP status codes\n5. Add unit tests for auth error handling scenarios\n\nThe implementation should follow the existing error handling patterns in the codebase (errors.handlers.ts, errors.mappers.ts) to maintain consistency.",
+            "status": "pending",
+            "dependencies": [
+              "12.5"
+            ],
+            "parentTaskId": 12
+          },
+          {
+            "id": 7,
+            "title": "Move Auth Routes to Dedicated File",
+            "description": "Move authentication routes from index.ts to a dedicated auth routes file, following the same pattern as bookmark and label routes.",
+            "details": "Currently, the auth routes are defined directly in the main index.ts file:\n- `/api/test/no-auth` - Test endpoint without authentication\n- `/api/test/with-auth` - Test endpoint requiring authentication  \n- `/api/auth/session` - Get current session information\n- `/api/auth/*` - Better Auth handler routes\n\nThis subtask involves:\n\n1. Create a new `AuthRoutes` class in `src/features/auth/auth.routes.ts` following the same pattern as BookmarkRoutes and LabelRoutes\n2. Move all auth-related routes from index.ts to the new AuthRoutes class\n3. Register the AuthRoutes class in the dependency injection container\n4. Update index.ts to use the new AuthRoutes via container resolution\n5. Ensure the auth routes are properly mounted with the correct base path\n6. Update any imports or dependencies as needed\n7. Verify all auth endpoints still work correctly after the refactor\n\nThe implementation should maintain the existing functionality while improving code organization and following established patterns in the codebase.",
+            "status": "pending",
+            "dependencies": [
+              "12.6"
+            ],
+            "parentTaskId": 12
           }
         ]
       },
@@ -1925,11 +1947,24 @@
         ],
         "priority": "medium",
         "subtasks": []
+      },
+      {
+        "id": 69,
+        "title": "Backend: Implement Better Auth Error Handling",
+        "description": "Integrate Better Auth's specific error handling mechanisms into the Hono application's global error handler. This will ensure that authentication and authorization errors are caught and formatted consistently with other application errors.",
+        "details": "Review the Better Auth error handling documentation to identify the specific error classes it throws (e.g., AuthenticationError, AuthorizationError). Modify the existing global error handling middleware in the Hono application to specifically catch these errors. When a Better Auth error is caught, map it to the application's standard JSON error response format, returning the appropriate HTTP status code (e.g., 401 for AuthenticationError, 403 for AuthorizationError). Ensure this new logic coexists with the current handling for service and repository errors, maintaining a uniform error response structure across the entire API.",
+        "testStrategy": "Create a suite of integration tests for protected API endpoints. Test cases should include: 1) making a request without a session token to verify a 401 Unauthorized response; 2) making a request with an invalid or expired token to verify a 401 Unauthorized response; and 3) if roles are implemented, making a request for a resource the user is not permitted to access to verify a 403 Forbidden response. All error responses must conform to the application's standard error JSON schema.",
+        "status": "pending",
+        "dependencies": [
+          12
+        ],
+        "priority": "high",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-28T23:20:22.656Z",
+      "updated": "2025-08-29T00:01:57.860Z",
       "description": "Tasks for master context"
     }
   }

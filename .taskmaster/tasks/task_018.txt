@@ -1,0 +1,11 @@
+# Task ID: 18
+# Title: Backend: Implement Bookmark CRUD Endpoints
+# Status: pending
+# Dependencies: 10, 17
+# Priority: high
+# Description: Develop REST API endpoints for creating, reading, updating, and deleting single bookmarks.
+# Details:
+Implement `GET /bookmarks`, `GET /bookmarks/:id`, `POST /bookmarks`, `PATCH /bookmarks/:id`, `DELETE /bookmarks/:id`.
+
+# Test Strategy:
+Write API integration tests for each endpoint (create, retrieve, update, delete).
