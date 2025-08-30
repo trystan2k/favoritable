@@ -121,13 +121,11 @@ For each subtask completion:
 **Subtask commit message pattern**:
 
 ```bash
-type(scope): implement subtask - brief description
+type(scope): brief description of actual work done
 
 - Specific changes made in this subtask
 - Files modified/created
 - Tests added (if any)
-
-Part of #TaskID
 ```
 
 ### 9. 🔍 FINAL QUALITY VERIFICATION
@@ -304,6 +302,7 @@ Based on your development guidelines, here are the **NO NO actions**:
 - **NEVER** Assume unspecified requirements
 - **NEVER** Overengineer solutions
 - **NEVER** Include any agent information in the commit message (like Co-Authored-By:)
+- **NEVER** reference task or subtask IDs in commit messages - focus purely on the work done
 - Under **NO** circumstance commit code when there are issues from QA scripts (even warnings)  
 
 ---
