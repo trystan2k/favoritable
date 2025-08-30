@@ -803,7 +803,7 @@
             "title": "Implement Better Auth Error Handling",
             "description": "Implement proper error handling for Better Auth errors following the framework's error handling patterns, similar to how we currently handle errors for services and repositories.",
             "details": "According to Better Auth documentation (https://www.better-auth.com/docs/concepts/api#error-handling), auth operations can throw specific error types that need to be handled appropriately. This subtask involves:\n\n1. Study Better Auth error types and structure\n2. Create auth error mappers similar to serviceErrorsHandler and repositoryErrorsHandler\n3. Integrate auth error handling into the main error handler chain\n4. Ensure auth errors are properly logged and return appropriate HTTP status codes\n5. Add unit tests for auth error handling scenarios\n\nThe implementation should follow the existing error handling patterns in the codebase (errors.handlers.ts, errors.mappers.ts) to maintain consistency.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [
               "12.5"
             ],
@@ -1964,7 +1964,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-29T00:01:57.860Z",
+      "updated": "2025-08-30T18:52:37.209Z",
       "description": "Tasks for master context"
     }
   }

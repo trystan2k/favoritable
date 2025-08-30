@@ -7,11 +7,10 @@ import { auth } from './auth.js';
 import { Container } from './core/dependency-injection/di.container.js';
 import { logger } from './core/logger.js';
 import { db } from './db/index.js';
+import { authErrorsHandler } from './errors/auth-errors.mappers.js';
 import { errorHandler } from './errors/errors.handlers.js';
-import {
-  repositoryErrorsHandler,
-  serviceErrorsHandler,
-} from './errors/errors.mappers.js';
+import { repositoryErrorsHandler } from './errors/repository-errors.mappers.js';
+import { serviceErrorsHandler } from './errors/service-errors.mappers.js';
 import { SQLiteBookmarkLabelRepository } from './features/bookmarkLabel/bookmarkLabel.sql-lite.repository.js';
 import { BookmarkRoutes } from './features/bookmarks/bookmark.routes.js';
 import { BookmarkService } from './features/bookmarks/bookmark.services.js';
@@ -83,7 +82,11 @@ app.use('*', async (c, next) => {
   return next();
 });
 
-const errorHandlers = [serviceErrorsHandler, repositoryErrorsHandler];
+const errorHandlers = [
+  authErrorsHandler,
+  serviceErrorsHandler,
+  repositoryErrorsHandler,
+];
 app.onError(errorHandler(errorHandlers));
 
 const api = app.basePath(routes.basePath);

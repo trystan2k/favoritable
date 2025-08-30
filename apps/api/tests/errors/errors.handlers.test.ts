@@ -1,16 +1,12 @@
-import { LibsqlError } from '@libsql/client';
 import type { Context } from 'hono';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { errorHandler } from '../../src/errors/errors.handlers.js';
 import {
+  APIError,
   MalFormedRequestError,
   NotFoundError,
   UnexpectedError,
 } from '../../src/errors/errors.js';
-import {
-  repositoryErrorsHandler,
-  serviceErrorsHandler,
-} from '../../src/errors/errors.mappers.js';
 
 // Mock the logger
 vi.mock('../../src/core/logger.js', () => ({
@@ -23,9 +19,12 @@ vi.mock('../../src/core/logger.js', () => ({
 }));
 
 // Mock the env
+let mockNodeEnv = 'development';
 vi.mock('../../src/env.js', () => ({
-  env: {
-    NODE_ENV: 'development',
+  get env() {
+    return {
+      NODE_ENV: mockNodeEnv,
+    };
   },
   NodeEnvs: {
     DEVELOPMENT: 'development',
@@ -57,6 +56,7 @@ describe('errorHandler', () => {
   beforeEach(() => {
     mockContext = createMockContext();
     vi.clearAllMocks();
+    mockNodeEnv = 'development';
   });
 
   test('should pass through APIError instances without modification', () => {
@@ -77,115 +77,48 @@ describe('errorHandler', () => {
     );
   });
 
-  test('should convert SyntaxError to MalFormedRequestError through serviceErrorsHandler', () => {
-    const syntaxError = new SyntaxError('Invalid JSON');
-    const handler = errorHandler([
-      serviceErrorsHandler,
-      repositoryErrorsHandler,
-    ]);
+  test('should hide error message details if in PRODUCTION NODE_ENV', () => {
+    mockNodeEnv = 'production';
+    const notFoundError = new NotFoundError('Resource not found', {
+      cause: 'Some cause',
+    });
+    const handler = errorHandler([]);
 
-    handler(syntaxError, mockContext);
+    handler(notFoundError, mockContext);
 
     expect(mockContext.json).toHaveBeenCalledWith(
       expect.objectContaining({
         error: expect.objectContaining({
-          code: '00006',
-          message: 'Input data is invalid',
-          name: 'MalFormedRequestError',
+          code: '00003',
+          message: 'An unexpected error occurred',
+          cause: undefined,
+          name: undefined,
+          stack: undefined,
         }),
       }),
-      400
+      404
     );
   });
 
-  test('should convert LibsqlError to UnexpectedError when serviceErrorsHandler only processes it', () => {
-    const libsqlError = new LibsqlError(
-      'UNIQUE constraint failed',
-      'SQLITE_CONSTRAINT_UNIQUE'
-    );
-    const handler = errorHandler([serviceErrorsHandler]);
+  test('should default to 500 HTTP code if API Error does not have a default value', () => {
+    class WrongAPIError extends APIError {
+      code = '99999';
+      name = 'WrongAPIError';
+      httpStatusCode = undefined;
+    }
 
-    handler(libsqlError, mockContext);
+    const customError = new WrongAPIError('Custom error');
 
-    // Currently serviceErrorsHandler converts unhandled errors to UnexpectedError
-    // This demonstrates the ordering issue that this task is supposed to fix
-    expect(mockContext.json).toHaveBeenCalledWith(
-      expect.objectContaining({
-        error: expect.objectContaining({
-          code: '00005',
-          message: 'An unexpected error has ocurred',
-          name: 'UnexpectedError',
-        }),
-      }),
-      500
-    );
-  });
+    const handler = errorHandler([]);
 
-  test('should convert LibsqlError to EntityAlreadyExist when repositoryErrorsHandler is called first', () => {
-    const libsqlError = new LibsqlError(
-      'UNIQUE constraint failed',
-      'SQLITE_CONSTRAINT_UNIQUE'
-    );
-    // Put repositoryErrorsHandler first to handle LibsqlError correctly
-    const handler = errorHandler([
-      repositoryErrorsHandler,
-      serviceErrorsHandler,
-    ]);
-
-    handler(libsqlError, mockContext);
+    handler(customError, mockContext);
 
     expect(mockContext.json).toHaveBeenCalledWith(
       expect.objectContaining({
         error: expect.objectContaining({
-          code: '00004',
-          message: 'Entity already exist',
-          name: 'EntityAlreadyExist',
-        }),
-      }),
-      409
-    );
-  });
-
-  test('should convert LibsqlError to MalFormedRequestError when repositoryErrorsHandler is called first', () => {
-    const libsqlError = new LibsqlError(
-      'NOT NULL constraint failed',
-      'SQLITE_CONSTRAINT_NOTNULL'
-    );
-    // Put repositoryErrorsHandler first to handle LibsqlError correctly
-    const handler = errorHandler([
-      repositoryErrorsHandler,
-      serviceErrorsHandler,
-    ]);
-
-    handler(libsqlError, mockContext);
-
-    expect(mockContext.json).toHaveBeenCalledWith(
-      expect.objectContaining({
-        error: expect.objectContaining({
-          code: '00006',
-          message: 'Input data is invalid',
-          name: 'MalFormedRequestError',
-        }),
-      }),
-      400
-    );
-  });
-
-  test('should fallback to UnexpectedError for unknown errors', () => {
-    const unknownError = new Error('Something went wrong');
-    const handler = errorHandler([
-      serviceErrorsHandler,
-      repositoryErrorsHandler,
-    ]);
-
-    handler(unknownError, mockContext);
-
-    expect(mockContext.json).toHaveBeenCalledWith(
-      expect.objectContaining({
-        error: expect.objectContaining({
-          code: '00005',
-          message: 'An unexpected error has ocurred',
-          name: 'UnexpectedError',
+          code: '99999',
+          message: 'Custom error',
+          name: 'WrongAPIError',
         }),
       }),
       500
