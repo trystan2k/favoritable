@@ -145,7 +145,8 @@ type(scope): brief description of actual work done
 
 ### 11. 📝 DEVELOPMENT LOGGING
 
-- **Action**: Use **Basic Memory MCP** to log development AND create physical file
+- **Action**: Use **Basic Memory MCP** to log development for all subtasks (if it exist, otherwise for the task implemented).
+- **Action**: Once the task is complete, read all info related to it (task and subtasks notes) in **Basic Memory MCP** and create physical file with the information about the implementation of the task.
 - **Log template** (should cover the entire task and all its subtasks):
 
 ```markdown
@@ -303,6 +304,7 @@ Based on your development guidelines, here are the **NO NO actions**:
 - **NEVER** Overengineer solutions
 - **NEVER** Include any agent information in the commit message (like Co-Authored-By:)
 - **NEVER** reference task or subtask IDs in commit messages - focus purely on the work done
+- **NEVER** create physical development logs for subtasks - only for complete tasks
 - Under **NO** circumstance commit code when there are issues from QA scripts (even warnings)  
 
 ---
