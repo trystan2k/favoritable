@@ -1,7 +1,7 @@
 import pino from 'pino';
 import { env, NodeEnvs } from '../env.js';
 
-const LogLevels = {
+export const LogLevels = {
   FATAL: 'fatal',
   ERROR: 'error',
   WARN: 'warn',

@@ -53,6 +53,73 @@ pnpm exec drizzle-kit push
 - `pnpm exec drizzle-kit generate` - Generate migration files
 - `pnpm exec drizzle-kit migrate` - Run migrations
 
+## OAuth Provider Configuration
+
+The API supports authentication via multiple OAuth providers: GitHub, Google, Facebook, Twitter/X, and Apple. Each provider requires registration and configuration.
+
+### Environment Variables
+
+Copy `.env.example` to `.env` and configure the OAuth providers you want to support:
+
+```bash
+cp .env.example .env
+```
+
+### Provider Setup Instructions
+
+#### GitHub OAuth
+
+1. Go to [GitHub Developer Settings](https://github.com/settings/applications/new)
+2. Create a new OAuth App
+3. Set Authorization callback URL to: `https://your-domain.com/api/auth/callback/github`
+4. Add `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` to your `.env` file
+
+#### Google OAuth  
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+2. Create a new OAuth 2.0 Client ID
+3. Add authorized redirect URI: `https://your-domain.com/api/auth/callback/google`
+4. Add `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` to your `.env` file
+
+#### Facebook OAuth
+
+1. Go to [Meta for Developers](https://developers.facebook.com/apps/)
+2. Create a new app and set up Facebook Login
+3. Add redirect URI: `https://your-domain.com/api/auth/callback/facebook`
+4. Add `FACEBOOK_CLIENT_ID` and `FACEBOOK_CLIENT_SECRET` to your `.env` file
+
+#### Twitter/X OAuth
+
+1. Go to [Twitter Developer Portal](https://developer.twitter.com/en/portal/dashboard)
+2. Create a new app with OAuth 2.0 enabled
+3. Add callback URI: `https://your-domain.com/api/auth/callback/twitter`
+4. Add `TWITTER_CLIENT_ID` and `TWITTER_CLIENT_SECRET` to your `.env` file
+
+#### Apple OAuth (Advanced)
+
+1. Go to [Apple Developer Portal](https://developer.apple.com/account/resources/identifiers/list/serviceId)
+2. Create a Services ID and enable Sign in with Apple
+3. Configure domains and return URLs: `https://your-domain.com/api/auth/callback/apple`
+4. Generate a private key (.p8 file) for JWT signing
+5. Add `APPLE_CLIENT_ID`, `APPLE_TEAM_ID`, `APPLE_KEY_ID`, and `APPLE_PRIVATE_KEY_PATH` to your `.env` file
+
+### OAuth Callback URLs
+
+The API automatically handles OAuth callbacks at these endpoints:
+
+- `GET /api/auth/callback/github`
+- `GET /api/auth/callback/google`
+- `GET /api/auth/callback/facebook`
+- `GET /api/auth/callback/twitter`
+- `GET /api/auth/callback/apple`
+
+### Security Notes
+
+- Environment variables containing secrets should never be committed to version control
+- Use your deployment platform's environment variable management for production
+- The API uses PKCE (Proof Key for Code Exchange) for enhanced security
+- All OAuth sessions are automatically managed by Better Auth
+
 ## Logging System
 
 The API uses a structured logging system built on top of Pino for high-performance, structured JSON logging. The logger automatically handles sensitive data redaction, environment-specific formatting, and request tracing.
@@ -119,6 +186,7 @@ app.get('/bookmarks', async (c) => {
 ### Security Features
 
 The logger automatically redacts sensitive information from logs:
+
 - Passwords, tokens, API keys
 - Authorization headers and cookies  
 - Credit card information
@@ -141,6 +209,7 @@ The logger adapts based on the environment:
    - `error` for serious problems
 
 2. **Include context**:
+
    ```typescript
    logger.info('Bookmark imported successfully', {
      bookmarkId: bookmark.id,
@@ -151,6 +220,7 @@ The logger adapts based on the environment:
    ```
 
 3. **Use child loggers for context**:
+
    ```typescript
    const operationLogger = logger.child({ 
      operation: 'bulk_import',
@@ -210,13 +280,20 @@ docker run -d \
 
 #### Using Environment File
 
-Create a `.env.production` file:
+Create a `.env.production` file with database and OAuth configuration:
 
 ```env
 NODE_ENV=production
 DATABASE_TYPE=turso
 TURSO_DATABASE_URL=libsql://your-db-name.region.turso.io
 TURSO_AUTH_TOKEN=your_auth_token_here
+
+# OAuth providers (configure as needed)
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+# Add other OAuth providers as needed...
 ```
 
 Then run with the environment file:
