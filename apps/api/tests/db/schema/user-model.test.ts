@@ -163,7 +163,14 @@ describe('User Model Tests', () => {
 
   test('should validate provider enum values at compile time', async () => {
     // Test valid providers
-    const validProviders = ['github', 'google', 'discord'] as const;
+    const validProviders = [
+      'github',
+      'google',
+      'facebook',
+      'twitter',
+      'apple',
+      'discord',
+    ] as const;
 
     for (const provider of validProviders) {
       const newUser: InsertUserDTO = {

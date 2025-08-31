@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { config } from '@dotenvx/dotenvx';
 import { ZodError, z } from 'zod';
-import { LogLevels } from './core/logger';
+import { LogLevels } from './core/types';
 import { DATABASE_TYPES } from './db/types';
 
 export const NodeEnvs = {

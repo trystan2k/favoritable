@@ -839,8 +839,8 @@
             "title": "Configure Environment for OAuth Secrets",
             "description": "Set up the environment variable management system to securely store API keys and secrets for all five OAuth providers (Google, GitHub, Facebook, Twitter, Apple).",
             "dependencies": [],
-            "details": "Create a `.env.example` file with placeholders for all required keys (e.g., `GOOGLE_CLIENT_ID`, `GITHUB_CLIENT_SECRET`). Ensure the application's configuration module can correctly load and parse these variables for use in the OAuth logic. Update the deployment pipeline to handle these secrets securely.",
-            "status": "in-progress",
+            "details": "Create a `.env.example` file with placeholders for all required keys (e.g., `GOOGLE_CLIENT_ID`, `GITHUB_CLIENT_SECRET`). Ensure the application's configuration module can correctly load and parse these variables for use in the OAuth logic. Update the deployment pipeline to handle these secrets securely.\n<info added on 2025-08-31T18:49:10.537Z>\nCompleted with commit e21c0a1. Added a comprehensive OAuth environment configuration which includes a complete .env.example for all providers (GitHub, Google, Facebook, Twitter, Apple), Zod validation for credentials in env.ts, and setup documentation in the README.md. Implemented proper validation with clear error messages and included deployment configuration notes. All QA checks are passing.\n</info added on 2025-08-31T18:49:10.537Z>",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -863,7 +863,7 @@
               "13.2"
             ],
             "details": "Create a new project in the Google Cloud Console. Configure the OAuth consent screen. Create OAuth 2.0 Client ID credentials, specifying the correct authorized JavaScript origins and redirect URIs. Add the client ID and secret to the environment configuration. Implement the Google-specific logic to construct the authorization URL and parse the user profile data in the callback handler.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": ""
           },
           {
@@ -2060,7 +2060,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-31T18:37:42.735Z",
+      "updated": "2025-08-31T18:49:21.213Z",
       "description": "Tasks for master context"
     }
   }
