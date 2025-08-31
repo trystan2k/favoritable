@@ -41,6 +41,18 @@
         "--isolated",
         "--output-dir=./playwright"
       ]
+    },
+    "serena": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--project",
+        "favoritable"
+      ]
     }
   }
 }

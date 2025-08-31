@@ -221,6 +221,32 @@ get-task --id [TASK_ID]
 update-task-status --id [TASK_ID] --status [in-progress|done]
 ```
 
+### Serena MCP
+
+Use Serena MCP for code analysis, file operations, and project understanding:
+
+```bash
+# File operations
+serena_read_file --relative-path [PATH]
+serena_create_text_file --relative-path [PATH] --content [CONTENT]
+
+# Code analysis
+serena_find_symbol --name-path [SYMBOL_PATH]
+serena_get_symbols_overview --relative-path [PATH]
+serena_search_for_pattern --substring-pattern [PATTERN]
+
+# Code modifications
+serena_replace_symbol_body --name-path [SYMBOL] --relative-path [PATH] --body [NEW_BODY]
+serena_insert_after_symbol --name-path [SYMBOL] --relative-path [PATH] --body [CONTENT]
+
+# Memory management
+serena_write_memory --memory-name [NAME] --content [CONTENT]
+serena_read_memory --memory-file-name [NAME]
+
+# Shell commands
+serena_execute_shell_command --command [COMMAND]
+```
+
 ### QA Scripts
 
 ```bash
@@ -249,6 +275,8 @@ log-development --task-id [TASK_ID] --details "[details]"
 
 - [ ] Task clearly understood
 - [ ] Details obtained via MCP Task Master
+- [ ] **Serena MCP activated** - Use `serena_activate_project` if needed
+- [ ] **Project context reviewed** - Use `serena_read_memory` to review relevant project knowledge
 - [ ] Deepthink plan created and validated
 - [ ] Status updated to `in-progress`
 - [ ] Initial QA executed and clean
@@ -256,6 +284,10 @@ log-development --task-id [TASK_ID] --details "[details]"
 ### ✅ During Development
 
 - [ ] Following established plan
+- [ ] **Using Serena MCP appropriately**:
+  - [ ] `serena_get_symbols_overview` before modifying files
+  - [ ] `serena_find_symbol` to understand existing code patterns
+  - [ ] Symbol-based modifications when possible
 - [ ] Each subtask gets individual commit after review
 - [ ] Quality check before each subtask commit
 - [ ] Tests being written as needed
@@ -331,10 +363,12 @@ Based on your development guidelines, here are the **NO NO actions**:
 ## 🏗 Architecture Violations
 
 - **ALWAYS** get documentation information about libraries from Context7 MCP, before start to using them
+- **ALWAYS** use Serena MCP for codebase exploration before making changes
 - **NEVER** assume libraries are available – Always check existing usage first  
 - **NEVER** add comments unless explicitly asked  
 - **NEVER** skip existing patterns – Follow codebase conventions  
 - **NEVER** commit secrets or keys to repository  
+- **NEVER** modify code without first understanding the existing structure (use `serena_get_symbols_overview`)
 
 ---
 
@@ -374,10 +408,18 @@ These are the absolute prohibitions that will break your development workflow, c
 
 ### Technical Problems
 
-1. Consult previous development logs
-2. Check task dependencies
-3. Request specific technical guidance
-4. Document solution for similar cases
+1. **Use Serena MCP** for codebase exploration and analysis
+2. Consult previous development logs (use `serena_read_memory`)
+3. Check task dependencies
+4. Request specific technical guidance
+5. Document solution for similar cases (use `serena_write_memory`)
+
+**Key Serena MCP Use Cases:**
+
+- **File Analysis**: Use `serena_get_symbols_overview` before modifying files
+- **Code Search**: Use `serena_find_symbol` and `serena_search_for_pattern` to understand existing implementations
+- **Safe Modifications**: Use symbol-based tools (`serena_replace_symbol_body`, `serena_insert_after_symbol`) instead of regex replacements when possible
+- **Project Memory**: Use `serena_read_memory` to access project knowledge and `serena_write_memory` to document findings
 
 ---
 
