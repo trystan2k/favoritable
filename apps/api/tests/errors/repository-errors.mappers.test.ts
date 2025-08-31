@@ -66,7 +66,7 @@ describe('repositoryErrorsHandler', () => {
 
     expect(result).toBeInstanceOf(UnexpectedError);
     expect((result as APIError).message).toBe(
-      'An unexpected error has ocurred'
+      'An unexpected error has occurred'
     );
     expect((result as APIError).httpStatusCode).toBe(500);
   });
@@ -86,7 +86,7 @@ describe('repositoryErrorsHandler', () => {
 
     expect(result).toBeInstanceOf(UnexpectedError);
     expect((result as APIError).message).toBe(
-      'An unexpected error has ocurred in repository'
+      'An unexpected error has occurred in repository'
     );
     expect((result as APIError).httpStatusCode).toBe(500);
   });

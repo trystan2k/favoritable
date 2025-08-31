@@ -166,7 +166,7 @@ describe('errorHandler', () => {
       expect.objectContaining({
         error: expect.objectContaining({
           code: '00005',
-          message: 'An unexpected error has ocurred',
+          message: 'An unexpected error has occurred',
           name: 'UnexpectedError',
         }),
       }),

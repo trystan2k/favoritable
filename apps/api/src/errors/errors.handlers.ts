@@ -65,7 +65,7 @@ export const errorHandler = (
 
       if (!isAPIErrorInstance(errorObj)) {
         // If no specific handler matched, use UnexpectedError as fallback
-        errorObj = new UnexpectedError('An unexpected error has ocurred');
+        errorObj = new UnexpectedError('An unexpected error has occurred');
       }
     }
 
