@@ -911,7 +911,7 @@
               "13.2"
             ],
             "details": "In the Apple Developer portal, register a new App ID and enable the 'Sign in with Apple' capability. Create a Services ID to act as the client ID. Generate a private key (.p8 file) for signing client secrets. Configure the domain and redirect URLs. Add the Team ID, Client ID, and Key ID to the environment configuration. Implement the logic to generate a client secret JWT and handle the Apple-specific callback response.\n<info added on 2025-08-31T19:03:39.795Z>\nIntegration is complete with comprehensive JWT client secret support. The code integration is finished, including enhanced provider configuration in `auth.ts`, new environment variables validated in `env.ts`, and added `trustedOrigins`. Documentation in README.md and .env.example has been updated accordingly. All QA checks (typecheck, lint, test, build) are passing. External setup is still required in the Apple Developer Portal, including App ID/Service ID creation, private key (.p8) generation, and the final JWT client secret generation for deployment.\n</info added on 2025-08-31T19:03:39.795Z>",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": ""
           },
           {
@@ -926,7 +926,7 @@
               "13.7"
             ],
             "details": "Manually test the full login/signup flow for each provider on a staging environment. Verify that user accounts are created correctly, sessions are managed, and profile data is accurate. Write unit and integration tests for the common callback handler. Update the project's README and developer documentation with instructions on how to configure and use the OAuth providers.",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": ""
           }
         ]
@@ -2060,7 +2060,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-31T19:01:31.152Z",
+      "updated": "2025-08-31T19:04:02.429Z",
       "description": "Tasks for master context"
     }
   }
