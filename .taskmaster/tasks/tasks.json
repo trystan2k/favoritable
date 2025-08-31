@@ -814,7 +814,7 @@
             "title": "Move Auth Routes to Dedicated File",
             "description": "Move authentication routes from index.ts to a dedicated auth routes file, following the same pattern as bookmark and label routes.",
             "details": "Currently, the auth routes are defined directly in the main index.ts file:\n- `/api/test/no-auth` - Test endpoint without authentication\n- `/api/test/with-auth` - Test endpoint requiring authentication  \n- `/api/auth/session` - Get current session information\n- `/api/auth/*` - Better Auth handler routes\n\nThis subtask involves:\n\n1. Create a new `AuthRoutes` class in `src/features/auth/auth.routes.ts` following the same pattern as BookmarkRoutes and LabelRoutes\n2. Move all auth-related routes from index.ts to the new AuthRoutes class\n3. Register the AuthRoutes class in the dependency injection container\n4. Update index.ts to use the new AuthRoutes via container resolution\n5. Ensure the auth routes are properly mounted with the correct base path\n6. Update any imports or dependencies as needed\n7. Verify all auth endpoints still work correctly after the refactor\n\nThe implementation should maintain the existing functionality while improving code organization and following established patterns in the codebase.",
-            "status": "pending",
+            "status": "in-progress",
             "dependencies": [
               "12.6"
             ],
@@ -1964,7 +1964,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-30T18:52:37.209Z",
+      "updated": "2025-08-30T19:02:12.327Z",
       "description": "Tasks for master context"
     }
   }

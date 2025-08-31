@@ -16,10 +16,11 @@ import { BookmarkRoutes } from './features/bookmarks/bookmark.routes.js';
 import { BookmarkService } from './features/bookmarks/bookmark.services.js';
 import { SQLiteBookmarkRepository } from './features/bookmarks/bookmark.sql-lite.repository.js';
 import { BookmarkUnitOfWork } from './features/bookmarks/bookmark-unit-of-work.js';
+import { AuthRoutes } from './features/common/auth/auth.routes.js';
 import { LabelRoutes } from './features/labels/label.routes.js';
 import { LabelService } from './features/labels/label.services.js';
 import { SQLiteLabelRepository } from './features/labels/label.sq-lite.repository.js';
-import { authMiddleware, type HonoEnv } from './middleware/auth.middleware.js';
+import type { HonoEnv } from './middleware/auth.middleware.js';
 import {
   addCacheHeaders,
   addCorsHeaders,
@@ -34,6 +35,7 @@ export function registerDependencies(): void {
 
   // Register dependencies
   container.initialize([
+    AuthRoutes,
     BookmarkRoutes,
     LabelRoutes,
     SQLiteBookmarkLabelRepository,
@@ -53,6 +55,7 @@ const routes = {
   basePath: '/api',
   bookmarks: '/bookmarks',
   labels: '/labels',
+  auth: '',
 };
 
 const app = new Hono<HonoEnv>();
@@ -91,43 +94,14 @@ app.onError(errorHandler(errorHandlers));
 
 const api = app.basePath(routes.basePath);
 
+const authRoutes = Container.getInstance().resolve<AuthRoutes>('AuthRoutes');
 const bookmarkRoutes =
   Container.getInstance().resolve<BookmarkRoutes>('BookmarkRoutes');
 const labelRoutes = Container.getInstance().resolve<LabelRoutes>('LabelRoutes');
 
+api.route(routes.auth, authRoutes.routes);
 api.route(routes.bookmarks, bookmarkRoutes.routes);
 api.route(routes.labels, labelRoutes.routes);
-
-// Auth test routes
-app.get('/api/test/no-auth', (c) => {
-  return c.json({ message: 'This endpoint works without auth' });
-});
-
-app.get('/api/test/with-auth', authMiddleware(), (c) => {
-  const user = c.get('user');
-
-  return c.json({
-    message: 'This endpoint requires auth',
-    user: user ? user.email : null,
-  });
-});
-
-app.get('/api/auth/session', (c) => {
-  const session = c.get('session');
-  const user = c.get('user');
-
-  if (!user) return c.json({ error: 'Not authenticated' }, 401);
-
-  return c.json({
-    session,
-    user,
-  });
-});
-
-// Better Auth routes
-app.on(['POST', 'GET'], '/api/auth/*', (c) => {
-  return auth.handler(c.req.raw);
-});
 
 // Health check
 app.get('/health', (c) => c.text('OK'));
