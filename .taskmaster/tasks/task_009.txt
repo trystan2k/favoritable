@@ -1,0 +1,31 @@
+# Task ID: 9
+# Title: Define & Implement Label Data Model
+# Status: done
+# Dependencies: 5, 8
+# Priority: high
+# Description: Create the database schema and ORM definitions for the Label entity.
+# Details:
+Define `Label` table with `id`, `name`, `color`, `createdAt`, `updatedAt`, `userId` fields. Implement Drizzle schema and migrations.
+
+# Test Strategy:
+Write unit tests for ORM operations (create, read label).
+
+# Subtasks:
+## 1. Define Drizzle Schema for Label Table [done]
+### Dependencies: None
+### Description: Create the Drizzle ORM schema definition for the `Label` table. This includes fields for `id`, `name`, `color`, `createdAt`, `updatedAt`, and a `userId` foreign key referencing the `User` table.
+### Details:
+The schema should be defined in a new file, likely `src/db/schema/labels.ts`. Ensure the `userId` column correctly references the `users.id` column with a `notNull` constraint and a cascade on delete rule.
+
+## 2. Generate SQL Migration for Label Table [done]
+### Dependencies: 9.1
+### Description: Use the Drizzle Kit command-line tool to generate a new SQL migration file based on the schema changes defined in the previous subtask.
+### Details:
+Run the `drizzle-kit generate:pg` command to create the migration file. Review the generated SQL to ensure it correctly creates the `labels` table and its foreign key constraint.
+
+## 3. Apply Migration and Write Unit Tests [done]
+### Dependencies: 9.2
+### Description: Apply the newly generated database migration to the test database. Then, write unit tests to verify the Label data model, specifically testing the creation and retrieval of a label record associated with a user.
+### Details:
+Use the `drizzle-kit push:pg` or an equivalent migration script to update the database schema. The unit test should first create a user, then create a label linked to that user, and finally fetch the label to assert its properties and its association with the correct user.
+

@@ -1,0 +1,11 @@
+# Task ID: 26
+# Title: Frontend: Implement Archive/Unarchive UI
+# Status: pending
+# Dependencies: 19, 25
+# Priority: medium
+# Description: Add UI elements (e.g., archive button) to bookmark cards or a context menu.
+# Details:
+Implement click handler to call the archive/unarchive API endpoint. Update UI state accordingly.
+
+# Test Strategy:
+Archive a bookmark and verify it moves to the 'Archived' collection and is removed from 'All'.

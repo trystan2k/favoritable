@@ -1,0 +1,11 @@
+# Task ID: 41
+# Title: Backend: Implement Export/Backup Bookmarks Endpoint
+# Status: pending
+# Dependencies: 18
+# Priority: medium
+# Description: Develop an endpoint to export all user's bookmarks into a downloadable file.
+# Details:
+Implement `GET /bookmarks/export` (or similar). Generate a JSON, HTML, or text file containing all bookmarks.
+
+# Test Strategy:
+Write API tests to verify the export endpoint generates a valid file with correct data.

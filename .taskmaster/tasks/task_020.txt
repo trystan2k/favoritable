@@ -1,0 +1,11 @@
+# Task ID: 20
+# Title: Frontend: Implement Add New Bookmark UI
+# Status: pending
+# Dependencies: 19
+# Priority: medium
+# Description: Develop the user interface for adding a new bookmark.
+# Details:
+Create a form with input fields for URL, and potentially labels. Implement form submission to `POST /bookmarks`.
+
+# Test Strategy:
+Test adding a new bookmark and verify it appears in the list/grid view.

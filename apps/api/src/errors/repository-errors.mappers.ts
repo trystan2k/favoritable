@@ -4,19 +4,7 @@ import {
   EntityAlreadyExist,
   MalFormedRequestError,
   UnexpectedError,
-} from './errors.js';
-
-export const serviceErrorsHandler = (error: Error): Error | APIError => {
-  if (error instanceof APIError) {
-    return error;
-  }
-
-  if (error.name === 'SyntaxError') {
-    return new MalFormedRequestError('Input data is invalid', error.message);
-  }
-
-  return error;
-};
+} from './errors';
 
 export const repositoryErrorsHandler = (error: Error): Error | APIError => {
   if (error instanceof APIError) {
@@ -46,13 +34,13 @@ export const repositoryErrorsHandler = (error: Error): Error | APIError => {
 
     if (sqlError.code === 'SQLITE_ERROR') {
       return new UnexpectedError(
-        'An unexpected error has ocurred',
+        'An unexpected error has occurred',
         error.message
       );
     }
 
     return new UnexpectedError(
-      'An unexpected error has ocurred in repository',
+      'An unexpected error has occurred in repository',
       error.message
     );
   }

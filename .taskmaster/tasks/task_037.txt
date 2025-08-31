@@ -1,0 +1,11 @@
+# Task ID: 37
+# Title: Backend: Implement Import from Omnivore Endpoint
+# Status: pending
+# Dependencies: 18
+# Priority: medium
+# Description: Develop an endpoint to import bookmarks from an Omnivore export file.
+# Details:
+Implement `POST /bookmarks/import/omnivore`. Parse the Omnivore JSON/CSV format and create new bookmark records.
+
+# Test Strategy:
+Write E2E tests using sample Omnivore export files to verify successful import.

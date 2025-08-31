@@ -1,0 +1,24 @@
+meta {
+  name: Sign Up - Email
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/api/auth/sign-up/email
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "John", 
+    "email": "john.bovi@gmail.com", 
+    "password": "password1234", 
+    "image": "https://example.com/image.png"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

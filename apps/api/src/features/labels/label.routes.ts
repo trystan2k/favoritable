@@ -4,6 +4,7 @@ import {
   Service,
 } from '../../core/dependency-injection/di.decorators.js';
 import { zCustomValidator } from '../../core/validators.wrapper.js';
+import { authMiddleware } from '../../middleware/auth.middleware.js';
 import {
   createLabelSchema,
   deleteLabelssSchema,
@@ -28,6 +29,9 @@ export class LabelRoutes {
   }
 
   private setupRoutes() {
+    // Apply authentication middleware to all label routes
+    this.labelRoutes.use('*', authMiddleware());
+
     // Labels - Get
     this.labelRoutes.get(
       '/',

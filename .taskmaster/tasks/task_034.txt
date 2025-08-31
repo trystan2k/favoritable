@@ -1,0 +1,11 @@
+# Task ID: 34
+# Title: Frontend: Implement Search Bookmarks UI
+# Status: pending
+# Dependencies: 19, 33
+# Priority: medium
+# Description: Add a search bar component to the main bookmark view.
+# Details:
+Implement input field and trigger search API call on input change or submit. Display search results.
+
+# Test Strategy:
+Enter search terms and verify the bookmark list updates to show matching results.

@@ -1,0 +1,11 @@
+# Task ID: 15
+# Title: Develop Login/Signup UI
+# Status: pending
+# Dependencies: 2, 13
+# Priority: high
+# Description: Create frontend components for unauthenticated users to log in or sign up via social providers (Google, Facebook, GitHub, Apple, and Twitter), integrating with Better Auth.
+# Details:
+Design a login page with buttons for Google, Facebook, GitHub, Apple, and Twitter. The frontend will handle redirection to the backend's Better Auth OAuth initiation endpoints (e.g., `/login/google`, `/login/facebook`, `/login/github`, `/login/apple`, `/login/twitter`).
+
+# Test Strategy:
+Verify UI renders correctly with all five social provider buttons (Google, Facebook, GitHub, Apple, Twitter). Click each login button and ensure redirection to the correct backend Better Auth endpoint.

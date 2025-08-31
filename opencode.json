@@ -23,6 +23,24 @@
     "shadcn-ui": {
       "type": "local",
       "command": ["npx", "@jpisnice/shadcn-ui-mcp-server"]
+    },
+    "github": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    },
+    "playwright": {
+      "type": "local",
+      "command": [
+        "npx",
+        "@playwright/mcp@latest",
+        "--browser=chrome",
+        "--isolated",
+        "--output-dir=./playwright"
+      ]
     }
   }
 }

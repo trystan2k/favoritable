@@ -1,0 +1,37 @@
+# Task ID: 63
+# Title: Fix Logger Error Handler Order Issue
+# Status: done
+# Dependencies: 3
+# Priority: high
+# Description: Correct the execution order of error handlers in the API's main error handler function to ensure specific error types are logged accurately before the generic fallback.
+# Details:
+In the `apps/api/src/errors/errors.handlers.ts` file, locate the primary `errorHandler` function. This function processes a sequence of error-specific handlers. The current implementation incorrectly places the generic `UnexpectedError` handler before more specific handlers like `ValidationError` or `NotFoundError`. Modify the logic to ensure the handlers are checked in order of specificity, from most specific to least specific. The `UnexpectedError` handler must be the final check in the sequence, acting as a catch-all for any errors not previously matched.
+
+# Test Strategy:
+To verify the fix, first create unit tests that throw specific error types (e.g., `ValidationError`, `NotFoundError`) and assert that the error handler correctly identifies and logs them with their specific type. Manually, trigger errors by making API calls: 1) Request a non-existent resource to trigger a `NotFoundError`. 2) Send an invalid request body to trigger a `ValidationError`. In both cases, inspect the application logs to confirm the error is logged with its correct, specific type and not as a generic 'UnexpectedError'.
+
+# Subtasks:
+## 1. Analyze Current Error Handler Order [done]
+### Dependencies: None
+### Description: Review the `errorHandler` function in `apps/api/src/errors/errors.handlers.ts` to identify the current sequence of error checks and confirm that the generic `UnexpectedError` handler is incorrectly prioritized.
+### Details:
+Locate the `errorHandler` function in `apps/api/src/errors/errors.handlers.ts`. Document the existing `if/else if` or `switch` statement order to map out how different error types are currently processed.
+
+## 2. Refactor Error Handler Logic to Correct Order [done]
+### Dependencies: 63.1
+### Description: Modify the `errorHandler` function to process specific error handlers (e.g., `ValidationError`, `NotFoundError`) before the generic `UnexpectedError` handler.
+### Details:
+In `apps/api/src/errors/errors.handlers.ts`, reorder the conditional checks within the `errorHandler` function. Ensure the check for `UnexpectedError` or the default `else` block is the very last one in the sequence, acting as a catch-all.
+
+## 3. Implement Comprehensive Unit Tests for Error Handling [done]
+### Dependencies: 63.2
+### Description: Create new unit tests to verify the corrected error handler logic. This includes testing for specific errors like `ValidationError` and ensuring the generic fallback case for a standard `Error` works as expected.
+### Details:
+Write a unit test that throws a `ValidationError` and asserts the logger captures it with the correct type. Write a second unit test that throws a standard `Error` and asserts the logger correctly falls back to logging it as an `UnexpectedError`.
+
+## 4. Perform Manual Testing and Verification [done]
+### Dependencies: 63.2
+### Description: Manually trigger different types of errors through API calls to confirm the logger is capturing them correctly in the application logs and that the API responds appropriately.
+### Details:
+Make API calls designed to fail in specific ways. For example, send a request with invalid data to trigger a `ValidationError` and request a non-existent resource to trigger a `NotFoundError`. Check the server logs to verify that the errors are logged with the correct, specific types.
+

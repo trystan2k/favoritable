@@ -1,0 +1,11 @@
+# Task ID: 16
+# Title: Implement Automatic User Creation
+# Status: pending
+# Dependencies: 8, 13
+# Priority: high
+# Description: Develop backend logic to automatically create a new user record upon their first social login.
+# Details:
+Modify the Better Auth OAuth callback handler. The handler must check if a user with the given OAuth provider ID already exists. If the user does not exist, create a new `User` record in the database using the profile information (e.g., email, name, avatar) provided by the OAuth provider through Better Auth. If the user already exists, log them in.
+
+# Test Strategy:
+Use a new social account (e.g., GitHub, Google) to perform a first-time login. Verify that a new user record is successfully created in the database with the correct details from the social provider. Also, test a subsequent login with the same account to ensure no new user is created and the existing user is logged in correctly.

@@ -1,0 +1,11 @@
+# Task ID: 39
+# Title: Backend: Implement Import from Text File Endpoint
+# Status: pending
+# Dependencies: 18
+# Priority: medium
+# Description: Develop an endpoint to import bookmarks from a text file with line-separated URLs.
+# Details:
+Implement `POST /bookmarks/import/text`. Parse each line as a URL and create new bookmark records.
+
+# Test Strategy:
+Write E2E tests using sample text files with URLs to verify successful import.

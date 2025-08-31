@@ -1,0 +1,11 @@
+# Task ID: 13
+# Title: Configure OAuth Providers
+# Status: pending
+# Dependencies: 12
+# Priority: high
+# Description: Integrate Google, Facebook, GitHub, Apple, and Twitter OAuth providers with Better Auth.
+# Details:
+Obtain API keys/secrets for Google, Facebook, GitHub, Apple, and Twitter. Configure Better Auth's built-in OAuth support for each provider, utilizing the PKCE flow for secure SPA authentication. Set up the necessary callback URLs in both the application and the provider dashboards.
+
+# Test Strategy:
+Manually test the login flow for Google, Facebook, GitHub, Apple, and Twitter. Verify that the PKCE flow completes successfully, a user session is created, and user data is correctly retrieved from the provider.

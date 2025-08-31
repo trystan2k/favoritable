@@ -735,55 +735,131 @@
       {
         "id": 12,
         "title": "Integrate Auth.js",
-        "description": "Update authentication strategy from Auth.js to Lucia Auth. Set up Lucia Auth with the Hono backend for authentication as per the new architectural decision.",
-        "status": "pending",
+        "description": "Update authentication strategy from Auth.js to Better Auth. Set up Better Auth with the Hono backend for authentication as per the new architectural decision.",
+        "status": "done",
         "dependencies": [
           3,
           8
         ],
         "priority": "high",
-        "details": "Install Lucia Auth and its official Hono adapter. Configure Lucia for session-based authentication using HTTP-only cookies. This involves setting up the database adapter, defining the schema for users and sessions, and initializing Lucia in the Hono application.",
-        "testStrategy": "Verify Lucia Auth middleware is active and correctly protects routes. Test session creation on login and session deletion on logout. Confirm that HTTP-only session cookies are being set and validated correctly on protected requests.",
-        "subtasks": []
+        "details": "Install Better Auth and its official Hono adapter. Configure Better Auth for session-based authentication using HTTP-only cookies. This involves setting up the database adapter, defining the schema for users and sessions, and initializing Better Auth in the Hono application.",
+        "testStrategy": "Verify Better Auth middleware is active and correctly protects routes. Test session creation on login and session deletion on logout. Confirm that HTTP-only session cookies are being set and validated correctly on protected requests.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install Better Auth and Adapter Dependencies",
+            "description": "Add Better Auth, its official Hono adapter, and the relevant database driver to the backend project's dependencies to prepare for the integration.",
+            "dependencies": [],
+            "details": "In the Hono backend workspace, execute the package manager command to install `lucia` and the appropriate adapter (e.g., `@lucia-auth/adapter-drizzle-sqlite`). Ensure these packages are correctly added to the `package.json` file.\n<info added on 2025-08-28T23:20:19.319Z>\nBetter Auth v1.3.7 was installed as the authentication library, replacing the deprecated Better Auth. All lint issues were resolved using proper null checks instead of non-null assertions. All QA checks, including typecheck, lint, knip, tests, and build, are passing.\n</info added on 2025-08-28T23:20:19.319Z>",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Define and Migrate User and Session Database Schemas",
+            "description": "Update the database schema to include the `User` and `Session` tables required by Better Auth. Generate and apply a database migration to create these tables.",
+            "dependencies": [
+              "12.1"
+            ],
+            "details": "Using the project's ORM (e.g., Drizzle), define the schema for the `user` and `session` tables according to Better Auth's documentation. The `user` table must have a unique ID, and the `session` table needs fields for ID, user ID, and expiration timestamp. Run the ORM's migration tool to apply these changes to the database.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Initialize and Configure Better Auth in Hono",
+            "description": "Create and configure the main Better Auth instance within the Hono application. This involves connecting Better Auth to the database adapter and setting session cookie parameters.",
+            "dependencies": [
+              "12.2"
+            ],
+            "details": "Create a new file (e.g., `src/lib/auth.ts`) to house the authentication logic. Initialize Better Auth by passing the database adapter. Configure the `getUserAttributes` function to define which user data is accessible on the session object. Set session cookie options, ensuring it is an HTTP-only cookie for security. Export the initialized `lucia` object.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Hono Middleware for Session Validation",
+            "description": "Develop a Hono middleware that intercepts incoming requests to validate the session cookie. If the session is valid, the middleware will attach user and session data to the request context.",
+            "dependencies": [
+              "12.3"
+            ],
+            "details": "The middleware should read the session cookie from the request headers. Use `lucia.validateSession()` to verify the session's validity. If valid, attach the `user` and `session` to Hono's context (e.g., `c.set('user', user)`). If the session is invalid, clear the session cookie. This middleware should be applied to all routes that may require authentication.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement and Test Protected and Unprotected Routes",
+            "description": "Create basic API endpoints to verify that the authentication and session middleware are functioning correctly. This includes one public route and one protected route.",
+            "dependencies": [
+              "12.4"
+            ],
+            "details": "Create a public route (e.g., `/health`) that does not use the auth middleware. Create a protected route (e.g., `/api/me`) that uses the middleware. The protected route should attempt to read the user from the context and return user data if present, or a 401 Unauthorized status if the user is not authenticated.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement Better Auth Error Handling",
+            "description": "Implement proper error handling for Better Auth errors following the framework's error handling patterns, similar to how we currently handle errors for services and repositories.",
+            "details": "According to Better Auth documentation (https://www.better-auth.com/docs/concepts/api#error-handling), auth operations can throw specific error types that need to be handled appropriately. This subtask involves:\n\n1. Study Better Auth error types and structure\n2. Create auth error mappers similar to serviceErrorsHandler and repositoryErrorsHandler\n3. Integrate auth error handling into the main error handler chain\n4. Ensure auth errors are properly logged and return appropriate HTTP status codes\n5. Add unit tests for auth error handling scenarios\n\nThe implementation should follow the existing error handling patterns in the codebase (errors.handlers.ts, errors.mappers.ts) to maintain consistency.",
+            "status": "done",
+            "dependencies": [
+              "12.5"
+            ],
+            "parentTaskId": 12
+          },
+          {
+            "id": 7,
+            "title": "Move Auth Routes to Dedicated File",
+            "description": "Move authentication routes from index.ts to a dedicated auth routes file, following the same pattern as bookmark and label routes.",
+            "details": "Currently, the auth routes are defined directly in the main index.ts file:\n- `/api/test/no-auth` - Test endpoint without authentication\n- `/api/test/with-auth` - Test endpoint requiring authentication  \n- `/api/auth/session` - Get current session information\n- `/api/auth/*` - Better Auth handler routes\n\nThis subtask involves:\n\n1. Create a new `AuthRoutes` class in `src/features/auth/auth.routes.ts` following the same pattern as BookmarkRoutes and LabelRoutes\n2. Move all auth-related routes from index.ts to the new AuthRoutes class\n3. Register the AuthRoutes class in the dependency injection container\n4. Update index.ts to use the new AuthRoutes via container resolution\n5. Ensure the auth routes are properly mounted with the correct base path\n6. Update any imports or dependencies as needed\n7. Verify all auth endpoints still work correctly after the refactor\n\nThe implementation should maintain the existing functionality while improving code organization and following established patterns in the codebase.",
+            "status": "done",
+            "dependencies": [
+              "12.6"
+            ],
+            "parentTaskId": 12
+          }
+        ]
       },
       {
         "id": 13,
         "title": "Configure OAuth Providers",
-        "description": "Integrate Google, Facebook, GitHub, Apple, and Twitter OAuth providers with Lucia Auth.",
+        "description": "Integrate Google, Facebook, GitHub, Apple, and Twitter OAuth providers with Better Auth.",
         "status": "pending",
         "dependencies": [
           12
         ],
         "priority": "high",
-        "details": "Obtain API keys/secrets for Google, Facebook, GitHub, Apple, and Twitter. Configure Lucia Auth's built-in OAuth support for each provider, utilizing the PKCE flow for secure SPA authentication. Set up the necessary callback URLs in both the application and the provider dashboards.",
+        "details": "Obtain API keys/secrets for Google, Facebook, GitHub, Apple, and Twitter. Configure Better Auth's built-in OAuth support for each provider, utilizing the PKCE flow for secure SPA authentication. Set up the necessary callback URLs in both the application and the provider dashboards.",
         "testStrategy": "Manually test the login flow for Google, Facebook, GitHub, Apple, and Twitter. Verify that the PKCE flow completes successfully, a user session is created, and user data is correctly retrieved from the provider.",
         "subtasks": []
       },
       {
         "id": 14,
         "title": "Implement Persistent User Sessions",
-        "description": "Ensure user sessions are persistent using Lucia Auth's built-in session management.",
+        "description": "Ensure user sessions are persistent using Better Auth's built-in session management.",
         "status": "pending",
         "dependencies": [
           12
         ],
         "priority": "high",
-        "details": "Configure Lucia Auth to manage persistent sessions using its database adapter and HTTP-only cookies. Lucia's built-in functionality will handle session validation on backend routes.",
+        "details": "Configure Better Auth to manage persistent sessions using its database adapter and HTTP-only cookies. Better Auth's built-in functionality will handle session validation on backend routes.",
         "testStrategy": "Log in, close the browser, and reopen to verify the user is still logged in via the persistent session cookie. Test session expiration by waiting for the defined session lifetime and ensuring the user is logged out.",
         "subtasks": []
       },
       {
         "id": 15,
         "title": "Develop Login/Signup UI",
-        "description": "Create frontend components for unauthenticated users to log in or sign up via social providers (Google, Facebook, GitHub, Apple, and Twitter), integrating with Lucia Auth.",
+        "description": "Create frontend components for unauthenticated users to log in or sign up via social providers (Google, Facebook, GitHub, Apple, and Twitter), integrating with Better Auth.",
         "status": "pending",
         "dependencies": [
           2,
           13
         ],
         "priority": "high",
-        "details": "Design a login page with buttons for Google, Facebook, GitHub, Apple, and Twitter. The frontend will handle redirection to the backend's Lucia Auth OAuth initiation endpoints (e.g., `/login/google`, `/login/facebook`, `/login/github`, `/login/apple`, `/login/twitter`).",
-        "testStrategy": "Verify UI renders correctly with all five social provider buttons (Google, Facebook, GitHub, Apple, Twitter). Click each login button and ensure redirection to the correct backend Lucia Auth endpoint.",
+        "details": "Design a login page with buttons for Google, Facebook, GitHub, Apple, and Twitter. The frontend will handle redirection to the backend's Better Auth OAuth initiation endpoints (e.g., `/login/google`, `/login/facebook`, `/login/github`, `/login/apple`, `/login/twitter`).",
+        "testStrategy": "Verify UI renders correctly with all five social provider buttons (Google, Facebook, GitHub, Apple, Twitter). Click each login button and ensure redirection to the correct backend Better Auth endpoint.",
         "subtasks": []
       },
       {
@@ -796,7 +872,7 @@
           13
         ],
         "priority": "high",
-        "details": "Modify the Lucia Auth OAuth callback handler. The handler must check if a user with the given OAuth provider ID already exists. If the user does not exist, create a new `User` record in the database using the profile information (e.g., email, name, avatar) provided by the OAuth provider through Lucia. If the user already exists, log them in.",
+        "details": "Modify the Better Auth OAuth callback handler. The handler must check if a user with the given OAuth provider ID already exists. If the user does not exist, create a new `User` record in the database using the profile information (e.g., email, name, avatar) provided by the OAuth provider through Better Auth. If the user already exists, log them in.",
         "testStrategy": "Use a new social account (e.g., GitHub, Google) to perform a first-time login. Verify that a new user record is successfully created in the database with the correct details from the social provider. Also, test a subsequent login with the same account to ensure no new user is created and the existing user is logged in correctly.",
         "subtasks": []
       },
@@ -1856,9 +1932,9 @@
       },
       {
         "id": 68,
-        "title": "Backend: Audit and Validate userId Handling Post-Lucia Auth Integration",
-        "description": "Conduct a comprehensive audit of the backend to ensure the `userId` from Lucia Auth is correctly and securely handled across all layers, from API routes to the database. This task verifies data ownership and prevents `userId` exposure in public API responses.",
-        "details": "Following the integration of Lucia Auth (Task 12), a full review of user identification handling is required. 1. **Route Handlers & Middleware:** Verify that all protected routes correctly extract the authenticated user's `userId` from the session context provided by Lucia. 2. **Service & Repository Layers:** Ensure that all functions operating on user-specific data (e.g., bookmarks) explicitly accept `userId` as a parameter. This `userId` must be used in all subsequent database queries to scope the operation correctly. 3. **Data Models & Queries:** Review Drizzle schemas for tables like `bookmarks` to confirm they contain a non-nullable `userId` foreign key. Audit all database queries (SELECT, INSERT, UPDATE, DELETE) to ensure they include a `WHERE userId = ?` clause to enforce strict data isolation between users. 4. **API Response Payloads:** Scrutinize all data transformation objects (DTOs) or response formatters to guarantee that the `userId` field is never included in JSON payloads sent to the client.",
+        "title": "Backend: Audit and Validate userId Handling Post-Better Auth Integration",
+        "description": "Conduct a comprehensive audit of the backend to ensure the `userId` from Better Auth is correctly and securely handled across all layers, from API routes to the database. This task verifies data ownership and prevents `userId` exposure in public API responses.",
+        "details": "Following the integration of Better Auth (Task 12), a full review of user identification handling is required. 1. **Route Handlers & Middleware:** Verify that all protected routes correctly extract the authenticated user's `userId` from the session context provided by Better Auth. 2. **Service & Repository Layers:** Ensure that all functions operating on user-specific data (e.g., bookmarks) explicitly accept `userId` as a parameter. This `userId` must be used in all subsequent database queries to scope the operation correctly. 3. **Data Models & Queries:** Review Drizzle schemas for tables like `bookmarks` to confirm they contain a non-nullable `userId` foreign key. Audit all database queries (SELECT, INSERT, UPDATE, DELETE) to ensure they include a `WHERE userId = ?` clause to enforce strict data isolation between users. 4. **API Response Payloads:** Scrutinize all data transformation objects (DTOs) or response formatters to guarantee that the `userId` field is never included in JSON payloads sent to the client.",
         "testStrategy": "1. **Automated Integration Tests:** Write new tests to cover authorization scenarios. For example, authenticate as User A, create a bookmark, and then authenticate as User B and attempt to read, update, or delete User A's bookmark, asserting that a 403 Forbidden or 404 Not Found error is returned. 2. **Payload Schema Validation:** Enhance existing API tests to assert that the `userId` field is absent from all response bodies for endpoints like `GET /bookmarks` and `GET /bookmarks/:id`. 3. **Manual Penetration Testing:** Using an API client like Postman, manually attempt to perform cross-user data access by manipulating resource IDs while authenticated as a different user. 4. **Code Review:** Conduct a focused code review of all routes and services that handle user-owned data, specifically checking for the correct propagation and application of the `userId` from the auth context down to the database query.",
         "status": "pending",
         "dependencies": [
@@ -1871,11 +1947,24 @@
         ],
         "priority": "medium",
         "subtasks": []
+      },
+      {
+        "id": 69,
+        "title": "Backend: Implement Better Auth Error Handling",
+        "description": "Integrate Better Auth's specific error handling mechanisms into the Hono application's global error handler. This will ensure that authentication and authorization errors are caught and formatted consistently with other application errors.",
+        "details": "Review the Better Auth error handling documentation to identify the specific error classes it throws (e.g., AuthenticationError, AuthorizationError). Modify the existing global error handling middleware in the Hono application to specifically catch these errors. When a Better Auth error is caught, map it to the application's standard JSON error response format, returning the appropriate HTTP status code (e.g., 401 for AuthenticationError, 403 for AuthorizationError). Ensure this new logic coexists with the current handling for service and repository errors, maintaining a uniform error response structure across the entire API.",
+        "testStrategy": "Create a suite of integration tests for protected API endpoints. Test cases should include: 1) making a request without a session token to verify a 401 Unauthorized response; 2) making a request with an invalid or expired token to verify a 401 Unauthorized response; and 3) if roles are implemented, making a request for a resource the user is not permitted to access to verify a 403 Forbidden response. All error responses must conform to the application's standard error JSON schema.",
+        "status": "pending",
+        "dependencies": [
+          12
+        ],
+        "priority": "high",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-17T18:17:16.911Z",
+      "updated": "2025-08-31T14:04:14.040Z",
       "description": "Tasks for master context"
     }
   }

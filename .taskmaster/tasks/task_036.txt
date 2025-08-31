@@ -1,0 +1,11 @@
+# Task ID: 36
+# Title: Frontend: Implement Sort Bookmarks UI
+# Status: pending
+# Dependencies: 19, 35
+# Priority: medium
+# Description: Add a dropdown or set of options to the bookmark view for sorting.
+# Details:
+Implement UI elements to select sorting criteria and order. Trigger API calls with sort parameters.
+
+# Test Strategy:
+Change sorting options and verify the order of bookmarks in the UI updates correctly.

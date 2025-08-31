@@ -1,0 +1,43 @@
+# Task ID: 8
+# Title: Define & Implement User Data Model
+# Status: done
+# Dependencies: 5
+# Priority: high
+# Description: Create the database schema and ORM definitions for the User entity.
+# Details:
+Define `User` table with `id`, `email`, `name`, `avatarUrl`, `provider` fields. Implement Drizzle schema and migrations.
+
+# Test Strategy:
+Write unit tests for ORM operations (create, read user).
+
+# Subtasks:
+## 1. Define Drizzle Schema for User Table [done]
+### Dependencies: None
+### Description: Create the TypeScript file defining the `users` table schema using Drizzle ORM. Include fields for `id`, `email`, `name`, `avatarUrl`, and `provider` with appropriate data types and constraints.
+### Details:
+In a new file, e.g., `src/db/schema/users.ts`, use `pgTable` to define the table. Ensure `id` is the primary key, `email` is unique, and other fields have correct types (e.g., `text`, `varchar`).
+
+## 2. Generate TypeScript Types from User Schema [done]
+### Dependencies: 8.1
+### Description: Use Drizzle's `typeof` and `InferSelectModel`/`InferInsertModel` utilities to create and export TypeScript types for the User entity. This will ensure type safety across the application.
+### Details:
+In the same schema file (`src/db/schema/users.ts`), add and export types like `export type User = typeof users.$inferSelect;` and `export type NewUser = typeof users.$inferInsert;`.
+
+## 3. Generate SQL Migration File for User Table [done]
+### Dependencies: 8.1
+### Description: Run the Drizzle Kit `generate` command to create a new SQL migration file based on the defined User schema. This file will contain the `CREATE TABLE` statement.
+### Details:
+Execute the command `pnpm drizzle-kit generate:pg` (or equivalent) and inspect the generated `.sql` file to ensure it accurately reflects the schema for the `users` table.
+
+## 4. Apply Database Migration [done]
+### Dependencies: 8.3
+### Description: Execute the migration script to apply the newly generated SQL migration to the development database, which will create the actual `users` table.
+### Details:
+Run the Drizzle Kit `migrate` command. After execution, connect to the development database using a client to verify that the `users` table and its columns have been successfully created.
+
+## 5. Implement Unit Tests for User ORM Operations [done]
+### Dependencies: 8.4
+### Description: Write unit tests to verify the User data model implementation. The tests should cover creating a new user and reading that user back from the database to ensure the schema and ORM are working correctly.
+### Details:
+Using a testing framework like Vitest or Jest, create a test suite for the User model. Write at least two tests: one for inserting a user record and another for selecting that user record by its ID or email.
+

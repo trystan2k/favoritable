@@ -1,0 +1,11 @@
+# Task ID: 43
+# Title: Backend: Implement Batch Delete Bookmarks Endpoint
+# Status: pending
+# Dependencies: 18
+# Priority: medium
+# Description: Develop an endpoint to delete multiple bookmarks simultaneously.
+# Details:
+Implement `POST /bookmarks/batch-delete` that accepts an array of bookmark IDs.
+
+# Test Strategy:
+Write API tests to verify multiple bookmarks can be deleted in a single request.

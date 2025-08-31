@@ -1,0 +1,11 @@
+# Task ID: 50
+# Title: Implement API Tests
+# Status: pending
+# Dependencies: 3, 18, 27
+# Priority: high
+# Description: Write comprehensive integration tests for all backend API endpoints using Vitest.
+# Details:
+Test all CRUD operations, authentication flows, search, sort, and import/export endpoints.
+
+# Test Strategy:
+Achieve minimum 90% code coverage for backend API routes. Run tests regularly in CI.

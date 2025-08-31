@@ -1,0 +1,11 @@
+# Task ID: 27
+# Title: Backend: Implement Label CRUD Endpoints
+# Status: pending
+# Dependencies: 9, 17
+# Priority: medium
+# Description: Develop REST API endpoints for creating, reading, updating, and deleting labels.
+# Details:
+Implement `GET /labels`, `GET /labels/:id`, `POST /labels`, `PUT /labels/:id`, `DELETE /labels/:id`.
+
+# Test Strategy:
+Write API integration tests for each label endpoint.

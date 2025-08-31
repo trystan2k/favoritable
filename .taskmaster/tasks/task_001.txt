@@ -1,0 +1,47 @@
+# Task ID: 1
+# Title: Setup Project Repositories
+# Status: done
+# Dependencies: None
+# Priority: high
+# Description: Initialize the monorepo structure for frontend and backend components.
+# Details:
+Create root directory, frontend (SPA Application) and backend (Hono) subdirectories. Configure shared TypeScript settings.
+
+# Test Strategy:
+Verify project structure and basic compilation.
+
+# Subtasks:
+## 1. Initialize Monorepo Root with PNPM [done]
+### Dependencies: None
+### Description: Create the root directory for the monorepo and initialize it using PNPM to manage workspaces.
+### Details:
+Create the main project folder. Inside, run `pnpm init` to create a root `package.json`. Create a `pnpm-workspace.yaml` file and define the packages paths, e.g., `packages:
+  - 'apps/*'`. Create an `apps` directory to hold the frontend and backend projects.
+
+## 2. Scaffold Backend Hono Project [done]
+### Dependencies: 1.1
+### Description: Create the backend project using the Hono starter template within the monorepo structure.
+### Details:
+Navigate to the `apps` directory. Run `pnpm create hono@latest backend` to scaffold a new Hono project named 'backend'. Select the `nodejs` template when prompted. This will create a `apps/backend` directory with a basic Hono application.
+
+## 3. Scaffold Frontend SPA Application Project [done]
+### Dependencies: 1.1
+### Description: Create the frontend project using the SPA Application starter template within the monorepo structure.
+### Details:
+Navigate to the `apps` directory. Run `pnpm create rsbuild@latest` to scaffold a new SPA Application project named 'frontend'. This will create an `apps/frontend` directory with a basic React application configured for SSR.
+<info added on 2025-08-11T09:50:07.459Z>
+The React application will be configured as a client-side Single Page Application without server-side rendering.
+</info added on 2025-08-11T09:50:07.459Z>
+
+## 4. Create Shared TypeScript Configuration [done]
+### Dependencies: 1.1
+### Description: Establish a base TypeScript configuration that can be shared between the frontend and backend projects to ensure consistency.
+### Details:
+Create a new directory in the root named `packages/typescript-config`. Inside this directory, create a `package.json` and a `tsconfig.json` file. The `tsconfig.json` should contain common compiler options (e.g., `strict: true`, `ESNext` module/target). In the root `package.json`, add `"@repo/typescript-config": "workspace:*"` to the devDependencies.
+
+## 5. Link Frontend and Backend to Shared TypeScript Config [done]
+### Dependencies: 1.2, 1.3, 1.4
+### Description: Update the individual tsconfig.json files in the frontend and backend projects to extend the newly created shared configuration.
+### Details:
+In `apps/frontend/tsconfig.json` and `apps/backend/tsconfig.json`, modify the configuration to extend the shared config. Add `"extends": "@repo/typescript-config/tsconfig.json"` to both files. Add `"@repo/typescript-config": "workspace:*"` to the `devDependencies` in both `apps/frontend/package.json` and `apps/backend/package.json`. Run `pnpm install` from the root directory to link the packages.
+

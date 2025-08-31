@@ -1,0 +1,11 @@
+# Task ID: 29
+# Title: Frontend: Implement Create, Rename, Delete Labels UI
+# Status: pending
+# Dependencies: 28
+# Priority: medium
+# Description: Develop a management interface for users to create, rename, and delete their labels.
+# Details:
+Add forms/modals for label creation/renaming. Implement delete confirmation.
+
+# Test Strategy:
+Test creating a new label, renaming an existing one, and deleting a label. Verify changes persist.

@@ -1,0 +1,11 @@
+# Task ID: 40
+# Title: Frontend: Develop Import Bookmarks UI
+# Status: pending
+# Dependencies: 19, 37, 38, 39
+# Priority: medium
+# Description: Create a user interface for uploading and importing bookmark files from different sources.
+# Details:
+Provide file upload inputs for Omnivore, HTML, and text files. Display import progress/status.
+
+# Test Strategy:
+Test uploading each file type and verify bookmarks appear in the UI after import.

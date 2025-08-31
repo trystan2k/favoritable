@@ -1,0 +1,43 @@
+# Task ID: 3
+# Title: Initialize Backend Project
+# Status: done
+# Dependencies: 1
+# Priority: high
+# Description: Set up the Hono (Node.js) project with TypeScript and Vitest.
+# Details:
+Install Hono, Node.js types, and Vitest. Create a basic Hono server endpoint.
+
+# Test Strategy:
+Run initial dev server, verify a simple 'hello world' endpoint works. Run Vitest setup tests.
+
+# Subtasks:
+## 1. Initialize Node.js Project and Install Core Dependencies [done]
+### Dependencies: None
+### Description: Create the backend project directory, initialize a Node.js project, and install essential packages like Hono, Node.js types, and Vitest.
+### Details:
+Use `npm init -y` or `pnpm init` to create `package.json`. Install `hono`, `@types/node` (as dev dependency), and `vitest` (as dev dependency).
+
+## 2. Configure TypeScript for Backend [done]
+### Dependencies: 3.1
+### Description: Set up the `tsconfig.json` file for the Hono backend project, ensuring proper compilation and type checking.
+### Details:
+Create `tsconfig.json` in the backend root with appropriate settings for Node.js, Hono, and Vitest, including `target`, `module`, `outDir`, `esModuleInterop`, `strict`, etc. Ensure `rootDir` and `outDir` are correctly configured.
+
+## 3. Implement Basic Hono Server Endpoint [done]
+### Dependencies: 3.1, 3.2
+### Description: Develop a minimal Hono server application with a single 'Hello World' endpoint to confirm basic server functionality.
+### Details:
+Create an `src/index.ts` file. Instantiate a Hono app and define a GET route (e.g., `/`) that returns a simple JSON or text response like `{"message": "Hello, Hono!"}`. Add a `start` or `dev` script to `package.json` to run the server.
+
+## 4. Configure Vitest and Add Placeholder Test [done]
+### Dependencies: 3.1
+### Description: Set up Vitest for unit testing within the backend project and create a basic, passing test file to validate the setup.
+### Details:
+Configure `vitest` in `package.json` scripts (e.g., `"test": "vitest"`) or create a `vitest.config.ts` file if more complex configuration is needed. Create a `src/test/example.test.ts` file with a simple passing test, such as `import { expect, test } from 'vitest'; test('basic setup', () => { expect(true).toBe(true); });`.
+
+## 5. Verify Initial Backend Setup [done]
+### Dependencies: 3.3, 3.4
+### Description: Perform a final verification of the backend project by running the development server and executing the initial Vitest tests to confirm all setup steps are complete and functional.
+### Details:
+Ensure the `dev` script for the Hono server and the `test` script for Vitest are correctly configured in `package.json`.
+

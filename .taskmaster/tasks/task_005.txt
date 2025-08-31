@@ -1,0 +1,49 @@
+# Task ID: 5
+# Title: Select & Setup Database
+# Status: done
+# Dependencies: 3
+# Priority: high
+# Description: Choose SQLite (Turso) as the database and configure its connection.
+# Details:
+Sign up for Turso, create a database instance. Configure backend to connect to Turso via `drizzle-orm` or similar ORM.
+
+# Test Strategy:
+Write a simple script to connect to the database and perform a basic query (e.g., create a test table).
+
+# Subtasks:
+## 1. Create ADR for Database Choice [done]
+### Dependencies: None
+### Description: Draft and finalize an Architecture Decision Record (ADR) documenting the selection of Turso as the project's database, justifying the choice based on project requirements.
+### Details:
+The ADR should outline the problem, considered alternatives (e.g., Postgres, MySQL), the final decision, and its consequences for the project architecture.
+
+## 2. Sign Up for Turso and Create Database Instance [done]
+### Dependencies: 5.1
+### Description: Create a new account on the Turso platform and provision a new database instance for the application. Retrieve the database connection URL and authentication token.
+### Details:
+Follow the Turso getting-started guide. Name the database instance according to project conventions and select a primary region.
+
+## 3. Configure Environment Variables for Database Credentials [done]
+### Dependencies: 5.2
+### Description: Securely store the retrieved Turso database URL and auth token as environment variables in the backend application's configuration.
+### Details:
+Use a `.env` file for local development (e.g., `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`) and ensure it is added to `.gitignore`. Configure secrets for deployment environments.
+
+## 4. Install Dependencies and Configure DB Client [done]
+### Dependencies: 5.3
+### Description: Install the Turso SDK (`@tursodatabase/libsql-client`) and the Drizzle ORM adapter (`drizzle-orm/libsql`). Configure the database client in the backend code to connect to Turso using the environment variables.
+### Details:
+Create a singleton or a shared module for the database client to ensure efficient connection management throughout the application.
+
+## 5. Implement and Run Connection Verification Test [done]
+### Dependencies: 5.4
+### Description: Create a simple script or an API endpoint to test the database connection. The test should perform a basic query (e.g., `SELECT 1`) to confirm that the configuration is correct.
+### Details:
+The script should connect, execute the query, and log a success or failure message. This can serve as a basic health check.
+
+## 6. Document Database Setup Process [done]
+### Dependencies: 5.5
+### Description: Add a section to the project's `README.md` or developer documentation explaining how to set up the Turso database for local development.
+### Details:
+Include steps for signing up, creating a database, and configuring the necessary environment variables so new developers can quickly set up their environment.
+
