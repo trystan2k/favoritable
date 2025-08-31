@@ -38,8 +38,11 @@ export const auth = betterAuth({
     },
     apple: {
       clientId: process.env.APPLE_CLIENT_ID || '',
+      clientSecret: process.env.APPLE_CLIENT_SECRET as string,
+      appBundleIdentifier: process.env.APPLE_APP_BUNDLE_IDENTIFIER,
     },
   },
+  trustedOrigins: ['https://appleid.apple.com'],
   advanced: {
     cookiePrefix: 'fav',
     defaultCookieAttributes: {

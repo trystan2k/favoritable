@@ -53,11 +53,13 @@ const BaseEnvSchema = z.object({
   TWITTER_CLIENT_ID: z.string().optional(),
   TWITTER_CLIENT_SECRET: z.string().optional(),
 
-  // Apple OAuth (Apple uses JWT for client secret, so only client ID is stored)
+  // Apple OAuth (Apple uses JWT for client secret generation)
   APPLE_CLIENT_ID: z.string().optional(),
+  APPLE_CLIENT_SECRET: z.string().optional(), // Generated JWT client secret
   APPLE_TEAM_ID: z.string().optional(),
   APPLE_KEY_ID: z.string().optional(),
   APPLE_PRIVATE_KEY_PATH: z.string().optional(),
+  APPLE_APP_BUNDLE_IDENTIFIER: z.string().optional(),
 });
 
 // Discriminated union for type-safe environment based on DATABASE_TYPE
