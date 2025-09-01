@@ -2,6 +2,8 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { config } from '@dotenvx/dotenvx';
 import { ZodError, z } from 'zod';
+import { LogLevels } from './core/types';
+import { DATABASE_TYPES } from './db/types';
 
 export const NodeEnvs = {
   DEVELOPMENT: 'development',
@@ -14,20 +16,60 @@ const BaseEnvSchema = z.object({
   NODE_ENV: z
     .enum([NodeEnvs.DEVELOPMENT, NodeEnvs.TEST, NodeEnvs.PRODUCTION])
     .default(NodeEnvs.DEVELOPMENT),
-  DATABASE_TYPE: z.enum(['local', 'turso']).default('local'),
+  DATABASE_TYPE: z
+    .enum([DATABASE_TYPES.LOCAL, DATABASE_TYPES.TURSO])
+    .default(DATABASE_TYPES.LOCAL),
   LOCAL_DATABASE_URL: z.string().optional(),
   TURSO_DATABASE_URL: z.string().optional(),
   TURSO_AUTH_TOKEN: z.string().optional(),
+
+  // Logging configuration (Possible values are those from LogLevels)
+  LOG_LEVEL: z
+    .enum([
+      LogLevels.FATAL,
+      LogLevels.ERROR,
+      LogLevels.WARN,
+      LogLevels.INFO,
+      LogLevels.DEBUG,
+      LogLevels.TRACE,
+      LogLevels.SILENT,
+    ] as const)
+    .default(LogLevels.INFO),
+
+  // OAuth Provider Credentials (optional to support partial configurations)
+  // GitHub OAuth
+  GITHUB_CLIENT_ID: z.string().optional(),
+  GITHUB_CLIENT_SECRET: z.string().optional(),
+
+  // Google OAuth
+  GOOGLE_CLIENT_ID: z.string().optional(),
+  GOOGLE_CLIENT_SECRET: z.string().optional(),
+
+  // Facebook OAuth
+  FACEBOOK_CLIENT_ID: z.string().optional(),
+  FACEBOOK_CLIENT_SECRET: z.string().optional(),
+
+  // Twitter/X OAuth
+  TWITTER_CLIENT_ID: z.string().optional(),
+  TWITTER_CLIENT_SECRET: z.string().optional(),
+
+  // Apple OAuth (Apple uses JWT for client secret generation)
+  APPLE_CLIENT_ID: z.string().optional(),
+  APPLE_CLIENT_SECRET: z.string().optional(), // Generated JWT client secret
+  APPLE_TEAM_ID: z.string().optional(),
+  APPLE_KEY_ID: z.string().optional(),
+  APPLE_PRIVATE_KEY_PATH: z.string().optional(),
+  APPLE_APP_BUNDLE_IDENTIFIER: z.string().optional(),
 });
 
 // Discriminated union for type-safe environment based on DATABASE_TYPE
 const LocalEnvSchema = BaseEnvSchema.extend({
-  DATABASE_TYPE: z.literal('local'),
+  DATABASE_TYPE: z.literal(DATABASE_TYPES.LOCAL),
   LOCAL_DATABASE_URL: z.string(),
 });
 
 const TursoEnvSchema = BaseEnvSchema.extend({
-  DATABASE_TYPE: z.literal('turso'),
+  DATABASE_TYPE: z.literal(DATABASE_TYPES.TURSO),
   TURSO_DATABASE_URL: z.string(),
   TURSO_AUTH_TOKEN: z.string(),
 });
@@ -37,7 +79,7 @@ const EnvSchema = z.discriminatedUnion('DATABASE_TYPE', [
   TursoEnvSchema,
 ]);
 
-if (process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV === NodeEnvs.TEST) {
   const envFileName = '.env.test';
   const envTestPath = path.resolve(process.cwd(), envFileName);
   if (!existsSync(envTestPath)) {

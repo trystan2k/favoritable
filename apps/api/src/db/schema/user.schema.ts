@@ -3,7 +3,14 @@ import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { trackingDates } from './common.schema.js';
 import { label } from './label.schema.js';
 
-const providerEnum = ['github', 'google', 'discord'] as const;
+const providerEnum = [
+  'github',
+  'google',
+  'facebook',
+  'twitter',
+  'apple',
+  'discord',
+] as const;
 
 export const user = sqliteTable(
   'users',
