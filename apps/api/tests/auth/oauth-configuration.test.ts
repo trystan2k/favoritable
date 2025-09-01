@@ -57,18 +57,21 @@ describe('OAuth Configuration', () => {
     expect(auth.options.trustedOrigins).toContain('https://appleid.apple.com');
   });
 
-  test('should have correct advanced cookie configuration', () => {
+  test('should have correct advanced cookie configuration for persistent sessions', () => {
     const advanced = auth.options.advanced;
     expect(advanced.cookiePrefix).toBe('fav');
     expect(advanced.defaultCookieAttributes).toEqual({
       sameSite: 'none',
       secure: true,
       partitioned: true,
+      httpOnly: true,
     });
   });
 
-  test('should have session cache configuration', () => {
+  test('should have persistent session configuration', () => {
     const session = auth.options.session;
+    expect(session.expiresIn).toBe(60 * 60 * 24 * 30); // 30 days
+    expect(session.updateAge).toBe(60 * 60 * 24); // 1 day
     expect(session.cookieCache.enabled).toBe(true);
     expect(session.cookieCache.maxAge).toBe(300); // 5 * 60 seconds
   });
