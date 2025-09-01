@@ -8,6 +8,7 @@
 
 # Test DB
 **/tests/**/test-**.db
+**/tests/**/.db/
 
 # Dependencies
 node_modules
