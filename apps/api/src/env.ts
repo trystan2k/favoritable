@@ -23,7 +23,7 @@ const BaseEnvSchema = z.object({
   TURSO_DATABASE_URL: z.string().optional(),
   TURSO_AUTH_TOKEN: z.string().optional(),
 
-  // Logging configuration (Possible values are from LogLevels)
+  // Logging configuration (Possible values are those from LogLevels)
   LOG_LEVEL: z
     .enum([
       LogLevels.FATAL,
