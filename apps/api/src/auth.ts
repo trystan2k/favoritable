@@ -49,10 +49,13 @@ export const auth = betterAuth({
       sameSite: 'none',
       secure: true,
       partitioned: true, // New browser standards will mandate this for foreign cookies
+      httpOnly: true, // Prevent XSS attacks
     },
   },
   telemetry: { enabled: false },
   session: {
+    expiresIn: 60 * 60 * 24 * 30, // 30 days for persistent sessions
+    updateAge: 60 * 60 * 24, // 1 day - session expiration updated daily when used
     cookieCache: {
       enabled: true,
       maxAge: 5 * 60, // Cache duration in seconds
