@@ -223,7 +223,7 @@ update-task-status --id [TASK_ID] --status [in-progress|done]
 
 ### Serena MCP
 
-Use Serena MCP for code analysis, file operations, and project understanding:
+Use Serena MCP for code analysis, search files, search symbols, file operations, and project understanding, :
 
 ```bash
 # File operations
