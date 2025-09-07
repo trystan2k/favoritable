@@ -54,7 +54,7 @@
         "favoritable"
       ]
     },
-    "sqllite": {
+    "sqlite": {
       "type": "local",
       "command": ["npx", "-y", "mcp-sqlite", "apps/api/local.db"]
     }

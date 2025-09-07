@@ -20,8 +20,8 @@ For context about the API project (apps/api), see document [CONTEXT.md](apps/api
   - Build: `pnpm build` (TypeScript)
   - Dev: `pnpm dev`
   - Typecheck: `pnpm typecheck`
-  - Lint: `pnpm lint` (Biome), 'pnpm lint:fix` to fix issues
-  - Format: `pnpm format` (Biome), 'pnpm format:fix` to fix issues
+  - Lint: `pnpm lint` (Biome), `pnpm lint:fix` to fix issues
+  - Format: `pnpm format` (Biome), `pnpm format:fix` to fix issues
 - **Frontend**
   - Build: `pnpm build` (Rsbuild)
   - Dev: `pnpm dev`
