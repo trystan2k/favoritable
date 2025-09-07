@@ -5,6 +5,7 @@ import {
   APIError,
   MalFormedRequestError,
   NotAcceptedError,
+  NotAuthorizedError,
   NotFoundError,
   UnexpectedError,
 } from '../../src/errors/errors.js';
@@ -40,9 +41,9 @@ describe('authErrorsHandler', () => {
 
     const result = authErrorsHandler(betterAuthError);
 
-    expect(result).toBeInstanceOf(NotAcceptedError);
+    expect(result).toBeInstanceOf(NotAuthorizedError);
     expect((result as APIError).message).toBe('Authentication failed');
-    expect((result as APIError).httpStatusCode).toBe(406);
+    expect((result as APIError).httpStatusCode).toBe(401);
   });
 
   test('should handle Better Auth APIError with status 403', () => {
@@ -52,9 +53,9 @@ describe('authErrorsHandler', () => {
 
     const result = authErrorsHandler(betterAuthError);
 
-    expect(result).toBeInstanceOf(NotAcceptedError);
+    expect(result).toBeInstanceOf(NotAuthorizedError);
     expect((result as APIError).message).toBe('Authentication failed');
-    expect((result as APIError).httpStatusCode).toBe(406);
+    expect((result as APIError).httpStatusCode).toBe(401);
   });
 
   test('should handle Better Auth APIError with status 404', () => {

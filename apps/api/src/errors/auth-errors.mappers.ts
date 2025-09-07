@@ -3,6 +3,7 @@ import {
   APIError,
   MalFormedRequestError,
   NotAcceptedError,
+  NotAuthorizedError,
   NotFoundError,
   UnexpectedError,
 } from './errors.js';
@@ -24,7 +25,7 @@ export const authErrorsHandler = (error: Error): Error | APIError => {
         );
       case 401:
       case 403:
-        return new NotAcceptedError('Authentication failed', message);
+        return new NotAuthorizedError('Authentication failed', message);
       case 404:
         return new NotFoundError('Authentication failed', message);
       case 422:
