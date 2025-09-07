@@ -12,9 +12,16 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 
 ### 1. 📋 TASK RECEPTION
 
+- **Action**: Await clear instructions on which task to implement
 - Receive the task or subtask to be developed
 - Identify the task ID in the Task Master system
-- **Action**: Await clear instructions on which task to implement
+- **Action**: Check if task is already implemented, if so, ask for clarification
+- Ensure that your are at `main` branch, otherwise, checkout it.
+- **Action**: Run `git pull` to ensure that your branch is up-to-date with remote.
+- **Action**: Create a feature branch based on `main` and do your work on this feature branch
+- Create one feature branch per task ID and commit all subtasks in this same branch (do not create branch for subtasks)
+- Feature branch should follow the pattern `feature/FAV-[ID]-[title]`
+- **Action**: Check if task is already expanded, otherwise expand it
 
 ### 2. 🔍 OBTAINING DETAILS
 
@@ -75,10 +82,6 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 ### 6. ⚙️ IMPLEMENTATION
 
 - Follow the plan created in deepthink
-- Ensure that local `main` branch is up-to-date with remote, otherwise update it
-- Create a feature branch based on `main` and do your work on this feature branch
-- Create one feature branch per task ID and commit all subtasks in this same branch (do not create branch for subtasks)
-- Feature branch should follow the pattern `feature/FAV-[ID]-[title]`
 
 #### 🔄 Subtask Development Cycle
 
