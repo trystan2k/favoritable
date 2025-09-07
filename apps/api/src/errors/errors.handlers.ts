@@ -20,9 +20,9 @@ const defaultResponseHandler = (err: APIError, c: Context): Response => {
     error: {
       code: err.code,
       message: publicMessage,
-      cause: env.NODE_ENV === NodeEnvs.DEVELOPMENT ? err.cause : undefined,
-      name: env.NODE_ENV === NodeEnvs.DEVELOPMENT ? err.name : undefined,
-      stack: env.NODE_ENV === NodeEnvs.DEVELOPMENT ? err.stack : undefined,
+      cause: env.NODE_ENV !== NodeEnvs.PRODUCTION ? err.cause : undefined,
+      name: env.NODE_ENV !== NodeEnvs.PRODUCTION ? err.name : undefined,
+      stack: env.NODE_ENV !== NodeEnvs.PRODUCTION ? err.stack : undefined,
     },
     timestamp: new Date().toISOString(),
   };

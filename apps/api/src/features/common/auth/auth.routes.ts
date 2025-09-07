@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { auth } from '../../../auth.js';
 import { Service } from '../../../core/dependency-injection/di.decorators.js';
+import { NotAuthorizedError } from '../../../errors/errors.js';
 import {
   authMiddleware,
   type HonoEnv,
@@ -39,7 +40,7 @@ export class AuthRoutes {
       const session = c.get('session');
       const user = c.get('user');
 
-      if (!user) return c.json({ error: 'Not authenticated' }, 401);
+      if (!user) throw new NotAuthorizedError('Unauthorized');
 
       return c.json({
         session,

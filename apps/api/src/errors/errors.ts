@@ -49,3 +49,9 @@ export class NotAcceptedError extends APIError {
   name = 'NotAcceptedError';
   httpStatusCode = 406 as ContentfulStatusCode;
 }
+
+export class NotAuthorizedError extends APIError {
+  code = '00009';
+  name = 'NotAuthorizedError';
+  httpStatusCode = 401 as ContentfulStatusCode;
+}

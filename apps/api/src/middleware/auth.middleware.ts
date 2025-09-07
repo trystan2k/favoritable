@@ -1,5 +1,6 @@
 import type { Context, Next } from 'hono';
 import type { auth } from '../auth.js';
+import { NotAuthorizedError } from '../errors/errors.js';
 
 export type HonoEnv = {
   Variables: {
@@ -14,7 +15,7 @@ export const authMiddleware = () => {
     const session = c.get('session');
 
     if (!user || !session) {
-      return c.json({ error: 'Authentication required' }, 401);
+      throw new NotAuthorizedError('Unauthorized');
     }
 
     return next();

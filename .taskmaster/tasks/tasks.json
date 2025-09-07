@@ -2071,17 +2071,71 @@
         "description": "Integrate Better Auth's specific error handling mechanisms into the Hono application's global error handler. This will ensure that authentication and authorization errors are caught and formatted consistently with other application errors.",
         "details": "Review the Better Auth error handling documentation to identify the specific error classes it throws (e.g., AuthenticationError, AuthorizationError). Modify the existing global error handling middleware in the Hono application to specifically catch these errors. When a Better Auth error is caught, map it to the application's standard JSON error response format, returning the appropriate HTTP status code (e.g., 401 for AuthenticationError, 403 for AuthorizationError). Ensure this new logic coexists with the current handling for service and repository errors, maintaining a uniform error response structure across the entire API.",
         "testStrategy": "Create a suite of integration tests for protected API endpoints. Test cases should include: 1) making a request without a session token to verify a 401 Unauthorized response; 2) making a request with an invalid or expired token to verify a 401 Unauthorized response; and 3) if roles are implemented, making a request for a resource the user is not permitted to access to verify a 403 Forbidden response. All error responses must conform to the application's standard error JSON schema.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           12
         ],
         "priority": "high",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Research and Document Better Auth Error Types",
+            "description": "Investigate the Better Auth library's documentation and/or source code to identify all specific error classes it throws for authentication and authorization failures. Document these classes and their intended use.",
+            "dependencies": [],
+            "details": "The primary goal is to create a definitive list of error classes to handle, such as `AuthenticationError`, `AuthorizationError`, `TokenExpiredError`, or `InvalidTokenError`. The output should be a comment in the main task ticket or a small markdown file in the repo listing each error class, its purpose, and the corresponding recommended HTTP status code (e.g., 401, 403). This list will serve as the blueprint for the implementation.",
+            "status": "done",
+            "testStrategy": "N/A (This is a research task). The deliverable is documentation."
+          },
+          {
+            "id": 2,
+            "title": "Update Global Error Middleware to Catch Specific Auth Errors",
+            "description": "Modify the existing Hono global error handler (`app.onError`) to add specific `instanceof` checks for the Better Auth error classes identified in the research phase.",
+            "dependencies": [
+              "69.1"
+            ],
+            "details": "In the main error handling middleware function, add conditional blocks (e.g., `if (err instanceof AuthenticationError) { ... }`) for each relevant Better Auth error. This logic should be placed before the existing generic error handlers for service or repository errors to ensure specific errors are caught first. Initially, these blocks can simply log to the console to confirm they are being triggered correctly.",
+            "status": "done",
+            "testStrategy": "Manually test a protected endpoint without a valid token using a tool like cURL or Postman. Verify that the console logs the expected message from the new conditional block, confirming the error is being caught."
+          },
+          {
+            "id": 3,
+            "title": "Map Auth Errors to Standardized JSON Response",
+            "description": "Implement the logic within the new error handling blocks to format the caught Better Auth errors into the application's standard JSON error response structure.",
+            "dependencies": [
+              "69.2"
+            ],
+            "details": "For each Better Auth error type, set the appropriate HTTP status code on the response context (e.g., `c.status(401)`). Then, construct and return a JSON body that matches the application's existing error format. The error message from the caught exception (`err.message`) should be used in the response body. For example: `return c.json({ error: { message: err.message, code: 'UNAUTHENTICATED' } }, 401);`.",
+            "status": "done",
+            "testStrategy": "Using an API client, send requests that trigger authentication and authorization errors. Assert that the HTTP response status code is correct (401, 403) and that the JSON body conforms to the application's standard error schema."
+          },
+          {
+            "id": 4,
+            "title": "Create Integration Tests for Auth Error Scenarios",
+            "description": "Develop a suite of automated integration tests to validate that the new error handling logic behaves as expected for various authentication and authorization failure cases.",
+            "dependencies": [
+              "69.3"
+            ],
+            "details": "Using the project's testing framework (e.g., Vitest with Supertest), create tests for protected endpoints. Test cases must include: 1) making a request without any session token; 2) making a request with an invalid or malformed token; 3) making a request with an expired token. Each test should assert that the response returns the correct HTTP status code and the standardized JSON error body.",
+            "status": "done",
+            "testStrategy": "Run the newly created test suite. All tests should pass, confirming that the error handling middleware correctly processes different types of auth errors."
+          },
+          {
+            "id": 5,
+            "title": "Refactor and Verify Coexistence with Other Error Handlers",
+            "description": "Review the complete error handling middleware to ensure the new auth error logic is well-integrated and does not interfere with existing handlers for service, repository, or generic errors. Refactor for clarity and maintainability.",
+            "dependencies": [
+              "69.4"
+            ],
+            "details": "Examine the order of operations within the `app.onError` handler. Ensure the specific Better Auth checks come before more generic error checks. If there is duplicated code for formatting JSON responses, extract it into a helper function. Add comments to clarify the different error handling paths. Finally, manually trigger a non-auth error (e.g., a validation error) to ensure it is still handled correctly by the pre-existing logic.",
+            "status": "done",
+            "testStrategy": "Run the entire project's test suite, including the new auth error tests and all existing tests. All tests must pass to confirm that no regressions were introduced to other parts of the application's error handling."
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-09-01T15:55:11.561Z",
+      "updated": "2025-09-07T07:21:03.211Z",
       "description": "Tasks for master context"
     }
   }
