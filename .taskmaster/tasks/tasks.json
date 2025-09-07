@@ -935,14 +935,35 @@
         "id": 14,
         "title": "Implement Persistent User Sessions",
         "description": "Ensure user sessions are persistent using Better Auth's built-in session management.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           12
         ],
         "priority": "high",
         "details": "Configure Better Auth to manage persistent sessions using its database adapter and HTTP-only cookies. Better Auth's built-in functionality will handle session validation on backend routes.",
         "testStrategy": "Log in, close the browser, and reopen to verify the user is still logged in via the persistent session cookie. Test session expiration by waiting for the defined session lifetime and ensuring the user is logged out.",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Configure Session Duration and Cookie Attributes",
+            "description": "Update the Lucia Auth configuration to define the session duration and set appropriate security attributes for the session cookie, such as `HttpOnly`, `Secure`, and `SameSite`, to enable persistence.",
+            "dependencies": [],
+            "details": "This involves modifying the Lucia initialization file to set the `sessionExpiresIn` property and configure the `sessionCookie` attributes to ensure sessions persist securely across browser restarts.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Write Automated Test for Session Persistence",
+            "description": "Create an automated test to verify that a user remains logged in after a simulated browser restart, confirming the persistent session cookie is working correctly.",
+            "dependencies": [
+              "14.1"
+            ],
+            "details": "The test should simulate a user login, store the session cookie, simulate a browser closure and reopening, and then make an authenticated request using the stored cookie to confirm the session is still valid. This test will be added to the API test suite (Task 50).",
+            "status": "done",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 15,
@@ -2060,7 +2081,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-08-31T19:06:55.325Z",
+      "updated": "2025-09-01T15:55:11.561Z",
       "description": "Tasks for master context"
     }
   }
