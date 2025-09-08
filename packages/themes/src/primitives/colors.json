@@ -1,6 +1,6 @@
 {
   "color": {
-    "black": {
+    "ink": {
       "50": { "value": "#b0b8c9" },
       "100": { "value": "#8892a6" },
       "200": { "value": "#6b7280" },
@@ -13,10 +13,9 @@
       "800": { "value": "#2d3142" },
       "850": { "value": "#2a2f3d" },
       "900": { "value": "#242938" },
-      "950": { "value": "#1f242f" },
-      "primary": { "value": "#1a1f2e" }
+      "950": { "value": "#1a1f2e" }
     },
-    "white": {
+    "neutral": {
       "0": { "value": "#ffffff" },
       "50": { "value": "#f8fafc" },
       "100": { "value": "#f1f5f9" },
@@ -150,68 +149,68 @@
     "semantic": {
       "background": {
         "light": {
-          "primary": { "value": "{color.white.0}" },
-          "secondary": { "value": "{color.white.50}" },
-          "tertiary": { "value": "{color.white.100}" },
-          "quaternary": { "value": "{color.white.200}" },
-          "card": { "value": "{color.white.0}" },
-          "cardHover": { "value": "{color.white.50}" },
-          "elevated": { "value": "{color.white.0}" },
+          "primary": { "value": "{color.neutral.0}" },
+          "secondary": { "value": "{color.neutral.50}" },
+          "tertiary": { "value": "{color.neutral.100}" },
+          "quaternary": { "value": "{color.neutral.200}" },
+          "card": { "value": "{color.neutral.0}" },
+          "cardHover": { "value": "{color.neutral.50}" },
+          "elevated": { "value": "{color.neutral.0}" },
           "overlay": { "value": "rgba(0, 0, 0, 0.8)" },
-          "inverse": { "value": "{color.white.800}" }
+          "inverse": { "value": "{color.neutral.800}" }
         },
         "dark": {
-          "primary": { "value": "{color.black.primary}" },
-          "secondary": { "value": "{color.black.900}" },
-          "tertiary": { "value": "{color.black.800}" },
-          "quaternary": { "value": "{color.black.700}" },
-          "card": { "value": "{color.black.700}" },
-          "cardHover": { "value": "{color.black.600}" },
-          "elevated": { "value": "{color.black.500}" },
-          "overlay": { "value": "{color.black.400}" },
-          "inverse": { "value": "{color.white.0}" }
+          "primary": { "value": "{color.ink.950}" },
+          "secondary": { "value": "{color.ink.900}" },
+          "tertiary": { "value": "{color.ink.800}" },
+          "quaternary": { "value": "{color.ink.700}" },
+          "card": { "value": "{color.ink.700}" },
+          "cardHover": { "value": "{color.ink.600}" },
+          "elevated": { "value": "{color.ink.500}" },
+          "overlay": { "value": "{color.ink.400}" },
+          "inverse": { "value": "{color.neutral.0}" }
         }
       },
       "surface": {
         "light": {
-          "pressed": { "value": "{color.white.200}" },
-          "disabled": { "value": "{color.white.100}" }
+          "pressed": { "value": "{color.neutral.200}" },
+          "disabled": { "value": "{color.neutral.100}" }
         },
         "dark": {
-          "pressed": { "value": "{color.black.850}" },
-          "disabled": { "value": "{color.black.950}" }
+          "pressed": { "value": "{color.ink.850}" },
+          "disabled": { "value": "{color.ink.950}" }
         }
       },
       "text": {
         "light": {
-          "primary": { "value": "{color.white.900}" },
-          "secondary": { "value": "{color.white.700}" },
-          "tertiary": { "value": "{color.white.500}" },
-          "quaternary": { "value": "{color.white.400}" },
-          "disabled": { "value": "{color.white.300}" },
-          "inverse": { "value": "{color.white.0}" }
+          "primary": { "value": "{color.neutral.900}" },
+          "secondary": { "value": "{color.neutral.700}" },
+          "tertiary": { "value": "{color.neutral.500}" },
+          "quaternary": { "value": "{color.neutral.400}" },
+          "disabled": { "value": "{color.neutral.300}" },
+          "inverse": { "value": "{color.neutral.0}" }
         },
         "dark": {
-          "primary": { "value": "{color.white.0}" },
-          "secondary": { "value": "{color.black.50}" },
-          "tertiary": { "value": "{color.black.100}" },
-          "quaternary": { "value": "{color.black.200}" },
-          "disabled": { "value": "{color.black.300}" },
-          "inverse": { "value": "{color.black.primary}" }
+          "primary": { "value": "{color.neutral.0}" },
+          "secondary": { "value": "{color.ink.50}" },
+          "tertiary": { "value": "{color.ink.100}" },
+          "quaternary": { "value": "{color.ink.200}" },
+          "disabled": { "value": "{color.ink.300}" },
+          "inverse": { "value": "{color.ink.950}" }
         }
       },
       "border": {
         "light": {
-          "primary": { "value": "{color.white.200}" },
-          "secondary": { "value": "{color.white.300}" },
-          "tertiary": { "value": "{color.white.400}" },
-          "disabled": { "value": "{color.white.100}" }
+          "primary": { "value": "{color.neutral.200}" },
+          "secondary": { "value": "{color.neutral.300}" },
+          "tertiary": { "value": "{color.neutral.400}" },
+          "disabled": { "value": "{color.neutral.100}" }
         },
         "dark": {
-          "primary": { "value": "{color.black.350}" },
-          "secondary": { "value": "{color.black.300}" },
-          "tertiary": { "value": "{color.black.200}" },
-          "disabled": { "value": "{color.black.350}" }
+          "primary": { "value": "{color.ink.350}" },
+          "secondary": { "value": "{color.ink.300}" },
+          "tertiary": { "value": "{color.ink.200}" },
+          "disabled": { "value": "{color.ink.350}" }
         }
       },
       "interactive": {
@@ -248,16 +247,16 @@
           "hover": { "value": "{color.amber.400}" },
           "active": { "value": "{color.amber.600}" },
           "disabled": { "value": "{color.amber.200}" },
-          "text": { "value": "{color.white.0}" },
-          "textDisabled": { "value": "{color.white.500}" }
+          "text": { "value": "{color.neutral.0}" },
+          "textDisabled": { "value": "{color.neutral.500}" }
         },
         "secondary": {
           "base": { "value": "{color.amber.100}" },
           "hover": { "value": "{color.amber.200}" },
           "active": { "value": "{color.amber.300}" },
-          "disabled": { "value": "{color.white.100}" },
+          "disabled": { "value": "{color.neutral.100}" },
           "text": { "value": "{color.amber.700}" },
-          "textDisabled": { "value": "{color.white.400}" }
+          "textDisabled": { "value": "{color.neutral.400}" }
         },
         "tertiary": {
           "base": { "value": "transparent" },
@@ -265,7 +264,7 @@
           "active": { "value": "{color.amber.100}" },
           "disabled": { "value": "transparent" },
           "text": { "value": "{color.amber.500}" },
-          "textDisabled": { "value": "{color.white.400}" }
+          "textDisabled": { "value": "{color.neutral.400}" }
         }
       },
       "error": {
