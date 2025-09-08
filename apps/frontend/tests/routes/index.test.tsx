@@ -55,7 +55,7 @@ describe('Index Route', () => {
     const mainDiv = screen.getByRole('heading').parentElement;
     expect(mainDiv).toHaveAttribute(
       'style',
-      expect.stringContaining('padding: var(--size-spacing-4)')
+      expect.stringContaining('padding: var(--spacing-4)')
     );
 
     // Test the card container that wraps the description and buttons

@@ -7,11 +7,11 @@ export const Route = createFileRoute('/')({
 
 function Index() {
   return (
-    <div style={{ padding: 'var(--size-spacing-4)' }}>
+    <div style={{ padding: 'var(--spacing-4)' }}>
       <h3 style={{ color: 'var(--theme-color-text-brand)' }}>Welcome Home!</h3>
       <div
         style={{
-          marginTop: 'var(--size-spacing-4)',
+          marginTop: 'var(--spacing-4)',
           padding: 'var(--size-spacing-3)',
           backgroundColor: 'var(--theme-color-background-card)',
           borderRadius: 'var(--size-border-radius-medium)',
