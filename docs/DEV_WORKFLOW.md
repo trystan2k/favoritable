@@ -341,6 +341,7 @@ Based on your development guidelines, here are the **NO NO actions**:
 - **NEVER** Include any agent information in the commit message (like Co-Authored-By:)
 - **NEVER** reference task or subtask IDs in commit messages - focus purely on the work done
 - **NEVER** create physical development logs for subtasks - only for complete tasks
+- **NEVER** bypass git hooks with `--no-verify` or similar flags - git hooks are mandatory quality gates
 - Under **NO** circumstance commit code when there are issues from QA scripts (even warnings)  
 
 ---
