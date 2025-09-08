@@ -34,23 +34,38 @@ describe('Index Route', () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
-    const buttons = screen.getAllByRole('button');
-    expect(buttons).toHaveLength(4);
-    expect(buttons[0]).toHaveTextContent('Solid Button');
-    expect(buttons[1]).toHaveTextContent('Soft Button');
-    expect(buttons[2]).toHaveTextContent('Outline Button');
-    expect(buttons[3]).toHaveTextContent('Ghost Button');
+    // Filter out the theme switcher button and only check the content buttons
+    const allButtons = screen.getAllByRole('button');
+    const contentButtons = allButtons.filter(
+      (button) => !button.getAttribute('aria-label')?.includes('Switch to')
+    );
+
+    expect(contentButtons).toHaveLength(4);
+    expect(contentButtons[0]).toHaveTextContent('Solid Button');
+    expect(contentButtons[1]).toHaveTextContent('Soft Button');
+    expect(contentButtons[2]).toHaveTextContent('Outline Button');
+    expect(contentButtons[3]).toHaveTextContent('Ghost Button');
   });
 
   test('has correct layout structure when navigating to /', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
-    // Find the div with padding style by testing-library data attributes or by searching for the text content
+    // Find the main div that now uses CSS custom properties
     const mainDiv = screen.getByRole('heading').parentElement;
     expect(mainDiv).toHaveAttribute(
       'style',
-      expect.stringContaining('padding: 1rem')
+      expect.stringContaining('padding: var(--spacing-4)')
+    );
+
+    // Test the card container that wraps the description and buttons
+    const descriptionText = screen.getByText(/Design tokens are working!/);
+    const cardContainer = descriptionText.parentElement;
+    expect(cardContainer).toHaveAttribute(
+      'style',
+      expect.stringContaining(
+        'background-color: var(--theme-color-background-card)'
+      )
     );
 
     const buttonContainer = screen.getByRole('button', {
@@ -62,11 +77,7 @@ describe('Index Route', () => {
     );
     expect(buttonContainer).toHaveAttribute(
       'style',
-      expect.stringContaining('gap: 0.5rem')
-    );
-    expect(buttonContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('margin-top: 1rem')
+      expect.stringContaining('gap: var(--size-spacing-2)')
     );
   });
 
@@ -75,16 +86,16 @@ describe('Index Route', () => {
     await renderWithRouter(router);
 
     const heading = screen.getByRole('heading', { level: 3 });
-    const firstButton = screen.getByRole('button', { name: 'Solid Button' });
+    const descriptionText = screen.getByText(/Design tokens are working!/);
 
-    // Verify DOM order
+    // Verify DOM order - heading should come before the description
     const container = heading.parentElement;
     if (container) {
       const children = Array.from(container.children);
-      const buttonParent = firstButton.parentElement;
-      if (buttonParent) {
+      const cardContainer = descriptionText.parentElement;
+      if (cardContainer) {
         expect(children.indexOf(heading)).toBeLessThan(
-          children.indexOf(buttonParent)
+          children.indexOf(cardContainer)
         );
       }
     }

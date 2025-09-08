@@ -1,0 +1,40 @@
+{
+  "size": {
+    "width": {
+      "xs": { "value": "20rem" },
+      "sm": { "value": "24rem" },
+      "md": { "value": "28rem" },
+      "lg": { "value": "32rem" },
+      "xl": { "value": "36rem" },
+      "2xl": { "value": "42rem" },
+      "3xl": { "value": "48rem" },
+      "4xl": { "value": "56rem" },
+      "5xl": { "value": "64rem" },
+      "6xl": { "value": "72rem" },
+      "7xl": { "value": "80rem" },
+      "full": { "value": "100%" },
+      "screen": { "value": "100vw" },
+      "min": { "value": "min-content" },
+      "max": { "value": "max-content" },
+      "fit": { "value": "fit-content" }
+    },
+    "height": {
+      "auto": { "value": "auto" },
+      "full": { "value": "100%" },
+      "screen": { "value": "100dvh" },
+      "min": { "value": "min-content" },
+      "max": { "value": "max-content" },
+      "fit": { "value": "fit-content" }
+    }
+  },
+  "radius": {
+    "none": { "value": "0" },
+    "sm": { "value": "0.125rem" },
+    "md": { "value": "0.375rem" },
+    "lg": { "value": "0.5rem" },
+    "xl": { "value": "0.75rem" },
+    "2xl": { "value": "1rem" },
+    "3xl": { "value": "1.5rem" },
+    "full": { "value": "9999px" }
+  }
+}

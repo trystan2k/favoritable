@@ -110,6 +110,7 @@ For tasks with subtasks, follow this cycle for each subtask:
   - Do not proceed to commit until QA is clean
   - Run again until it passes completely
   - If you are still struggling to fix it (cannot fix in 5 interactions, for example), ask for help
+- **Action**: Ask the agent specialists (identify the ones that are more specialized in the task) to review the changes and apply any suggestion.
 
 ### 8. 📝 SUBTASK COMMIT CYCLE
 
@@ -341,6 +342,7 @@ Based on your development guidelines, here are the **NO NO actions**:
 - **NEVER** Include any agent information in the commit message (like Co-Authored-By:)
 - **NEVER** reference task or subtask IDs in commit messages - focus purely on the work done
 - **NEVER** create physical development logs for subtasks - only for complete tasks
+- **NEVER** bypass git hooks with `--no-verify` or similar flags - git hooks are mandatory quality gates
 - Under **NO** circumstance commit code when there are issues from QA scripts (even warnings)  
 
 ---

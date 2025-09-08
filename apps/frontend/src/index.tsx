@@ -3,7 +3,11 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import '@radix-ui/themes/styles.css';
+import '@favoritable/themes/dist/base-tokens.css';
+import '@favoritable/themes/dist/themes.css';
+import './styles/global.css';
 
+import { ThemeProvider } from './contexts/ThemeContext';
 import { routeTree } from './routeTree.gen';
 
 const router = createRouter({ routeTree });
@@ -19,9 +23,11 @@ if (rootEl) {
   const root = ReactDOM.createRoot(rootEl);
   root.render(
     <StrictMode>
-      <Theme>
-        <RouterProvider router={router} />
-      </Theme>
+      <ThemeProvider>
+        <Theme>
+          <RouterProvider router={router} />
+        </Theme>
+      </ThemeProvider>
     </StrictMode>
   );
 }
