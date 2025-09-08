@@ -1,12 +1,20 @@
 import { fileHeader } from 'style-dictionary/utils';
 
+// Configurable theme names for prefix normalization
+const THEME_NAMES = ['light', 'dark'];
+
+// Function to normalize theme prefixes in token paths
+function normalizeThemePrefix(tokenPath) {
+  const themePattern = new RegExp(`^theme-(${THEME_NAMES.join('|')})-`);
+  return tokenPath.replace(themePattern, 'theme-');
+}
+
 // Reusable token reference replacement function
 const replaceTokenReferences = (value) => {
   return value.replace(/\{([^}]+)\}/g, (_match, tokenPath) => {
     // Convert dot notation to kebab case and normalize theme prefixes
-    const cssVarName = tokenPath
-      .replace(/\./g, '-')
-      .replace(/^theme-(?:light|dark)-/, 'theme-');
+    const kebabTokenPath = tokenPath.replace(/\./g, '-');
+    const cssVarName = normalizeThemePrefix(kebabTokenPath);
     return `var(--${cssVarName})`;
   });
 };
@@ -14,10 +22,7 @@ const replaceTokenReferences = (value) => {
 // Reusable theme-agnostic name generator
 const generateThemeAgnosticName = (token) => {
   return token.path
-    .filter(
-      (segment, index) =>
-        !(index === 1 && (segment === 'light' || segment === 'dark'))
-    )
+    .filter((segment, index) => !(index === 1 && THEME_NAMES.includes(segment)))
     .join('-');
 };
 
@@ -47,12 +52,13 @@ export default {
         const header = await fileHeader({ file });
 
         // Split tokens by theme in one pass
-        const { lightTokens, darkTokens } = dictionary.allTokens.reduce(
+        const themeTokens = dictionary.allTokens.reduce(
           (acc, token) => {
-            if (token.filePath.includes('theme-light')) {
-              acc.lightTokens.push(token);
-            } else if (token.filePath.includes('theme-dark')) {
-              acc.darkTokens.push(token);
+            const themeName = THEME_NAMES.find((name) =>
+              token.filePath.includes(`theme-${name}`)
+            );
+            if (themeName) {
+              acc[`${themeName}Tokens`].push(token);
             }
             return acc;
           },
@@ -65,10 +71,10 @@ export default {
             .map((token) => `  --${token.name}: ${token.value};`)
             .join('\n');
 
-        const lightCSS = `:root[data-theme="light"] {\n${generateTokenCSS(lightTokens)}\n}`;
-        const darkCSS = `:root[data-theme="dark"] {\n${generateTokenCSS(darkTokens)}\n}`;
+        const lightCSS = `:root[data-theme="light"] {\n${generateTokenCSS(themeTokens.lightTokens)}\n}`;
+        const darkCSS = `:root[data-theme="dark"] {\n${generateTokenCSS(themeTokens.darkTokens)}\n}`;
 
-        return [header, lightCSS, darkCSS].join('\n\n') + '\n';
+        return `${[header, lightCSS, darkCSS].join('\n\n')}\n`;
       },
       'css/base-tokens': async ({ dictionary, file }) => {
         const header = await fileHeader({ file });
