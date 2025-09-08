@@ -65,10 +65,10 @@ export default {
             .map((token) => `  --${token.name}: ${token.value};`)
             .join('\n');
 
-        const darkCSS = `:root[data-theme="dark"] {\n${generateTokenCSS(darkTokens)}\n}`;
         const lightCSS = `:root[data-theme="light"] {\n${generateTokenCSS(lightTokens)}\n}`;
+        const darkCSS = `:root[data-theme="dark"] {\n${generateTokenCSS(darkTokens)}\n}`;
 
-        return [header, darkCSS, lightCSS].join('\n\n') + '\n';
+        return [header, lightCSS, darkCSS].join('\n\n') + '\n';
       },
       'css/base-tokens': async ({ dictionary, file }) => {
         const header = await fileHeader({ file });
