@@ -21,8 +21,11 @@ const replaceTokenReferences = (value) => {
 
 // Reusable theme-agnostic name generator
 const generateThemeAgnosticName = (token) => {
+  // Remove theme name only at position 1 (where Style Dictionary places them for semantic tokens)
   return token.path
-    .filter((segment, index) => !(index === 1 && THEME_NAMES.includes(segment)))
+    .filter((segment, index) =>
+      index === 1 && THEME_NAMES.includes(segment) ? false : true
+    )
     .join('-');
 };
 
@@ -62,7 +65,10 @@ export default {
             }
             return acc;
           },
-          { lightTokens: [], darkTokens: [] }
+          THEME_NAMES.reduce((acc, themeName) => {
+            acc[`${themeName}Tokens`] = [];
+            return acc;
+          }, {})
         );
 
         // Generate CSS sections
@@ -81,8 +87,9 @@ export default {
         const tokens = dictionary.allTokens
           .filter(
             (token) =>
-              token.filePath.includes('primitives') ||
-              token.filePath.includes('components')
+              (token.filePath.includes('primitives') ||
+                token.filePath.includes('components')) &&
+              !token.path.includes('semantic')
           )
           .map((token) => `  --${token.name}: ${token.value};`)
           .join('\n');
@@ -107,8 +114,9 @@ export default {
           destination: 'base-tokens.css',
           format: 'css/base-tokens',
           filter: (token) =>
-            token.filePath.includes('primitives') ||
-            token.filePath.includes('components'),
+            (token.filePath.includes('primitives') ||
+              token.filePath.includes('components')) &&
+            !token.path.includes('semantic'),
         },
         {
           destination: 'themes.css',
