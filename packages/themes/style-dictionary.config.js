@@ -23,9 +23,7 @@ const replaceTokenReferences = (value) => {
 const generateThemeAgnosticName = (token) => {
   // Remove theme name only at position 1 (where Style Dictionary places them for semantic tokens)
   return token.path
-    .filter((segment, index) =>
-      index === 1 && THEME_NAMES.includes(segment) ? false : true
-    )
+    .filter((segment, index) => !(index === 1 && THEME_NAMES.includes(segment)))
     .join('-');
 };
 
@@ -65,10 +63,9 @@ export default {
             }
             return acc;
           },
-          THEME_NAMES.reduce((acc, themeName) => {
-            acc[`${themeName}Tokens`] = [];
-            return acc;
-          }, {})
+          Object.fromEntries(
+            THEME_NAMES.map((themeName) => [`${themeName}Tokens`, []])
+          )
         );
 
         // Generate CSS sections
