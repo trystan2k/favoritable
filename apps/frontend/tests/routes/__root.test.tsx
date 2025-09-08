@@ -47,11 +47,11 @@ describe('Root Layout', () => {
     );
     expect(navContainer).toHaveAttribute(
       'style',
-      expect.stringContaining('padding: 1rem')
+      expect.stringContaining('padding: var(--spacing-4)')
     );
     expect(navContainer).toHaveAttribute(
       'style',
-      expect.stringContaining('gap: 1rem')
+      expect.stringContaining('gap: var(--spacing-4)')
     );
   });
 
@@ -175,11 +175,11 @@ describe('Root Layout', () => {
     );
     expect(navContainer).toHaveAttribute(
       'style',
-      expect.stringContaining('padding: 1rem')
+      expect.stringContaining('padding: var(--spacing-4)')
     );
     expect(navContainer).toHaveAttribute(
       'style',
-      expect.stringContaining('gap: 1rem')
+      expect.stringContaining('gap: var(--spacing-4)')
     );
   });
 

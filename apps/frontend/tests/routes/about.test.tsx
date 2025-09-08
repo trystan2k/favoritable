@@ -39,7 +39,7 @@ describe('About Route', () => {
     const mainDiv = screen.getByRole('heading').parentElement;
     expect(mainDiv).toHaveAttribute(
       'style',
-      expect.stringContaining('padding: 1rem')
+      expect.stringContaining('padding: var(--spacing-4)')
     );
 
     const buttonContainer = screen.getByRole('button', {
@@ -47,7 +47,7 @@ describe('About Route', () => {
     }).parentElement;
     expect(buttonContainer).toHaveAttribute(
       'style',
-      expect.stringContaining('margin-top: 1rem')
+      expect.stringContaining('margin-top: var(--spacing-4)')
     );
   });
 
