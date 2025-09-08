@@ -1,0 +1,13 @@
+{
+  "breakpoint": {
+    "xs": { "value": "20rem" },
+    "sm": { "value": "24rem" },
+    "md": { "value": "28rem" },
+    "lg": { "value": "32rem" },
+    "xl": { "value": "36rem" },
+    "2xl": { "value": "42rem" },
+    "desktop": { "value": "48rem" },
+    "wide": { "value": "64rem" },
+    "ultrawide": { "value": "80rem" }
+  }
+}

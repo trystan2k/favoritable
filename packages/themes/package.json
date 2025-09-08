@@ -1,0 +1,23 @@
+{
+  "name": "@favoritable/themes",
+  "version": "0.0.1",
+  "description": "Design tokens and theme configuration for Favoritable",
+  "type": "module",
+  "main": "dist/base-tokens.css",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "style-dictionary build --config style-dictionary.config.js",
+    "debug": "style-dictionary build --config style-dictionary.config.js --verbose"
+  },
+  "devDependencies": {
+    "style-dictionary": "~4.4.0"
+  },
+  "keywords": [
+    "design-tokens",
+    "css-variables",
+    "theme"
+  ],
+  "license": "MIT"
+}

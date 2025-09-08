@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-router';
 import { render } from '@testing-library/react';
 import { act } from 'react';
+import { ThemeProvider } from '../src/contexts/ThemeContext';
 import { routeTree } from '../src/routeTree.gen';
 
 export const createTestRouter = (initialEntries = ['/']) => {
@@ -28,9 +29,11 @@ export const renderWithRouter = async (
 
   await act(async () => {
     renderResult = render(
-      <Theme>
-        <RouterProvider router={router} />
-      </Theme>
+      <ThemeProvider>
+        <Theme>
+          <RouterProvider router={router} />
+        </Theme>
+      </ThemeProvider>
     );
     await router.load();
   });

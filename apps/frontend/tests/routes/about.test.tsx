@@ -57,7 +57,7 @@ describe('About Route', () => {
 
     const heading = screen.getByRole('heading', { level: 3 });
     const paragraph = screen.getByText(/This is the about page/);
-    const button = screen.getByRole('button');
+    const button = screen.getByRole('button', { name: 'Large Outline Button' });
 
     // Verify DOM order
     const container = heading.parentElement;
@@ -94,9 +94,14 @@ describe('About Route', () => {
     expect(headings).toHaveLength(1);
     expect(headings[0]).toHaveTextContent('About Page');
 
-    // Check that we have exactly one button
+    // Check that we have the content button plus the theme switcher
     const buttons = screen.getAllByRole('button');
-    expect(buttons).toHaveLength(1);
-    expect(buttons[0]).toHaveTextContent('Large Outline Button');
+    expect(buttons).toHaveLength(2);
+
+    // Find the content button specifically
+    const contentButton = screen.getByRole('button', {
+      name: 'Large Outline Button',
+    });
+    expect(contentButton).toHaveTextContent('Large Outline Button');
   });
 });

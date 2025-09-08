@@ -1,0 +1,21 @@
+/**
+ * Global styles for theme-aware backgrounds
+ */
+
+body {
+  background-color: var(--theme-color-background-primary);
+  color: var(--theme-color-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/**
+ * Radix UI theme integration - map our brand colors to Radix UI accent colors
+ */
+.radix-themes {
+  --accent-9: var(--theme-color-text-brand);
+  --accent-a9: var(--theme-color-text-brand);
+  --accent-10: var(--theme-color-text-brand);
+  --accent-a10: var(--theme-color-text-brand);
+  --accent-11: var(--theme-color-text-brand);
+  --accent-a11: var(--theme-color-text-brand);
+}

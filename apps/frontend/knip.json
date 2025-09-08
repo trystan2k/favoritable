@@ -9,6 +9,6 @@
     "src/**/routeTree.gen.ts"
   ],
   "ignoreBinaries": ["only-allow"],
-  "ignoreDependencies": ["@favoritable/test-config"],
+  "ignoreDependencies": ["@favoritable/test-config", "@favoritable/themes"],
   "treatConfigHintsAsErrors": true
 }

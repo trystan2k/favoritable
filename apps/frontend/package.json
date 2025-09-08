@@ -14,7 +14,6 @@
     "url": "https://github.com/trystan2k/favoritable/issues"
   },
   "keywords": [
-    "hono",
     "bookmarks",
     "favoritable",
     "frontend",
@@ -41,6 +40,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@favoritable/themes": "workspace:*",
     "@radix-ui/themes": "~3.2.1",
     "@tanstack/react-router": "~1.131.5",
     "react": "~19.1.0",

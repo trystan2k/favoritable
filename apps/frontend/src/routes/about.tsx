@@ -7,10 +7,17 @@ export const Route = createFileRoute('/about')({
 
 function About() {
   return (
-    <div style={{ padding: '1rem' }}>
-      <h3>About Page</h3>
-      <p>This is the about page demonstrating routing with TanStack Router.</p>
-      <div style={{ marginTop: '1rem' }}>
+    <div style={{ padding: 'var(--spacing-4)' }}>
+      <h3 style={{ color: 'var(--theme-color-text-primary)' }}>About Page</h3>
+      <p
+        style={{
+          color: 'var(--theme-color-text-secondary)',
+          marginBottom: 'var(--spacing-4)',
+        }}
+      >
+        This is the about page demonstrating routing with TanStack Router.
+      </p>
+      <div style={{ marginTop: 'var(--spacing-4)' }}>
         <Button variant='outline' size='3'>
           Large Outline Button
         </Button>

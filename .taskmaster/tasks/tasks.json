@@ -2131,11 +2131,78 @@
             "testStrategy": "Run the entire project's test suite, including the new auth error tests and all existing tests. All tests must pass to confirm that no regressions were introduced to other parts of the application's error handling."
           }
         ]
+      },
+      {
+        "id": 70,
+        "title": "Configure Style Dictionary for Design Token Management",
+        "description": "Set up Style Dictionary within a dedicated `packages/themes` package to manage design system tokens (colors, spacing, typography). This package will automatically generate and export CSS custom variables for consumption by the frontend application.",
+        "status": "done",
+        "dependencies": [
+          4
+        ],
+        "priority": "medium",
+        "details": "This task involves establishing a single source of truth for design tokens using Style Dictionary. 1. **Package Setup**: Create a new package named `themes` at `packages/themes`. Add `style-dictionary` as a dev dependency within this new package's `package.json`. 2. **Token Definition**: Inside `packages/themes`, create a `src/` directory to house token definitions. Structure tokens by category (e.g., `color`, `size`, `font`) in JSON format, following the Category/Type/Item (CTI) naming convention. For example, create `src/color/brand.json` with primary and secondary colors. 3. **Configuration**: Create a `style-dictionary.config.js` file in the root of the `packages/themes` package. Configure the `source` to point to the token JSON files within `src/`. Define a `css` platform that outputs to a `dist/` directory within the package. Use the built-in `css/variables` format and the `name/cti/kebab` transform to generate CSS-friendly variable names (e.g., `--color-brand-primary-500`). The output file should be `packages/themes/dist/tokens.css`. 4. **Build Integration**: Add a `build` script to `packages/themes/package.json` that executes the Style Dictionary build process. Update the Turborepo configuration (`turbo.json`) to ensure that the frontend application's `build` task depends on the `themes` package's `build` task. This guarantees tokens are always generated before the app is built. 5. **Frontend Integration**: Configure the frontend application to import the generated `dist/tokens.css` file from the `packages/themes` package into its global stylesheet, making the custom properties available throughout the project.",
+        "testStrategy": "1. **Unit Testing**: Create a test suite for the `packages/themes` package using Vitest. Write a test that programmatically invokes the Style Dictionary build process with a mock set of token files. Read the generated CSS output from the `dist` folder and use snapshot testing to verify its structure and content. Assert that specific tokens are transformed into the correct CSS custom properties (e.g., a token with value `#0052CC` becomes `var(--color-brand-primary-500): #0052CC;`). 2. **Manual Validation**: Create a simple component or a dedicated route (e.g., `/style-guide`) in the frontend application. This page should display various UI elements (buttons, text blocks, colored swatches) that are styled exclusively using the newly generated CSS variables imported from the `packages/themes` package. Run the application and visually inspect this page to confirm that all tokens (colors, font sizes, spacing) are applied correctly. 3. **CI Verification**: Ensure the `build` script for the `packages/themes` package is part of the continuous integration pipeline and that the overall build fails if the token generation process encounters an error.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Initialize `packages/themes` and Install Style Dictionary",
+            "description": "Create the new `themes` package within the `packages/` directory of the monorepo. This package will house all design token definitions and the Style Dictionary configuration. Install `style-dictionary` as a development dependency for this package.",
+            "dependencies": [],
+            "details": "1. Create a new directory at `packages/themes`. 2. Inside this new directory, create a `package.json` file. Set the package name (e.g., `@your-scope/themes`). 3. From the monorepo root, run `pnpm add style-dictionary -D --filter @your-scope/themes` to install the necessary dependency.",
+            "status": "done",
+            "testStrategy": "Verify that the `packages/themes` directory and its `package.json` file exist. Confirm that `style-dictionary` is listed under `devDependencies` in `packages/themes/package.json`."
+          },
+          {
+            "id": 2,
+            "title": "Define Initial Design Tokens in JSON Format",
+            "description": "Create the directory structure for token definitions within the `themes` package and add initial token files for colors and spacing. This structure should follow the Category/Type/Item (CTI) convention to ensure scalability.",
+            "dependencies": [
+              "70.1"
+            ],
+            "details": "1. Inside `packages/themes`, create a `src/` directory. 2. Inside `src/`, create subdirectories for token categories: `color/` and `size/`. 3. Create a file `src/color/brand.json` and define primary/secondary color tokens. Example: `{ \"color\": { \"brand\": { \"primary\": { \"value\": \"#0052cc\" } } } }`. 4. Create a file `src/size/spacing.json` and define spacing tokens. Example: `{ \"size\": { \"spacing\": { \"small\": { \"value\": \"8px\" } } } }`.",
+            "status": "done",
+            "testStrategy": "Check that the directory structure `packages/themes/src/color` and `packages/themes/src/size` exists. Validate that the JSON files within these directories contain valid token definitions according to the Style Dictionary format."
+          },
+          {
+            "id": 3,
+            "title": "Create and Configure Style Dictionary Build Process",
+            "description": "Create a `style-dictionary.config.js` file to instruct Style Dictionary how to process the token source files and what output to generate. This configuration will define the transformation to CSS custom variables and the output destination.",
+            "dependencies": [
+              "70.2"
+            ],
+            "details": "1. In the root of `packages/themes`, create a `style-dictionary.config.js` file. 2. Configure the `source` property to point to all JSON files within the `src/` directory (e.g., `['src/**/*.json']`). 3. Define a `css` platform in the `platforms` object. 4. Set the `transformGroup` to `'css'`. 5. Set the `buildPath` to `'dist/'`. 6. Configure the `files` array to output a single `tokens.css` file using the `css/variables` format.",
+            "status": "done",
+            "testStrategy": "From within the `packages/themes` directory, manually run `npx style-dictionary build`. Verify that a `dist/tokens.css` file is generated and that it contains the expected CSS custom properties (e.g., `--color-brand-primary: #0052cc;`)."
+          },
+          {
+            "id": 4,
+            "title": "Add Build Script and Update Turborepo Configuration",
+            "description": "Integrate the Style Dictionary build process into the monorepo's build system. Add a `build` script to the `themes` package and update the root `turbo.json` to make the frontend app's build dependent on the themes build.",
+            "dependencies": [
+              "70.3"
+            ],
+            "details": "1. In `packages/themes/package.json`, add a `scripts` section with a `build` command: `\"build\": \"style-dictionary build\"`. 2. In the root `turbo.json` file, locate the `pipeline.build` configuration. 3. In the configuration for the frontend application's build task (e.g., `\"frontend#build\"`), add a dependency on the themes package's build task: `\"dependsOn\": [\"^build\", \"@your-scope/themes#build\"]`.",
+            "status": "done",
+            "testStrategy": "Run the build command for the frontend application from the monorepo root (e.g., `pnpm turbo build --filter=frontend`). Check the build logs to confirm that the `@your-scope/themes` build task is executed before the `frontend` build task."
+          },
+          {
+            "id": 5,
+            "title": "Integrate Generated CSS into Frontend Application",
+            "description": "Import the generated `tokens.css` file from the `themes` package into the global stylesheet of the frontend application. This will make the design tokens (as CSS custom properties) available for use throughout the entire application.",
+            "dependencies": [
+              "70.4"
+            ],
+            "details": "1. Locate the main entry point for your frontend application's global styles (e.g., `apps/frontend/src/styles/global.css` or `apps/frontend/src/main.tsx`). 2. Add an import statement to include the generated token file, referencing the package: `@import \"@your-scope/themes/dist/tokens.css\";`. 3. Ensure the frontend build process is configured to resolve and bundle this CSS file from the workspace package.",
+            "status": "done",
+            "testStrategy": "Start the frontend development server. Open the application in a browser and use the developer tools to inspect an element. In the 'Styles' or 'Computed' tab, verify that the CSS custom properties from the `themes` package (e.g., `--color-brand-primary`) are available globally and can be successfully applied to elements."
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-09-07T08:09:12.401Z",
+      "updated": "2025-09-07T09:25:00.808Z",
       "description": "Tasks for master context"
     }
   }

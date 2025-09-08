@@ -33,13 +33,13 @@ describe('Root Layout', () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
-    // Find the navigation container by looking for the parent of the links
+    // Find the navigation container by looking for the grandparent of the links
     const homeLink = screen.getByRole('link', { name: 'Home' });
-    const navContainer = homeLink.parentElement;
+    const navContainer = homeLink.parentElement?.parentElement;
 
     expect(navContainer).toHaveAttribute(
       'style',
-      expect.stringContaining('border-bottom: 1px solid rgb(204, 204, 204)')
+      expect.stringContaining('border-bottom: 1px solid')
     );
     expect(navContainer).toHaveAttribute(
       'style',
@@ -163,11 +163,11 @@ describe('Root Layout', () => {
 
     // Navigation container should still exist with same structure
     const homeLink = screen.getByRole('link', { name: 'Home' });
-    const navContainer = homeLink.parentElement;
+    const navContainer = homeLink.parentElement?.parentElement;
 
     expect(navContainer).toHaveAttribute(
       'style',
-      expect.stringContaining('border-bottom: 1px solid rgb(204, 204, 204)')
+      expect.stringContaining('border-bottom: 1px solid')
     );
     expect(navContainer).toHaveAttribute(
       'style',
