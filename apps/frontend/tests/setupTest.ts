@@ -28,16 +28,3 @@ Object.defineProperty(window, 'localStorage', {
   },
   writable: true,
 });
-
-// Mock localStorage
-Object.defineProperty(window, 'localStorage', {
-  value: {
-    getItem: vi.fn(() => null),
-    setItem: vi.fn(() => null),
-    clear: vi.fn(() => null),
-    removeItem: vi.fn(() => null),
-    length: 0,
-    key: vi.fn(() => null),
-  },
-  writable: true,
-});
