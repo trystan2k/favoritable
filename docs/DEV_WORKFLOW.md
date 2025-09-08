@@ -110,6 +110,7 @@ For tasks with subtasks, follow this cycle for each subtask:
   - Do not proceed to commit until QA is clean
   - Run again until it passes completely
   - If you are still struggling to fix it (cannot fix in 5 interactions, for example), ask for help
+- **Action**: Ask the agent specialists (identify the ones that are more specialized in the task) to review the changes and apply any suggestion.
 
 ### 8. 📝 SUBTASK COMMIT CYCLE
 
