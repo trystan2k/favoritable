@@ -20,9 +20,9 @@
           "inverse": { "value": "{color.semantic.background.light.inverse}" }
         },
         "surface": {
-          "default": { "value": "{theme.light.color.background.card}" },
-          "elevated": { "value": "{theme.light.color.background.elevated}" },
-          "overlay": { "value": "{theme.light.color.background.overlay}" },
+          "default": { "value": "{color.semantic.background.light.card}" },
+          "elevated": { "value": "{color.semantic.background.light.elevated}" },
+          "overlay": { "value": "{color.semantic.background.light.overlay}" },
           "pressed": { "value": "{color.semantic.surface.light.pressed}" },
           "disabled": { "value": "{color.semantic.surface.light.disabled}" }
         },
