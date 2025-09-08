@@ -29,7 +29,7 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
-const getInitialTheme = (): Theme => {
+export const getInitialTheme = (): Theme => {
   if (typeof window !== 'undefined') {
     const savedTheme = localStorage.getItem('favoritable-theme') as Theme;
     if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {

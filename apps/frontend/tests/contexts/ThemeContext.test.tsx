@@ -1,7 +1,11 @@
 import { act, renderHook } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
-import { ThemeProvider, useTheme } from '../../src/contexts/ThemeContext';
+import {
+  getInitialTheme,
+  ThemeProvider,
+  useTheme,
+} from '../../src/contexts/ThemeContext';
 
 const mockMatchMedia = vi.fn();
 const mockLocalStorage = {
@@ -202,6 +206,7 @@ describe('ThemeContext', () => {
         expect.any(Function)
       );
 
+      // Test system change to dark theme (e.matches: true)
       act(() => {
         const handler = eventHandlers.change;
         if (handler) {
@@ -210,6 +215,16 @@ describe('ThemeContext', () => {
       });
 
       expect(result.current.theme).toBe('dark');
+
+      // Test system change to light theme (e.matches: false)
+      act(() => {
+        const handler = eventHandlers.change;
+        if (handler) {
+          handler({ matches: false } as MediaQueryListEvent);
+        }
+      });
+
+      expect(result.current.theme).toBe('light');
     });
 
     test('does not respond to system theme changes when theme is saved', () => {
@@ -277,6 +292,25 @@ describe('ThemeContext', () => {
         'change',
         expect.any(Function)
       );
+    });
+
+    test('initializes with light theme in SSR environment (window undefined)', () => {
+      // Test the getInitialTheme function directly when window is undefined
+      const originalWindow = globalThis.window;
+
+      // Temporarily make window undefined to simulate SSR
+      // @ts-expect-error - We're intentionally making window undefined for SSR simulation
+      delete globalThis.window;
+
+      try {
+        const result = getInitialTheme();
+        expect(result).toBe('light');
+      } catch (_error) {
+        expect(true).toBe(false);
+      } finally {
+        // Restore window for other tests
+        globalThis.window = originalWindow;
+      }
     });
   });
 });
