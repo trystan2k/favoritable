@@ -1,4 +1,4 @@
-import { Button } from '@radix-ui/themes';
+import { Button } from 'react-aria-components';
 import { useTheme } from '../contexts/ThemeContext';
 
 export const ThemeSwitcher = () => {
@@ -6,22 +6,15 @@ export const ThemeSwitcher = () => {
 
   return (
     <Button
-      variant='ghost'
-      size='2'
-      onClick={toggleTheme}
+      onPress={toggleTheme}
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+      className='button-ghost'
       style={{
-        cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         width: 'var(--spacing-8)',
         height: 'var(--spacing-8)',
-        borderRadius: 'var(--radius-md)',
-        border: '1px solid var(--theme-color-border-secondary)',
-        backgroundColor: 'var(--theme-color-background-card)',
-        color: 'var(--theme-color-text-primary)',
-        transition: 'all 0.2s ease',
       }}
     >
       {theme === 'light' ? '🌙' : '☀️'}

@@ -77,7 +77,7 @@ describe('Index Route', () => {
     );
     expect(buttonContainer).toHaveAttribute(
       'style',
-      expect.stringContaining('gap: var(--size-spacing-2)')
+      expect.stringContaining('gap: var(--spacing-2)')
     );
   });
 

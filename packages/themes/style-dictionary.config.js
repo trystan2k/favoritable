@@ -84,9 +84,8 @@ export default {
         const tokens = dictionary.allTokens
           .filter(
             (token) =>
-              (token.filePath.includes('primitives') ||
-                token.filePath.includes('components')) &&
-              !token.filePath.includes('semantic')
+              token.filePath.includes('primitives') ||
+              token.filePath.includes('components')
           )
           .map((token) => `  --${token.name}: ${token.value};`)
           .join('\n');
@@ -111,9 +110,8 @@ export default {
           destination: 'base-tokens.css',
           format: 'css/base-tokens',
           filter: (token) =>
-            (token.filePath.includes('primitives') ||
-              token.filePath.includes('components')) &&
-            !token.path.includes('semantic'),
+            token.filePath.includes('primitives') ||
+            token.filePath.includes('components'),
         },
         {
           destination: 'themes.css',
