@@ -1,10 +1,7 @@
-import { Theme } from '@radix-ui/themes';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import '@radix-ui/themes/styles.css';
-import '@favoritable/themes/dist/base-tokens.css';
-import '@favoritable/themes/dist/themes.css';
+
 import './styles/global.css';
 
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -24,9 +21,7 @@ if (rootEl) {
   root.render(
     <StrictMode>
       <ThemeProvider>
-        <Theme>
-          <RouterProvider router={router} />
-        </Theme>
+        <RouterProvider router={router} />
       </ThemeProvider>
     </StrictMode>
   );

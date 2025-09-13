@@ -1,5 +1,5 @@
-import { Button } from '@radix-ui/themes';
 import { createFileRoute } from '@tanstack/react-router';
+import { Button } from 'react-aria-components';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -12,17 +12,17 @@ function Index() {
       <div
         style={{
           marginTop: 'var(--spacing-4)',
-          padding: 'var(--size-spacing-3)',
+          padding: 'var(--spacing-3)',
           backgroundColor: 'var(--theme-color-background-card)',
-          borderRadius: 'var(--size-border-radius-medium)',
+          borderRadius: 'var(--radius-md)',
           border: '1px solid var(--theme-color-border-primary)',
         }}
       >
         <p
           style={{
-            fontSize: 'var(--size-font-size-sm)',
+            fontSize: 'var(--font-size-sm)',
             color: 'var(--theme-color-text-secondary)',
-            margin: '0 0 var(--size-spacing-3) 0',
+            margin: '0 0 var(--spacing-3) 0',
           }}
         >
           Design tokens are working! This card uses theme-aware CSS variables
@@ -32,14 +32,14 @@ function Index() {
         <div
           style={{
             display: 'flex',
-            gap: 'var(--size-spacing-2)',
+            gap: 'var(--spacing-2)',
             alignItems: 'center',
           }}
         >
-          <Button variant='solid'>Solid Button</Button>
-          <Button variant='soft'>Soft Button</Button>
-          <Button variant='outline'>Outline Button</Button>
-          <Button variant='ghost'>Ghost Button</Button>
+          <Button className='button-solid'>Solid Button</Button>
+          <Button className='button-soft'>Soft Button</Button>
+          <Button className='button-outline'>Outline Button</Button>
+          <Button className='button-ghost'>Ghost Button</Button>
         </div>
       </div>
     </div>

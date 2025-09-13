@@ -41,7 +41,7 @@
   "license": "MIT",
   "dependencies": {
     "@favoritable/themes": "workspace:*",
-    "@radix-ui/themes": "~3.2.1",
+    "react-aria-components": "~1.10.1",
     "@tanstack/react-router": "~1.131.5",
     "react": "~19.1.0",
     "react-dom": "~19.1.0"

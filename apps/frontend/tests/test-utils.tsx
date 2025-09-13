@@ -1,4 +1,3 @@
-import { Theme } from '@radix-ui/themes';
 import {
   createMemoryHistory,
   createRouter,
@@ -30,9 +29,7 @@ export const renderWithRouter = async (
   await act(async () => {
     renderResult = render(
       <ThemeProvider>
-        <Theme>
-          <RouterProvider router={router} />
-        </Theme>
+        <RouterProvider router={router} />
       </ThemeProvider>
     );
     await router.load();

@@ -2198,11 +2198,90 @@
             "testStrategy": "Start the frontend development server. Open the application in a browser and use the developer tools to inspect an element. In the 'Styles' or 'Computed' tab, verify that the CSS custom properties from the `themes` package (e.g., `--color-brand-primary`) are available globally and can be successfully applied to elements."
           }
         ]
+      },
+      {
+        "id": 71,
+        "title": "Migrate Frontend Component Library from Radix UI to React Aria Components",
+        "description": "Execute a foundational migration of the frontend from the Radix UI component library to React Aria Components. Since the current frontend consists of only basic test pages with minimal components, this task will establish React Aria as the standard for all future development before major feature work begins.",
+        "status": "done",
+        "dependencies": [],
+        "priority": "medium",
+        "details": "1. **Dependency Replacement:** Identify and remove all `@radix-ui/*` packages from `package.json`. Add `react-aria-components` and its peer dependencies (`react-aria`, `react-stately`). Run the package manager to install and resolve dependencies.\n2. **Component Refactoring:** Refactor the few existing components on the current basic test pages to use React Aria Components. This will serve as a template for future component development.\n3. **Styling Adaptation:** Since React Aria Components are unstyled, adapt all existing CSS to correctly style the new component structure. Ensure the visual appearance and theme remain consistent.\n4. **Configuration Review:** Check and update any build configurations (e.g., `tailwind.config.js`) that may have settings related to Radix UI.\n5. **Documentation Update:** Update the project's README and any relevant ADRs to document React Aria Components as the chosen library, outlining basic usage patterns for the team.",
+        "testStrategy": "1. **Test Page Validation:** Manually review the updated test pages to ensure the new components render and function correctly across major browsers (Chrome, Firefox, Safari).\n2. **Unit Test Updates:** If any unit tests exist for the current components, update them to match the new DOM structure and props from React Aria.\n3. **Baseline Accessibility Check:** Perform a quick accessibility check on the new components using tools like Axe DevTools to ensure a strong foundation is set for future development.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Update Project Dependencies for React Aria Migration",
+            "description": "Remove all Radix UI packages from the project's dependencies and install React Aria Components along with its required peer dependencies.",
+            "dependencies": [],
+            "details": "In `package.json`, identify and remove all packages under the `@radix-ui/*` scope. Add `react-aria-components`, `react-aria`, and `react-stately` as new dependencies. Run the appropriate package manager command (e.g., `npm install` or `yarn install`) to update the lock file and `node_modules` directory.",
+            "status": "done",
+            "testStrategy": "After running the install command, start the development server. The application should compile without any module resolution errors related to the old or new dependencies."
+          },
+          {
+            "id": 2,
+            "title": "Refactor a Core Component (e.g., Button) to React Aria",
+            "description": "Convert a single, representative component, such as a Button, from its Radix UI implementation to use the equivalent from `react-aria-components`. This will establish a migration pattern.",
+            "dependencies": [
+              "71.1"
+            ],
+            "details": "Locate the existing `Button` component file. Replace the Radix UI primitives with the `<Button>` component from `react-aria-components`. Map all existing props, event handlers (e.g., `onClick` to `onPress`), and accessibility attributes to the new component's API.",
+            "status": "done",
+            "testStrategy": "Manually test the refactored button on a test page. Verify that `onPress` events fire correctly and that the component's base structure is rendered in the DOM."
+          },
+          {
+            "id": 3,
+            "title": "Adapt Styling for React Aria's Data Attributes",
+            "description": "Update CSS or Tailwind CSS configuration to style the newly refactored components. React Aria uses data attributes like `data-pressed` and `data-focused` for state-based styling.",
+            "dependencies": [
+              "71.2"
+            ],
+            "details": "Modify the CSS files or `tailwind.config.js` to target React Aria's data attributes for styling component states (hover, focus, pressed, disabled, etc.). Replace any selectors that were specific to Radix UI's `data-state` attributes. Ensure the visual appearance of the refactored `Button` matches the original design.",
+            "status": "done",
+            "testStrategy": "Visually inspect the refactored `Button` in all its interactive states (default, hover, focus, pressed) across supported browsers to confirm styles are applied correctly and consistently."
+          },
+          {
+            "id": 4,
+            "title": "Migrate Remaining Components on Test Pages",
+            "description": "Apply the established pattern to refactor all other Radix UI components currently used on the basic test pages to their React Aria Components equivalents.",
+            "dependencies": [
+              "71.3"
+            ],
+            "details": "Identify any remaining components on the test pages that use Radix UI (e.g., Dialog, Input, Label). Refactor each one using the appropriate `react-aria-components` primitive and apply the styling patterns established in the previous subtask. Remove any lingering Radix-specific code or configuration.",
+            "status": "done",
+            "testStrategy": "Perform a full manual review of the updated test pages. Confirm that all migrated components render, are styled correctly, and function as expected. Check the browser console for any new errors or warnings."
+          },
+          {
+            "id": 5,
+            "title": "Update Project Documentation and ADRs",
+            "description": "Update the project's README and any relevant Architectural Decision Records (ADRs) to reflect the adoption of React Aria Components as the standard component library.",
+            "dependencies": [
+              "71.4"
+            ],
+            "details": "In the `README.md`, replace mentions of Radix UI with React Aria Components. Add a new section outlining basic usage patterns, installation, and a link to the official documentation. Create or update an ADR to formalize the decision and its rationale.",
+            "status": "done",
+            "testStrategy": "Review the updated documentation for accuracy and clarity. Ensure a new developer joining the project can easily understand the component library choice and find instructions on how to use it."
+          }
+        ]
+      },
+      {
+        "id": 72,
+        "title": "Configure and Apply CSS Modules for React Aria Components",
+        "description": "Configure CSS Modules in the Rsbuild setup and refactor the existing test pages to use modular stylesheets for all React Aria Components. This will establish the primary styling pattern for the application.",
+        "details": "1. **Build System Configuration**: Review and refine the Rsbuild configuration for CSS Modules. Ensure that `localIdentName` is configured for descriptive class names in development (e.g., `[name]__[local]--[hash:base64:5]`) and minified names in production. 2. **Styling Conventions**: Establish a convention where each component has its own corresponding `.module.css` file (e.g., `Button.tsx` and `Button.module.css` co-located). 3. **Component Refactoring**: Systematically refactor the React Aria Components on the test pages (migrated in Task #71). Replace any existing styling logic with CSS Modules. Import the style object (`import styles from './Component.module.css'`) and apply classes to the components (`className={styles.wrapper}`). 4. **Integrate Design Tokens**: Ensure all styles within the new CSS Modules utilize the CSS custom variables generated by Style Dictionary (from Task #70). For example, use `color: var(--color-text-primary);` instead of hardcoded hex values. 5. **Documentation**: Briefly document the established conventions in the project's `CONTRIBUTING.md` or a relevant ADR.",
+        "testStrategy": "1. **Build Verification**: Run the development server and verify that component class names are human-readable. Run a production build and inspect the generated CSS and HTML to confirm that class names are hashed and minified. 2. **Visual Inspection**: Manually review all refactored test pages in the browser. Confirm that all React Aria Components are styled correctly and that there are no visual regressions. 3. **Scoped Styles Check**: Use the browser's developer tools to inspect two different components on the same page. Verify that their styles are properly scoped and that class names from one component's module do not affect the other. 4. **Code Review**: During the pull request review, confirm that all new styling adheres to the CSS Modules pattern and exclusively uses design tokens from the `packages/themes` package.",
+        "status": "pending",
+        "dependencies": [
+          70,
+          71
+        ],
+        "priority": "high",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-09-07T09:25:00.808Z",
+      "updated": "2025-09-13T17:59:08.055Z",
       "description": "Tasks for master context"
     }
   }
