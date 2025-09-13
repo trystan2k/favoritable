@@ -58,7 +58,7 @@
     "cheerio": "~1.0.0",
     "domhandler": "~5.0.3",
     "drizzle-orm": "~0.40.0",
-    "hono": "~4.7.2",
+    "hono": "~4.9.7",
     "pino": "~9.7.0",
     "puppeteer": "~24.16.1",
     "reflect-metadata": "~0.2.2",
