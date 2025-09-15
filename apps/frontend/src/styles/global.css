@@ -1,16 +1,17 @@
 /**
  * Import theme styles
  */
-@import '@favoritable/themes/dist/base-tokens.css';
-@import '@favoritable/themes/dist/themes.css';
+@import '@favoritable/themes/dist/foundations.css';
+@import '@favoritable/themes/dist/light.css';
+@import '@favoritable/themes/dist/dark.css';
 
 /**
  * Global styles for theme-aware backgrounds
  */
 
 body {
-  background-color: var(--theme-color-background-primary);
-  color: var(--theme-color-text-primary);
+  background-color: var(--semantic-colors-background-primary);
+  color: var(--semantic-colors-text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -57,7 +58,7 @@ body {
 .button-soft[data-focused],
 .button-outline[data-focused],
 .button-ghost[data-focused] {
-  outline: 2px solid var(--theme-color-interactive-focus);
+  outline: 2px solid var(--semantic-colors-interactive-focus);
   outline-offset: 2px;
 }
 
@@ -73,44 +74,44 @@ body {
 
 /* Button variant styles */
 .button-solid {
-  background-color: var(--theme-color-background-primary);
-  color: var(--theme-color-text-primary);
-  border-color: var(--theme-color-border-primary);
+  background-color: var(--semantic-colors-cta-primary-base);
+  color: var(--semantic-colors-cta-primary-text);
+  border-color: var(--semantic-colors-cta-primary-base);
 }
 
 .button-solid[data-hovered] {
-  background-color: var(--theme-color-interactive-hover);
-  color: var(--theme-color-text-primary);
-  border-color: var(--theme-color-interactive-hover);
+  background-color: var(--semantic-colors-cta-primary-hover);
+  color: var(--semantic-colors-cta-primary-text);
+  border-color: var(--semantic-colors-cta-primary-hover);
 }
 
 .button-soft {
-  background-color: var(--theme-color-background-secondary);
-  color: var(--theme-color-text-secondary);
+  background-color: var(--semantic-colors-cta-secondary-base);
+  color: var(--semantic-colors-cta-secondary-text);
   border-color: transparent;
 }
 
 .button-soft[data-hovered] {
-  background-color: var(--theme-color-interactive-hover);
-  color: var(--theme-color-text-primary);
+  background-color: var(--semantic-colors-cta-secondary-hover);
+  color: var(--semantic-colors-cta-secondary-text);
 }
 
 .button-outline {
-  background-color: transparent;
-  color: var(--theme-color-text-primary);
-  border-color: var(--theme-color-border-primary);
+  background-color: var(--semantic-colors-cta-tertiary-base);
+  color: var(--semantic-colors-text-primary);
+  border-color: var(--semantic-colors-border-primary);
 }
 
 .button-outline[data-hovered] {
-  background-color: var(--theme-color-background-secondary);
+  background-color: var(--semantic-colors-cta-tertiary-hover);
 }
 
 .button-ghost {
-  background-color: transparent;
-  color: var(--theme-color-text-primary);
+  background-color: var(--semantic-colors-cta-tertiary-base);
+  color: var(--semantic-colors-text-primary);
   border-color: transparent;
 }
 
 .button-ghost[data-hovered] {
-  background-color: var(--theme-color-background-secondary);
+  background-color: var(--semantic-colors-cta-tertiary-hover);
 }

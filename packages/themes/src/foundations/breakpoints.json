@@ -1,0 +1,13 @@
+{
+  "breakpoint": {
+    "xs": { "value": "320px", "type": "dimension" },
+    "sm": { "value": "384px", "type": "dimension" },
+    "md": { "value": "448px", "type": "dimension" },
+    "lg": { "value": "512px", "type": "dimension" },
+    "xl": { "value": "576px", "type": "dimension" },
+    "2xl": { "value": "672px", "type": "dimension" },
+    "desktop": { "value": "768px", "type": "dimension" },
+    "wide": { "value": "1024px", "type": "dimension" },
+    "ultrawide": { "value": "1280px", "type": "dimension" }
+  }
+}
