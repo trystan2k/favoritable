@@ -1,0 +1,34 @@
+{
+  "focus": {
+    "ring": {
+      "width": {
+        "default": { "value": "2px" },
+        "thick": { "value": "4px" }
+      },
+      "offset": {
+        "default": { "value": "2px" },
+        "tight": { "value": "1px" },
+        "loose": { "value": "4px" }
+      },
+      "style": {
+        "solid": { "value": "solid" },
+        "dashed": { "value": "dashed" }
+      },
+      "opacity": {
+        "default": { "value": "0.5" },
+        "high": { "value": "0.8" },
+        "full": { "value": "1" }
+      }
+    },
+    "outline": {
+      "width": {
+        "default": { "value": "1px" },
+        "thick": { "value": "2px" }
+      },
+      "style": {
+        "solid": { "value": "solid" },
+        "dotted": { "value": "dotted" }
+      }
+    }
+  }
+}

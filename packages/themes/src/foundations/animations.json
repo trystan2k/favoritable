@@ -1,0 +1,62 @@
+{
+  "transition": {
+    "duration": {
+      "instant": { "value": "0ms" },
+      "fast": { "value": "150ms" },
+      "base": { "value": "200ms" },
+      "slow": { "value": "300ms" },
+      "slower": { "value": "500ms" },
+      "slowest": { "value": "750ms" }
+    },
+    "easing": {
+      "linear": { "value": "linear" },
+      "easeIn": { "value": "cubic-bezier(0.4, 0, 1, 1)" },
+      "easeOut": { "value": "cubic-bezier(0, 0, 0.2, 1)" },
+      "easeInOut": { "value": "cubic-bezier(0.4, 0, 0.2, 1)" },
+      "bounce": { "value": "cubic-bezier(0.68, -0.55, 0.265, 1.55)" },
+      "spring": { "value": "cubic-bezier(0.175, 0.885, 0.32, 1.275)" }
+    },
+    "property": {
+      "all": { "value": "all" },
+      "colors": {
+        "value": "color, background-color, border-color, fill, stroke"
+      },
+      "opacity": { "value": "opacity" },
+      "shadow": { "value": "box-shadow" },
+      "transform": { "value": "transform" }
+    }
+  },
+  "animation": {
+    "fadeIn": {
+      "duration": { "value": "{transition.duration.base}" },
+      "easing": { "value": "{transition.easing.easeOut}" },
+      "keyframes": { "value": "fadeIn" }
+    },
+    "fadeOut": {
+      "duration": { "value": "{transition.duration.base}" },
+      "easing": { "value": "{transition.easing.easeIn}" },
+      "keyframes": { "value": "fadeOut" }
+    },
+    "slideUp": {
+      "duration": { "value": "{transition.duration.slow}" },
+      "easing": { "value": "{transition.easing.spring}" },
+      "keyframes": { "value": "slideUp" }
+    },
+    "slideDown": {
+      "duration": { "value": "{transition.duration.slow}" },
+      "easing": { "value": "{transition.easing.spring}" },
+      "keyframes": { "value": "slideDown" }
+    },
+    "scaleIn": {
+      "duration": { "value": "{transition.duration.fast}" },
+      "easing": { "value": "{transition.easing.bounce}" },
+      "keyframes": { "value": "scaleIn" }
+    },
+    "pulse": {
+      "duration": { "value": "2s" },
+      "easing": { "value": "{transition.easing.easeInOut}" },
+      "keyframes": { "value": "pulse" },
+      "iteration": { "value": "infinite" }
+    }
+  }
+}
