@@ -132,6 +132,51 @@
       "800": { "value": "#3730a3" },
       "900": { "value": "#312e81" },
       "950": { "value": "#1e1b4b" }
+    },
+    "semantic": {
+      "text": {
+        "primary": { "value": "{color.gray.900}" },
+        "secondary": { "value": "{color.gray.700}" },
+        "tertiary": { "value": "{color.gray.500}" },
+        "disabled": { "value": "{color.gray.400}" },
+        "inverse": { "value": "{color.white}" }
+      },
+      "background": {
+        "primary": { "value": "{color.white}" },
+        "secondary": { "value": "{color.gray.50}" },
+        "tertiary": { "value": "{color.gray.100}" },
+        "inverse": { "value": "{color.gray.900}" }
+      },
+      "border": {
+        "primary": { "value": "{color.gray.200}" },
+        "secondary": { "value": "{color.gray.300}" },
+        "focus": { "value": "{color.blue.500}" },
+        "disabled": { "value": "{color.gray.200}" }
+      },
+      "success": {
+        "text": { "value": "{color.green.700}" },
+        "background": { "value": "{color.green.50}" },
+        "border": { "value": "{color.green.200}" },
+        "solid": { "value": "{color.green.600}" }
+      },
+      "warning": {
+        "text": { "value": "{color.amber.800}" },
+        "background": { "value": "{color.amber.50}" },
+        "border": { "value": "{color.amber.200}" },
+        "solid": { "value": "{color.amber.600}" }
+      },
+      "danger": {
+        "text": { "value": "{color.red.700}" },
+        "background": { "value": "{color.red.50}" },
+        "border": { "value": "{color.red.200}" },
+        "solid": { "value": "{color.red.600}" }
+      },
+      "info": {
+        "text": { "value": "{color.blue.700}" },
+        "background": { "value": "{color.blue.50}" },
+        "border": { "value": "{color.blue.200}" },
+        "solid": { "value": "{color.blue.600}" }
+      }
     }
   }
 }
