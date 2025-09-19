@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from 'react-aria-components';
+import { Button } from '../components/Button';
 
 export const Route = createFileRoute('/about')({
   component: About,
@@ -19,7 +19,7 @@ function About() {
       </p>
       <div style={{ marginTop: 'var(--spacing-4)' }}>
         <Button
-          className='button-outline'
+          variant='outline'
           style={{
             padding: 'var(--spacing-3) var(--spacing-4)',
           }}

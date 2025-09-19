@@ -19,30 +19,7 @@ body {
  * React Aria Components styling with data attributes
  */
 
-/* Button base styles applied to all our custom button classes */
-.button-solid,
-.button-soft,
-.button-outline,
-.button-ghost {
-  padding: var(--spacing-2) var(--spacing-3);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  font-family: inherit;
-  outline: none;
-}
-
-/* Button hover states for all variants */
-.button-solid[data-hovered],
-.button-soft[data-hovered],
-.button-outline[data-hovered],
-.button-ghost[data-hovered] {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+/* Button styles now handled by CSS Modules in components/Button.module.css */
 
 /* Button pressed states for all variants */
 .button-solid[data-pressed],

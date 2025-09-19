@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from 'react-aria-components';
+import { Button } from '../components/Button';
 import { TestButton } from '../components/TestButton';
 
 export const Route = createFileRoute('/')({
@@ -37,10 +37,10 @@ function Index() {
             alignItems: 'center',
           }}
         >
-          <Button className='button-solid'>Solid Button</Button>
-          <Button className='button-soft'>Soft Button</Button>
-          <Button className='button-outline'>Outline Button</Button>
-          <Button className='button-ghost'>Ghost Button</Button>
+          <Button variant='solid'>Solid Button</Button>
+          <Button variant='soft'>Soft Button</Button>
+          <Button variant='outline'>Outline Button</Button>
+          <Button variant='ghost'>Ghost Button</Button>
         </div>
         <div style={{ marginTop: 'var(--spacing-4)' }}>
           <h4
