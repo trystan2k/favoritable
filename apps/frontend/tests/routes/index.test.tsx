@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
+import styles from '../../src/routes/Layout.module.css';
 import { createTestRouter, renderWithRouter } from '../test-utils';
 
 describe('Index Route', () => {
@@ -28,29 +29,22 @@ describe('Index Route', () => {
     expect(
       screen.getByRole('button', { name: 'Ghost Button' })
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: 'CSS Modules Button' })
-    ).toBeInTheDocument();
   });
 
-  test('CSS Modules test section is rendered correctly', async () => {
+  test('CSS modules are applied correctly to components', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
-    // Check that the CSS Modules heading is present
-    expect(
-      screen.getByRole('heading', { level: 4, name: 'CSS Modules Test:' })
-    ).toBeInTheDocument();
+    // Check that CSS modules classes are applied
+    const pageContent = screen.getByRole('heading', {
+      name: 'Welcome Home!',
+    }).parentElement;
 
-    // Check that the CSS Modules button is present and styled
-    const cssModulesButton = screen.getByRole('button', {
-      name: 'CSS Modules Button',
-    });
-    expect(cssModulesButton).toBeInTheDocument();
+    expect(pageContent).toHaveClass(styles.page || 'page');
 
-    // The button should have CSS Module classes applied - check that className contains hashed class names
-    const className = cssModulesButton.className;
-    expect(className).toMatch(/button_/); // Should contain CSS module generated class name
+    // Check that buttons have CSS Module classes applied
+    const solidButton = screen.getByRole('button', { name: 'Solid Button' });
+    expect(solidButton.className).toMatch(/button_/); // Should contain CSS module generated class name
   });
 
   test('buttons are rendered in correct order when navigating to /', async () => {
@@ -63,12 +57,11 @@ describe('Index Route', () => {
       (button) => !button.getAttribute('aria-label')?.includes('Switch to')
     );
 
-    expect(contentButtons).toHaveLength(5); // Now includes CSS Modules Button
+    expect(contentButtons).toHaveLength(4); // Four button variants
     expect(contentButtons[0]).toHaveTextContent('Solid Button');
     expect(contentButtons[1]).toHaveTextContent('Soft Button');
     expect(contentButtons[2]).toHaveTextContent('Outline Button');
     expect(contentButtons[3]).toHaveTextContent('Ghost Button');
-    expect(contentButtons[4]).toHaveTextContent('CSS Modules Button');
   });
 
   test('has correct layout structure when navigating to /', async () => {
@@ -81,32 +74,17 @@ describe('Index Route', () => {
       name: 'Welcome Home!',
     });
     const mainDiv = mainHeading.parentElement;
-    expect(mainDiv).toHaveAttribute(
-      'style',
-      expect.stringContaining('padding: var(--spacing-4)')
-    );
+    expect(mainDiv).toHaveClass(styles.page || 'page');
 
     // Test the card container that wraps the description and buttons
     const descriptionText = screen.getByText(/Design tokens are working!/);
     const cardContainer = descriptionText.parentElement;
-    expect(cardContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining(
-        'background-color: var(--theme-color-background-card)'
-      )
-    );
+    expect(cardContainer).toHaveClass(styles.card || 'card');
 
     const buttonContainer = screen.getByRole('button', {
       name: 'Solid Button',
     }).parentElement;
-    expect(buttonContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('display: flex')
-    );
-    expect(buttonContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('gap: var(--spacing-2)')
-    );
+    expect(buttonContainer).toHaveClass(styles.buttonGroup || 'buttonGroup');
   });
 
   test('content is in correct order when navigating to /', async () => {
