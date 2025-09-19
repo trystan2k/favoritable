@@ -8,6 +8,12 @@ export default defineConfig({
     port: 4000,
   },
   tools: {
+    cssLoader: {
+      modules: {
+        auto: true,
+        localIdentName: '[name]__[local]--[hash:base64:5]',
+      },
+    },
     rspack: {
       plugins: [
         tanstackRouter({

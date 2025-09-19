@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from 'react-aria-components';
+import { TestButton } from '../components/TestButton';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -40,6 +41,17 @@ function Index() {
           <Button className='button-soft'>Soft Button</Button>
           <Button className='button-outline'>Outline Button</Button>
           <Button className='button-ghost'>Ghost Button</Button>
+        </div>
+        <div style={{ marginTop: 'var(--spacing-4)' }}>
+          <h4
+            style={{
+              color: 'var(--theme-color-text-brand)',
+              marginBottom: 'var(--spacing-2)',
+            }}
+          >
+            CSS Modules Test:
+          </h4>
+          <TestButton>CSS Modules Button</TestButton>
         </div>
       </div>
     </div>

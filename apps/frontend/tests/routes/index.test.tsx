@@ -28,6 +28,29 @@ describe('Index Route', () => {
     expect(
       screen.getByRole('button', { name: 'Ghost Button' })
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'CSS Modules Button' })
+    ).toBeInTheDocument();
+  });
+
+  test('CSS Modules test section is rendered correctly', async () => {
+    const router = createTestRouter(['/']);
+    await renderWithRouter(router);
+
+    // Check that the CSS Modules heading is present
+    expect(
+      screen.getByRole('heading', { level: 4, name: 'CSS Modules Test:' })
+    ).toBeInTheDocument();
+
+    // Check that the CSS Modules button is present and styled
+    const cssModulesButton = screen.getByRole('button', {
+      name: 'CSS Modules Button',
+    });
+    expect(cssModulesButton).toBeInTheDocument();
+
+    // The button should have CSS Module classes applied - check that className contains hashed class names
+    const className = cssModulesButton.className;
+    expect(className).toMatch(/button_/); // Should contain CSS module generated class name
   });
 
   test('buttons are rendered in correct order when navigating to /', async () => {
@@ -40,19 +63,24 @@ describe('Index Route', () => {
       (button) => !button.getAttribute('aria-label')?.includes('Switch to')
     );
 
-    expect(contentButtons).toHaveLength(4);
+    expect(contentButtons).toHaveLength(5); // Now includes CSS Modules Button
     expect(contentButtons[0]).toHaveTextContent('Solid Button');
     expect(contentButtons[1]).toHaveTextContent('Soft Button');
     expect(contentButtons[2]).toHaveTextContent('Outline Button');
     expect(contentButtons[3]).toHaveTextContent('Ghost Button');
+    expect(contentButtons[4]).toHaveTextContent('CSS Modules Button');
   });
 
   test('has correct layout structure when navigating to /', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
-    // Find the main div that now uses CSS custom properties
-    const mainDiv = screen.getByRole('heading').parentElement;
+    // Find the main div that now uses CSS custom properties - use specific heading
+    const mainHeading = screen.getByRole('heading', {
+      level: 3,
+      name: 'Welcome Home!',
+    });
+    const mainDiv = mainHeading.parentElement;
     expect(mainDiv).toHaveAttribute(
       'style',
       expect.stringContaining('padding: var(--spacing-4)')

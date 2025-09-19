@@ -1,0 +1,86 @@
+/**
+ * Button CSS Module - Test implementation
+ * This file contains CSS Modules styles for React Aria Button components
+ */
+
+/* Base button styles */
+.button {
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  font-family: inherit;
+  outline: none;
+}
+
+/* Button hover states */
+.button[data-hovered] {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Button pressed states */
+.button[data-pressed] {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Button focus states */
+.button[data-focused] {
+  outline: 2px solid var(--semantic-colors-interactive-focus);
+  outline-offset: 2px;
+}
+
+/* Button disabled states */
+.button[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Button variants */
+.solid {
+  background-color: var(--semantic-colors-cta-primary-base);
+  color: var(--semantic-colors-cta-primary-text);
+  border-color: var(--semantic-colors-cta-primary-base);
+}
+
+.solid[data-hovered] {
+  background-color: var(--semantic-colors-cta-primary-hover);
+  color: var(--semantic-colors-cta-primary-text);
+  border-color: var(--semantic-colors-cta-primary-hover);
+}
+
+.soft {
+  background-color: var(--semantic-colors-cta-secondary-base);
+  color: var(--semantic-colors-cta-secondary-text);
+  border-color: transparent;
+}
+
+.soft[data-hovered] {
+  background-color: var(--semantic-colors-cta-secondary-hover);
+  color: var(--semantic-colors-cta-secondary-text);
+}
+
+.outline {
+  background-color: var(--semantic-colors-cta-tertiary-base);
+  color: var(--semantic-colors-text-primary);
+  border-color: var(--semantic-colors-border-primary);
+}
+
+.outline[data-hovered] {
+  background-color: var(--semantic-colors-cta-tertiary-hover);
+}
+
+.ghost {
+  background-color: var(--semantic-colors-cta-tertiary-base);
+  color: var(--semantic-colors-text-primary);
+  border-color: transparent;
+}
+
+.ghost[data-hovered] {
+  background-color: var(--semantic-colors-cta-tertiary-hover);
+}
