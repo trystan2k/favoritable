@@ -46,13 +46,13 @@ describe('ThemeContext', () => {
   });
 
   describe('useTheme hook', () => {
-    test('throws error when used outside ThemeProvider', () => {
+    test('should throw error when used outside ThemeProvider', () => {
       expect(() => {
         renderHook(() => useTheme());
       }).toThrow('useTheme must be used within a ThemeProvider');
     });
 
-    test('returns theme context when used within ThemeProvider', () => {
+    test('should return theme context when used within ThemeProvider', () => {
       const wrapper = ({ children }: { children: ReactNode }) => (
         <ThemeProvider>{children}</ThemeProvider>
       );
@@ -68,7 +68,7 @@ describe('ThemeContext', () => {
   });
 
   describe('ThemeProvider', () => {
-    test('initializes with light theme by default', () => {
+    test('should initialize with light theme by default', () => {
       const wrapper = ({ children }: { children: ReactNode }) => (
         <ThemeProvider>{children}</ThemeProvider>
       );
@@ -79,7 +79,7 @@ describe('ThemeContext', () => {
       expect(mockSetAttribute).toHaveBeenCalledWith('data-theme', 'light');
     });
 
-    test('initializes with saved theme from localStorage', () => {
+    test('should initialize with saved theme from localStorage', () => {
       mockLocalStorage.getItem.mockReturnValue('dark');
 
       const wrapper = ({ children }: { children: ReactNode }) => (
@@ -92,7 +92,7 @@ describe('ThemeContext', () => {
       expect(mockSetAttribute).toHaveBeenCalledWith('data-theme', 'dark');
     });
 
-    test('initializes with system preference when no saved theme', () => {
+    test('should initialize with system preference when no saved theme', () => {
       mockLocalStorage.getItem.mockReturnValue(null);
       mockMatchMedia.mockReturnValue({
         matches: true,
@@ -114,7 +114,7 @@ describe('ThemeContext', () => {
       expect(result.current.theme).toBe('dark');
     });
 
-    test('ignores invalid saved theme from localStorage', () => {
+    test('should ignore invalid saved theme from localStorage', () => {
       mockLocalStorage.getItem.mockReturnValue('invalid-theme');
 
       const wrapper = ({ children }: { children: ReactNode }) => (
@@ -126,7 +126,7 @@ describe('ThemeContext', () => {
       expect(result.current.theme).toBe('light');
     });
 
-    test('setTheme updates theme and saves to localStorage', () => {
+    test('should setThem updates theme and saves to localStorage', () => {
       const wrapper = ({ children }: { children: ReactNode }) => (
         <ThemeProvider>{children}</ThemeProvider>
       );
@@ -145,7 +145,7 @@ describe('ThemeContext', () => {
       expect(mockSetAttribute).toHaveBeenCalledWith('data-theme', 'dark');
     });
 
-    test('toggleTheme switches between light and dark', () => {
+    test('should toggleThem switches between light and dark', () => {
       const wrapper = ({ children }: { children: ReactNode }) => (
         <ThemeProvider>{children}</ThemeProvider>
       );
@@ -175,7 +175,7 @@ describe('ThemeContext', () => {
       );
     });
 
-    test('responds to system theme changes when no saved preference', () => {
+    test('should respond to system theme changes when no saved preference', () => {
       const eventHandlers: { [key: string]: (e: MediaQueryListEvent) => void } =
         {};
       const mockAddEventListener = vi.fn((event, handler) => {
@@ -227,7 +227,7 @@ describe('ThemeContext', () => {
       expect(result.current.theme).toBe('light');
     });
 
-    test('does not respond to system theme changes when theme is saved', () => {
+    test('should doe not respond to system theme changes when theme is saved', () => {
       const eventHandlers: { [key: string]: (e: MediaQueryListEvent) => void } =
         {};
       const mockAddEventListener = vi.fn((event, handler) => {
@@ -267,7 +267,7 @@ describe('ThemeContext', () => {
       expect(result.current.theme).toBe('light');
     });
 
-    test('cleans up media query listener on unmount', () => {
+    test('should clean up media query listener on unmount', () => {
       const mockRemoveEventListener = vi.fn();
       mockMatchMedia.mockReturnValue({
         matches: false,
@@ -294,7 +294,7 @@ describe('ThemeContext', () => {
       );
     });
 
-    test('initializes with light theme in SSR environment (window undefined)', () => {
+    test('should initialize with light theme in SSR environment (window undefined)', () => {
       // Test the getInitialTheme function directly when window is undefined
       const originalWindow = globalThis.window;
 

@@ -8,16 +8,17 @@ describe('Theme Switcher', () => {
     vi.clearAllMocks();
   });
 
-  test('renders theme switcher button', async () => {
+  test('should render theme switcher button', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
     const themeSwitcher = screen.getByLabelText('Switch to dark theme');
     expect(themeSwitcher).toBeInTheDocument();
-    expect(themeSwitcher).toHaveTextContent('🌙');
+    expect(themeSwitcher.querySelector('svg')).toBeInTheDocument();
+    expect(themeSwitcher.querySelector('.lucide-moon')).toBeInTheDocument();
   });
 
-  test('toggles theme when clicked', async () => {
+  test('should toggle theme when clicked', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
@@ -31,14 +32,17 @@ describe('Theme Switcher', () => {
       'aria-label',
       'Switch to light theme'
     );
-    expect(themeSwitcher).toHaveTextContent('☀️');
+    expect(themeSwitcher.querySelector('svg')).toBeInTheDocument();
+    expect(themeSwitcher.querySelector('.lucide-sun')).toBeInTheDocument();
   });
 
-  test('initializes with light theme by default', async () => {
+  test('should initialize with light theme by default', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
     const themeSwitcher = screen.getByLabelText('Switch to dark theme');
-    expect(themeSwitcher).toHaveTextContent('🌙');
+    expect(themeSwitcher.querySelector('svg')).toBeInTheDocument();
+    // Moon icon should be present in light theme
+    expect(themeSwitcher.querySelector('.lucide-moon')).toBeInTheDocument();
   });
 });

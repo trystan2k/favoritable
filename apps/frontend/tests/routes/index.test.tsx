@@ -4,7 +4,7 @@ import styles from '../../src/routes/Layout.module.css';
 import { createTestRouter, renderWithRouter } from '../test-utils';
 
 describe('Index Route', () => {
-  test('renders welcome heading when navigating to /', async () => {
+  test('should render welcome heading when navigating to /', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
@@ -13,7 +13,7 @@ describe('Index Route', () => {
     ).toBeInTheDocument();
   });
 
-  test('renders all button variants when navigating to /', async () => {
+  test('should render all button variants when navigating to /', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
@@ -31,7 +31,7 @@ describe('Index Route', () => {
     ).toBeInTheDocument();
   });
 
-  test('CSS modules are applied correctly to components', async () => {
+  test('should apply CSS modules classes correctly to components when navigating to /', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
@@ -47,7 +47,7 @@ describe('Index Route', () => {
     expect(solidButton.className).toMatch(/button_/); // Should contain CSS module generated class name
   });
 
-  test('buttons are rendered in correct order when navigating to /', async () => {
+  test('should render buttons in correct order when navigating to /', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
@@ -64,7 +64,7 @@ describe('Index Route', () => {
     expect(contentButtons[3]).toHaveTextContent('Ghost Button');
   });
 
-  test('has correct layout structure when navigating to /', async () => {
+  test('should render correct layout structure when navigating to /', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
@@ -87,7 +87,7 @@ describe('Index Route', () => {
     expect(buttonContainer).toHaveClass(styles.buttonGroup || 'buttonGroup');
   });
 
-  test('content is in correct order when navigating to /', async () => {
+  test('should render content in correct order when navigating to /', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 

@@ -5,7 +5,7 @@ import styles from '../../src/routes/Layout.module.css';
 import { createTestRouter, renderWithRouter } from '../test-utils';
 
 describe('Root Layout', () => {
-  test('renders navigation bar with Home and About links', async () => {
+  test('should render navigation bar with Home and About links', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
@@ -14,7 +14,7 @@ describe('Root Layout', () => {
     expect(screen.getByRole('link', { name: 'About' })).toBeInTheDocument();
   });
 
-  test('Home link has correct href attribute', async () => {
+  test('should render home link with correct href attribute', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
@@ -22,7 +22,7 @@ describe('Root Layout', () => {
     expect(homeLink).toHaveAttribute('href', '/');
   });
 
-  test('About link has correct href attribute', async () => {
+  test('should render about link with correct href attribute', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
@@ -30,7 +30,7 @@ describe('Root Layout', () => {
     expect(aboutLink).toHaveAttribute('href', '/about');
   });
 
-  test('renders navigation bar with correct styling', async () => {
+  test('should render navigation bar with correct styling', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
@@ -41,7 +41,7 @@ describe('Root Layout', () => {
     expect(navContainer).toHaveClass(styles.nav || 'nav');
   });
 
-  test('renders child route content in outlet when navigating to home', async () => {
+  test('should render child route content in outlet when navigating to home', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
@@ -51,7 +51,7 @@ describe('Root Layout', () => {
     ).toBeInTheDocument();
   });
 
-  test('renders child route content in outlet when navigating to about', async () => {
+  test('should render child route content in outlet when navigating to about', async () => {
     const router = createTestRouter(['/about']);
     await renderWithRouter(router);
 
@@ -61,7 +61,7 @@ describe('Root Layout', () => {
     ).toBeInTheDocument();
   });
 
-  test('navigation works correctly when clicking Home link from About page', async () => {
+  test('should navigate to home page when clicking Home link from About page', async () => {
     const user = userEvent.setup();
     const router = createTestRouter(['/about']);
     await renderWithRouter(router);
@@ -84,7 +84,7 @@ describe('Root Layout', () => {
     ).not.toBeInTheDocument();
   });
 
-  test('navigation works correctly when clicking About link from Home page', async () => {
+  test('should navigate to about page when clicking About link from Home page', async () => {
     const user = userEvent.setup();
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
@@ -107,7 +107,7 @@ describe('Root Layout', () => {
     ).not.toBeInTheDocument();
   });
 
-  test('navigation links are always present regardless of current route', async () => {
+  test('should render navigation links always present regardless of current route', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
@@ -125,7 +125,7 @@ describe('Root Layout', () => {
     expect(screen.getByRole('link', { name: 'About' })).toBeInTheDocument();
   });
 
-  test('navigation links are in correct order', async () => {
+  test('should render navigation links in correct order', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
@@ -138,7 +138,7 @@ describe('Root Layout', () => {
     expect(navLinks[1]).toHaveTextContent('About');
   });
 
-  test('layout structure is maintained across different routes', async () => {
+  test('should maintain layout structure across different routes', async () => {
     const user = userEvent.setup();
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
@@ -154,7 +154,7 @@ describe('Root Layout', () => {
     expect(navContainer).toHaveClass(styles.nav || 'nav');
   });
 
-  test('router current location updates correctly during navigation', async () => {
+  test('should update router current location correctly during navigation', async () => {
     const user = userEvent.setup();
     const router = createTestRouter(['/']);
     await renderWithRouter(router);

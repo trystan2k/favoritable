@@ -4,7 +4,7 @@ import styles from '../../src/routes/Layout.module.css';
 import { createTestRouter, renderWithRouter } from '../test-utils';
 
 describe('About Route', () => {
-  test('renders about heading when navigating to /about', async () => {
+  test('should render about heading when navigating to /about', async () => {
     const router = createTestRouter(['/about']);
     await renderWithRouter(router);
 
@@ -13,7 +13,7 @@ describe('About Route', () => {
     ).toBeInTheDocument();
   });
 
-  test('renders description text when navigating to /about', async () => {
+  test('should render description text when navigating to /about', async () => {
     const router = createTestRouter(['/about']);
     await renderWithRouter(router);
 
@@ -24,7 +24,7 @@ describe('About Route', () => {
     ).toBeInTheDocument();
   });
 
-  test('renders large outline button when navigating to /about', async () => {
+  test('should render large outline button when navigating to /about', async () => {
     const router = createTestRouter(['/about']);
     await renderWithRouter(router);
 
@@ -32,7 +32,7 @@ describe('About Route', () => {
     expect(button).toBeInTheDocument();
   });
 
-  test('has correct layout structure when navigating to /about', async () => {
+  test('should render correct layout structure when navigating to /about', async () => {
     const router = createTestRouter(['/about']);
     await renderWithRouter(router);
 
@@ -46,7 +46,7 @@ describe('About Route', () => {
     expect(buttonContainer).toHaveClass(styles.section || 'section');
   });
 
-  test('content is in correct order when navigating to /about', async () => {
+  test('should render content in correct order when navigating to /about', async () => {
     const router = createTestRouter(['/about']);
     await renderWithRouter(router);
 
@@ -70,7 +70,7 @@ describe('About Route', () => {
     }
   });
 
-  test('button has correct size attribute when navigating to /about', async () => {
+  test('should render button with correct size attribute when navigating to /about', async () => {
     const router = createTestRouter(['/about']);
     await renderWithRouter(router);
 
@@ -80,7 +80,7 @@ describe('About Route', () => {
     // But we can verify the button renders and is accessible
   });
 
-  test('page has proper semantic structure when navigating to /about', async () => {
+  test('should render page with proper semantic structure when navigating to /about', async () => {
     const router = createTestRouter(['/about']);
     await renderWithRouter(router);
 
