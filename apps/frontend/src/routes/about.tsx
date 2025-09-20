@@ -1,5 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '../components/Button';
+import { Button } from 'react-aria-components';
+import buttonSharedStyles from '../shared-styles/Button.module.css';
+import { cx } from '../utils/cx';
 import styles from './Layout.module.css';
 
 export const Route = createFileRoute('/about')({
@@ -14,7 +16,13 @@ function About() {
         This is the about page demonstrating routing with TanStack Router.
       </p>
       <div className={styles.section}>
-        <Button variant='outline' className={styles.largeButton}>
+        <Button
+          className={cx(
+            buttonSharedStyles.button,
+            buttonSharedStyles.outline,
+            styles.largeButton
+          )}
+        >
           Large Outline Button
         </Button>
       </div>

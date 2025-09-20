@@ -1,5 +1,7 @@
+import { Button } from 'react-aria-components';
 import { useTheme } from '../contexts/ThemeContext';
-import { Button } from './Button';
+import buttonSharedStyles from '../shared-styles/Button.module.css';
+import { cx } from '../utils/cx';
 import styles from './ThemeSwitcher.module.css';
 
 export const ThemeSwitcher = () => {
@@ -9,8 +11,11 @@ export const ThemeSwitcher = () => {
     <Button
       onPress={toggleTheme}
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
-      variant='ghost'
-      className={styles.themeSwitcher}
+      className={cx(
+        buttonSharedStyles.button,
+        buttonSharedStyles.ghost,
+        styles.themeSwitcher
+      )}
     >
       {theme === 'light' ? '🌙' : '☀️'}
     </Button>
