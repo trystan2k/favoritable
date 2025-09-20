@@ -1,5 +1,10 @@
 {
   "component": {
+    "interactive": {
+      "disabled": {
+        "opacity": { "value": "0.5" }
+      }
+    },
     "typography": {
       "display": {
         "lg": {

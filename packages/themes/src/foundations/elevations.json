@@ -1,19 +1,19 @@
 {
   "shadow": {
-    "xs": { "value": "0 1px 2px 0 rgba(0, 0, 0, 0.05)" },
+    "xs": { "value": "0 1px 2px 0 {color.shadows.005}" },
     "sm": {
-      "value": "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)"
+      "value": "0 1px 3px 0 {color.shadows.01}, 0 1px 2px 0 {color.shadows.006}"
     },
     "md": {
-      "value": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
+      "value": "0 4px 6px -1px {color.shadows.01}, 0 2px 4px -1px {color.shadows.006}"
     },
     "lg": {
-      "value": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"
+      "value": "0 10px 15px -3px {color.shadows.01}, 0 4px 6px -2px {color.shadows.005}"
     },
     "xl": {
-      "value": "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+      "value": "0 20px 25px -5px {color.shadows.01}, 0 10px 10px -5px {color.shadows.004}"
     },
-    "2xl": { "value": "0 25px 50px -12px rgba(0, 0, 0, 0.25)" },
-    "inner": { "value": "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)" }
+    "2xl": { "value": "0 25px 50px -12px {color.shadows.025}" },
+    "inner": { "value": "inset 0 2px 4px 0 {color.shadows.006}" }
   }
 }
