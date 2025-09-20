@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
+import styles from '../../src/routes/Layout.module.css';
 import { createTestRouter, renderWithRouter } from '../test-utils';
 
 describe('Index Route', () => {
@@ -30,6 +31,22 @@ describe('Index Route', () => {
     ).toBeInTheDocument();
   });
 
+  test('CSS modules are applied correctly to components', async () => {
+    const router = createTestRouter(['/']);
+    await renderWithRouter(router);
+
+    // Check that CSS modules classes are applied
+    const pageContent = screen.getByRole('heading', {
+      name: 'Welcome Home!',
+    }).parentElement;
+
+    expect(pageContent).toHaveClass(styles.page || 'page');
+
+    // Check that buttons have CSS Module classes applied
+    const solidButton = screen.getByRole('button', { name: 'Solid Button' });
+    expect(solidButton.className).toMatch(/button_/); // Should contain CSS module generated class name
+  });
+
   test('buttons are rendered in correct order when navigating to /', async () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
@@ -40,7 +57,7 @@ describe('Index Route', () => {
       (button) => !button.getAttribute('aria-label')?.includes('Switch to')
     );
 
-    expect(contentButtons).toHaveLength(4);
+    expect(contentButtons).toHaveLength(4); // Four button variants
     expect(contentButtons[0]).toHaveTextContent('Solid Button');
     expect(contentButtons[1]).toHaveTextContent('Soft Button');
     expect(contentButtons[2]).toHaveTextContent('Outline Button');
@@ -51,34 +68,23 @@ describe('Index Route', () => {
     const router = createTestRouter(['/']);
     await renderWithRouter(router);
 
-    // Find the main div that now uses CSS custom properties
-    const mainDiv = screen.getByRole('heading').parentElement;
-    expect(mainDiv).toHaveAttribute(
-      'style',
-      expect.stringContaining('padding: var(--spacing-4)')
-    );
+    // Find the main div that now uses CSS custom properties - use specific heading
+    const mainHeading = screen.getByRole('heading', {
+      level: 3,
+      name: 'Welcome Home!',
+    });
+    const mainDiv = mainHeading.parentElement;
+    expect(mainDiv).toHaveClass(styles.page || 'page');
 
     // Test the card container that wraps the description and buttons
     const descriptionText = screen.getByText(/Design tokens are working!/);
     const cardContainer = descriptionText.parentElement;
-    expect(cardContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining(
-        'background-color: var(--theme-color-background-card)'
-      )
-    );
+    expect(cardContainer).toHaveClass(styles.card || 'card');
 
     const buttonContainer = screen.getByRole('button', {
       name: 'Solid Button',
     }).parentElement;
-    expect(buttonContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('display: flex')
-    );
-    expect(buttonContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('gap: var(--spacing-2)')
-    );
+    expect(buttonContainer).toHaveClass(styles.buttonGroup || 'buttonGroup');
   });
 
   test('content is in correct order when navigating to /', async () => {

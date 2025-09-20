@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
+import styles from '../../src/routes/Layout.module.css';
 import { createTestRouter, renderWithRouter } from '../test-utils';
 
 describe('About Route', () => {
@@ -35,20 +36,14 @@ describe('About Route', () => {
     const router = createTestRouter(['/about']);
     await renderWithRouter(router);
 
-    // Find the div with padding style by searching for the heading's parent
+    // Find the div with page class by searching for the heading's parent
     const mainDiv = screen.getByRole('heading').parentElement;
-    expect(mainDiv).toHaveAttribute(
-      'style',
-      expect.stringContaining('padding: var(--spacing-4)')
-    );
+    expect(mainDiv).toHaveClass(styles.page || 'page');
 
     const buttonContainer = screen.getByRole('button', {
       name: 'Large Outline Button',
     }).parentElement;
-    expect(buttonContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('margin-top: var(--spacing-4)')
-    );
+    expect(buttonContainer).toHaveClass(styles.section || 'section');
   });
 
   test('content is in correct order when navigating to /about', async () => {

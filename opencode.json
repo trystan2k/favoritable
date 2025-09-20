@@ -1,6 +1,18 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "instructions": ["AGENTS.md", "docs/DEV_WORKFLOW.md"],
+  "provider": {
+    "github-copilot": {
+      "models": {
+        "claude-sonnet-4": {
+          "limit": {
+            "context": 256000,
+            "output": 32000
+          }
+        }
+      }
+    }
+  },
   "mcp": {
     "task-master-ai": {
       "type": "local",
@@ -13,16 +25,13 @@
       "enabled": true
     },
     "repomix": {
+      "enabled": false,
       "type": "local",
       "command": ["repomix", "--mcp"]
     },
     "basic-memory": {
       "type": "local",
       "command": ["uvx", "basic-memory", "--project", "favoritable", "mcp"]
-    },
-    "shadcn-ui": {
-      "type": "local",
-      "command": ["npx", "@jpisnice/shadcn-ui-mcp-server"]
     },
     "github": {
       "type": "remote",
@@ -33,6 +42,7 @@
       }
     },
     "playwright": {
+      "enabled": false,
       "type": "local",
       "command": [
         "npx",
@@ -43,6 +53,7 @@
       ]
     },
     "serena": {
+      "enabled": true,
       "type": "local",
       "command": [
         "uvx",
@@ -55,6 +66,7 @@
       ]
     },
     "sqlite": {
+      "enabled": false,
       "type": "local",
       "command": ["npx", "-y", "mcp-sqlite", "apps/api/local.db"]
     }

@@ -1,0 +1,67 @@
+.nav {
+  border-bottom: 1px solid var(--theme-color-border-primary);
+  display: flex;
+  padding: var(--spacing-4);
+  gap: var(--spacing-4);
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--theme-color-background-secondary);
+}
+
+.navLinks {
+  display: flex;
+  gap: var(--spacing-4);
+}
+
+.navLink {
+  color: var(--theme-color-text-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+}
+
+.page {
+  padding: var(--spacing-4);
+}
+
+.pageTitle {
+  color: var(--theme-color-text-primary);
+  margin-bottom: var(--spacing-4);
+}
+
+.pageTitleBrand {
+  color: var(--theme-color-text-brand);
+  margin-bottom: var(--spacing-2);
+}
+
+.pageText {
+  color: var(--theme-color-text-secondary);
+  margin-bottom: var(--spacing-4);
+}
+
+.card {
+  margin-top: var(--spacing-4);
+  padding: var(--spacing-3);
+  background-color: var(--theme-color-background-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--theme-color-border-primary);
+}
+
+.cardText {
+  font-size: var(--font-size-sm);
+  color: var(--theme-color-text-secondary);
+  margin: 0 0 var(--spacing-3) 0;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: var(--spacing-2);
+  align-items: center;
+}
+
+.section {
+  margin-top: var(--spacing-4);
+}
+
+.largeButton {
+  padding: var(--spacing-3) var(--spacing-4);
+}

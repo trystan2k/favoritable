@@ -1,6 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test } from 'vitest';
+import styles from '../../src/routes/Layout.module.css';
 import { createTestRouter, renderWithRouter } from '../test-utils';
 
 describe('Root Layout', () => {
@@ -37,22 +38,7 @@ describe('Root Layout', () => {
     const homeLink = screen.getByRole('link', { name: 'Home' });
     const navContainer = homeLink.parentElement?.parentElement;
 
-    expect(navContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('border-bottom: 1px solid')
-    );
-    expect(navContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('display: flex')
-    );
-    expect(navContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('padding: var(--spacing-4)')
-    );
-    expect(navContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('gap: var(--spacing-4)')
-    );
+    expect(navContainer).toHaveClass(styles.nav || 'nav');
   });
 
   test('renders child route content in outlet when navigating to home', async () => {
@@ -165,22 +151,7 @@ describe('Root Layout', () => {
     const homeLink = screen.getByRole('link', { name: 'Home' });
     const navContainer = homeLink.parentElement?.parentElement;
 
-    expect(navContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('border-bottom: 1px solid')
-    );
-    expect(navContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('display: flex')
-    );
-    expect(navContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('padding: var(--spacing-4)')
-    );
-    expect(navContainer).toHaveAttribute(
-      'style',
-      expect.stringContaining('gap: var(--spacing-4)')
-    );
+    expect(navContainer).toHaveClass(styles.nav || 'nav');
   });
 
   test('router current location updates correctly during navigation', async () => {
