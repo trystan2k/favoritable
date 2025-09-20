@@ -2,7 +2,20 @@
 
 ## 📚 Onboarding
 
-At the start of each session read the `docs/DEV_WORKFLOW.md` document to load development rules.
+At the start of each session, read:
+
+1. Any `**/README.md` docs across the project
+2. Any `**/README.*.md` docs across the project
+
+## Project context
+
+### API
+
+For context about the API project (apps/api), see document [CONTEXT.md](apps/api/docs/CONTEXT.md)
+
+### Frontend
+
+For context about the Frontend project (apps/frontend), see document [CONTEXT.md](apps/frontend/docs/CONTEXT.md)
 
 ## Build, Lint, and Test Commands
 
