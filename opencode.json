@@ -1,6 +1,18 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "instructions": ["AGENTS.md"],
+  "instructions": ["AGENTS.md", "docs/DEV_WORKFLOW.md"],
+  "provider": {
+    "github-copilot": {
+      "models": {
+        "claude-sonnet-4": {
+          "limit": {
+            "context": 256000,
+            "output": 32000
+          }
+        }
+      }
+    }
+  },
   "mcp": {
     "task-master-ai": {
       "type": "local",

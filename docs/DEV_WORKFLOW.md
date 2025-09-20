@@ -18,6 +18,7 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 - **Action**: Check if task is already implemented, if so, ask for clarification
 - Ensure that your are at `main` branch, otherwise, checkout it.
 - **Action**: Run `git pull` to ensure that your branch is up-to-date with remote.
+- **Attention**:If there are changes that are not committed, stash them checkout and pull `main` and then unstash the changes.
 - **Action**: Create a feature branch based on `main` and do your work on this feature branch
 - Create one feature branch per task ID and commit all subtasks in this same branch (do not create branch for subtasks)
 - Feature branch should follow the pattern `feature/FAV-[ID]-[title]`
@@ -88,14 +89,10 @@ THESE INSTRUCTIONS ARE MANDATORY and must be strictly followed throughout develo
 For tasks with subtasks, follow this cycle for each subtask:
 
 1. **Implement subtask** following the deepthink plan
-2. **Quality check** - Run `pnpm run complete-check` before commit
-3. **Review request** - Ask for code review before committing
-4. **Commit subtask** - Create one commit per completed subtask
-5. **Push request** - Ask for permission to push after commit
-6. **Repeat** for next subtask
+2. **Quality check** - Run `pnpm run complete-check` after each subtask implementation
+3. **Review request** - Ask for code review before going to the next subtask
+4. **Repeat** for each subtask
 
-- **Each subtask = One commit** for better traceability
-- Keep commits focused and atomic per subtask
 - **Principles during implementation**:
   - 🎯 Focus on the essential
   - 📝 Comment code when necessary
@@ -112,27 +109,7 @@ For tasks with subtasks, follow this cycle for each subtask:
   - If you are still struggling to fix it (cannot fix in 5 interactions, for example), ask for help
 - **Action**: Ask the agent specialists (identify the ones that are more specialized in the task) to review the changes and apply any suggestion.
 
-### 8. 📝 SUBTASK COMMIT CYCLE
-
-For each subtask completion:
-
-- **Action**: Before commit, ask me to review the changes and only continue after my ok
-- **Action**: Ask me if I did any code change during review. If so, review the changes and use this info for the commit
-- **Action**: Run `pnpm run complete-check` one final time before commit
-- **Action**: Commit with descriptive message following the pattern below
-- **Action**: Ask permission to push the subtask commit
-
-**Subtask commit message pattern**:
-
-```bash
-type(scope): brief description of actual work done
-
-- Specific changes made in this subtask
-- Files modified/created
-- Tests added (if any)
-```
-
-### 9. 🔍 FINAL QUALITY VERIFICATION
+### 8. 🔍 FINAL QUALITY VERIFICATION
 
 - **Action**: After ALL subtasks are complete, run `pnpm run complete-check` one final time
 - **Action**: Ensure entire task implementation works as expected
@@ -140,14 +117,14 @@ type(scope): brief description of actual work done
   - ⚠️ **MANDATORY** - resolve ALL problems
   - This is the final quality gate before task completion
 
-### 10. ✅ TASK STATUS UPDATE - COMPLETION
+### 9. ✅ TASK STATUS UPDATE - COMPLETION
 
 - **Action**: Update the task with complete implementation details covering all subtasks
 - **Action**: Mark the task as `done` in Task Master
 - Confirm that the status has been updated correctly
 - Confirm that all subtasks are marked as complete
 
-### 11. 📝 DEVELOPMENT LOGGING
+### 10. 📝 DEVELOPMENT LOGGING
 
 - **Action**: Use **Basic Memory MCP** to log development for all subtasks (if it exist, otherwise for the task implemented).
 - **Action**: Once the task is complete, read all info related to it (task and subtasks notes) in **Basic Memory MCP** and create physical file with the information about the implementation of the task.
@@ -183,6 +160,24 @@ type(scope): brief description of actual work done
 2. **ALSO** create the physical file using the `write` tool at `docs/memories/development-logs/task-[ID]-[title].md`
 3. Use `read_note` from Basic Memory to get the content and copy it to the physical file
 
+### 11. 📝 COMMIT CYCLE
+
+- **Action**: Before commit, ask me to review the changes and only continue after my ok
+- **Action**: Ask me if I did any code change during review. If so, review the changes and use this info for the commit
+- **Action**: Run `pnpm run complete-check` one final time before commit
+- **Action**: Commit with descriptive message following the pattern below
+- **Action**: Ask permission to push the subtask commit
+
+**Subtask commit message pattern**:
+
+```bash
+type(scope): brief description of actual work done
+
+- Specific changes made in this subtask
+- Files modified/created
+- Tests added (if any)
+```
+
 ### 12. 💾 FINAL PUSH
 
 - **Action**: Ask permission for final push of all subtask commits to feature branch
@@ -210,112 +205,6 @@ Use the Github MCP (or if not available Github CLI) to open a PR with a comprehe
 💾 Commit: [commit hash]
 📝 Log: Recorded in Basic Memory MCP
 ```
-
----
-
-## 🎨 CSS MODULES CONVENTIONS
-
-### Primary Styling Method
-
-CSS Modules is the **primary and required** styling approach for all React components in this project. All component-specific styles must use CSS Modules to ensure proper scoping and maintainability.
-
-### File Naming and Co-location Convention
-
-- Each component must have its corresponding CSS Module file co-located in the same directory
-- Naming pattern: `Component.tsx` → `Component.module.css`
-- Example structure:
-  ```
-  src/components/
-    Button.tsx
-    Button.module.css
-    ThemeSwitcher.tsx  
-    ThemeSwitcher.module.css
-  ```
-
-### Import and Usage Pattern
-
-```typescript
-// Component.tsx
-import styles from './Component.module.css';
-
-export function Component() {
-  return (
-    <div className={styles.wrapper}>
-      <button className={styles.button}>
-        Click me
-      </button>
-    </div>
-  );
-}
-```
-
-### Design Token Usage (MANDATORY)
-
-All CSS values in `.module.css` files **MUST** use design tokens from the Style Dictionary system:
-
-```css
-/* Component.module.css */
-.button {
-  /* ✅ CORRECT - Using design tokens */
-  padding: var(--spacing-2) var(--spacing-3);
-  background-color: var(--semantic-colors-cta-primary-base);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
-  
-  /* ❌ INCORRECT - Hardcoded values */
-  /* padding: 8px 12px; */
-  /* background-color: #f59e0b; */
-}
-```
-
-### Available Design Token Categories
-
-- **Spacing**: `var(--spacing-1)` through `var(--spacing-96)`
-- **Colors**: 
-  - Semantic: `var(--semantic-colors-*)`
-  - Theme-aware: `var(--theme-color-*)`
-- **Typography**: `var(--font-size-*)`, `var(--font-weight-*)`
-- **Border Radius**: `var(--radius-*)`
-- **Shadows**: `var(--shadow-*)`
-
-### Global vs Component Styles
-
-- **Component-specific styles**: Always use CSS Modules in component directories
-- **Global styles**: Only in `src/styles/global.css` for:
-  - Theme imports
-  - Body/html base styles
-  - CSS resets
-- **Layout styles**: Use CSS Modules in `src/routes/Layout.module.css` for page layouts
-
-### TypeScript Support
-
-CSS Modules are properly typed. The build system generates type definitions automatically:
-
-```typescript
-// This works with full TypeScript support
-import styles from './Component.module.css';
-console.log(styles.button); // ✅ Type-safe access
-```
-
-### Testing CSS Modules
-
-When testing components that use CSS Modules, import the styles in tests:
-
-```typescript
-// Component.test.tsx
-import styles from '../../src/components/Component.module.css';
-
-test('applies correct CSS class', () => {
-  const element = screen.getByRole('button');
-  expect(element).toHaveClass(styles.button || 'button');
-});
-```
-
-### Build Configuration
-
-CSS Modules are configured in `rsbuild.config.ts` with:
-- Development: Human-readable class names (`Component_button__hash123`)
-- Production: Minified class names for optimal bundle size
 
 ---
 
@@ -384,6 +273,7 @@ log-development --task-id [TASK_ID] --details "[details]"
 ### ✅ Before Starting Development
 
 - [ ] Task clearly understood
+- [ ] Load the appropriate CONTEXT.md file, for the project that the task is related to (frontend or api) from docs folder
 - [ ] Details obtained via MCP Task Master
 - [ ] **Serena MCP activated** - Use `serena_activate_project` if needed
 - [ ] **Project context reviewed** - Use `serena_read_memory` to review relevant project knowledge
@@ -403,12 +293,12 @@ log-development --task-id [TASK_ID] --details "[details]"
 - [ ] Tests being written as needed
 - [ ] Clean and well-structured code
 
-### ✅ Before Each Subtask Commit
+### ✅ Before Commit
 
-- [ ] Subtask implementation complete
-- [ ] QA executed and 100% clean for subtask
-- [ ] Code reviewed and approved
-- [ ] Commit message follows subtask pattern
+- [ ] Implementation complete as per task
+- [ ] QA executed and 100% clean
+- [ ] Tests passing
+- [ ] Code reviewed
 
 ### ✅ Before Final Task Completion
 
@@ -420,7 +310,6 @@ log-development --task-id [TASK_ID] --details "[details]"
 
 ### ✅ After Completion
 
-- [ ] All subtasks committed individually
 - [ ] Task status updated to `done`
 - [ ] Log recorded in Basic Memory MCP
 - [ ] Physical development log file created in docs/memories/development-logs/
