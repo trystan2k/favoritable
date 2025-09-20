@@ -1,3 +1,4 @@
+import { Moon, Sun } from 'lucide-react';
 import { Button } from 'react-aria-components';
 import { useTheme } from '../contexts/ThemeContext';
 import buttonSharedStyles from '../shared-styles/Button.module.css';
@@ -17,7 +18,11 @@ export const ThemeSwitcher = () => {
         styles.themeSwitcher
       )}
     >
-      {theme === 'light' ? '🌙' : '☀️'}
+      {theme === 'light' ? (
+        <Moon fill='var(--color-amber-400)' />
+      ) : (
+        <Sun fill='var(--color-amber-800)' stroke='var(--color-amber-800)' />
+      )}
     </Button>
   );
 };

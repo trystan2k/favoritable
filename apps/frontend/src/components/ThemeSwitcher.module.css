@@ -4,4 +4,5 @@
   justify-content: center;
   width: var(--spacing-8);
   height: var(--spacing-8);
+  padding: 0;
 }
