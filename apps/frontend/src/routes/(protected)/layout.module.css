@@ -19,6 +19,40 @@
   font-weight: var(--font-weight-medium);
 }
 
+.navActions {
+  display: flex;
+  gap: var(--spacing-3);
+  align-items: center;
+}
+
+.userInfo {
+  color: var(--theme-color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.logoutButton {
+  padding: var(--spacing-2) var(--spacing-3);
+  background-color: var(--theme-color-button-secondary-default);
+  border: 1px solid var(--theme-color-border-primary);
+  color: var(--theme-color-text-primary);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logoutButton:hover {
+  background-color: var(--theme-color-button-secondary-hover);
+  border-color: var(--theme-color-border-secondary);
+}
+
+.logoutButton:focus {
+  outline: 2px solid var(--theme-color-accent-primary);
+  outline-offset: 2px;
+}
+
 .page {
   padding: var(--spacing-4);
 }

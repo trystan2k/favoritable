@@ -7,8 +7,19 @@ export const Route = createFileRoute('/login/')({
 });
 
 function Login() {
+  const getApiBaseUrl = (): string => {
+    // In development, use localhost
+    if (import.meta.env.DEV) {
+      return 'http://localhost:3000';
+    }
+
+    // In production, use the current origin
+    return window.location.origin;
+  };
+
   const handleSocialLogin = (provider: string) => {
-    window.location.href = `/login/${provider}`;
+    const apiBaseUrl = getApiBaseUrl();
+    window.location.href = `${apiBaseUrl}/api/auth/callback/${provider}`;
   };
 
   return (

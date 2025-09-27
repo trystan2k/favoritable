@@ -61,7 +61,9 @@ describe('Login Route', () => {
     });
     await userEvent.click(googleButton);
 
-    expect(mockLocation.href).toBe('/login/google');
+    expect(mockLocation.href).toBe(
+      'http://localhost:3000/api/auth/callback/google'
+    );
   });
 
   it('redirects to correct Facebook OAuth endpoint when Facebook button is clicked', async () => {
@@ -72,7 +74,9 @@ describe('Login Route', () => {
     });
     await userEvent.click(facebookButton);
 
-    expect(mockLocation.href).toBe('/login/facebook');
+    expect(mockLocation.href).toBe(
+      'http://localhost:3000/api/auth/callback/facebook'
+    );
   });
 
   it('redirects to correct GitHub OAuth endpoint when GitHub button is clicked', async () => {
@@ -83,7 +87,9 @@ describe('Login Route', () => {
     });
     await userEvent.click(githubButton);
 
-    expect(mockLocation.href).toBe('/login/github');
+    expect(mockLocation.href).toBe(
+      'http://localhost:3000/api/auth/callback/github'
+    );
   });
 
   it('redirects to correct Apple OAuth endpoint when Apple button is clicked', async () => {
@@ -94,7 +100,9 @@ describe('Login Route', () => {
     });
     await userEvent.click(appleButton);
 
-    expect(mockLocation.href).toBe('/login/apple');
+    expect(mockLocation.href).toBe(
+      'http://localhost:3000/api/auth/callback/apple'
+    );
   });
 
   it('redirects to correct Twitter/X OAuth endpoint when Twitter button is clicked', async () => {
@@ -105,7 +113,9 @@ describe('Login Route', () => {
     });
     await userEvent.click(twitterButton);
 
-    expect(mockLocation.href).toBe('/login/twitter');
+    expect(mockLocation.href).toBe(
+      'http://localhost:3000/api/auth/callback/twitter'
+    );
   });
 
   it('has accessible page structure', async () => {
@@ -144,7 +154,7 @@ describe('Login Route', () => {
     const card = cardContent?.parentElement;
     const container = card?.parentElement;
     expect(container).toBeTruthy();
-    expect(container!).toHaveClass(styles.container || 'container');
+    expect(container).toHaveClass(styles.container || 'container');
   });
 
   it('renders terms and conditions text', async () => {
@@ -173,7 +183,9 @@ describe('Login Route', () => {
       await userEvent.keyboard('{Enter}');
     });
 
-    expect(mockLocation.href).toBe('/login/google');
+    expect(mockLocation.href).toBe(
+      'http://localhost:3000/api/auth/callback/google'
+    );
   });
 
   it('handles Space key activation on Facebook button', async () => {
@@ -188,7 +200,9 @@ describe('Login Route', () => {
       await userEvent.keyboard(' ');
     });
 
-    expect(mockLocation.href).toBe('/login/facebook');
+    expect(mockLocation.href).toBe(
+      'http://localhost:3000/api/auth/callback/facebook'
+    );
   });
 
   it('renders login layout with theme switcher in header', async () => {

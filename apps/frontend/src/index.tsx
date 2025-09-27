@@ -4,6 +4,11 @@ import ReactDOM from 'react-dom/client';
 
 import './styles/global.css';
 
+import {
+  type AuthContextType,
+  AuthProvider,
+  useAuth,
+} from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { routeTree } from './routeTree.gen';
 
@@ -20,6 +25,15 @@ declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;
   }
+  interface RouteContext {
+    auth?: AuthContextType;
+  }
+}
+
+// Inner component that uses the auth context
+function App() {
+  const auth = useAuth();
+  return <RouterProvider router={router} context={{ auth }} />;
 }
 
 const rootEl = document.getElementById('root');
@@ -28,7 +42,9 @@ if (rootEl) {
   root.render(
     <StrictMode>
       <ThemeProvider>
-        <RouterProvider router={router} />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </ThemeProvider>
     </StrictMode>
   );
