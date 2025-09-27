@@ -1,14 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from 'react-aria-components';
-import buttonSharedStyles from '../shared-styles/Button.module.css';
-import { cx } from '../utils/cx';
+import buttonSharedStyles from '../../shared-styles/Button.module.css';
+import { cx } from '../../utils/cx';
 import styles from './Layout.module.css';
 
-export const Route = createFileRoute('/about')({
-  component: About,
+export const Route = createFileRoute('/(protected)/about')({
+  component: RouteComponent,
 });
 
-function About() {
+function RouteComponent() {
   return (
     <div className={styles.page}>
       <h3 className={styles.pageTitle}>About Page</h3>

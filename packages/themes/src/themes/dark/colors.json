@@ -1,7 +1,7 @@
 {
   "color": {
-    "white": { "value": "#000000" },
-    "black": { "value": "#ffffff" },
+    "white": { "value": "#ffffff" },
+    "black": { "value": "#000000" },
     "shadows": {
       "004": { "value": "rgba(255, 255, 255, 0.04)" },
       "005": { "value": "rgba(255, 255, 255, 0.05)" },

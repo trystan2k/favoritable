@@ -1,0 +1,55 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-3);
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--semantic-colors-interactive-focus);
+  outline-offset: 2px;
+}
+
+.text {
+  flex: 1;
+  text-align: center;
+}
+
+.google {
+  background-color: var(--brands-colors-google-background);
+  border-color: var(--theme-color-border-primary);
+  color: var(--brands-colors-google-text);
+}
+
+.facebook {
+  background-color: var(--brands-colors-facebook-background);
+  border-color: var(--brands-colors-facebook-background);
+  color: var(--brands-colors-facebook-text);
+}
+
+.github {
+  background-color: var(--brands-colors-github-background);
+  border-color: var(--theme-color-border-primary);
+  color: var(--brands-colors-github-text);
+}
+
+.apple {
+  background-color: var(--brands-colors-apple-background);
+  border-color: var(--theme-color-border-primary);
+  color: var(--brands-colors-apple-text);
+}
+
+.twitter {
+  background-color: var(--brands-colors-x-background);
+  border-color: var(--theme-color-border-primary);
+  color: var(--brands-colors-x-text);
+}
