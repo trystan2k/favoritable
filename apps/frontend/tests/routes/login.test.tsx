@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
 import styles from '../../src/routes/login/Login.module.css';
@@ -167,8 +167,11 @@ describe('Login Route', () => {
     const googleButton = screen.getByRole('button', {
       name: /Continue with Google/,
     });
-    googleButton.focus();
-    await userEvent.keyboard('{Enter}');
+
+    await act(async () => {
+      googleButton.focus();
+      await userEvent.keyboard('{Enter}');
+    });
 
     expect(mockLocation.href).toBe('/login/google');
   });
@@ -179,8 +182,11 @@ describe('Login Route', () => {
     const facebookButton = screen.getByRole('button', {
       name: /Continue with Facebook/,
     });
-    facebookButton.focus();
-    await userEvent.keyboard(' ');
+
+    await act(async () => {
+      facebookButton.focus();
+      await userEvent.keyboard(' ');
+    });
 
     expect(mockLocation.href).toBe('/login/facebook');
   });
