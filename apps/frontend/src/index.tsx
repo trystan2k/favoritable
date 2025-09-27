@@ -7,7 +7,14 @@ import './styles/global.css';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { routeTree } from './routeTree.gen';
 
-const router = createRouter({ routeTree });
+const router = createRouter({
+  routeTree,
+  context: {
+    // auth will initially be undefined
+    // We'll be passing down the auth state from within a React component
+    auth: undefined,
+  },
+});
 
 declare module '@tanstack/react-router' {
   interface Register {

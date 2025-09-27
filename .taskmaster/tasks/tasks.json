@@ -24,7 +24,9 @@
             "id": 2,
             "title": "Scaffold Backend Hono Project",
             "description": "Create the backend project using the Hono starter template within the monorepo structure.",
-            "dependencies": ["1.1"],
+            "dependencies": [
+              "1.1"
+            ],
             "details": "Navigate to the `apps` directory. Run `pnpm create hono@latest backend` to scaffold a new Hono project named 'backend'. Select the `nodejs` template when prompted. This will create a `apps/backend` directory with a basic Hono application.",
             "status": "done",
             "testStrategy": "Navigate to `apps/backend` and run `pnpm install`, then `pnpm dev`. Verify that the development server starts without errors."
@@ -33,7 +35,9 @@
             "id": 3,
             "title": "Scaffold Frontend SPA Application Project",
             "description": "Create the frontend project using the SPA Application starter template within the monorepo structure.",
-            "dependencies": ["1.1"],
+            "dependencies": [
+              "1.1"
+            ],
             "details": "Navigate to the `apps` directory. Run `pnpm create rsbuild@latest` to scaffold a new SPA Application project named 'frontend'. This will create an `apps/frontend` directory with a basic React application configured for SSR.\n<info added on 2025-08-11T09:50:07.459Z>\nThe React application will be configured as a client-side Single Page Application without server-side rendering.\n</info added on 2025-08-11T09:50:07.459Z>",
             "status": "done",
             "testStrategy": "Navigate to `apps/frontend` and run `pnpm install`, then `pnpm dev`. Verify that the development server starts and the default page is accessible in a browser."
@@ -42,7 +46,9 @@
             "id": 4,
             "title": "Create Shared TypeScript Configuration",
             "description": "Establish a base TypeScript configuration that can be shared between the frontend and backend projects to ensure consistency.",
-            "dependencies": ["1.1"],
+            "dependencies": [
+              "1.1"
+            ],
             "details": "Create a new directory in the root named `packages/typescript-config`. Inside this directory, create a `package.json` and a `tsconfig.json` file. The `tsconfig.json` should contain common compiler options (e.g., `strict: true`, `ESNext` module/target). In the root `package.json`, add `\"@repo/typescript-config\": \"workspace:*\"` to the devDependencies.",
             "status": "done",
             "testStrategy": "Verify the `packages/typescript-config/tsconfig.json` file exists and contains valid JSON with base TypeScript settings."
@@ -51,7 +57,11 @@
             "id": 5,
             "title": "Link Frontend and Backend to Shared TypeScript Config",
             "description": "Update the individual tsconfig.json files in the frontend and backend projects to extend the newly created shared configuration.",
-            "dependencies": ["1.2", "1.3", "1.4"],
+            "dependencies": [
+              "1.2",
+              "1.3",
+              "1.4"
+            ],
             "details": "In `apps/frontend/tsconfig.json` and `apps/backend/tsconfig.json`, modify the configuration to extend the shared config. Add `\"extends\": \"@repo/typescript-config/tsconfig.json\"` to both files. Add `\"@repo/typescript-config\": \"workspace:*\"` to the `devDependencies` in both `apps/frontend/package.json` and `apps/backend/package.json`. Run `pnpm install` from the root directory to link the packages.",
             "status": "done",
             "testStrategy": "Run `pnpm -w exec tsc --noEmit` from the root directory. The command should execute successfully for both frontend and backend workspaces, indicating that they correctly inherit the shared configuration."
@@ -63,7 +73,9 @@
         "title": "Initialize Frontend Project",
         "description": "Set up the SPA Application project with Rsbuild, TypeScript, TanStack Router, Radix UI, CSS modules, Vitest, and React Testing Library, as per ADR 004.",
         "status": "done",
-        "dependencies": [1],
+        "dependencies": [
+          1
+        ],
         "priority": "high",
         "details": "Initialize an Rsbuild-based React SPA project with TypeScript. Install and configure TanStack Router for client-side routing. Set up Radix UI for unstyled components and CSS modules for styling. The testing framework will be Vitest with React Testing Library. A basic example component using Radix UI and CSS modules should be created, and a basic route structure should be implemented to validate the setup.",
         "testStrategy": "Run the initial Rsbuild dev server. Verify a basic Radix UI component renders correctly with its associated CSS module styles applied. Test the basic client-side routing setup by navigating between a couple of example routes. Ensure all Vitest setup tests pass successfully.",
@@ -81,7 +93,9 @@
             "id": 2,
             "title": "Install Core Application Dependencies",
             "description": "Install TanStack Router for routing, Radix UI for accessible components, and a utility for managing CSS class names.",
-            "dependencies": ["2.1"],
+            "dependencies": [
+              "2.1"
+            ],
             "details": "Run `npm install @tanstack/react-router @radix-ui/react-primitive clsx` to add the necessary libraries for routing, UI components, and class name management to the project's `package.json`.\n<info added on 2025-08-11T22:20:44.907Z>\nRun `pnpm install @tanstack/react-router @radix-ui/react-primitive clsx` to add the necessary libraries for routing, UI components, and class name management to the project's `package.json`.\n</info added on 2025-08-11T22:20:44.907Z>",
             "status": "done",
             "testStrategy": ""
@@ -90,7 +104,9 @@
             "id": 3,
             "title": "Configure TanStack Router and Define Initial Routes",
             "description": "Set up the basic routing structure using TanStack Router, including creating a root route and at least two child routes for validation purposes.",
-            "dependencies": ["2.2"],
+            "dependencies": [
+              "2.2"
+            ],
             "details": "Configure the TanStack Router Vite plugin to generate the route tree. Define a root layout route and two simple page routes (e.g., a Home page at `/` and an About page at `/about`). Integrate the router provider into the main application entry point (`src/main.tsx`).",
             "status": "done",
             "testStrategy": ""
@@ -99,7 +115,9 @@
             "id": 4,
             "title": "Validate CSS Modules Integration",
             "description": "Confirm that CSS Modules are correctly configured and working as expected for component-scoped styling.",
-            "dependencies": ["2.1"],
+            "dependencies": [
+              "2.1"
+            ],
             "details": "Rsbuild enables CSS Modules by default for `*.module.css` files. Create a simple component and an associated `*.module.css` file. Apply a class from the module to an element and verify in the browser that the class name is hashed and styles are applied correctly.",
             "status": "done",
             "testStrategy": ""
@@ -108,7 +126,9 @@
             "id": 5,
             "title": "Install and Configure Vitest with React Testing Library",
             "description": "Set up the testing framework by installing Vitest, JSDOM, and React Testing Library, and creating the necessary configuration files.",
-            "dependencies": ["2.1"],
+            "dependencies": [
+              "2.1"
+            ],
             "details": "Run `npm install -D vitest jsdom @testing-library/react @testing-library/jest-dom @vitejs/plugin-react`. Create a `vitest.config.ts` file to configure the test environment (jsdom), globals, and test file matching patterns.\n<info added on 2025-08-11T22:21:12.658Z>\nRun pnpm install -D vitest jsdom @testing-library/react @testing-library/jest-dom @vitejs/plugin-react. Create a vitest.config.ts file to configure the test environment (jsdom), globals, and test file matching patterns.\n</info added on 2025-08-11T22:21:12.658Z>",
             "status": "done",
             "testStrategy": ""
@@ -117,7 +137,10 @@
             "id": 6,
             "title": "Create a Validation Component with Radix UI and CSS Modules",
             "description": "Develop a simple, reusable component (e.g., a Button) using a Radix UI primitive and styled with CSS Modules to serve as an integration test point.",
-            "dependencies": ["2.2", "2.4"],
+            "dependencies": [
+              "2.2",
+              "2.4"
+            ],
             "details": "Create a new component file, `src/components/ui/Button.tsx`. Use a Radix UI primitive like `<Slot>`. Create a corresponding `Button.module.css` file and apply styles to the component. This component will be used to validate the integration of the UI and styling libraries.",
             "status": "done",
             "testStrategy": ""
@@ -126,7 +149,10 @@
             "id": 7,
             "title": "Implement Validation Pages Using the New Component",
             "description": "Create page components for the routes defined in the TanStack Router setup and use the validation component to ensure routing, components, and styling work together.",
-            "dependencies": ["2.3", "2.6"],
+            "dependencies": [
+              "2.3",
+              "2.6"
+            ],
             "details": "Create components for the `/` and `/about` routes. Import and render the validation `Button` component on at least one of these pages. Verify that navigation between pages works and the component renders correctly with its styles.",
             "status": "done",
             "testStrategy": ""
@@ -135,7 +161,10 @@
             "id": 8,
             "title": "Write Initial Component Test",
             "description": "Write a basic unit test for the validation component using Vitest and React Testing Library to confirm the entire testing setup is functional.",
-            "dependencies": ["2.5", "2.6"],
+            "dependencies": [
+              "2.5",
+              "2.6"
+            ],
             "details": "Create a test file, `src/components/ui/Button.test.tsx`. Write a simple test that renders the `Button` component and asserts that it is present in the document. Run `npm test` to ensure the test passes.\n<info added on 2025-08-11T22:23:00.430Z>\nThe command to run the test is `pnpm test`.\n</info added on 2025-08-11T22:23:00.430Z>",
             "status": "done",
             "testStrategy": ""
@@ -149,7 +178,9 @@
         "details": "Install Hono, Node.js types, and Vitest. Create a basic Hono server endpoint.",
         "testStrategy": "Run initial dev server, verify a simple 'hello world' endpoint works. Run Vitest setup tests.",
         "priority": "high",
-        "dependencies": [1],
+        "dependencies": [
+          1
+        ],
         "status": "done",
         "subtasks": [
           {
@@ -165,7 +196,9 @@
             "id": 2,
             "title": "Configure TypeScript for Backend",
             "description": "Set up the `tsconfig.json` file for the Hono backend project, ensuring proper compilation and type checking.",
-            "dependencies": ["3.1"],
+            "dependencies": [
+              "3.1"
+            ],
             "details": "Create `tsconfig.json` in the backend root with appropriate settings for Node.js, Hono, and Vitest, including `target`, `module`, `outDir`, `esModuleInterop`, `strict`, etc. Ensure `rootDir` and `outDir` are correctly configured.",
             "status": "done",
             "testStrategy": "Attempt to compile a simple TypeScript file (e.g., `tsc src/index.ts`) to ensure `tsconfig.json` is valid and works without errors."
@@ -174,7 +207,10 @@
             "id": 3,
             "title": "Implement Basic Hono Server Endpoint",
             "description": "Develop a minimal Hono server application with a single 'Hello World' endpoint to confirm basic server functionality.",
-            "dependencies": ["3.1", "3.2"],
+            "dependencies": [
+              "3.1",
+              "3.2"
+            ],
             "details": "Create an `src/index.ts` file. Instantiate a Hono app and define a GET route (e.g., `/`) that returns a simple JSON or text response like `{\"message\": \"Hello, Hono!\"}`. Add a `start` or `dev` script to `package.json` to run the server.",
             "status": "done",
             "testStrategy": "Manually run the server using the defined script and use `curl http://localhost:<port>/` or a web browser to access the endpoint and verify the 'Hello, Hono!' response."
@@ -183,7 +219,9 @@
             "id": 4,
             "title": "Configure Vitest and Add Placeholder Test",
             "description": "Set up Vitest for unit testing within the backend project and create a basic, passing test file to validate the setup.",
-            "dependencies": ["3.1"],
+            "dependencies": [
+              "3.1"
+            ],
             "details": "Configure `vitest` in `package.json` scripts (e.g., `\"test\": \"vitest\"`) or create a `vitest.config.ts` file if more complex configuration is needed. Create a `src/test/example.test.ts` file with a simple passing test, such as `import { expect, test } from 'vitest'; test('basic setup', () => { expect(true).toBe(true); });`.",
             "status": "done",
             "testStrategy": "Run the `vitest` command (e.g., `pnpm test`) and ensure the placeholder test passes successfully."
@@ -192,7 +230,10 @@
             "id": 5,
             "title": "Verify Initial Backend Setup",
             "description": "Perform a final verification of the backend project by running the development server and executing the initial Vitest tests to confirm all setup steps are complete and functional.",
-            "dependencies": ["3.3", "3.4"],
+            "dependencies": [
+              "3.3",
+              "3.4"
+            ],
             "details": "Ensure the `dev` script for the Hono server and the `test` script for Vitest are correctly configured in `package.json`.",
             "status": "done",
             "testStrategy": "Run `pnpm dev` and confirm the server starts without errors and the 'Hello, Hono!' endpoint is accessible. Then, run `pnpm test` and confirm all Vitest tests pass successfully."
@@ -204,7 +245,10 @@
         "title": "Configure Linting & Formatting",
         "description": "Set up Biome V2 and Knip for linting, formatting, and dependency analysis across the monorepo.",
         "status": "done",
-        "dependencies": [2, 3],
+        "dependencies": [
+          2,
+          3
+        ],
         "priority": "high",
         "details": "This task involves setting up a unified linting and formatting system for the entire monorepo using Biome V2 and Knip. A common configuration for Biome should be created in the `packages` folder and then extended by each application (e.g., `api`, `frontend`). Configure `biome.json` and `knip.json` files. Add `lint`, `format`, and `knip` scripts to the root `package.json` to run checks across all workspaces.",
         "testStrategy": "Run `biome format --write` and `biome lint --apply` across the entire project to verify auto-fixing. Run `knip` to check for unused files, exports, and dependencies. Manually introduce an error (e.g., an unused variable) and confirm that `biome lint` reports it. Verify that the scripts work correctly from the monorepo root.",
@@ -222,7 +266,9 @@
             "id": 2,
             "title": "Create Base Biome Configuration",
             "description": "Create a common `biome.json` configuration file in a shared location (e.g., `packages/config-biome`) to define the project-wide formatting and linting rules.",
-            "dependencies": ["4.1"],
+            "dependencies": [
+              "4.1"
+            ],
             "details": "This base configuration should specify the desired formatter settings (e.g., indent style, line width) and enable the recommended set of linter rules. This file will be extended by individual workspaces.",
             "status": "done",
             "testStrategy": ""
@@ -231,7 +277,9 @@
             "id": 3,
             "title": "Extend Biome Configuration in Workspaces",
             "description": "Create `biome.json` files in each application workspace (e.g., `api`, `frontend`) that extend the base configuration.",
-            "dependencies": ["4.2"],
+            "dependencies": [
+              "4.2"
+            ],
             "details": "In each application's root directory, add a `biome.json` file that uses the `extends` property to inherit from the base configuration file. This ensures consistent rules while allowing for future workspace-specific overrides.",
             "status": "done",
             "testStrategy": ""
@@ -240,7 +288,9 @@
             "id": 4,
             "title": "Configure Knip for Dependency Analysis",
             "description": "Create a `knip.json` file at the monorepo root to configure unused file, export, and dependency analysis across all workspaces.",
-            "dependencies": ["4.1"],
+            "dependencies": [
+              "4.1"
+            ],
             "details": "Define the entry points for each workspace (e.g., `api/src/index.ts`, `frontend/src/main.tsx`) and configure any project-specific paths or patterns that Knip should ignore during its analysis.",
             "status": "done",
             "testStrategy": ""
@@ -249,7 +299,10 @@
             "id": 5,
             "title": "Add Root-Level NPM Scripts",
             "description": "Add `lint`, `format`, and `knip` scripts to the root `package.json` to run the tools across the entire monorepo.",
-            "dependencies": ["4.3", "4.4"],
+            "dependencies": [
+              "4.3",
+              "4.4"
+            ],
             "details": "Define scripts in the root `package.json` like `\"lint\": \"biome lint .\"`, `\"format\": \"biome format --write .\"`, and `\"knip\": \"knip\"`. These scripts will provide a single point of entry for running code quality checks.",
             "status": "done",
             "testStrategy": ""
@@ -258,7 +311,9 @@
             "id": 6,
             "title": "Perform Initial Codebase Formatting and Linting",
             "description": "Run the newly created format and lint scripts across the entire codebase to apply the new rules and fix any auto-fixable issues.",
-            "dependencies": ["4.5"],
+            "dependencies": [
+              "4.5"
+            ],
             "details": "Execute `npm run format` and `npm run lint -- --apply` from the root directory. Review the automated changes and commit them to establish a clean, consistent code style baseline for the project.",
             "status": "done",
             "testStrategy": ""
@@ -272,7 +327,9 @@
         "details": "Sign up for Turso, create a database instance. Configure backend to connect to Turso via `drizzle-orm` or similar ORM.",
         "testStrategy": "Write a simple script to connect to the database and perform a basic query (e.g., create a test table).",
         "priority": "high",
-        "dependencies": [3],
+        "dependencies": [
+          3
+        ],
         "status": "done",
         "subtasks": [
           {
@@ -288,7 +345,9 @@
             "id": 2,
             "title": "Sign Up for Turso and Create Database Instance",
             "description": "Create a new account on the Turso platform and provision a new database instance for the application. Retrieve the database connection URL and authentication token.",
-            "dependencies": ["5.1"],
+            "dependencies": [
+              "5.1"
+            ],
             "details": "Follow the Turso getting-started guide. Name the database instance according to project conventions and select a primary region.",
             "status": "done",
             "testStrategy": ""
@@ -297,7 +356,9 @@
             "id": 3,
             "title": "Configure Environment Variables for Database Credentials",
             "description": "Securely store the retrieved Turso database URL and auth token as environment variables in the backend application's configuration.",
-            "dependencies": ["5.2"],
+            "dependencies": [
+              "5.2"
+            ],
             "details": "Use a `.env` file for local development (e.g., `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`) and ensure it is added to `.gitignore`. Configure secrets for deployment environments.",
             "status": "done",
             "testStrategy": ""
@@ -306,7 +367,9 @@
             "id": 4,
             "title": "Install Dependencies and Configure DB Client",
             "description": "Install the Turso SDK (`@tursodatabase/libsql-client`) and the Drizzle ORM adapter (`drizzle-orm/libsql`). Configure the database client in the backend code to connect to Turso using the environment variables.",
-            "dependencies": ["5.3"],
+            "dependencies": [
+              "5.3"
+            ],
             "details": "Create a singleton or a shared module for the database client to ensure efficient connection management throughout the application.",
             "status": "done",
             "testStrategy": ""
@@ -315,7 +378,9 @@
             "id": 5,
             "title": "Implement and Run Connection Verification Test",
             "description": "Create a simple script or an API endpoint to test the database connection. The test should perform a basic query (e.g., `SELECT 1`) to confirm that the configuration is correct.",
-            "dependencies": ["5.4"],
+            "dependencies": [
+              "5.4"
+            ],
             "details": "The script should connect, execute the query, and log a success or failure message. This can serve as a basic health check.",
             "status": "done",
             "testStrategy": ""
@@ -324,7 +389,9 @@
             "id": 6,
             "title": "Document Database Setup Process",
             "description": "Add a section to the project's `README.md` or developer documentation explaining how to set up the Turso database for local development.",
-            "dependencies": ["5.5"],
+            "dependencies": [
+              "5.5"
+            ],
             "details": "Include steps for signing up, creating a database, and configuring the necessary environment variables so new developers can quickly set up their environment.",
             "status": "done",
             "testStrategy": ""
@@ -336,7 +403,9 @@
         "title": "Implement Docker Image creation for future deployment",
         "description": "Create a production-ready Docker container for the Hono API. This task focuses on building a multi-stage Dockerfile that includes all necessary dependencies for Puppeteer to support web scraping, and ensuring the container can be built and tested locally.",
         "status": "done",
-        "dependencies": [3],
+        "dependencies": [
+          3
+        ],
         "priority": "high",
         "details": "Develop a multi-stage Dockerfile to create an optimized and secure production image for the Hono API. The build process should handle installing dependencies, building the TypeScript source, and copying only the necessary artifacts to a lean final image. A key requirement is to install all system-level dependencies needed for Puppeteer to run headless Chromium for web scraping tasks. The final container should be configured for a production environment and tested locally to ensure full functionality before deployment.",
         "testStrategy": "Build the Docker image locally using the `docker build` command. Run the image as a container, mapping the necessary ports and providing required environment variables (e.g., database credentials). Test the running container by sending requests to its API endpoints using a tool like cURL or Postman. Specifically, verify that a standard endpoint returns a successful response and that an endpoint utilizing Puppeteer for web scraping executes without errors and returns the expected data.",
@@ -355,7 +424,9 @@
             "title": "Install Puppeteer System Dependencies in Docker Image",
             "description": "Add the necessary system-level dependencies to the Dockerfile to ensure Puppeteer can run headless Chromium correctly within the container.",
             "status": "done",
-            "dependencies": [1],
+            "dependencies": [
+              1
+            ],
             "details": "In the final production stage of the Dockerfile, add commands to install required libraries for headless Chromium (e.g., `libnss3`, `libgconf-2-4`, etc.). Research the specific dependencies needed for the chosen base image (e.g., Debian-based).",
             "testStrategy": ""
           },
@@ -364,7 +435,9 @@
             "title": "Configure Container Entrypoint and Environment",
             "description": "Configure the Docker container's runtime environment variables, exposed port, and startup command for production.",
             "status": "done",
-            "dependencies": [1],
+            "dependencies": [
+              1
+            ],
             "details": "In the Dockerfile, set the `NODE_ENV` environment variable to `production`. Use the `EXPOSE` instruction to document the application port (e.g., 3000). Define the `CMD` instruction to start the Hono server using the compiled JavaScript output.",
             "testStrategy": ""
           },
@@ -373,7 +446,9 @@
             "title": "Document Local Docker Build and Run Process",
             "description": "Create documentation or scripts for building the Docker image and running it locally for development and testing purposes.",
             "status": "done",
-            "dependencies": [3],
+            "dependencies": [
+              3
+            ],
             "details": "Add a section to the `README.md` or create helper scripts in `package.json` that detail the `docker build` and `docker run` commands. The run command should include examples for port mapping (`-p`) and passing environment variables (`-e` or `--env-file`).",
             "testStrategy": ""
           },
@@ -382,7 +457,10 @@
             "title": "Validate API Functionality in Local Container",
             "description": "Build and run the container locally to test that all API endpoints, especially those using Puppeteer, are fully functional.",
             "status": "done",
-            "dependencies": [2, 4],
+            "dependencies": [
+              2,
+              4
+            ],
             "details": "Follow the documented process to build the image and run the container. Use cURL or Postman to send requests to the API on `localhost`. Confirm that a basic endpoint works and that the web scraping endpoint successfully executes a Puppeteer job and returns data without crashing.\n<info added on 2025-08-15T23:31:35.127Z>\nThe Docker setup is complete. This includes a multi-stage Dockerfile with all necessary Puppeteer dependencies, an optimized .dockerignore file, and documented commands in the README. For local validation, use the npm scripts: 'pnpm docker:build' and 'pnpm docker:run'.\n</info added on 2025-08-15T23:31:35.127Z>",
             "testStrategy": ""
           }
@@ -393,7 +471,9 @@
         "title": "Implement Secure Headers Middleware",
         "description": "Updated the Hono backend to use the `hono/secure-headers` middleware, replacing the previous custom `addSecurityHeaders` function. This enhances API security by enforcing a strict Content Security Policy (CSP) and other standard security headers.",
         "status": "done",
-        "dependencies": [3],
+        "dependencies": [
+          3
+        ],
         "priority": "high",
         "details": "The implementation involved replacing the contents of `apps/api/src/core/http.headers.ts` with a call to the `secureHeaders` middleware. The middleware is configured with a Content Security Policy (CSP), HTTP Strict-Transport-Security (HSTS), and other important security headers to harden the API against common web vulnerabilities like XSS and clickjacking.",
         "testStrategy": "1. Manually inspect HTTP response headers using browser dev tools or `curl` to confirm the new secure headers are present and correctly configured. 2. Add automated integration tests to the API test suite (see Task 50) to assert the presence and correctness of these headers on an ongoing basis.",
@@ -443,7 +523,9 @@
         "details": "Define `User` table with `id`, `email`, `name`, `avatarUrl`, `provider` fields. Implement Drizzle schema and migrations.",
         "testStrategy": "Write unit tests for ORM operations (create, read user).",
         "priority": "high",
-        "dependencies": [5],
+        "dependencies": [
+          5
+        ],
         "status": "done",
         "subtasks": [
           {
@@ -459,7 +541,9 @@
             "id": 2,
             "title": "Generate TypeScript Types from User Schema",
             "description": "Use Drizzle's `typeof` and `InferSelectModel`/`InferInsertModel` utilities to create and export TypeScript types for the User entity. This will ensure type safety across the application.",
-            "dependencies": ["8.1"],
+            "dependencies": [
+              "8.1"
+            ],
             "details": "In the same schema file (`src/db/schema/users.ts`), add and export types like `export type User = typeof users.$inferSelect;` and `export type NewUser = typeof users.$inferInsert;`.",
             "status": "done",
             "testStrategy": ""
@@ -468,7 +552,9 @@
             "id": 3,
             "title": "Generate SQL Migration File for User Table",
             "description": "Run the Drizzle Kit `generate` command to create a new SQL migration file based on the defined User schema. This file will contain the `CREATE TABLE` statement.",
-            "dependencies": ["8.1"],
+            "dependencies": [
+              "8.1"
+            ],
             "details": "Execute the command `pnpm drizzle-kit generate:pg` (or equivalent) and inspect the generated `.sql` file to ensure it accurately reflects the schema for the `users` table.",
             "status": "done",
             "testStrategy": ""
@@ -477,7 +563,9 @@
             "id": 4,
             "title": "Apply Database Migration",
             "description": "Execute the migration script to apply the newly generated SQL migration to the development database, which will create the actual `users` table.",
-            "dependencies": ["8.3"],
+            "dependencies": [
+              "8.3"
+            ],
             "details": "Run the Drizzle Kit `migrate` command. After execution, connect to the development database using a client to verify that the `users` table and its columns have been successfully created.",
             "status": "done",
             "testStrategy": ""
@@ -486,7 +574,9 @@
             "id": 5,
             "title": "Implement Unit Tests for User ORM Operations",
             "description": "Write unit tests to verify the User data model implementation. The tests should cover creating a new user and reading that user back from the database to ensure the schema and ORM are working correctly.",
-            "dependencies": ["8.4"],
+            "dependencies": [
+              "8.4"
+            ],
             "details": "Using a testing framework like Vitest or Jest, create a test suite for the User model. Write at least two tests: one for inserting a user record and another for selecting that user record by its ID or email.",
             "status": "done",
             "testStrategy": ""
@@ -500,7 +590,10 @@
         "details": "Define `Label` table with `id`, `name`, `color`, `createdAt`, `updatedAt`, `userId` fields. Implement Drizzle schema and migrations.",
         "testStrategy": "Write unit tests for ORM operations (create, read label).",
         "priority": "high",
-        "dependencies": [5, 8],
+        "dependencies": [
+          5,
+          8
+        ],
         "status": "done",
         "subtasks": [
           {
@@ -516,7 +609,9 @@
             "id": 2,
             "title": "Generate SQL Migration for Label Table",
             "description": "Use the Drizzle Kit command-line tool to generate a new SQL migration file based on the schema changes defined in the previous subtask.",
-            "dependencies": ["9.1"],
+            "dependencies": [
+              "9.1"
+            ],
             "details": "Run the `drizzle-kit generate:pg` command to create the migration file. Review the generated SQL to ensure it correctly creates the `labels` table and its foreign key constraint.",
             "status": "done",
             "testStrategy": ""
@@ -525,7 +620,9 @@
             "id": 3,
             "title": "Apply Migration and Write Unit Tests",
             "description": "Apply the newly generated database migration to the test database. Then, write unit tests to verify the Label data model, specifically testing the creation and retrieval of a label record associated with a user.",
-            "dependencies": ["9.2"],
+            "dependencies": [
+              "9.2"
+            ],
             "details": "Use the `drizzle-kit push:pg` or an equivalent migration script to update the database schema. The unit test should first create a user, then create a label linked to that user, and finally fetch the label to assert its properties and its association with the correct user.",
             "status": "done",
             "testStrategy": ""
@@ -539,7 +636,10 @@
         "details": "Define `Bookmark` table with `id`, `url`, `slug`, `title`, `description`, `author`, `thumbnail`, `state`, `publishedAt`, `createdAt`, `updatedAt`, `userId` fields. Implement Drizzle schema and migrations.",
         "testStrategy": "Write unit tests for ORM operations (create, read bookmark).",
         "priority": "high",
-        "dependencies": [5, 8],
+        "dependencies": [
+          5,
+          8
+        ],
         "status": "done",
         "subtasks": [
           {
@@ -555,7 +655,9 @@
             "id": 2,
             "title": "Generate SQL Migration for Bookmark Schema",
             "description": "Use the Drizzle Kit command-line tool to generate a new SQL migration file based on the schema definition created in the previous subtask.",
-            "dependencies": ["10.1"],
+            "dependencies": [
+              "10.1"
+            ],
             "details": "Run the `drizzle-kit generate:pg` command. Review the generated SQL file to ensure it accurately creates the `bookmarks` table with all the correct columns, data types, and foreign key constraints.",
             "status": "done",
             "testStrategy": ""
@@ -564,7 +666,9 @@
             "id": 3,
             "title": "Apply Migration and Write Unit Test",
             "description": "Apply the generated migration to the test database and write a unit test to confirm the Bookmark data model works as expected by creating and reading a bookmark record.",
-            "dependencies": ["10.2"],
+            "dependencies": [
+              "10.2"
+            ],
             "details": "Execute the migration script to update the database schema. Create a new test file for the bookmark model. Write a test case that uses the Drizzle ORM to insert a new bookmark and then retrieves it, asserting that the returned data is correct.",
             "status": "done",
             "testStrategy": ""
@@ -578,7 +682,10 @@
         "details": "Define `BookmarkLabel` table with `id`, `bookmarkId`, `labelId`, `createdAt`, `updatedAt` fields. Implement Drizzle schema and migrations.",
         "testStrategy": "Write unit tests for ORM operations (linking/unlinking bookmarks and labels).",
         "priority": "high",
-        "dependencies": [9, 10],
+        "dependencies": [
+          9,
+          10
+        ],
         "status": "done",
         "subtasks": [
           {
@@ -594,7 +701,9 @@
             "id": 2,
             "title": "Update Bookmark and Label Schemas for Relations",
             "description": "Update the existing `Bookmark` and `Label` Drizzle schemas to define the many-to-many relationship using the newly created `bookmarks_to_labels` join table.",
-            "dependencies": ["11.1"],
+            "dependencies": [
+              "11.1"
+            ],
             "details": "Use Drizzle's `relations` helper to define the relationship on both the `bookmarks` and `labels` schemas. This will enable querying a bookmark's labels and a label's bookmarks through the ORM.",
             "status": "done",
             "testStrategy": ""
@@ -603,7 +712,9 @@
             "id": 3,
             "title": "Generate and Apply Database Migration",
             "description": "Use Drizzle Kit to generate a new SQL migration file based on the schema changes. Review the generated migration and apply it to the development database.",
-            "dependencies": ["11.2"],
+            "dependencies": [
+              "11.2"
+            ],
             "details": "Run the `drizzle-kit generate` command to create the migration script. Verify the SQL statements for creating the join table, foreign keys, and any necessary indexes. Apply the migration to the database.",
             "status": "done",
             "testStrategy": ""
@@ -612,7 +723,9 @@
             "id": 4,
             "title": "Write Unit Tests for Bookmark-Label Relationship",
             "description": "Write unit tests to verify that a label can be correctly added to and removed from a bookmark, and that queries for related items work as expected.",
-            "dependencies": ["11.3"],
+            "dependencies": [
+              "11.3"
+            ],
             "details": "Create test cases that: 1. Create a bookmark and a label. 2. Associate the label with the bookmark. 3. Verify the association by querying the bookmark's labels. 4. Remove the association. 5. Verify the label has been removed from the bookmark.",
             "status": "done",
             "testStrategy": ""
@@ -624,7 +737,10 @@
         "title": "Integrate Auth.js",
         "description": "Update authentication strategy from Auth.js to Better Auth. Set up Better Auth with the Hono backend for authentication as per the new architectural decision.",
         "status": "done",
-        "dependencies": [3, 8],
+        "dependencies": [
+          3,
+          8
+        ],
         "priority": "high",
         "details": "Install Better Auth and its official Hono adapter. Configure Better Auth for session-based authentication using HTTP-only cookies. This involves setting up the database adapter, defining the schema for users and sessions, and initializing Better Auth in the Hono application.",
         "testStrategy": "Verify Better Auth middleware is active and correctly protects routes. Test session creation on login and session deletion on logout. Confirm that HTTP-only session cookies are being set and validated correctly on protected requests.",
@@ -642,7 +758,9 @@
             "id": 2,
             "title": "Define and Migrate User and Session Database Schemas",
             "description": "Update the database schema to include the `User` and `Session` tables required by Better Auth. Generate and apply a database migration to create these tables.",
-            "dependencies": ["12.1"],
+            "dependencies": [
+              "12.1"
+            ],
             "details": "Using the project's ORM (e.g., Drizzle), define the schema for the `user` and `session` tables according to Better Auth's documentation. The `user` table must have a unique ID, and the `session` table needs fields for ID, user ID, and expiration timestamp. Run the ORM's migration tool to apply these changes to the database.",
             "status": "done",
             "testStrategy": ""
@@ -651,7 +769,9 @@
             "id": 3,
             "title": "Initialize and Configure Better Auth in Hono",
             "description": "Create and configure the main Better Auth instance within the Hono application. This involves connecting Better Auth to the database adapter and setting session cookie parameters.",
-            "dependencies": ["12.2"],
+            "dependencies": [
+              "12.2"
+            ],
             "details": "Create a new file (e.g., `src/lib/auth.ts`) to house the authentication logic. Initialize Better Auth by passing the database adapter. Configure the `getUserAttributes` function to define which user data is accessible on the session object. Set session cookie options, ensuring it is an HTTP-only cookie for security. Export the initialized `lucia` object.",
             "status": "done",
             "testStrategy": ""
@@ -660,7 +780,9 @@
             "id": 4,
             "title": "Implement Hono Middleware for Session Validation",
             "description": "Develop a Hono middleware that intercepts incoming requests to validate the session cookie. If the session is valid, the middleware will attach user and session data to the request context.",
-            "dependencies": ["12.3"],
+            "dependencies": [
+              "12.3"
+            ],
             "details": "The middleware should read the session cookie from the request headers. Use `lucia.validateSession()` to verify the session's validity. If valid, attach the `user` and `session` to Hono's context (e.g., `c.set('user', user)`). If the session is invalid, clear the session cookie. This middleware should be applied to all routes that may require authentication.",
             "status": "done",
             "testStrategy": ""
@@ -669,7 +791,9 @@
             "id": 5,
             "title": "Implement and Test Protected and Unprotected Routes",
             "description": "Create basic API endpoints to verify that the authentication and session middleware are functioning correctly. This includes one public route and one protected route.",
-            "dependencies": ["12.4"],
+            "dependencies": [
+              "12.4"
+            ],
             "details": "Create a public route (e.g., `/health`) that does not use the auth middleware. Create a protected route (e.g., `/api/me`) that uses the middleware. The protected route should attempt to read the user from the context and return user data if present, or a 401 Unauthorized status if the user is not authenticated.",
             "status": "done",
             "testStrategy": ""
@@ -680,7 +804,9 @@
             "description": "Implement proper error handling for Better Auth errors following the framework's error handling patterns, similar to how we currently handle errors for services and repositories.",
             "details": "According to Better Auth documentation (https://www.better-auth.com/docs/concepts/api#error-handling), auth operations can throw specific error types that need to be handled appropriately. This subtask involves:\n\n1. Study Better Auth error types and structure\n2. Create auth error mappers similar to serviceErrorsHandler and repositoryErrorsHandler\n3. Integrate auth error handling into the main error handler chain\n4. Ensure auth errors are properly logged and return appropriate HTTP status codes\n5. Add unit tests for auth error handling scenarios\n\nThe implementation should follow the existing error handling patterns in the codebase (errors.handlers.ts, errors.mappers.ts) to maintain consistency.",
             "status": "done",
-            "dependencies": ["12.5"],
+            "dependencies": [
+              "12.5"
+            ],
             "parentTaskId": 12
           },
           {
@@ -689,7 +815,9 @@
             "description": "Move authentication routes from index.ts to a dedicated auth routes file, following the same pattern as bookmark and label routes.",
             "details": "Currently, the auth routes are defined directly in the main index.ts file:\n- `/api/test/no-auth` - Test endpoint without authentication\n- `/api/test/with-auth` - Test endpoint requiring authentication  \n- `/api/auth/session` - Get current session information\n- `/api/auth/*` - Better Auth handler routes\n\nThis subtask involves:\n\n1. Create a new `AuthRoutes` class in `src/features/auth/auth.routes.ts` following the same pattern as BookmarkRoutes and LabelRoutes\n2. Move all auth-related routes from index.ts to the new AuthRoutes class\n3. Register the AuthRoutes class in the dependency injection container\n4. Update index.ts to use the new AuthRoutes via container resolution\n5. Ensure the auth routes are properly mounted with the correct base path\n6. Update any imports or dependencies as needed\n7. Verify all auth endpoints still work correctly after the refactor\n\nThe implementation should maintain the existing functionality while improving code organization and following established patterns in the codebase.",
             "status": "done",
-            "dependencies": ["12.6"],
+            "dependencies": [
+              "12.6"
+            ],
             "parentTaskId": 12
           }
         ]
@@ -699,7 +827,9 @@
         "title": "Configure OAuth Providers",
         "description": "Integrate Google, Facebook, GitHub, Apple, and Twitter OAuth providers with Better Auth.",
         "status": "done",
-        "dependencies": [12],
+        "dependencies": [
+          12
+        ],
         "priority": "high",
         "details": "Obtain API keys/secrets for Google, Facebook, GitHub, Apple, and Twitter. Configure Better Auth's built-in OAuth support for each provider, utilizing the PKCE flow for secure SPA authentication. Set up the necessary callback URLs in both the application and the provider dashboards.",
         "testStrategy": "Manually test the login flow for Google, Facebook, GitHub, Apple, and Twitter. Verify that the PKCE flow completes successfully, a user session is created, and user data is correctly retrieved from the provider.",
@@ -717,7 +847,9 @@
             "id": 2,
             "title": "Implement Common OAuth Callback Handler",
             "description": "Develop a single, generic callback endpoint to handle the authorization code exchange and user profile retrieval for all OAuth providers, utilizing the PKCE flow.",
-            "dependencies": ["13.1"],
+            "dependencies": [
+              "13.1"
+            ],
             "details": "The handler should dynamically use the correct provider configuration based on a URL parameter (e.g., `/api/auth/callback/:provider`). It must implement the PKCE code verification step, exchange the authorization code for an access token, fetch the user's profile, and then either create a new user account or log in an existing user. It should normalize the user data from different providers into a consistent internal format.",
             "status": "done",
             "testStrategy": ""
@@ -726,7 +858,10 @@
             "id": 3,
             "title": "Integrate Google OAuth Provider",
             "description": "Set up a Google Cloud project, obtain OAuth 2.0 credentials, and configure the Google provider in Better Auth.",
-            "dependencies": ["13.1", "13.2"],
+            "dependencies": [
+              "13.1",
+              "13.2"
+            ],
             "details": "Create a new project in the Google Cloud Console. Configure the OAuth consent screen. Create OAuth 2.0 Client ID credentials, specifying the correct authorized JavaScript origins and redirect URIs. Add the client ID and secret to the environment configuration. Implement the Google-specific logic to construct the authorization URL and parse the user profile data in the callback handler.\n<info added on 2025-08-31T18:59:23.872Z>\nThe code integration for the Google provider is complete. This includes configuration in Better Auth (`apps/api/src/auth.ts:28-30`), definition and validation of environment variables (`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`) in `apps/api/src/env.ts:45-46`, and updated documentation in README.md and .env.example. The remaining work is the external setup in the Google Cloud Console, as this subtask now primarily covers non-code changes.\n</info added on 2025-08-31T18:59:23.872Z>",
             "status": "done",
             "testStrategy": ""
@@ -735,7 +870,10 @@
             "id": 4,
             "title": "Integrate GitHub OAuth Provider",
             "description": "Register a new OAuth App on GitHub, obtain credentials, and configure the GitHub provider in Better Auth.",
-            "dependencies": ["13.1", "13.2"],
+            "dependencies": [
+              "13.1",
+              "13.2"
+            ],
             "details": "In GitHub developer settings, register a new OAuth App. Set the application name, homepage URL, and the authorization callback URL. Generate a new client secret. Add the client ID and secret to the environment configuration. Implement the GitHub-specific logic for authorization and user profile fetching.\n<info added on 2025-08-31T19:00:05.674Z>\nThe code integration for the GitHub provider is complete. This includes configuration in Better Auth (apps/api/src/auth.ts:24-26) and environment variable validation (apps/api/src/env.ts:41-42). Documentation has been updated in README.md and .env.example. The remaining work is the external setup in GitHub's Developer Settings (App registration, Client ID/Secret generation, and callback URL configuration), not additional code changes.\n</info added on 2025-08-31T19:00:05.674Z>",
             "status": "done",
             "testStrategy": ""
@@ -744,7 +882,10 @@
             "id": 5,
             "title": "Integrate Facebook OAuth Provider",
             "description": "Create a Facebook for Developers app, configure Facebook Login, obtain credentials, and integrate it with Better Auth.",
-            "dependencies": ["13.1", "13.2"],
+            "dependencies": [
+              "13.1",
+              "13.2"
+            ],
             "details": "Go to the Meta for Developers portal and create a new app. Set up the 'Facebook Login' product. Configure valid OAuth redirect URIs. Obtain the App ID and App Secret and add them to the environment configuration. Implement the Facebook-specific logic, ensuring the correct scopes (e.g., `email`, `public_profile`) are requested.\n<info added on 2025-08-31T19:00:47.936Z>\nThe code integration for the Facebook provider is complete. This includes configuration in Better Auth (apps/api/src/auth.ts:32-34), definition of environment variables (FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET), and validation in the Zod schema (apps/api/src/env.ts:49-50). Documentation has also been updated with setup instructions in README.md and variables added to .env.example. The remaining work for this subtask involves the external setup on the Meta for Developers portal, not additional code changes.\n</info added on 2025-08-31T19:00:47.936Z>",
             "status": "done",
             "testStrategy": ""
@@ -753,7 +894,10 @@
             "id": 6,
             "title": "Integrate Twitter (X) OAuth Provider",
             "description": "Apply for a developer account, create a new app with OAuth 2.0 enabled, obtain credentials, and configure the Twitter provider.",
-            "dependencies": ["13.1", "13.2"],
+            "dependencies": [
+              "13.1",
+              "13.2"
+            ],
             "details": "In the Twitter Developer Portal, create a new project and app. Enable OAuth 2.0 with PKCE. Configure the callback URI and requested scopes (e.g., `users.read`, `tweet.read`). Obtain the Client ID and Client Secret and add them to the environment configuration. Implement the Twitter-specific integration logic.\n<info added on 2025-08-31T19:01:24.093Z>\nThe code integration for the Twitter (X) OAuth provider is complete. The provider has been configured in Better Auth (apps/api/src/auth.ts:36-38), environment variables (TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET) have been defined and validated (apps/api/src/env.ts:53-54), and setup instructions have been added to README.md and .env.example. The remaining work is the external setup in the Twitter Developer Portal to create the app and generate the necessary Client ID and Secret.\n</info added on 2025-08-31T19:01:24.093Z>",
             "status": "done",
             "testStrategy": ""
@@ -762,7 +906,10 @@
             "id": 7,
             "title": "Integrate Apple OAuth Provider",
             "description": "Configure 'Sign in with Apple' in the Apple Developer portal, generate credentials, and integrate the Apple provider.",
-            "dependencies": ["13.1", "13.2"],
+            "dependencies": [
+              "13.1",
+              "13.2"
+            ],
             "details": "In the Apple Developer portal, register a new App ID and enable the 'Sign in with Apple' capability. Create a Services ID to act as the client ID. Generate a private key (.p8 file) for signing client secrets. Configure the domain and redirect URLs. Add the Team ID, Client ID, and Key ID to the environment configuration. Implement the logic to generate a client secret JWT and handle the Apple-specific callback response.\n<info added on 2025-08-31T19:03:39.795Z>\nIntegration is complete with comprehensive JWT client secret support. The code integration is finished, including enhanced provider configuration in `auth.ts`, new environment variables validated in `env.ts`, and added `trustedOrigins`. Documentation in README.md and .env.example has been updated accordingly. All QA checks (typecheck, lint, test, build) are passing. External setup is still required in the Apple Developer Portal, including App ID/Service ID creation, private key (.p8) generation, and the final JWT client secret generation for deployment.\n</info added on 2025-08-31T19:03:39.795Z>",
             "status": "done",
             "testStrategy": ""
@@ -771,7 +918,13 @@
             "id": 8,
             "title": "End-to-End Testing and Documentation",
             "description": "Perform end-to-end testing for all five OAuth providers and create comprehensive documentation for the feature.",
-            "dependencies": ["13.3", "13.4", "13.5", "13.6", "13.7"],
+            "dependencies": [
+              "13.3",
+              "13.4",
+              "13.5",
+              "13.6",
+              "13.7"
+            ],
             "details": "Manually test the full login/signup flow for each provider on a staging environment. Verify that user accounts are created correctly, sessions are managed, and profile data is accurate. Write unit and integration tests for the common callback handler. Update the project's README and developer documentation with instructions on how to configure and use the OAuth providers.\n<info added on 2025-08-31T19:06:46.580Z>\nUnit testing has been implemented with a new OAuth configuration test suite (`apps/api/tests/auth/oauth-configuration.test.ts`) that verifies all 5 providers, cookie configuration, session management, and security settings. All 10 test cases are passing. The project README.md has been updated with comprehensive documentation, including setup instructions for all providers, API endpoints, and development workflow. All QA checks are passing. The code implementation and testing infrastructure is complete and ready for production deployment.\n</info added on 2025-08-31T19:06:46.580Z>",
             "status": "done",
             "testStrategy": ""
@@ -783,7 +936,9 @@
         "title": "Implement Persistent User Sessions",
         "description": "Ensure user sessions are persistent using Better Auth's built-in session management.",
         "status": "done",
-        "dependencies": [12],
+        "dependencies": [
+          12
+        ],
         "priority": "high",
         "details": "Configure Better Auth to manage persistent sessions using its database adapter and HTTP-only cookies. Better Auth's built-in functionality will handle session validation on backend routes.",
         "testStrategy": "Log in, close the browser, and reopen to verify the user is still logged in via the persistent session cookie. Test session expiration by waiting for the defined session lifetime and ensuring the user is logged out.",
@@ -801,7 +956,9 @@
             "id": 2,
             "title": "Write Automated Test for Session Persistence",
             "description": "Create an automated test to verify that a user remains logged in after a simulated browser restart, confirming the persistent session cookie is working correctly.",
-            "dependencies": ["14.1"],
+            "dependencies": [
+              "14.1"
+            ],
             "details": "The test should simulate a user login, store the session cookie, simulate a browser closure and reopening, and then make an authenticated request using the stored cookie to confirm the session is still valid. This test will be added to the API test suite (Task 50).",
             "status": "done",
             "testStrategy": ""
@@ -812,19 +969,56 @@
         "id": 15,
         "title": "Develop Login/Signup UI",
         "description": "Create frontend components for unauthenticated users to log in or sign up via social providers (Google, Facebook, GitHub, Apple, and Twitter), integrating with Better Auth.",
-        "status": "pending",
-        "dependencies": [2, 13],
+        "status": "done",
+        "dependencies": [
+          2,
+          13
+        ],
         "priority": "high",
         "details": "Design a login page with buttons for Google, Facebook, GitHub, Apple, and Twitter. The frontend will handle redirection to the backend's Better Auth OAuth initiation endpoints (e.g., `/login/google`, `/login/facebook`, `/login/github`, `/login/apple`, `/login/twitter`).",
         "testStrategy": "Verify UI renders correctly with all five social provider buttons (Google, Facebook, GitHub, Apple, Twitter). Click each login button and ensure redirection to the correct backend Better Auth endpoint.",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Login Page Route and Component Shell",
+            "description": "Establish the frontend route for the login page (e.g., '/login') and create the main container component that will hold the social login buttons.",
+            "dependencies": [],
+            "details": "This task involves configuring the application's router to direct users to a new, empty login page component. This component will serve as the foundation for the UI.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Develop Reusable SocialLoginButton Component",
+            "description": "Build a generic and reusable `SocialLoginButton` component that accepts properties like provider name, icon, and the backend redirect URL.",
+            "dependencies": [],
+            "details": "The component should be styled to display a social provider's logo and name. When clicked, it should navigate the user to the corresponding Better Auth OAuth initiation endpoint passed via its props.",
+            "status": "done",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement Login Page Layout with Provider Buttons",
+            "description": "Integrate the `SocialLoginButton` component into the login page, creating and displaying an instance for each of the five required social providers: Google, Facebook, GitHub, Apple, and Twitter.",
+            "dependencies": [
+              "15.1",
+              "15.2"
+            ],
+            "details": "Use the `SocialLoginButton` component five times within the login page component. Each instance must be configured with the correct properties for its respective provider, including the specific backend endpoint (e.g., `/login/google`, `/login/facebook`, etc.).",
+            "status": "done",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 16,
         "title": "Implement Automatic User Creation",
         "description": "Develop backend logic to automatically create a new user record upon their first social login.",
         "status": "pending",
-        "dependencies": [8, 13],
+        "dependencies": [
+          8,
+          13
+        ],
         "priority": "high",
         "details": "Modify the Better Auth OAuth callback handler. The handler must check if a user with the given OAuth provider ID already exists. If the user does not exist, create a new `User` record in the database using the profile information (e.g., email, name, avatar) provided by the OAuth provider through Better Auth. If the user already exists, log them in.",
         "testStrategy": "Use a new social account (e.g., GitHub, Google) to perform a first-time login. Verify that a new user record is successfully created in the database with the correct details from the social provider. Also, test a subsequent login with the same account to ensure no new user is created and the existing user is logged in correctly.",
@@ -837,7 +1031,11 @@
         "details": "Modify bookmark and label creation/update endpoints to automatically assign the current authenticated user's ID.",
         "testStrategy": "Create bookmarks and labels as a logged-in user; verify `userId` is correctly populated in the database.",
         "priority": "high",
-        "dependencies": [9, 10, 16],
+        "dependencies": [
+          9,
+          10,
+          16
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -848,7 +1046,10 @@
         "details": "Implement `GET /bookmarks`, `GET /bookmarks/:id`, `POST /bookmarks`, `PATCH /bookmarks/:id`, `DELETE /bookmarks/:id`.",
         "testStrategy": "Write API integration tests for each endpoint (create, retrieve, update, delete).",
         "priority": "high",
-        "dependencies": [10, 17],
+        "dependencies": [
+          10,
+          17
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -859,7 +1060,10 @@
         "details": "Use Shadcn UI components for cards/list items. Fetch bookmarks from `GET /bookmarks` endpoint.",
         "testStrategy": "Verify bookmarks are displayed correctly. Test responsiveness of the layout.",
         "priority": "medium",
-        "dependencies": [2, 18],
+        "dependencies": [
+          2,
+          18
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -870,7 +1074,9 @@
         "details": "Create a form with input fields for URL, and potentially labels. Implement form submission to `POST /bookmarks`.",
         "testStrategy": "Test adding a new bookmark and verify it appears in the list/grid view.",
         "priority": "medium",
-        "dependencies": [19],
+        "dependencies": [
+          19
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -881,7 +1087,9 @@
         "details": "Create an endpoint `POST /bookmarks/from-url` that takes a URL and returns its metadata. Use a library like `link-preview-generator` or `metascraper`.",
         "testStrategy": "Write unit tests for the metadata fetching logic with various URL types (articles, videos, blogs).",
         "priority": "high",
-        "dependencies": [18],
+        "dependencies": [
+          18
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -892,7 +1100,10 @@
         "details": "Show title, description, author on hover or directly on the card. Display the thumbnail image. Pre-fill add/edit forms with fetched data.",
         "testStrategy": "Add a new bookmark and verify metadata is correctly displayed on the card and in edit mode.",
         "priority": "medium",
-        "dependencies": [20, 21],
+        "dependencies": [
+          20,
+          21
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -903,7 +1114,9 @@
         "details": "Implement `PATCH /bookmarks/:id` to update a `isFavorite` field (or similar) on the bookmark.",
         "testStrategy": "Write API tests to verify favorite status can be toggled and persists.",
         "priority": "medium",
-        "dependencies": [18],
+        "dependencies": [
+          18
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -914,7 +1127,10 @@
         "details": "Implement click handler to call the favorite/unfavorite API endpoint. Update UI state accordingly.",
         "testStrategy": "Click the favorite button and verify the status changes visually and persists on refresh.",
         "priority": "medium",
-        "dependencies": [19, 23],
+        "dependencies": [
+          19,
+          23
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -925,7 +1141,9 @@
         "details": "Implement `PATCH /bookmarks/:id` to update the `state` field ('active'/'archived') on the bookmark.",
         "testStrategy": "Write API tests to verify archive status can be toggled and persists.",
         "priority": "medium",
-        "dependencies": [18],
+        "dependencies": [
+          18
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -936,7 +1154,10 @@
         "details": "Implement click handler to call the archive/unarchive API endpoint. Update UI state accordingly.",
         "testStrategy": "Archive a bookmark and verify it moves to the 'Archived' collection and is removed from 'All'.",
         "priority": "medium",
-        "dependencies": [19, 25],
+        "dependencies": [
+          19,
+          25
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -947,7 +1168,10 @@
         "details": "Implement `GET /labels`, `GET /labels/:id`, `POST /labels`, `PUT /labels/:id`, `DELETE /labels/:id`.",
         "testStrategy": "Write API integration tests for each label endpoint.",
         "priority": "medium",
-        "dependencies": [9, 17],
+        "dependencies": [
+          9,
+          17
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -958,7 +1182,10 @@
         "details": "Fetch labels from `GET /labels`. Display them as clickable links/buttons in a sidebar.",
         "testStrategy": "Verify sidebar renders correctly and lists all user's labels.",
         "priority": "medium",
-        "dependencies": [2, 27],
+        "dependencies": [
+          2,
+          27
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -969,7 +1196,9 @@
         "details": "Add forms/modals for label creation/renaming. Implement delete confirmation.",
         "testStrategy": "Test creating a new label, renaming an existing one, and deleting a label. Verify changes persist.",
         "priority": "medium",
-        "dependencies": [28],
+        "dependencies": [
+          28
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -980,7 +1209,10 @@
         "details": "Add a query parameter (e.g., `?labelId=xyz`) to filter bookmarks based on associated labels.",
         "testStrategy": "Write API tests to verify filtering by single and multiple labels.",
         "priority": "medium",
-        "dependencies": [18, 11],
+        "dependencies": [
+          18,
+          11
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -991,7 +1223,11 @@
         "details": "When a label in the sidebar is clicked, update the bookmark list to show only bookmarks with that label.",
         "testStrategy": "Click on different labels in the sidebar and verify the displayed bookmarks change accordingly.",
         "priority": "medium",
-        "dependencies": [19, 28, 30],
+        "dependencies": [
+          19,
+          28,
+          30
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1002,7 +1238,11 @@
         "details": "Integrate these as navigation options, potentially in the sidebar or a separate filter bar. Use existing favorite/archive status.",
         "testStrategy": "Verify clicking on 'Favorites' shows only favorited bookmarks, 'Archived' shows only archived, and 'All' shows all active bookmarks.",
         "priority": "medium",
-        "dependencies": [19, 24, 26],
+        "dependencies": [
+          19,
+          24,
+          26
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1013,7 +1253,9 @@
         "details": "Implement full-text search or `LIKE` queries on relevant fields. Add a query parameter (e.g., `?q=keyword`).",
         "testStrategy": "Write API tests to verify search functionality returns correct results for various keywords.",
         "priority": "medium",
-        "dependencies": [18],
+        "dependencies": [
+          18
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1024,7 +1266,10 @@
         "details": "Implement input field and trigger search API call on input change or submit. Display search results.",
         "testStrategy": "Enter search terms and verify the bookmark list updates to show matching results.",
         "priority": "medium",
-        "dependencies": [19, 33],
+        "dependencies": [
+          19,
+          33
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1035,7 +1280,9 @@
         "details": "Add query parameters (e.g., `?sortBy=createdAt&order=desc`). Implement database sorting logic.",
         "testStrategy": "Write API tests to verify sorting works correctly for all specified criteria.",
         "priority": "medium",
-        "dependencies": [18],
+        "dependencies": [
+          18
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1046,7 +1293,10 @@
         "details": "Implement UI elements to select sorting criteria and order. Trigger API calls with sort parameters.",
         "testStrategy": "Change sorting options and verify the order of bookmarks in the UI updates correctly.",
         "priority": "medium",
-        "dependencies": [19, 35],
+        "dependencies": [
+          19,
+          35
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1057,7 +1307,9 @@
         "details": "Implement `POST /bookmarks/import/omnivore`. Parse the Omnivore JSON/CSV format and create new bookmark records.",
         "testStrategy": "Write E2E tests using sample Omnivore export files to verify successful import.",
         "priority": "medium",
-        "dependencies": [18],
+        "dependencies": [
+          18
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1068,7 +1320,9 @@
         "details": "Implement `POST /bookmarks/import/html`. Parse the Netscape Bookmark File Format (HTML) and create new bookmark records.",
         "testStrategy": "Write E2E tests using sample browser HTML export files to verify successful import.",
         "priority": "medium",
-        "dependencies": [18],
+        "dependencies": [
+          18
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1079,7 +1333,9 @@
         "details": "Implement `POST /bookmarks/import/text`. Parse each line as a URL and create new bookmark records.",
         "testStrategy": "Write E2E tests using sample text files with URLs to verify successful import.",
         "priority": "medium",
-        "dependencies": [18],
+        "dependencies": [
+          18
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1090,7 +1346,12 @@
         "details": "Provide file upload inputs for Omnivore, HTML, and text files. Display import progress/status.",
         "testStrategy": "Test uploading each file type and verify bookmarks appear in the UI after import.",
         "priority": "medium",
-        "dependencies": [19, 37, 38, 39],
+        "dependencies": [
+          19,
+          37,
+          38,
+          39
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1101,7 +1362,9 @@
         "details": "Implement `GET /bookmarks/export` (or similar). Generate a JSON, HTML, or text file containing all bookmarks.",
         "testStrategy": "Write API tests to verify the export endpoint generates a valid file with correct data.",
         "priority": "medium",
-        "dependencies": [18],
+        "dependencies": [
+          18
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1112,7 +1375,9 @@
         "details": "Implement a button that initiates the download of the exported bookmark file.",
         "testStrategy": "Click the export button and verify a file is downloaded containing the user's bookmarks.",
         "priority": "medium",
-        "dependencies": [41],
+        "dependencies": [
+          41
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1123,7 +1388,9 @@
         "details": "Implement `POST /bookmarks/batch-delete` that accepts an array of bookmark IDs.",
         "testStrategy": "Write API tests to verify multiple bookmarks can be deleted in a single request.",
         "priority": "medium",
-        "dependencies": [18],
+        "dependencies": [
+          18
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1134,7 +1401,10 @@
         "details": "Implement checkboxes or multi-select options on bookmark cards. Add a 'Delete Selected' button.",
         "testStrategy": "Select multiple bookmarks, click delete, and verify they are removed from the UI and database.",
         "priority": "medium",
-        "dependencies": [19, 43],
+        "dependencies": [
+          19,
+          43
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1145,7 +1415,9 @@
         "details": "Use Shadcn UI's theme capabilities. Implement a global theme context and a toggle button.",
         "testStrategy": "Toggle between themes and verify all UI components adapt correctly.",
         "priority": "medium",
-        "dependencies": [2],
+        "dependencies": [
+          2
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1156,7 +1428,12 @@
         "details": "Design and implement the sidebar structure, including logo, user info, and navigation links (e.g., collections, labels).",
         "testStrategy": "Verify navigation renders correctly and links are functional.",
         "priority": "medium",
-        "dependencies": [2, 15, 28, 32],
+        "dependencies": [
+          2,
+          15,
+          28,
+          32
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1167,7 +1444,10 @@
         "details": "Use CSS media queries and flexible layouts (flexbox/grid). Test on various screen sizes and devices.",
         "testStrategy": "Resize browser window, use device emulation in dev tools, and test on actual mobile devices.",
         "priority": "high",
-        "dependencies": [19, 46],
+        "dependencies": [
+          19,
+          46
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1178,7 +1458,10 @@
         "details": "Use semantic HTML, provide alt text for images, ensure keyboard navigation, sufficient color contrast, and ARIA attributes where necessary.",
         "testStrategy": "Use accessibility audit tools (Lighthouse, Axe DevTools) and manual keyboard/screen reader testing.",
         "priority": "high",
-        "dependencies": [19, 46],
+        "dependencies": [
+          19,
+          46
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1189,7 +1472,9 @@
         "details": "Focus on critical components like login form, bookmark card, label management, search bar.",
         "testStrategy": "Achieve minimum 80% code coverage for core UI components. Run tests regularly in CI.",
         "priority": "medium",
-        "dependencies": [2],
+        "dependencies": [
+          2
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1200,7 +1485,11 @@
         "details": "Test all CRUD operations, authentication flows, search, sort, and import/export endpoints.",
         "testStrategy": "Achieve minimum 90% code coverage for backend API routes. Run tests regularly in CI.",
         "priority": "high",
-        "dependencies": [3, 18, 27],
+        "dependencies": [
+          3,
+          18,
+          27
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1211,7 +1500,9 @@
         "details": "Use a tool like Playwright or Cypress to simulate file uploads and verify data persistence in the database.",
         "testStrategy": "Run E2E tests with various valid and invalid import files to ensure robustness.",
         "priority": "medium",
-        "dependencies": [40],
+        "dependencies": [
+          40
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1222,7 +1513,10 @@
         "details": "Integrate Swagger UI or similar tool. Annotate Hono routes with JSDoc or OpenAPI specifications.",
         "testStrategy": "Verify API documentation is accessible and accurately reflects all endpoints, parameters, and responses.",
         "priority": "low",
-        "dependencies": [18, 27],
+        "dependencies": [
+          18,
+          27
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1233,7 +1527,9 @@
         "details": "Choose a logging library (e.g., Pino, Winston). Configure error logging, request logging. Consider a monitoring service (e.g., Sentry, Datadog).",
         "testStrategy": "Generate errors and verify logs are captured. Monitor application performance metrics.",
         "priority": "medium",
-        "dependencies": [6],
+        "dependencies": [
+          6
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1244,7 +1540,11 @@
         "details": "Check environment variables, security best practices, error handling, performance, scalability considerations, and backup strategies.",
         "testStrategy": "Use a checklist to ensure all production requirements are met.",
         "priority": "high",
-        "dependencies": [6, 7, 53],
+        "dependencies": [
+          6,
+          7,
+          53
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1255,7 +1555,9 @@
         "details": "Configure Dependabot in the GitHub repository. Define update frequency and scope.",
         "testStrategy": "Verify Dependabot creates pull requests for outdated dependencies.",
         "priority": "low",
-        "dependencies": [1],
+        "dependencies": [
+          1
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1266,7 +1568,9 @@
         "details": "Investigate issues like dynamic content, anti-bot measures, and malformed metadata. Implement retry mechanisms or alternative scrapping methods.",
         "testStrategy": "Test with a diverse set of problematic URLs and verify improved scrapping success rates.",
         "priority": "medium",
-        "dependencies": [21],
+        "dependencies": [
+          21
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1275,7 +1579,10 @@
         "title": "Investigate Performance Improvements",
         "description": "Research and identify areas for performance optimization in both frontend and backend, with a primary focus on implementing an effective caching strategy.",
         "status": "pending",
-        "dependencies": [19, 18],
+        "dependencies": [
+          19,
+          18
+        ],
         "priority": "low",
         "details": "Analyze database queries, API response times, and frontend rendering performance. The main implementation will be a caching layer. Evaluate different caching solutions: distributed caching with Redis for scalability vs. simpler in-memory caching using libraries like `node-cache` or `memory-cache`. The cache should be designed to handle bookmark data, URL metadata, and the results of frequently accessed queries. Also investigate other improvements like database indexing and lazy loading.",
         "testStrategy": "Conduct load testing and performance profiling before and after changes. Measure improvements in key metrics like API response times and page load speed. Verify cache effectiveness by checking hit/miss rates and ensuring data consistency.",
@@ -1286,7 +1593,9 @@
         "title": "Investigate Server-Sent Events (SSE)",
         "description": "Implement a background job processing system using Server-Sent Events (SSE) to handle asynchronous URL scraping operations, as documented in ADR 002.",
         "status": "pending",
-        "dependencies": [3],
+        "dependencies": [
+          3
+        ],
         "priority": "high",
         "details": "This task involves building a robust, non-blocking architecture for URL scraping. The API will immediately accept bookmark import requests, queue them for background processing, and provide real-time progress updates to the client via SSE.\n\nKey components to implement:\n1.  **SQLite Job Queue:** A custom queue built on SQLite to persist and manage scraping jobs (pending, processing, completed, failed).\n2.  **Child Process Workers:** Isolate Puppeteer scraping tasks in dedicated child processes to prevent blocking the main Node.js event loop.\n3.  **Job Coordinator:** A central module in the main process to manage the job queue, dispatch jobs to available workers, and handle retries.\n4.  **EventEmitter for Status Updates:** Use Node.js's EventEmitter to communicate job status (e.g., 'progress', 'completed', 'error') from child workers back to the main process.\n5.  **Hono SSE Endpoint:** Create a `/api/jobs/:jobId/stream` endpoint that streams status updates for a specific job to the frontend.",
         "testStrategy": "1.  **Unit Tests:** Write unit tests for the SQLite job queue logic (enqueue, dequeue, update status) and the core logic of the Puppeteer worker.\n2.  **Integration Tests:** Create integration tests for the entire flow: API call -> job creation -> worker processing -> status update via EventEmitter -> SSE message received by a test client.\n3.  **End-to-End (E2E) Tests:** Verify that the frontend correctly initiates an import, receives an immediate response, and displays real-time progress updates by consuming the SSE stream.\n4.  **Stress Tests:** Test the system with a large number of concurrent jobs to ensure stability and proper resource management of child processes.",
@@ -1299,7 +1608,9 @@
         "details": "Organize components, hooks, utilities, pages, and styles logically. Follow best practices for maintainability.",
         "testStrategy": "Review code organization and ensure consistency across the project.",
         "priority": "low",
-        "dependencies": [2],
+        "dependencies": [
+          2
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1310,7 +1621,9 @@
         "details": "Review component design patterns, state management, error boundaries, and code splitting.",
         "testStrategy": "Perform code reviews and apply identified best practices.",
         "priority": "low",
-        "dependencies": [2],
+        "dependencies": [
+          2
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1321,7 +1634,10 @@
         "details": "Integrate with a natural language processing (NLP) API or a local model to analyze bookmark content and suggest relevant labels.",
         "testStrategy": "Write unit tests for the AI suggestion logic with various bookmark contents. Evaluate suggestion accuracy.",
         "priority": "low",
-        "dependencies": [18, 21],
+        "dependencies": [
+          18,
+          21
+        ],
         "status": "pending",
         "subtasks": []
       },
@@ -1330,7 +1646,9 @@
         "title": "Configure Husky for Git Hooks",
         "description": "Set up Husky to manage Git hooks, ensuring that code quality checks (type checking, linting, formatting) and tests are run automatically before commits and pushes, as per ADR-013.",
         "status": "done",
-        "dependencies": [4],
+        "dependencies": [
+          4
+        ],
         "priority": "medium",
         "details": "Implement the Git hooks strategy defined in ADR-013. This involves using Husky directly without `lint-staged`.\n\n1. **Installation**: Install Husky as a dev dependency: `pnpm install husky -D`.\n2. **Initialization**: Initialize Husky to create the `.husky/` directory: `npx husky init`.\n3. **Pre-commit Hook**: Create a pre-commit hook that runs type checking and Biome checks on staged files. This hook will apply safe fixes automatically. Use the command: `npx husky add .husky/pre-commit \"pnpm typecheck && pnpm check:write --staged\"`.\n4. **Pre-push Hook**: Create a pre-push hook that runs the test suite with coverage to prevent pushing broken code. Use the command: `npx husky add .husky/pre-push \"pnpm test:coverage\"`.\n\nRefer to ADR-013 for the complete implementation strategy.",
         "testStrategy": "The test strategy involves verifying both hooks individually.\n\n**Pre-commit Hook Test:**\n1. Modify a source file to introduce a type error (e.g., assign a number to a string variable) and a separate formatting error that Biome can fix automatically.\n2. Stage the file with `git add`.\n3. Attempt to commit: `git commit -m 'test: trigger pre-commit hook'`.\n4. Verify that the commit is blocked and the output shows the type error. Check that the formatting error was automatically fixed by Biome.\n5. Fix the type error, stage the file again, and re-attempt the commit. It should now succeed.\n\n**Pre-push Hook Test:**\n1. Ensure you have at least one commit ready to be pushed.\n2. Introduce a change that causes a unit test to fail.\n3. Commit this change.\n4. Attempt to push the branch to the remote repository: `git push`.\n5. Verify that the push is blocked by Husky and the output shows the test failure from `pnpm test:coverage`.\n6. Fix the failing test, commit the fix, and attempt to push again. The push should now succeed.",
@@ -1348,7 +1666,9 @@
             "id": 2,
             "title": "Initialize Husky Configuration",
             "description": "Run the Husky initialization script to create the `.husky/` directory. This step prepares the project to have Git hooks managed by Husky.",
-            "dependencies": ["62.1"],
+            "dependencies": [
+              "62.1"
+            ],
             "details": "Execute the command `npx husky init` in the project root. This will create the `.husky` directory and a sample hook file.",
             "status": "done",
             "testStrategy": ""
@@ -1357,7 +1677,9 @@
             "id": 3,
             "title": "Create Pre-commit Hook for Quality Checks",
             "description": "Configure a pre-commit hook to run type checking and Biome checks on staged files. This hook will apply safe fixes automatically before each commit, enforcing code quality standards.",
-            "dependencies": ["62.2"],
+            "dependencies": [
+              "62.2"
+            ],
             "details": "Use the Husky CLI to create the pre-commit hook file with the specified commands. Run: `npx husky add .husky/pre-commit \"pnpm typecheck && pnpm check:write --staged\"`.",
             "status": "done",
             "testStrategy": ""
@@ -1366,7 +1688,9 @@
             "id": 4,
             "title": "Create Pre-push Hook for Testing",
             "description": "Configure a pre-push hook that runs the full test suite with coverage. This acts as a final safeguard to prevent pushing broken code or code with failing tests to the remote repository.",
-            "dependencies": ["62.2"],
+            "dependencies": [
+              "62.2"
+            ],
             "details": "Use the Husky CLI to create the pre-push hook file with the test command. Run: `npx husky add .husky/pre-push \"pnpm test:coverage\"`.",
             "status": "done",
             "testStrategy": ""
@@ -1380,7 +1704,9 @@
         "details": "In the `apps/api/src/errors/errors.handlers.ts` file, locate the primary `errorHandler` function. This function processes a sequence of error-specific handlers. The current implementation incorrectly places the generic `UnexpectedError` handler before more specific handlers like `ValidationError` or `NotFoundError`. Modify the logic to ensure the handlers are checked in order of specificity, from most specific to least specific. The `UnexpectedError` handler must be the final check in the sequence, acting as a catch-all for any errors not previously matched.",
         "testStrategy": "To verify the fix, first create unit tests that throw specific error types (e.g., `ValidationError`, `NotFoundError`) and assert that the error handler correctly identifies and logs them with their specific type. Manually, trigger errors by making API calls: 1) Request a non-existent resource to trigger a `NotFoundError`. 2) Send an invalid request body to trigger a `ValidationError`. In both cases, inspect the application logs to confirm the error is logged with its correct, specific type and not as a generic 'UnexpectedError'.",
         "status": "done",
-        "dependencies": [3],
+        "dependencies": [
+          3
+        ],
         "priority": "high",
         "subtasks": [
           {
@@ -1396,7 +1722,9 @@
             "id": 2,
             "title": "Refactor Error Handler Logic to Correct Order",
             "description": "Modify the `errorHandler` function to process specific error handlers (e.g., `ValidationError`, `NotFoundError`) before the generic `UnexpectedError` handler.",
-            "dependencies": ["63.1"],
+            "dependencies": [
+              "63.1"
+            ],
             "details": "In `apps/api/src/errors/errors.handlers.ts`, reorder the conditional checks within the `errorHandler` function. Ensure the check for `UnexpectedError` or the default `else` block is the very last one in the sequence, acting as a catch-all.",
             "status": "done",
             "testStrategy": ""
@@ -1405,7 +1733,9 @@
             "id": 3,
             "title": "Implement Comprehensive Unit Tests for Error Handling",
             "description": "Create new unit tests to verify the corrected error handler logic. This includes testing for specific errors like `ValidationError` and ensuring the generic fallback case for a standard `Error` works as expected.",
-            "dependencies": ["63.2"],
+            "dependencies": [
+              "63.2"
+            ],
             "details": "Write a unit test that throws a `ValidationError` and asserts the logger captures it with the correct type. Write a second unit test that throws a standard `Error` and asserts the logger correctly falls back to logging it as an `UnexpectedError`.",
             "status": "done",
             "testStrategy": ""
@@ -1414,7 +1744,9 @@
             "id": 4,
             "title": "Perform Manual Testing and Verification",
             "description": "Manually trigger different types of errors through API calls to confirm the logger is capturing them correctly in the application logs and that the API responds appropriately.",
-            "dependencies": ["63.2"],
+            "dependencies": [
+              "63.2"
+            ],
             "details": "Make API calls designed to fail in specific ways. For example, send a request with invalid data to trigger a `ValidationError` and request a non-existent resource to trigger a `NotFoundError`. Check the server logs to verify that the errors are logged with the correct, specific types.",
             "status": "done",
             "testStrategy": ""
@@ -1444,7 +1776,9 @@
             "id": 2,
             "title": "Write ADR for Backend Stack (Hono, SQLite, Drizzle)",
             "description": "Document the decision to use Hono, SQLite, and Drizzle ORM for the backend, explaining the rationale and consequences.",
-            "dependencies": ["64.1"],
+            "dependencies": [
+              "64.1"
+            ],
             "details": "Using the template from subtask 64.1, create a new file `001-backend-stack.md`. Populate the sections to justify the choice of Hono for its performance, SQLite for its embedded nature, and Drizzle for its TypeScript-first approach.",
             "status": "done",
             "testStrategy": ""
@@ -1453,7 +1787,9 @@
             "id": 3,
             "title": "Write ADR for Project Structure (Monorepo, Turborepo)",
             "description": "Document the decision to structure the project as a monorepo managed by Turborepo.",
-            "dependencies": ["64.1"],
+            "dependencies": [
+              "64.1"
+            ],
             "details": "Create a new file `002-project-structure.md`. Explain the context of managing multiple related packages and the decision to use a monorepo. Detail why Turborepo was chosen for its build caching and task orchestration capabilities.",
             "status": "done",
             "testStrategy": ""
@@ -1462,7 +1798,9 @@
             "id": 4,
             "title": "Write ADR for Testing Frameworks (Vitest, RTL)",
             "description": "Document the choice of Vitest and React Testing Library as the primary frameworks for the project's testing strategy.",
-            "dependencies": ["64.1"],
+            "dependencies": [
+              "64.1"
+            ],
             "details": "Create a new file `003-testing-frameworks.md`. Justify the selection of Vitest for its speed and compatibility with Vite, and React Testing Library for its user-centric testing philosophy for UI components.",
             "status": "done",
             "testStrategy": ""
@@ -1471,7 +1809,9 @@
             "id": 5,
             "title": "Write ADR for Type Safety and Validation (TypeScript, Zod)",
             "description": "Document the decisions to use TypeScript for static type safety and Zod for runtime data validation.",
-            "dependencies": ["64.1"],
+            "dependencies": [
+              "64.1"
+            ],
             "details": "Create a new file `004-typing-and-validation.md`. Explain the benefits of using TypeScript across the monorepo and the rationale for choosing Zod for schema declaration and validation.",
             "status": "done",
             "testStrategy": ""
@@ -1480,7 +1820,9 @@
             "id": 6,
             "title": "Write ADR for API Client and Web Scraping (Bruno, Puppeteer)",
             "description": "Document the selection of Bruno as the API client and Puppeteer for web scraping metadata.",
-            "dependencies": ["64.1"],
+            "dependencies": [
+              "64.1"
+            ],
             "details": "Create a new file `005-developer-tooling.md`. Describe the reasons for choosing Bruno for its git-friendly format and Puppeteer for its robust browser automation capabilities for fetching metadata.",
             "status": "done",
             "testStrategy": ""
@@ -1489,7 +1831,9 @@
             "id": 7,
             "title": "Write ADR for Logging (Pino)",
             "description": "Document the choice of Pino for high-performance, structured logging in the backend application.",
-            "dependencies": ["64.1"],
+            "dependencies": [
+              "64.1"
+            ],
             "details": "Create a new file `006-logging.md`. Explain the importance of structured logging for observability and justify the selection of Pino based on its performance benchmarks and simple API.",
             "status": "done",
             "testStrategy": ""
@@ -1498,7 +1842,14 @@
             "id": 8,
             "title": "Review and Finalize All ADRs",
             "description": "Conduct a final review of all created ADRs to ensure they are clear, complete, and consistently formatted before merging.",
-            "dependencies": ["64.2", "64.3", "64.4", "64.5", "64.6", "64.7"],
+            "dependencies": [
+              "64.2",
+              "64.3",
+              "64.4",
+              "64.5",
+              "64.6",
+              "64.7"
+            ],
             "details": "Review each ADR file in the `docs/adr` directory. Check for grammatical errors, clarity in the 'Context' and 'Consequences' sections, and ensure the 'Status' is set to 'Accepted' in all final documents. Verify file naming conventions are consistent.",
             "status": "done",
             "testStrategy": ""
@@ -1512,7 +1863,10 @@
         "details": "Create a new directory `packages/test-config`. Inside, initialize a `package.json` with the name `@repo/test-config`. Add necessary dev dependencies like `vitest`, `@vitejs/plugin-react`, and `jsdom`. Create a `vitest.config.ts` file that exports a base configuration object using `defineConfig`. This base config should include common settings such as `globals: true`, `environment: 'jsdom'`, and a path to a global setup file (e.g., `src/setup.ts`). Update at least one existing application or package (e.g., `apps/web`) to use this new shared config by adding `@repo/test-config` as a dev dependency and modifying its local `vitest.config.ts` to import and extend the base configuration.",
         "testStrategy": "Verify that the `packages/test-config` directory and its `package.json` exist and are correctly configured. Inspect the `packages/test-config/vitest.config.ts` file to ensure it exports a reusable Vitest configuration. Check the `package.json` of another package (e.g., `apps/web`) to confirm `@repo/test-config` is listed as a dev dependency. Finally, run the test suite for the consuming package (e.g., `pnpm --filter @repo/web test`) and ensure all tests pass, confirming the shared configuration is being applied correctly.",
         "status": "done",
-        "dependencies": [1, 64],
+        "dependencies": [
+          1,
+          64
+        ],
         "priority": "medium",
         "subtasks": [
           {
@@ -1528,7 +1882,9 @@
             "id": 2,
             "title": "Install Dependencies for `test-config` Package",
             "description": "Add all necessary development dependencies to the `@repo/test-config` package to support Vitest, React, and JSDOM.",
-            "dependencies": ["65.1"],
+            "dependencies": [
+              "65.1"
+            ],
             "details": "Using your package manager (e.g., pnpm), add the following packages as development dependencies to the `@repo/test-config` workspace:\n- `vitest`\n- `@vitejs/plugin-react`\n- `jsdom`\n- `typescript`\n- `@testing-library/jest-dom`\nExample command: `pnpm add -D vitest @vitejs/plugin-react jsdom typescript @testing-library/jest-dom --filter @repo/test-config`",
             "status": "done",
             "testStrategy": "Check the `devDependencies` section of `packages/test-config/package.json` to confirm that all specified packages have been added."
@@ -1537,7 +1893,9 @@
             "id": 3,
             "title": "Create Base `vitest.config.ts` and Global Setup File",
             "description": "Create the reusable `vitest.config.ts` file that exports the base test configuration, and the global setup file it references.",
-            "dependencies": ["65.2"],
+            "dependencies": [
+              "65.2"
+            ],
             "details": "In `packages/test-config`, create a `vitest.config.ts` file. This file should import `defineConfig` from `vitest/config` and `react` from `@vitejs/plugin-react`. Export a default configuration object with `globals: true`, `environment: 'jsdom'`, `plugins: [react()]`, and `setupFiles: ['./src/setup.ts']`. \n\nNext, create the setup file at `packages/test-config/src/setup.ts`. In this file, import `@testing-library/jest-dom/vitest` to extend Vitest's `expect` with DOM assertions.",
             "status": "done",
             "testStrategy": "Inspect the `packages/test-config/vitest.config.ts` file to ensure it correctly exports a Vitest configuration with the specified settings. Verify the `packages/test-config/src/setup.ts` file exists and contains the necessary import."
@@ -1546,7 +1904,9 @@
             "id": 4,
             "title": "Integrate `@repo/test-config` into an Existing Application",
             "description": "Update an existing application, such as `apps/web`, to use the new shared test configuration package.",
-            "dependencies": ["65.3"],
+            "dependencies": [
+              "65.3"
+            ],
             "details": "1. Add `@repo/test-config` as a development dependency to an existing application (e.g., `apps/web`) using `pnpm add -D @repo/test-config --filter web`.\n2. Modify the `vitest.config.ts` file in `apps/web`. Import the base configuration from `@repo/test-config` and use `mergeConfig` from `vitest/config` to extend it. The file should look similar to this:\n\nimport { defineConfig, mergeConfig } from 'vitest/config';\nimport baseConfig from '@repo/test-config/vitest.config';\n\nexport default mergeConfig(baseConfig, defineConfig({\n  // App-specific overrides can go here\n}));",
             "status": "done",
             "testStrategy": "Check the `package.json` of the target application (`apps/web`) to confirm `@repo/test-config` is listed as a dev dependency. Review its `vitest.config.ts` to ensure it imports and extends the base configuration."
@@ -1555,7 +1915,9 @@
             "id": 5,
             "title": "Verify Shared Configuration by Running Tests in Consuming App",
             "description": "Run the test suite for the application that was updated to use the shared config to ensure everything works as expected.",
-            "dependencies": ["65.4"],
+            "dependencies": [
+              "65.4"
+            ],
             "details": "Navigate to the directory of the application updated in the previous step (e.g., `apps/web`). Run its test script (e.g., `pnpm test`). The tests should execute successfully without any configuration-related errors. Confirm that global setups, such as `jest-dom` matchers, are available in the tests without needing to be imported in every test file.",
             "status": "done",
             "testStrategy": "Execute the test command within the `apps/web` package. The primary success criteria is that all existing tests pass. A secondary check is to temporarily remove the `setupFiles` line from the shared config and confirm that tests relying on `jest-dom` matchers now fail, proving the config is being correctly inherited."
@@ -1567,7 +1929,11 @@
         "title": "Refactor and Relocate Tooling Configuration Packages",
         "description": "Rename the `config-biome` package to `lint-config` for tool agnosticism and reorganize all tooling configuration packages into a new `packages/development/` directory to improve monorepo structure.",
         "status": "done",
-        "dependencies": [4, 62, 65],
+        "dependencies": [
+          4,
+          62,
+          65
+        ],
         "priority": "medium",
         "details": "This task involves a structural refactor of the monorepo's tooling configuration. First, create a new directory `packages/development`. Move the existing `packages/config-biome` and `packages/test-config` directories into this new `packages/development` directory. Rename the `config-biome` folder to `lint-config`. Update the `package.json` within `packages/development/lint-config` to change its name from `@favoritable/config-biome` to `@favoritable/lint-config`. Next, update the root `pnpm-workspace.yaml` to include the `packages/development/*` path. Conduct a global search-and-replace across the entire project to update all imports and `package.json` dependencies from `@favoritable/config-biome` to `@favoritable/lint-config`. Also, verify and update any references to `@favoritable/test-config` to ensure they resolve correctly. Finally, check and update any scripts, such as the Husky pre-commit hook, that may have hardcoded paths or dependencies on the old package names or locations. Run `pnpm install` to regenerate the lockfile and reflect the workspace changes.",
         "testStrategy": "1. Verify the new directory structure exists: `packages/development/lint-config` and `packages/development/test-config`. 2. Check the `package.json` in `lint-config` to confirm its name is `@favoritable/lint-config`. 3. Run `pnpm lint` and `pnpm format` from the root to ensure the linter and formatter still execute correctly across all workspaces using the new shared configuration package. 4. Run `pnpm test` to confirm that all tests still pass and correctly extend the shared configuration from `@favoritable/test-config` in its new location. 5. Trigger the pre-commit hook by making a change that violates a lint rule; verify that the hook runs successfully and blocks the commit, confirming it can find the new config. 6. Delete all `node_modules` and `pnpm-lock.yaml` and run `pnpm install` to ensure a clean setup works correctly.",
@@ -1585,7 +1951,9 @@
             "id": 2,
             "title": "Rename `config-biome` Package to `lint-config`",
             "description": "Rename the `packages/development/config-biome` directory to `lint-config` and update the `name` field in its `package.json` from `@favoritable/config-biome` to `@favoritable/lint-config`.",
-            "dependencies": ["66.1"],
+            "dependencies": [
+              "66.1"
+            ],
             "details": "In the new `packages/development` directory, rename the `config-biome` folder to `lint-config`. Then, edit the `package.json` file inside this folder to change its name property to `@favoritable/lint-config`.",
             "status": "done",
             "testStrategy": ""
@@ -1594,7 +1962,9 @@
             "id": 3,
             "title": "Update `pnpm-workspace.yaml`",
             "description": "Modify the root `pnpm-workspace.yaml` file to include the new `packages/development/*` path, ensuring pnpm can find the relocated packages.",
-            "dependencies": ["66.1"],
+            "dependencies": [
+              "66.1"
+            ],
             "details": "Add the path `packages/development/*` to the `packages` list in the root `pnpm-workspace.yaml` file to make the package manager aware of the new package locations.",
             "status": "done",
             "testStrategy": ""
@@ -1603,7 +1973,10 @@
             "id": 4,
             "title": "Update All Project References to Relocated Packages",
             "description": "Perform a global search-and-replace across the entire monorepo to update all imports and `package.json` dependencies from `@favoritable/config-biome` to `@favoritable/lint-config`.",
-            "dependencies": ["66.2", "66.3"],
+            "dependencies": [
+              "66.2",
+              "66.3"
+            ],
             "details": "Search the entire codebase for the string `@favoritable/config-biome` and replace it with `@favoritable/lint-config`. This includes all `package.json` files and any import statements. Also, verify and update any scripts that may have hardcoded paths to the old locations.",
             "status": "done",
             "testStrategy": ""
@@ -1612,7 +1985,9 @@
             "id": 5,
             "title": "Verify Toolchain Integrity and Finalize Changes",
             "description": "Run `pnpm install` to update the lockfile and reflect workspace changes. Then, execute all root-level scripts (e.g., `lint`, `test`) to ensure the entire toolchain is functioning correctly after the refactor.",
-            "dependencies": ["66.4"],
+            "dependencies": [
+              "66.4"
+            ],
             "details": "After all file changes are complete, run `pnpm install` from the project root. Subsequently, run `pnpm lint`, `pnpm test`, and any other relevant CI/CD or pre-commit hook scripts to confirm that the tooling configurations are correctly applied and functional.",
             "status": "done",
             "testStrategy": ""
@@ -1626,7 +2001,10 @@
         "details": "Create a `render.yaml` file in the project root to define the infrastructure as code. In this file, configure a 'Web Service' for the API, specifying the Docker build context and pointing to the Dockerfile created in Task #6. Set up environment variables for the production database URL (from Task #5) and other secrets using Render's secret management. Configure the build command to use Turborepo to efficiently build the API service (e.g., `npx turbo build --filter=api`). Connect the project's Git repository to Render and configure the service to use the `render.yaml` file, enabling auto-deploy on pushes to the main branch.",
         "testStrategy": "Once the initial deployment is complete, verify the service is live by accessing its public URL provided by Render. Use an API client like Bruno or cURL to hit a health check endpoint and confirm a successful response. Perform a test on an endpoint that requires database interaction to validate the production database connection is working correctly. Crucially, test the web scraping endpoint by providing a sample URL to ensure the Puppeteer instance within the deployed container has the necessary permissions and dependencies to function in the Render environment.",
         "status": "pending",
-        "dependencies": [5, 6],
+        "dependencies": [
+          5,
+          6
+        ],
         "priority": "high",
         "subtasks": [
           {
@@ -1642,7 +2020,9 @@
             "id": 2,
             "title": "Configure Environment Variables and Secrets on Render",
             "description": "Set up all necessary environment variables for the production API service within the Render dashboard. This keeps sensitive data like database credentials and API keys separate from the codebase.",
-            "dependencies": ["67.1"],
+            "dependencies": [
+              "67.1"
+            ],
             "details": "Navigate to the Render dashboard and create a new 'Environment Group' for the project. Add all required environment variables, including the `DATABASE_URL` from the production database (Task #5), `JWT_SECRET`, and any OAuth provider keys (Task #13). In the `render.yaml` file, link this group to the web service using the `envVars.fromGroup` key.",
             "status": "pending",
             "testStrategy": "Review the list of environment variables used in local development (`.env` file) and ensure a corresponding secret has been created for each one in the Render Environment Group."
@@ -1651,7 +2031,10 @@
             "id": 3,
             "title": "Create Render Service and Enable Auto-Deploy (CI/CD)",
             "description": "Create the Web Service on the Render platform by connecting the GitHub repository and using the `render.yaml` file. This will trigger the first deployment and set up the CI/CD pipeline.",
-            "dependencies": ["67.1", "67.2"],
+            "dependencies": [
+              "67.1",
+              "67.2"
+            ],
             "details": "In the Render dashboard, create a new 'Blueprint Instance'. Connect the project's GitHub repository and select the branch containing the `render.yaml` file (e.g., `main`). Render will parse the file and prompt to create the defined web service. Approve the plan to start the initial build and deployment. Verify that the 'Auto-Deploy' setting is enabled to automatically deploy new commits pushed to the main branch.",
             "status": "pending",
             "testStrategy": "Monitor the initial deployment logs in the Render dashboard for any build or startup errors. Once the service status changes to 'Live', access its public URL to confirm it is running and not showing a deployment error page."
@@ -1660,7 +2043,9 @@
             "id": 4,
             "title": "Validate Production Database Connectivity",
             "description": "After a successful deployment, perform live tests to confirm that the deployed API can successfully connect to the production database and execute basic data operations.",
-            "dependencies": ["67.3"],
+            "dependencies": [
+              "67.3"
+            ],
             "details": "Using an API client like Bruno or cURL, send requests to the deployed service's public URL. Target at least one endpoint that reads from the database (e.g., fetching a list of public items) and one that writes to it (e.g., a user registration endpoint). Confirm that the requests succeed and the data is persisted correctly. Check the service logs on Render for any database connection errors.",
             "status": "pending",
             "testStrategy": "Execute a test request to an endpoint that requires a database read. The test passes if it returns a 200-level status code and expected data. Execute a second test to an endpoint that writes data; verify success with a 201 status code and by subsequently fetching the created resource."
@@ -1669,7 +2054,9 @@
             "id": 5,
             "title": "Verify Production Web Scraping Functionality",
             "description": "Test the web scraping endpoint on the deployed service to ensure that Puppeteer and its underlying headless Chromium dependencies are correctly installed and functional within the Render container.",
-            "dependencies": ["67.3"],
+            "dependencies": [
+              "67.3"
+            ],
             "details": "Send a request from an API client to the specific endpoint designed for web scraping. The request should target a simple, reliable website to minimize external failures. Monitor the API response and, more importantly, the real-time service logs in the Render dashboard. Look for any errors related to Puppeteer initialization, browser launch failures, or sandbox issues, which are common in containerized environments.",
             "status": "pending",
             "testStrategy": "Make a POST request to the scraping endpoint (e.g., `/api/scrape`) with a target URL. The test is successful if the API returns a 200 OK status with the expected scraped content and no Puppeteer-related errors appear in the Render logs."
@@ -1678,7 +2065,13 @@
             "id": 6,
             "title": "Document Deployment Process and Configuration",
             "description": "Create comprehensive documentation covering the Render deployment setup. This guide will serve as a reference for team members to understand the infrastructure, manage the environment, and troubleshoot issues.",
-            "dependencies": ["67.1", "67.2", "67.3", "67.4", "67.5"],
+            "dependencies": [
+              "67.1",
+              "67.2",
+              "67.3",
+              "67.4",
+              "67.5"
+            ],
             "details": "Create a `DEPLOYMENT.md` file in the project's root or `docs/` directory. In this file, explain the structure and purpose of the `render.yaml` file. List all required environment variables with a brief description for each (do not include secret values). Provide a step-by-step guide on how the CI/CD pipeline works (push to main triggers deploy) and how to perform manual deployments or rollbacks via the Render dashboard.",
             "status": "pending",
             "testStrategy": "Have a team member who was not involved in the setup review the documentation. They should be able to understand the entire deployment architecture and process from the document alone."
@@ -1692,7 +2085,14 @@
         "details": "Following the integration of Better Auth (Task 12), a full review of user identification handling is required. 1. **Route Handlers & Middleware:** Verify that all protected routes correctly extract the authenticated user's `userId` from the session context provided by Better Auth. 2. **Service & Repository Layers:** Ensure that all functions operating on user-specific data (e.g., bookmarks) explicitly accept `userId` as a parameter. This `userId` must be used in all subsequent database queries to scope the operation correctly. 3. **Data Models & Queries:** Review Drizzle schemas for tables like `bookmarks` to confirm they contain a non-nullable `userId` foreign key. Audit all database queries (SELECT, INSERT, UPDATE, DELETE) to ensure they include a `WHERE userId = ?` clause to enforce strict data isolation between users. 4. **API Response Payloads:** Scrutinize all data transformation objects (DTOs) or response formatters to guarantee that the `userId` field is never included in JSON payloads sent to the client.",
         "testStrategy": "1. **Automated Integration Tests:** Write new tests to cover authorization scenarios. For example, authenticate as User A, create a bookmark, and then authenticate as User B and attempt to read, update, or delete User A's bookmark, asserting that a 403 Forbidden or 404 Not Found error is returned. 2. **Payload Schema Validation:** Enhance existing API tests to assert that the `userId` field is absent from all response bodies for endpoints like `GET /bookmarks` and `GET /bookmarks/:id`. 3. **Manual Penetration Testing:** Using an API client like Postman, manually attempt to perform cross-user data access by manipulating resource IDs while authenticated as a different user. 4. **Code Review:** Conduct a focused code review of all routes and services that handle user-owned data, specifically checking for the correct propagation and application of the `userId` from the auth context down to the database query.",
         "status": "pending",
-        "dependencies": [8, 12, 18, 37, 38, 39],
+        "dependencies": [
+          8,
+          12,
+          18,
+          37,
+          38,
+          39
+        ],
         "priority": "medium",
         "subtasks": []
       },
@@ -1703,7 +2103,9 @@
         "details": "Review the Better Auth error handling documentation to identify the specific error classes it throws (e.g., AuthenticationError, AuthorizationError). Modify the existing global error handling middleware in the Hono application to specifically catch these errors. When a Better Auth error is caught, map it to the application's standard JSON error response format, returning the appropriate HTTP status code (e.g., 401 for AuthenticationError, 403 for AuthorizationError). Ensure this new logic coexists with the current handling for service and repository errors, maintaining a uniform error response structure across the entire API.",
         "testStrategy": "Create a suite of integration tests for protected API endpoints. Test cases should include: 1) making a request without a session token to verify a 401 Unauthorized response; 2) making a request with an invalid or expired token to verify a 401 Unauthorized response; and 3) if roles are implemented, making a request for a resource the user is not permitted to access to verify a 403 Forbidden response. All error responses must conform to the application's standard error JSON schema.",
         "status": "done",
-        "dependencies": [12],
+        "dependencies": [
+          12
+        ],
         "priority": "high",
         "subtasks": [
           {
@@ -1719,7 +2121,9 @@
             "id": 2,
             "title": "Update Global Error Middleware to Catch Specific Auth Errors",
             "description": "Modify the existing Hono global error handler (`app.onError`) to add specific `instanceof` checks for the Better Auth error classes identified in the research phase.",
-            "dependencies": ["69.1"],
+            "dependencies": [
+              "69.1"
+            ],
             "details": "In the main error handling middleware function, add conditional blocks (e.g., `if (err instanceof AuthenticationError) { ... }`) for each relevant Better Auth error. This logic should be placed before the existing generic error handlers for service or repository errors to ensure specific errors are caught first. Initially, these blocks can simply log to the console to confirm they are being triggered correctly.",
             "status": "done",
             "testStrategy": "Manually test a protected endpoint without a valid token using a tool like cURL or Postman. Verify that the console logs the expected message from the new conditional block, confirming the error is being caught."
@@ -1728,7 +2132,9 @@
             "id": 3,
             "title": "Map Auth Errors to Standardized JSON Response",
             "description": "Implement the logic within the new error handling blocks to format the caught Better Auth errors into the application's standard JSON error response structure.",
-            "dependencies": ["69.2"],
+            "dependencies": [
+              "69.2"
+            ],
             "details": "For each Better Auth error type, set the appropriate HTTP status code on the response context (e.g., `c.status(401)`). Then, construct and return a JSON body that matches the application's existing error format. The error message from the caught exception (`err.message`) should be used in the response body. For example: `return c.json({ error: { message: err.message, code: 'UNAUTHENTICATED' } }, 401);`.",
             "status": "done",
             "testStrategy": "Using an API client, send requests that trigger authentication and authorization errors. Assert that the HTTP response status code is correct (401, 403) and that the JSON body conforms to the application's standard error schema."
@@ -1737,7 +2143,9 @@
             "id": 4,
             "title": "Create Integration Tests for Auth Error Scenarios",
             "description": "Develop a suite of automated integration tests to validate that the new error handling logic behaves as expected for various authentication and authorization failure cases.",
-            "dependencies": ["69.3"],
+            "dependencies": [
+              "69.3"
+            ],
             "details": "Using the project's testing framework (e.g., Vitest with Supertest), create tests for protected endpoints. Test cases must include: 1) making a request without any session token; 2) making a request with an invalid or malformed token; 3) making a request with an expired token. Each test should assert that the response returns the correct HTTP status code and the standardized JSON error body.",
             "status": "done",
             "testStrategy": "Run the newly created test suite. All tests should pass, confirming that the error handling middleware correctly processes different types of auth errors."
@@ -1746,7 +2154,9 @@
             "id": 5,
             "title": "Refactor and Verify Coexistence with Other Error Handlers",
             "description": "Review the complete error handling middleware to ensure the new auth error logic is well-integrated and does not interfere with existing handlers for service, repository, or generic errors. Refactor for clarity and maintainability.",
-            "dependencies": ["69.4"],
+            "dependencies": [
+              "69.4"
+            ],
             "details": "Examine the order of operations within the `app.onError` handler. Ensure the specific Better Auth checks come before more generic error checks. If there is duplicated code for formatting JSON responses, extract it into a helper function. Add comments to clarify the different error handling paths. Finally, manually trigger a non-auth error (e.g., a validation error) to ensure it is still handled correctly by the pre-existing logic.",
             "status": "done",
             "testStrategy": "Run the entire project's test suite, including the new auth error tests and all existing tests. All tests must pass to confirm that no regressions were introduced to other parts of the application's error handling."
@@ -1758,7 +2168,9 @@
         "title": "Configure Style Dictionary for Design Token Management",
         "description": "Set up Style Dictionary within a dedicated `packages/themes` package to manage design system tokens (colors, spacing, typography). This package will automatically generate and export CSS custom variables for consumption by the frontend application.",
         "status": "done",
-        "dependencies": [4],
+        "dependencies": [
+          4
+        ],
         "priority": "medium",
         "details": "This task involves establishing a single source of truth for design tokens using Style Dictionary. 1. **Package Setup**: Create a new package named `themes` at `packages/themes`. Add `style-dictionary` as a dev dependency within this new package's `package.json`. 2. **Token Definition**: Inside `packages/themes`, create a `src/` directory to house token definitions. Structure tokens by category (e.g., `color`, `size`, `font`) in JSON format, following the Category/Type/Item (CTI) naming convention. For example, create `src/color/brand.json` with primary and secondary colors. 3. **Configuration**: Create a `style-dictionary.config.js` file in the root of the `packages/themes` package. Configure the `source` to point to the token JSON files within `src/`. Define a `css` platform that outputs to a `dist/` directory within the package. Use the built-in `css/variables` format and the `name/cti/kebab` transform to generate CSS-friendly variable names (e.g., `--color-brand-primary-500`). The output file should be `packages/themes/dist/tokens.css`. 4. **Build Integration**: Add a `build` script to `packages/themes/package.json` that executes the Style Dictionary build process. Update the Turborepo configuration (`turbo.json`) to ensure that the frontend application's `build` task depends on the `themes` package's `build` task. This guarantees tokens are always generated before the app is built. 5. **Frontend Integration**: Configure the frontend application to import the generated `dist/tokens.css` file from the `packages/themes` package into its global stylesheet, making the custom properties available throughout the project.",
         "testStrategy": "1. **Unit Testing**: Create a test suite for the `packages/themes` package using Vitest. Write a test that programmatically invokes the Style Dictionary build process with a mock set of token files. Read the generated CSS output from the `dist` folder and use snapshot testing to verify its structure and content. Assert that specific tokens are transformed into the correct CSS custom properties (e.g., a token with value `#0052CC` becomes `var(--color-brand-primary-500): #0052CC;`). 2. **Manual Validation**: Create a simple component or a dedicated route (e.g., `/style-guide`) in the frontend application. This page should display various UI elements (buttons, text blocks, colored swatches) that are styled exclusively using the newly generated CSS variables imported from the `packages/themes` package. Run the application and visually inspect this page to confirm that all tokens (colors, font sizes, spacing) are applied correctly. 3. **CI Verification**: Ensure the `build` script for the `packages/themes` package is part of the continuous integration pipeline and that the overall build fails if the token generation process encounters an error.",
@@ -1776,7 +2188,9 @@
             "id": 2,
             "title": "Define Initial Design Tokens in JSON Format",
             "description": "Create the directory structure for token definitions within the `themes` package and add initial token files for colors and spacing. This structure should follow the Category/Type/Item (CTI) convention to ensure scalability.",
-            "dependencies": ["70.1"],
+            "dependencies": [
+              "70.1"
+            ],
             "details": "1. Inside `packages/themes`, create a `src/` directory. 2. Inside `src/`, create subdirectories for token categories: `color/` and `size/`. 3. Create a file `src/color/brand.json` and define primary/secondary color tokens. Example: `{ \"color\": { \"brand\": { \"primary\": { \"value\": \"#0052cc\" } } } }`. 4. Create a file `src/size/spacing.json` and define spacing tokens. Example: `{ \"size\": { \"spacing\": { \"small\": { \"value\": \"8px\" } } } }`.",
             "status": "done",
             "testStrategy": "Check that the directory structure `packages/themes/src/color` and `packages/themes/src/size` exists. Validate that the JSON files within these directories contain valid token definitions according to the Style Dictionary format."
@@ -1785,7 +2199,9 @@
             "id": 3,
             "title": "Create and Configure Style Dictionary Build Process",
             "description": "Create a `style-dictionary.config.js` file to instruct Style Dictionary how to process the token source files and what output to generate. This configuration will define the transformation to CSS custom variables and the output destination.",
-            "dependencies": ["70.2"],
+            "dependencies": [
+              "70.2"
+            ],
             "details": "1. In the root of `packages/themes`, create a `style-dictionary.config.js` file. 2. Configure the `source` property to point to all JSON files within the `src/` directory (e.g., `['src/**/*.json']`). 3. Define a `css` platform in the `platforms` object. 4. Set the `transformGroup` to `'css'`. 5. Set the `buildPath` to `'dist/'`. 6. Configure the `files` array to output a single `tokens.css` file using the `css/variables` format.",
             "status": "done",
             "testStrategy": "From within the `packages/themes` directory, manually run `npx style-dictionary build`. Verify that a `dist/tokens.css` file is generated and that it contains the expected CSS custom properties (e.g., `--color-brand-primary: #0052cc;`)."
@@ -1794,7 +2210,9 @@
             "id": 4,
             "title": "Add Build Script and Update Turborepo Configuration",
             "description": "Integrate the Style Dictionary build process into the monorepo's build system. Add a `build` script to the `themes` package and update the root `turbo.json` to make the frontend app's build dependent on the themes build.",
-            "dependencies": ["70.3"],
+            "dependencies": [
+              "70.3"
+            ],
             "details": "1. In `packages/themes/package.json`, add a `scripts` section with a `build` command: `\"build\": \"style-dictionary build\"`. 2. In the root `turbo.json` file, locate the `pipeline.build` configuration. 3. In the configuration for the frontend application's build task (e.g., `\"frontend#build\"`), add a dependency on the themes package's build task: `\"dependsOn\": [\"^build\", \"@your-scope/themes#build\"]`.",
             "status": "done",
             "testStrategy": "Run the build command for the frontend application from the monorepo root (e.g., `pnpm turbo build --filter=frontend`). Check the build logs to confirm that the `@your-scope/themes` build task is executed before the `frontend` build task."
@@ -1803,7 +2221,9 @@
             "id": 5,
             "title": "Integrate Generated CSS into Frontend Application",
             "description": "Import the generated `tokens.css` file from the `themes` package into the global stylesheet of the frontend application. This will make the design tokens (as CSS custom properties) available for use throughout the entire application.",
-            "dependencies": ["70.4"],
+            "dependencies": [
+              "70.4"
+            ],
             "details": "1. Locate the main entry point for your frontend application's global styles (e.g., `apps/frontend/src/styles/global.css` or `apps/frontend/src/main.tsx`). 2. Add an import statement to include the generated token file, referencing the package: `@import \"@your-scope/themes/dist/tokens.css\";`. 3. Ensure the frontend build process is configured to resolve and bundle this CSS file from the workspace package.",
             "status": "done",
             "testStrategy": "Start the frontend development server. Open the application in a browser and use the developer tools to inspect an element. In the 'Styles' or 'Computed' tab, verify that the CSS custom properties from the `themes` package (e.g., `--color-brand-primary`) are available globally and can be successfully applied to elements."
@@ -1833,7 +2253,9 @@
             "id": 2,
             "title": "Refactor a Core Component (e.g., Button) to React Aria",
             "description": "Convert a single, representative component, such as a Button, from its Radix UI implementation to use the equivalent from `react-aria-components`. This will establish a migration pattern.",
-            "dependencies": ["71.1"],
+            "dependencies": [
+              "71.1"
+            ],
             "details": "Locate the existing `Button` component file. Replace the Radix UI primitives with the `<Button>` component from `react-aria-components`. Map all existing props, event handlers (e.g., `onClick` to `onPress`), and accessibility attributes to the new component's API.",
             "status": "done",
             "testStrategy": "Manually test the refactored button on a test page. Verify that `onPress` events fire correctly and that the component's base structure is rendered in the DOM."
@@ -1842,7 +2264,9 @@
             "id": 3,
             "title": "Adapt Styling for React Aria's Data Attributes",
             "description": "Update CSS or Tailwind CSS configuration to style the newly refactored components. React Aria uses data attributes like `data-pressed` and `data-focused` for state-based styling.",
-            "dependencies": ["71.2"],
+            "dependencies": [
+              "71.2"
+            ],
             "details": "Modify the CSS files or `tailwind.config.js` to target React Aria's data attributes for styling component states (hover, focus, pressed, disabled, etc.). Replace any selectors that were specific to Radix UI's `data-state` attributes. Ensure the visual appearance of the refactored `Button` matches the original design.",
             "status": "done",
             "testStrategy": "Visually inspect the refactored `Button` in all its interactive states (default, hover, focus, pressed) across supported browsers to confirm styles are applied correctly and consistently."
@@ -1851,7 +2275,9 @@
             "id": 4,
             "title": "Migrate Remaining Components on Test Pages",
             "description": "Apply the established pattern to refactor all other Radix UI components currently used on the basic test pages to their React Aria Components equivalents.",
-            "dependencies": ["71.3"],
+            "dependencies": [
+              "71.3"
+            ],
             "details": "Identify any remaining components on the test pages that use Radix UI (e.g., Dialog, Input, Label). Refactor each one using the appropriate `react-aria-components` primitive and apply the styling patterns established in the previous subtask. Remove any lingering Radix-specific code or configuration.",
             "status": "done",
             "testStrategy": "Perform a full manual review of the updated test pages. Confirm that all migrated components render, are styled correctly, and function as expected. Check the browser console for any new errors or warnings."
@@ -1860,7 +2286,9 @@
             "id": 5,
             "title": "Update Project Documentation and ADRs",
             "description": "Update the project's README and any relevant Architectural Decision Records (ADRs) to reflect the adoption of React Aria Components as the standard component library.",
-            "dependencies": ["71.4"],
+            "dependencies": [
+              "71.4"
+            ],
             "details": "In the `README.md`, replace mentions of Radix UI with React Aria Components. Add a new section outlining basic usage patterns, installation, and a link to the official documentation. Create or update an ADR to formalize the decision and its rationale.",
             "status": "done",
             "testStrategy": "Review the updated documentation for accuracy and clarity. Ensure a new developer joining the project can easily understand the component library choice and find instructions on how to use it."
@@ -1874,7 +2302,10 @@
         "details": "1. **Build System Configuration**: Review and refine the Rsbuild configuration for CSS Modules. Ensure that `localIdentName` is configured for descriptive class names in development (e.g., `[name]__[local]--[hash:base64:5]`) and minified names in production. 2. **Styling Conventions**: Establish a convention where each component has its own corresponding `.module.css` file (e.g., `Button.tsx` and `Button.module.css` co-located). 3. **Component Refactoring**: Systematically refactor the React Aria Components on the test pages (migrated in Task #71). Replace any existing styling logic with CSS Modules. Import the style object (`import styles from './Component.module.css'`) and apply classes to the components (`className={styles.wrapper}`). 4. **Integrate Design Tokens**: Ensure all styles within the new CSS Modules utilize the CSS custom variables generated by Style Dictionary (from Task #70). For example, use `color: var(--color-text-primary);` instead of hardcoded hex values. 5. **Documentation**: Briefly document the established conventions in the project's `CONTRIBUTING.md` or a relevant ADR.",
         "testStrategy": "1. **Build Verification**: Run the development server and verify that component class names are human-readable. Run a production build and inspect the generated CSS and HTML to confirm that class names are hashed and minified. 2. **Visual Inspection**: Manually review all refactored test pages in the browser. Confirm that all React Aria Components are styled correctly and that there are no visual regressions. 3. **Scoped Styles Check**: Use the browser's developer tools to inspect two different components on the same page. Verify that their styles are properly scoped and that class names from one component's module do not affect the other. 4. **Code Review**: During the pull request review, confirm that all new styling adheres to the CSS Modules pattern and exclusively uses design tokens from the `packages/themes` package.",
         "status": "done",
-        "dependencies": [70, 71],
+        "dependencies": [
+          70,
+          71
+        ],
         "priority": "high",
         "subtasks": [
           {
@@ -1890,7 +2321,9 @@
             "id": 2,
             "title": "Establish Styling Pattern by Refactoring the Button Component",
             "description": "Create the first CSS module for the primary Button component to establish and validate the styling pattern. This involves creating a co-located `.module.css` file and applying its styles, ensuring the use of design tokens.",
-            "dependencies": ["72.1"],
+            "dependencies": [
+              "72.1"
+            ],
             "details": "Create a new file `Button.module.css` next to `Button.tsx`. Define the necessary styles for the button inside this file, using CSS custom properties from the design system (e.g., `background-color: var(--color-background-accent);`). In `Button.tsx`, import the styles via `import styles from './Button.module.css';` and apply the class to the component, for example: `className={styles.button}`.",
             "status": "done",
             "testStrategy": "Visually inspect the Button component on a test page to confirm it renders with the correct styles. Use browser developer tools to verify that the applied class name is scoped and that the CSS rules are correctly using the `var()` functions for design tokens."
@@ -1899,7 +2332,9 @@
             "id": 3,
             "title": "Refactor Core Form-Related React Aria Components",
             "description": "Systematically refactor the other core React Aria components on the test pages, such as Input, Checkbox, Select, and their related parts (Label, Description, etc.), to use the established CSS Modules pattern.",
-            "dependencies": ["72.2"],
+            "dependencies": [
+              "72.2"
+            ],
             "details": "For each core component (e.g., `Input`, `Checkbox`), create a corresponding `.module.css` file. Migrate all existing styling logic into this new file. Update the component's JSX to import and apply the modular class names. Ensure that all styles exclusively use design tokens for colors, spacing, typography, etc.",
             "status": "done",
             "testStrategy": "Go through each test page and visually inspect all refactored form components. Test their interactive states (hover, focus, disabled) to ensure styles are applied correctly. Check for any visual regressions compared to the previous implementation."
@@ -1908,7 +2343,9 @@
             "id": 4,
             "title": "Refactor Page Layout and Container Styles",
             "description": "Identify any remaining components on the test pages responsible for layout, structure, or containment, and refactor them to use CSS Modules. This ensures that all styling on the pages is fully modular and scoped, eliminating any remaining global or inline styles.",
-            "dependencies": ["72.3"],
+            "dependencies": [
+              "72.3"
+            ],
             "details": "Inspect the component tree of the test pages to find components like `PageWrapper`, `FormContainer`, or `Grid`. For each, create a `.module.css` file and move their styling logic into it. Update the components to use the imported style objects, removing any lingering `<style>` tags, inline style objects, or global class name dependencies.",
             "status": "done",
             "testStrategy": "Review the overall layout of the test pages in various viewport sizes to ensure the structure has not been broken. Use browser dev tools to confirm that no unscoped, global CSS classes (other than from a reset/normalize file) are being used for layout."
@@ -1917,7 +2354,9 @@
             "id": 5,
             "title": "Document CSS Modules Convention in CONTRIBUTING.md",
             "description": "Update the project's `CONTRIBUTING.md` or a relevant ADR to formally document the newly established conventions for styling components using CSS Modules. This ensures consistency and provides clear guidance for future development.",
-            "dependencies": ["72.4"],
+            "dependencies": [
+              "72.4"
+            ],
             "details": "The documentation should include: 1. A clear statement that CSS Modules is the primary styling method. 2. The file naming and co-location convention (`Component.tsx` and `Component.module.css`). 3. A code example showing how to import and apply styles. 4. A strict rule to use design tokens (CSS custom properties) for all style values.",
             "status": "done",
             "testStrategy": "Ask a team member to review the documentation for clarity and completeness. They should be able to understand and replicate the styling pattern for a new component based solely on the written guide."
@@ -1931,7 +2370,10 @@
         "details": "This task involves a comprehensive, full-stack implementation of internationalization. 1. **Shared Translations Package**: Create a new monorepo package `@favoritable/translations`. Initialize a `lingui.config.js` file in this package configured to scan source files in both `apps/web` and `apps/api`. Configure it to use the PO format and define initial locales for English (`en`) and Portuguese (`pt`). Add `lingui extract` and `lingui compile` scripts to its `package.json`. 2. **Backend Integration (Hono)**: Add `@lingui/core` and `@favoritable/translations` to the API service. Implement a Hono middleware that detects the user's locale from the `Accept-Language` request header and activates the appropriate language catalog for the request's scope. Refactor existing API responses and error messages (e.g., 'Bookmark not found', 'Invalid input') to use the `i18n._()` function for translation. 3. **Frontend Integration (React)**: Add `@lingui/react`, `@lingui/macro`, and `@favoritable/translations` to the web application. Configure the build tool (Rsbuild/Vite) to correctly process the Lingui macro. Wrap the application's root component in `<I18nProvider>` and implement logic to load catalogs and set the active locale based on browser settings or user preferences. Refactor UI components to use the `<Trans>` component for static text and the `useLingui` hook for dynamic translations. 4. **Development Workflow**: Add root-level npm scripts (`i18n:extract`, `i18n:compile`) to the monorepo to orchestrate the translation workflow. Document the process for developers to add new translatable strings, extract them to catalogs, and compile them for production use.",
         "testStrategy": "1. **Backend API Tests**: Update integration tests for existing endpoints (e.g., Bookmark CRUD). For each tested endpoint that returns a message, add assertions to verify that the message is correctly translated based on the `Accept-Language` header sent in the test request. Test with both `en` and `pt` headers. 2. **Frontend Component Tests**: For key components that display translated text, write unit tests that render the component within a mocked `<I18nProvider>`. Verify that the component displays the correct text when the provider's locale is switched between English and Portuguese. 3. **End-to-End (E2E) Tests**: Create E2E tests that simulate a user changing the application language. The test should navigate to several pages and assert that headings, buttons, and other key UI elements are rendered in the selected language. 4. **Workflow Verification**: Manually add a new translatable string in both a frontend component and a backend route. Run the `i18n:extract` script and confirm the new string appears in the `.po` catalog files. After adding a translation, run `i18n:compile` and verify the application uses the new compiled translation.",
         "status": "pending",
-        "dependencies": [2, 3],
+        "dependencies": [
+          2,
+          3
+        ],
         "priority": "medium",
         "subtasks": [
           {
@@ -1947,7 +2389,9 @@
             "id": 2,
             "title": "Integrate Lingui into Hono Backend and Refactor Core API Messages",
             "description": "Incorporate the Lingui i18n framework into the Hono API service. This involves adding dependencies, implementing a middleware to manage request locales, and refactoring key API responses to be translatable.",
-            "dependencies": ["73.1"],
+            "dependencies": [
+              "73.1"
+            ],
             "details": "In the `apps/api` package, add `@lingui/core` and `@favoritable/translations` as dependencies. Create a new Hono middleware that initializes i18n for each request using `setupI18n` from `@lingui/core`. The middleware must load the compiled catalogs from the shared package and activate the appropriate locale based on the `Accept-Language` request header, defaulting to 'en'. Refactor at least two existing API error messages (e.g., 'Bookmark not found', 'Invalid input') to use the `i18n._()` function.",
             "status": "pending",
             "testStrategy": "Update integration tests for the refactored API endpoints (as part of Task 50). For each endpoint, add test cases that send requests with `Accept-Language: en` and `Accept-Language: pt` headers. Assert that the response messages are correctly translated for each locale."
@@ -1956,7 +2400,9 @@
             "id": 3,
             "title": "Configure React Frontend with Lingui Provider and Build Tooling",
             "description": "Set up the React web application to use Lingui for frontend internationalization. This includes installing dependencies, configuring the build tool to support the Lingui macro, and wrapping the application in the `I18nProvider`.",
-            "dependencies": ["73.1"],
+            "dependencies": [
+              "73.1"
+            ],
             "details": "In the `apps/web` package, add `@lingui/react`, `@lingui/macro`, and `@favoritable/translations` as dependencies. Configure the Rsbuild/Vite build process to correctly transform the Lingui macro by adding the appropriate plugin (`@lingui/macro/swc` or equivalent). In the application's root component (`App.tsx`), implement logic to load the compiled catalogs and wrap the entire component tree with the `<I18nProvider>`, setting the initial locale based on browser settings (`navigator.language`).",
             "status": "pending",
             "testStrategy": "Create a simple test component that uses the `useLingui` hook to render a message. Write a new component test (as part of Task 49) to verify that this component renders the correct default English string when wrapped in a test-configured `I18nProvider`."
@@ -1965,7 +2411,9 @@
             "id": 4,
             "title": "Refactor UI Components and Establish Monorepo i18n Workflow",
             "description": "Refactor a key UI component, such as the Left-side Vertical Navigation, to use Lingui components for translatable text. Additionally, establish and document the monorepo-wide workflow for managing translations.",
-            "dependencies": ["73.3"],
+            "dependencies": [
+              "73.3"
+            ],
             "details": "Refactor the Left-side Vertical Navigation component (from Task 46) to replace static text labels (e.g., 'Collections', 'Labels') with the `<Trans>` macro from `@lingui/macro`. Add root-level scripts `i18n:extract` and `i18n:compile` to the monorepo's `package.json` that orchestrate running the corresponding scripts within the `@favoritable/translations` package. Run the new extract script to populate the `.po` files with the new UI strings. Document the developer workflow for adding and updating translations in `CONTRIBUTING.md`.",
             "status": "pending",
             "testStrategy": "Update the component tests for the Left-side Vertical Navigation (as part of Task 49). Ensure tests wrap the component in an `I18nProvider`. Verify that the navigation links render the correct English text. Add a test case that programmatically switches the provider's locale to 'pt' and asserts that the (initially untranslated) message IDs are rendered as placeholders."
@@ -1974,7 +2422,10 @@
             "id": 5,
             "title": "Add Portuguese Translations and Verify End-to-End Flow",
             "description": "Populate the Portuguese (`pt.po`) message catalog with translations for all extracted strings from both the backend and frontend. Compile the catalogs and perform an end-to-end verification to ensure the full-stack application correctly displays translations.",
-            "dependencies": ["73.2", "73.4"],
+            "dependencies": [
+              "73.2",
+              "73.4"
+            ],
             "details": "Edit the `packages/translations/locales/pt/messages.po` file and provide Portuguese translations for all extracted messages. Run the root `i18n:compile` script to generate the final compiled TypeScript modules. Manually test the full application flow: set the browser language to Portuguese and confirm the UI is translated. Use an API client to send a request with an `Accept-Language: pt` header to a refactored endpoint and confirm the API error message is translated.",
             "status": "pending",
             "testStrategy": "Enhance the automated tests from subtasks 2 and 4. Update the API integration tests to assert that the specific, correct Portuguese translation string is returned. Update the React component tests to assert that the final, correct Portuguese translations are rendered when the 'pt' locale is active."
@@ -1984,7 +2435,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-09-20T23:21:25.052Z",
+      "updated": "2025-09-27T21:55:36.363Z",
       "description": "Tasks for master context"
     }
   }

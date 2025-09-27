@@ -1,0 +1,61 @@
+.container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--theme-color-background-card);
+  border: 1px solid var(--theme-color-border-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.cardContent {
+  padding: var(--spacing-8);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--theme-color-text-primary);
+  text-align: center;
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--theme-color-text-secondary);
+  text-align: center;
+  margin: 0 0 var(--spacing-8) 0;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-6);
+}
+
+.termsContainer {
+  text-align: center;
+}
+
+.termsText {
+  font-size: var(--font-size-xs);
+  color: var(--theme-color-text-tertiary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.termsLink {
+  color: var(--semantic-colors-cta-primary-base);
+  text-decoration: none;
+}
+
+.termsLink:hover {
+  color: var(--semantic-colors-cta-primary-hover);
+  text-decoration: underline;
+}

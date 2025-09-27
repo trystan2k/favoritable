@@ -10,6 +10,8 @@
  */
 
 body {
+  padding: 0;
+  margin: 0;
   background-color: var(--semantic-colors-background-primary);
   color: var(--semantic-colors-text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -17,7 +19,7 @@ body {
 
 /**
  * React Aria Components styling with data attributes
- * 
+ *
  * All component-specific styles have been moved to CSS Modules:
  * - Button styles: components/Button.module.css
  * - Layout styles: routes/Layout.module.css

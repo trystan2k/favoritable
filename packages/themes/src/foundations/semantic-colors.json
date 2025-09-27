@@ -146,11 +146,26 @@
   },
   "brands": {
     "colors": {
-      "github": { "value": "#202831" },
-      "facebook": { "value": "#1676f2" },
-      "apple": { "value": "#000000" },
-      "google": { "value": "#4185f5" },
-      "microsoft": { "value": "#2f2f2f" }
+      "github": {
+        "background": { "value": "#202831" },
+        "text": { "value": "#ffffff" }
+      },
+      "facebook": {
+        "background": { "value": "#1877F2" },
+        "text": { "value": "#ffffff" }
+      },
+      "apple": {
+        "background": { "value": "#000000" },
+        "text": { "value": "#ffffff" }
+      },
+      "google": {
+        "background": { "value": "#ffffff" },
+        "text": { "value": "#000000" }
+      },
+      "x": {
+        "background": { "value": "#000000" },
+        "text": { "value": "#ffffff" }
+      }
     }
   }
 }
