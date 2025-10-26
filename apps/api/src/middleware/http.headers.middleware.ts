@@ -5,7 +5,7 @@ import { NotAcceptedError } from '../errors/errors.js';
 
 export const addCorsHeaders = () => {
   return cors({
-    origin: ['http://localhost:3000'], // Add your frontend origins
+    origin: ['http://localhost:3000', 'http://localhost:4000'], // Add your frontend origins
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowHeaders: ['Content-Type', 'Authorization'],
     exposeHeaders: ['Content-Length', 'X-Request-Id'],

@@ -4,14 +4,16 @@ import {
   Outlet,
   redirect,
 } from '@tanstack/react-router';
-import { isAuthenticated } from '../../auth/auth';
 import { ThemeSwitcher } from '../../components/ThemeSwitcher';
+import { authClient } from '../../lib/auth-client';
 import styles from './layout.module.css';
 
 export const Route = createFileRoute('/(protected)')({
   component: ProtectedLayout,
   beforeLoad: async ({ location }) => {
-    if (!isAuthenticated()) {
+    const { data: session } = await authClient.getSession();
+
+    if (!session?.user) {
       throw redirect({
         to: '/login',
         search: {
@@ -23,6 +25,17 @@ export const Route = createFileRoute('/(protected)')({
 });
 
 function ProtectedLayout() {
+  const { data: session } = authClient.useSession();
+
+  const handleLogout = async () => {
+    try {
+      await authClient.signOut();
+      // After logout, the route protection will redirect to login
+    } catch {
+      // Logout failed, but we'll let the user try again
+    }
+  };
+
   return (
     <>
       <nav className={styles.nav}>
@@ -34,7 +47,21 @@ function ProtectedLayout() {
             About
           </Link>
         </div>
-        <ThemeSwitcher />
+        <div className={styles.navActions}>
+          {session?.user && (
+            <span className={styles.userInfo}>
+              Welcome, {session.user.name}
+            </span>
+          )}
+          <button
+            type='button'
+            onClick={handleLogout}
+            className={styles.logoutButton}
+          >
+            Logout
+          </button>
+          <ThemeSwitcher />
+        </div>
       </nav>
       <Outlet />
     </>

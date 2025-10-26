@@ -9,7 +9,7 @@ import {
 describe('Home Route', () => {
   describe('Unauthenticated users', () => {
     test('should redirect to login when navigating to /home', async () => {
-      const router = createTestRouter(['/home']);
+      const router = await createTestRouter(['/home']);
       await renderWithRouter(router);
 
       // Unauthenticated users should see the login page
@@ -25,7 +25,7 @@ describe('Home Route', () => {
   describe('Authenticated users', () => {
     test('should render welcome heading when navigating to /home with auth', async () => {
       setupAuth(true);
-      const router = createTestRouter(['/home'], true);
+      const router = await createTestRouter(['/home'], true);
       await renderWithRouter(router);
 
       expect(
@@ -35,7 +35,7 @@ describe('Home Route', () => {
 
     test('should render all button variants when navigating to /home with auth', async () => {
       setupAuth(true);
-      const router = createTestRouter(['/home'], true);
+      const router = await createTestRouter(['/home'], true);
       await renderWithRouter(router);
 
       expect(
@@ -54,7 +54,7 @@ describe('Home Route', () => {
 
     test('should apply CSS modules classes correctly to components when navigating to /home with auth', async () => {
       setupAuth(true);
-      const router = createTestRouter(['/home'], true);
+      const router = await createTestRouter(['/home'], true);
       await renderWithRouter(router);
 
       // Check that buttons have CSS Module classes applied
@@ -64,7 +64,7 @@ describe('Home Route', () => {
 
     test('should render buttons in correct order when navigating to /home with auth', async () => {
       setupAuth(true);
-      const router = createTestRouter(['/home'], true);
+      const router = await createTestRouter(['/home'], true);
       await renderWithRouter(router);
 
       // Filter out the theme switcher button and only check the content buttons
@@ -92,7 +92,7 @@ describe('Home Route', () => {
 
     test('should render correct layout structure when navigating to /home with auth', async () => {
       setupAuth(true);
-      const router = createTestRouter(['/home'], true);
+      const router = await createTestRouter(['/home'], true);
       await renderWithRouter(router);
 
       // Find the main heading
@@ -113,7 +113,7 @@ describe('Home Route', () => {
 
     test('should render content in correct order when navigating to /home with auth', async () => {
       setupAuth(true);
-      const router = createTestRouter(['/home'], true);
+      const router = await createTestRouter(['/home'], true);
       await renderWithRouter(router);
 
       const heading = screen.getByRole('heading', { level: 3 });
@@ -126,7 +126,7 @@ describe('Home Route', () => {
 
     test('should render description text about design tokens when navigating to /home with auth', async () => {
       setupAuth(true);
-      const router = createTestRouter(['/home'], true);
+      const router = await createTestRouter(['/home'], true);
       await renderWithRouter(router);
 
       expect(

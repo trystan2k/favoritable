@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { SocialLoginButton } from '../../components/SocialLoginButton';
+import { authClient } from '../../lib/auth-client';
 import styles from './login.module.css';
 
 export const Route = createFileRoute('/login/')({
@@ -7,8 +8,21 @@ export const Route = createFileRoute('/login/')({
 });
 
 function Login() {
-  const handleSocialLogin = (provider: string) => {
-    window.location.href = `/login/${provider}`;
+  const handleSocialLogin = async (provider: string) => {
+    try {
+      await authClient.signIn.social({
+        provider: provider as
+          | 'google'
+          | 'facebook'
+          | 'github'
+          | 'apple'
+          | 'twitter',
+        callbackURL: window.location.origin,
+      });
+    } catch (_error) {
+      // TODO: Add proper error handling/display to user
+      // For now, silently fail - better error handling will be implemented later
+    }
   };
 
   return (

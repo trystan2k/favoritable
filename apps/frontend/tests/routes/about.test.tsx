@@ -1,12 +1,12 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 import styles from '../../src/routes/(protected)/Layout.module.css';
-import { createTestRouter, renderWithRouter, setupAuth } from '../test-utils';
+import { createTestRouter, renderWithRouter } from '../test-utils';
 
 describe('About Route', () => {
   describe('Unauthenticated users', () => {
     test('should redirect to login when navigating to /about', async () => {
-      const router = createTestRouter(['/about']);
+      const router = await createTestRouter(['/about']);
       await renderWithRouter(router);
 
       // Unauthenticated users should see the login page
@@ -19,7 +19,7 @@ describe('About Route', () => {
     });
 
     test('should show login form when redirected from /about', async () => {
-      const router = createTestRouter(['/about']);
+      const router = await createTestRouter(['/about']);
       await renderWithRouter(router);
 
       // Should see the login page content
@@ -34,8 +34,7 @@ describe('About Route', () => {
 
   describe('Authenticated users', () => {
     test('should render about heading when navigating to /about with auth', async () => {
-      setupAuth(true);
-      const router = createTestRouter(['/about'], true);
+      const router = await createTestRouter(['/about'], true);
       await renderWithRouter(router);
 
       expect(
@@ -44,8 +43,7 @@ describe('About Route', () => {
     });
 
     test('should render description text when navigating to /about with auth', async () => {
-      setupAuth(true);
-      const router = createTestRouter(['/about'], true);
+      const router = await createTestRouter(['/about'], true);
       await renderWithRouter(router);
 
       expect(
@@ -56,8 +54,7 @@ describe('About Route', () => {
     });
 
     test('should render large outline button when navigating to /about with auth', async () => {
-      setupAuth(true);
-      const router = createTestRouter(['/about'], true);
+      const router = await createTestRouter(['/about'], true);
       await renderWithRouter(router);
 
       const button = screen.getByRole('button', {
@@ -67,8 +64,7 @@ describe('About Route', () => {
     });
 
     test('should render correct layout structure when navigating to /about with auth', async () => {
-      setupAuth(true);
-      const router = createTestRouter(['/about'], true);
+      const router = await createTestRouter(['/about'], true);
       await renderWithRouter(router);
 
       // Find the div with page class by searching for the heading's parent
@@ -82,8 +78,7 @@ describe('About Route', () => {
     });
 
     test('should render content in correct order when navigating to /about with auth', async () => {
-      setupAuth(true);
-      const router = createTestRouter(['/about'], true);
+      const router = await createTestRouter(['/about'], true);
       await renderWithRouter(router);
 
       const heading = screen.getByRole('heading', { level: 3 });
@@ -109,8 +104,7 @@ describe('About Route', () => {
     });
 
     test('should render button with correct size attribute when navigating to /about with auth', async () => {
-      setupAuth(true);
-      const router = createTestRouter(['/about'], true);
+      const router = await createTestRouter(['/about'], true);
       await renderWithRouter(router);
 
       const button = screen.getByRole('button', {
@@ -122,8 +116,7 @@ describe('About Route', () => {
     });
 
     test('should render page with proper semantic structure when navigating to /about with auth', async () => {
-      setupAuth(true);
-      const router = createTestRouter(['/about'], true);
+      const router = await createTestRouter(['/about'], true);
       await renderWithRouter(router);
 
       // Check that we have exactly one heading (content heading, plus navigation links)

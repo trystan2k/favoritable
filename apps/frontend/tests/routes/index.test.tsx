@@ -1,12 +1,12 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 import styles from '../../src/routes/(protected)/Layout.module.css';
-import { createTestRouter, renderWithRouter, setupAuth } from '../test-utils';
+import { createTestRouter, renderWithRouter } from '../test-utils';
 
 describe('Index Route', () => {
   describe('Unauthenticated users', () => {
     test('should redirect to login when navigating to /', async () => {
-      const router = createTestRouter(['/']);
+      const router = await createTestRouter(['/']);
       await renderWithRouter(router);
 
       // Unauthenticated users should see the login page
@@ -19,7 +19,7 @@ describe('Index Route', () => {
     });
 
     test('should show login form when redirected from /', async () => {
-      const router = createTestRouter(['/']);
+      const router = await createTestRouter(['/']);
       await renderWithRouter(router);
 
       // Should see the login page content
@@ -37,8 +37,7 @@ describe('Index Route', () => {
 
   describe('Authenticated users', () => {
     test('should render welcome heading when navigating to / with auth', async () => {
-      setupAuth(true);
-      const router = createTestRouter(['/'], true);
+      const router = await createTestRouter(['/'], true);
       await renderWithRouter(router);
 
       // The index route redirects to /home, so we should see the home content
@@ -48,8 +47,7 @@ describe('Index Route', () => {
     });
 
     test('should render all button variants when navigating to / with auth', async () => {
-      setupAuth(true);
-      const router = createTestRouter(['/'], true);
+      const router = await createTestRouter(['/'], true);
       await renderWithRouter(router);
 
       expect(
@@ -67,8 +65,7 @@ describe('Index Route', () => {
     });
 
     test('should apply CSS modules classes correctly to components when navigating to / with auth', async () => {
-      setupAuth(true);
-      const router = createTestRouter(['/'], true);
+      const router = await createTestRouter(['/'], true);
       await renderWithRouter(router);
 
       // Check that CSS modules classes are applied
@@ -84,14 +81,15 @@ describe('Index Route', () => {
     });
 
     test('should render buttons in correct order when navigating to / with auth', async () => {
-      setupAuth(true);
-      const router = createTestRouter(['/'], true);
+      const router = await createTestRouter(['/'], true);
       await renderWithRouter(router);
 
-      // Filter out the theme switcher button and only check the content buttons
+      // Filter out the theme switcher and logout buttons and only check the content buttons
       const allButtons = screen.getAllByRole('button');
       const contentButtons = allButtons.filter(
-        (button) => !button.getAttribute('aria-label')?.includes('Switch to')
+        (button) =>
+          !button.getAttribute('aria-label')?.includes('Switch to') &&
+          !button.textContent?.includes('Logout')
       );
 
       expect(contentButtons).toHaveLength(4); // Four button variants
@@ -102,8 +100,7 @@ describe('Index Route', () => {
     });
 
     test('should render correct layout structure when navigating to / with auth', async () => {
-      setupAuth(true);
-      const router = createTestRouter(['/'], true);
+      const router = await createTestRouter(['/'], true);
       await renderWithRouter(router);
 
       // Find the main div that now uses CSS custom properties - use specific heading
@@ -126,8 +123,7 @@ describe('Index Route', () => {
     });
 
     test('should render content in correct order when navigating to / with auth', async () => {
-      setupAuth(true);
-      const router = createTestRouter(['/'], true);
+      const router = await createTestRouter(['/'], true);
       await renderWithRouter(router);
 
       const heading = screen.getByRole('heading', { level: 3 });
