@@ -4,7 +4,7 @@ import { createTestRouter, renderWithRouter } from '../test-utils';
 
 describe('Root Layout', () => {
   test('should render router devtools in development and redirect to login for unauthenticated users', async () => {
-    const router = createTestRouter(['/home'], false);
+    const router = await createTestRouter(['/home'], false);
     await renderWithRouter(router);
 
     // Since user is unauthenticated, they should be redirected to login
@@ -15,7 +15,7 @@ describe('Root Layout', () => {
   });
 
   test('should render outlet for child routes when user is authenticated', async () => {
-    const router = createTestRouter(['/home'], true);
+    const router = await createTestRouter(['/home'], true);
     await renderWithRouter(router);
 
     // When authenticated, the user should see the protected home page
@@ -25,7 +25,7 @@ describe('Root Layout', () => {
   });
 
   test('should handle login routes correctly for unauthenticated users', async () => {
-    const router = createTestRouter(['/login'], false);
+    const router = await createTestRouter(['/login'], false);
     await renderWithRouter(router);
 
     // Login route should render through root layout outlet
@@ -35,7 +35,7 @@ describe('Root Layout', () => {
   });
 
   test('should redirect authenticated users away from login page', async () => {
-    const router = createTestRouter(['/login'], true);
+    const router = await createTestRouter(['/login'], true);
     await renderWithRouter(router);
 
     // Authenticated users accessing login should be redirected to home
@@ -45,7 +45,7 @@ describe('Root Layout', () => {
   });
 
   test('should handle protected routes correctly for authenticated users', async () => {
-    const router = createTestRouter(['/about'], true);
+    const router = await createTestRouter(['/about'], true);
     await renderWithRouter(router);
 
     // Protected routes should render through root layout outlet when authenticated
@@ -55,7 +55,7 @@ describe('Root Layout', () => {
   });
 
   test('should redirect unauthenticated users from protected routes to login', async () => {
-    const router = createTestRouter(['/about'], false);
+    const router = await createTestRouter(['/about'], false);
     await renderWithRouter(router);
 
     // Unauthenticated users should be redirected to login
@@ -65,7 +65,7 @@ describe('Root Layout', () => {
   });
 
   test('should render 404 page for non-existent routes', async () => {
-    const router = createTestRouter(['/non-existent-route'], false);
+    const router = await createTestRouter(['/non-existent-route'], false);
     await renderWithRouter(router);
 
     // Root layout should render its notFoundComponent

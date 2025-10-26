@@ -4,11 +4,6 @@ import ReactDOM from 'react-dom/client';
 
 import './styles/global.css';
 
-import {
-  type AuthContextType,
-  AuthProvider,
-  useAuth,
-} from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { routeTree } from './routeTree.gen';
 
@@ -17,23 +12,44 @@ const router = createRouter({
   context: {
     // auth will initially be undefined
     // We'll be passing down the auth state from within a React component
-    auth: undefined,
+    auth: false,
   },
+  defaultPreload: 'intent',
+  scrollRestoration: true,
+  defaultStructuralSharing: true,
+  defaultPreloadStaleTime: 0,
 });
+
+// Define the Better Auth session type for router context
+type SessionData = {
+  user: {
+    id: string;
+    email: string;
+    name: string;
+    provider: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+} | null;
+
+type BetterAuthContextType = {
+  session: SessionData;
+  isPending: boolean;
+  error: Error | null;
+};
 
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;
   }
   interface RouteContext {
-    auth?: AuthContextType;
+    auth?: BetterAuthContextType;
   }
 }
 
-// Inner component that uses the auth context
+// Inner component that uses the Better Auth session
 function App() {
-  const auth = useAuth();
-  return <RouterProvider router={router} context={{ auth }} />;
+  return <RouterProvider router={router} />;
 }
 
 const rootEl = document.getElementById('root');
@@ -42,9 +58,7 @@ if (rootEl) {
   root.render(
     <StrictMode>
       <ThemeProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
+        <App />
       </ThemeProvider>
     </StrictMode>
   );

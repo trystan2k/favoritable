@@ -42,7 +42,7 @@ export const auth = betterAuth({
       appBundleIdentifier: process.env.APPLE_APP_BUNDLE_IDENTIFIER,
     },
   },
-  trustedOrigins: ['https://appleid.apple.com'],
+  trustedOrigins: ['https://appleid.apple.com', 'http://localhost:4000'],
   advanced: {
     cookiePrefix: 'fav',
     defaultCookieAttributes: {

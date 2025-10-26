@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { SocialLoginButton } from '../../components/SocialLoginButton';
+import { authClient } from '../../lib/auth-client';
 import styles from './login.module.css';
 
 export const Route = createFileRoute('/login/')({
@@ -7,19 +8,21 @@ export const Route = createFileRoute('/login/')({
 });
 
 function Login() {
-  const getApiBaseUrl = (): string => {
-    // In development, use localhost
-    if (import.meta.env.DEV) {
-      return 'http://localhost:3000';
+  const handleSocialLogin = async (provider: string) => {
+    try {
+      await authClient.signIn.social({
+        provider: provider as
+          | 'google'
+          | 'facebook'
+          | 'github'
+          | 'apple'
+          | 'twitter',
+        callbackURL: 'http://localhost:4000', // Redirect to home after successful login
+      });
+    } catch (_error) {
+      // TODO: Add proper error handling/display to user
+      // For now, silently fail - better error handling will be implemented later
     }
-
-    // In production, use the current origin
-    return window.location.origin;
-  };
-
-  const handleSocialLogin = (provider: string) => {
-    const apiBaseUrl = getApiBaseUrl();
-    window.location.href = `${apiBaseUrl}/api/auth/callback/${provider}`;
   };
 
   return (

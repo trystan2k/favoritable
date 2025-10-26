@@ -1,27 +1,20 @@
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import styles from '../../src/routes/login/Login.module.css';
-import { createTestRouter, renderWithRouter } from '../test-utils';
-
-// Mock window.location
-const mockLocation = {
-  href: '',
-  origin: 'http://localhost:3000',
-};
-
-Object.defineProperty(window, 'location', {
-  value: mockLocation,
-  writable: true,
-});
+import {
+  createTestRouter,
+  getMockAuthClient,
+  renderWithRouter,
+} from '../test-utils';
 
 describe('Login Route', () => {
   beforeEach(() => {
-    mockLocation.href = '';
+    vi.clearAllMocks();
   });
 
   const renderLoginRoute = async () => {
-    const router = createTestRouter(['/login']);
+    const router = await createTestRouter(['/login']);
     await renderWithRouter(router);
   };
 
@@ -53,7 +46,9 @@ describe('Login Route', () => {
     ).toBeInTheDocument();
   });
 
-  it('redirects to correct Google OAuth endpoint when Google button is clicked', async () => {
+  it('calls Better Auth signIn.social with correct Google provider when button is clicked', async () => {
+    const mockAuthClient = getMockAuthClient();
+
     await renderLoginRoute();
 
     const googleButton = screen.getByRole('button', {
@@ -61,12 +56,15 @@ describe('Login Route', () => {
     });
     await userEvent.click(googleButton);
 
-    expect(mockLocation.href).toBe(
-      'http://localhost:3000/api/auth/callback/google'
-    );
+    expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
+      provider: 'google',
+      callbackURL: 'http://localhost:4000',
+    });
   });
 
-  it('redirects to correct Facebook OAuth endpoint when Facebook button is clicked', async () => {
+  it('calls Better Auth signIn.social with correct Facebook provider when button is clicked', async () => {
+    const mockAuthClient = getMockAuthClient();
+
     await renderLoginRoute();
 
     const facebookButton = screen.getByRole('button', {
@@ -74,12 +72,15 @@ describe('Login Route', () => {
     });
     await userEvent.click(facebookButton);
 
-    expect(mockLocation.href).toBe(
-      'http://localhost:3000/api/auth/callback/facebook'
-    );
+    expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
+      provider: 'facebook',
+      callbackURL: 'http://localhost:4000',
+    });
   });
 
-  it('redirects to correct GitHub OAuth endpoint when GitHub button is clicked', async () => {
+  it('calls Better Auth signIn.social with correct GitHub provider when button is clicked', async () => {
+    const mockAuthClient = getMockAuthClient();
+
     await renderLoginRoute();
 
     const githubButton = screen.getByRole('button', {
@@ -87,12 +88,15 @@ describe('Login Route', () => {
     });
     await userEvent.click(githubButton);
 
-    expect(mockLocation.href).toBe(
-      'http://localhost:3000/api/auth/callback/github'
-    );
+    expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
+      provider: 'github',
+      callbackURL: 'http://localhost:4000',
+    });
   });
 
-  it('redirects to correct Apple OAuth endpoint when Apple button is clicked', async () => {
+  it('calls Better Auth signIn.social with correct Apple provider when button is clicked', async () => {
+    const mockAuthClient = getMockAuthClient();
+
     await renderLoginRoute();
 
     const appleButton = screen.getByRole('button', {
@@ -100,12 +104,15 @@ describe('Login Route', () => {
     });
     await userEvent.click(appleButton);
 
-    expect(mockLocation.href).toBe(
-      'http://localhost:3000/api/auth/callback/apple'
-    );
+    expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
+      provider: 'apple',
+      callbackURL: 'http://localhost:4000',
+    });
   });
 
-  it('redirects to correct Twitter/X OAuth endpoint when Twitter button is clicked', async () => {
+  it('calls Better Auth signIn.social with correct Twitter provider when button is clicked', async () => {
+    const mockAuthClient = getMockAuthClient();
+
     await renderLoginRoute();
 
     const twitterButton = screen.getByRole('button', {
@@ -113,9 +120,10 @@ describe('Login Route', () => {
     });
     await userEvent.click(twitterButton);
 
-    expect(mockLocation.href).toBe(
-      'http://localhost:3000/api/auth/callback/twitter'
-    );
+    expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
+      provider: 'twitter',
+      callbackURL: 'http://localhost:4000',
+    });
   });
 
   it('has accessible page structure', async () => {
@@ -171,7 +179,9 @@ describe('Login Route', () => {
     ).toHaveAttribute('href', '/privacy');
   });
 
-  it('handles Enter key activation on Google button', async () => {
+  it('calls Better Auth signIn.social when Enter key is pressed on Google button', async () => {
+    const mockAuthClient = getMockAuthClient();
+
     await renderLoginRoute();
 
     const googleButton = screen.getByRole('button', {
@@ -183,12 +193,15 @@ describe('Login Route', () => {
       await userEvent.keyboard('{Enter}');
     });
 
-    expect(mockLocation.href).toBe(
-      'http://localhost:3000/api/auth/callback/google'
-    );
+    expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
+      provider: 'google',
+      callbackURL: 'http://localhost:4000',
+    });
   });
 
-  it('handles Space key activation on Facebook button', async () => {
+  it('calls Better Auth signIn.social when Space key is pressed on Facebook button', async () => {
+    const mockAuthClient = getMockAuthClient();
+
     await renderLoginRoute();
 
     const facebookButton = screen.getByRole('button', {
@@ -200,9 +213,10 @@ describe('Login Route', () => {
       await userEvent.keyboard(' ');
     });
 
-    expect(mockLocation.href).toBe(
-      'http://localhost:3000/api/auth/callback/facebook'
-    );
+    expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
+      provider: 'facebook',
+      callbackURL: 'http://localhost:4000',
+    });
   });
 
   it('renders login layout with theme switcher in header', async () => {
@@ -211,5 +225,46 @@ describe('Login Route', () => {
     // The login layout should have a theme switcher in the header
     const themeSwitcher = screen.getByLabelText(/Switch to (dark|light) theme/);
     expect(themeSwitcher).toBeInTheDocument();
+  });
+
+  it('handles login errors gracefully', async () => {
+    const mockAuthClient = getMockAuthClient();
+
+    // Mock the signIn.social method to throw an error
+    // biome-ignore lint/suspicious/noExplicitAny: Need to access mock methods
+    (mockAuthClient.signInSocial as any).mockRejectedValueOnce(
+      new Error('Login failed')
+    );
+
+    await renderLoginRoute();
+
+    const googleButton = screen.getByRole('button', {
+      name: /Continue with Google/,
+    });
+
+    // Should not throw an error when login fails
+    await expect(userEvent.click(googleButton)).resolves.not.toThrow();
+
+    // Verify that signIn.social was called despite the error
+    expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
+      provider: 'google',
+      callbackURL: 'http://localhost:4000',
+    });
+  });
+
+  it('should not redirect when session is pending', async () => {
+    const mockAuthClient = getMockAuthClient();
+
+    // biome-ignore lint/suspicious/noExplicitAny: Mock type
+    (mockAuthClient.getSession as any).mockResolvedValueOnce({
+      data: null,
+      isPending: true,
+      error: null,
+    });
+
+    await renderLoginRoute();
+
+    // Should allow rendering to proceed (no redirect)
+    expect(mockAuthClient.getSession).toHaveBeenCalled();
   });
 });

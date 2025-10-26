@@ -2509,7 +2509,7 @@
         "description": "Refactor the existing frontend authentication logic to use the official `better-auth/react` client and hooks. This will replace the custom `AuthContext` implementation, improving maintainability and aligning with recommended patterns for session management and OAuth flows.",
         "details": "The current implementation in Task #74 uses a generic React Context for authentication, which can be improved by adopting the official `better-auth/react` library. This task involves a full refactor to align with the library's conventions.\n\n1. **Installation**: Add the Better Auth React client to the frontend project: `pnpm add better-auth/react`.\n2. **Client Initialization**: At the root of the React application (e.g., `main.tsx`), import `createAuthClient` and initialize it. Wrap the main application component with the provider component from the library to make the auth client available throughout the component tree.\n3. **Replace AuthContext**: Remove the custom `AuthContext` and its provider. Search the codebase for all instances of `useContext(AuthContext)` and replace them with the `useSession` hook from `better-auth/react`. This hook provides reactive session data, including user information, authentication status (`authenticated`, `unauthenticated`), and loading states.\n4. **Refactor Login Flow**: Update the login UI components. Instead of using `window.location` to redirect to backend OAuth endpoints, use the client instance. For example, a Google login button's `onClick` handler should call `authClient.signIn.social({ provider: 'google' })`.\n5. **Refactor Logout Flow**: Replace the manual HTTP call to the backend's logout endpoint with a single call to `authClient.signOut()`.\n6. **Update Protected Routes**: Modify the protected route logic. Instead of checking a value from the old custom context, use the status provided by the `useSession` hook (e.g., `const { session } = useSession(); if (session.status !== 'authenticated') { ... }`). The library's hooks will handle redirects and loading states more gracefully.\n7. **Update Tests**: All unit and integration tests related to authentication must be updated. Mocks for the custom `AuthContext` should be replaced with mocks for the `better-auth/react` hooks and client.",
         "testStrategy": "1. **Login Verification**: Test the login flow with at least one social provider (e.g., Google). Confirm that after a successful OAuth redirect, the `useSession` hook returns a session object with `status: 'authenticated'` and correct user data.\n2. **Session Persistence**: After logging in, perform a full page refresh. Verify that the user remains authenticated and the session is correctly restored.\n3. **Protected Route Access**: While logged out, attempt to navigate directly to a protected URL. Verify the application redirects to the login page. After logging in, navigate to the same protected URL and confirm the page loads correctly.\n4. **Logout Verification**: Click the logout button. Verify that the `useSession` hook updates to reflect an unauthenticated state and the user is redirected to a public page (e.g., the login page).\n5. **Regression Testing**: Run the entire frontend test suite (`pnpm test`) to ensure that all updated tests pass and that the refactoring has not introduced any regressions in other parts of the application.",
-        "status": "in-progress",
+        "status": "done",
         "dependencies": [
           74
         ],
@@ -2521,7 +2521,7 @@
             "description": "Add the `better-auth/react` library to the project and configure its provider at the root of the application. This is the foundational step for migrating away from the custom `AuthContext`.",
             "dependencies": [],
             "details": "1. Add the dependency to the frontend project by running `pnpm add better-auth/react`.\n2. In the main application entry point (e.g., `main.tsx`), import `createAuthClient` and `AuthProvider` from the library.\n3. Initialize the client: `const authClient = createAuthClient({ url: '/api/auth' });`.\n4. Wrap the root application component with the provider, passing the client instance: `<AuthProvider client={authClient}><App /></AuthProvider>`.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "After wrapping the application, run the dev server and ensure the app loads without any runtime errors. Check the browser console for any warnings or errors related to the new provider. The application's functionality should remain unchanged at this stage."
           },
           {
@@ -2532,7 +2532,7 @@
               "75.1"
             ],
             "details": "1. Delete the file containing the `AuthContext` definition and its provider component.\n2. Perform a global search for `useContext(AuthContext)`.\n3. In each component where it's found, import `useSession` from `better-auth/react`.\n4. Replace the context usage (e.g., `const { user, isAuthenticated } = useContext(AuthContext)`) with the hook: `const { session, status } = useSession()`.\n5. Update the component's logic to use `session.user` and check `status === 'authenticated'` instead of the old context values.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Manually navigate through the application. UI elements that depend on authentication state (e.g., user avatar, conditional navigation links) will likely appear in their 'logged-out' or 'loading' state. The primary goal is to ensure the application does not crash due to the removal of the old context."
           },
           {
@@ -2543,7 +2543,7 @@
               "75.2"
             ],
             "details": "1. In the login component, import and use the `useAuthClient` hook to get an instance of the auth client.\n2. For social login buttons (e.g., Google), replace the `onClick` handler's logic (e.g., `window.location.href = ...`) with a call to `authClient.signIn.social({ provider: 'google' })`.\n3. In the component handling logout (e.g., a user dropdown menu), replace the manual API call to the backend's logout endpoint with a single call to `authClient.signOut()`.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Perform a full login-logout cycle. Click a social login button and verify it redirects to the correct OAuth provider. After successful authentication, confirm you are redirected back to the app and the UI reflects the logged-in state (e.g., user name is displayed). Click the logout button and verify the UI returns to the logged-out state."
           },
           {
@@ -2554,7 +2554,7 @@
               "75.3"
             ],
             "details": "1. Locate the protected route component or logic (e.g., `<ProtectedRoute />` or a layout component).\n2. Use the `useSession` hook to get the `status`.\n3. Implement the following logic:\n   - If `status === 'loading'`, render a loading spinner or skeleton screen.\n   - If `status === 'unauthenticated'`, use the router's navigation function to redirect the user to the login page.\n   - If `status === 'authenticated'`, render the route's child components.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "1. While logged out, attempt to directly navigate to a protected URL. Verify you are redirected to the login page.\n2. Log in and navigate to the protected URL. Verify you can access the content.\n3. While on the protected page, perform a logout action. Verify you are immediately redirected to a public page (e.g., login or home)."
           },
           {
@@ -2565,7 +2565,7 @@
               "75.4"
             ],
             "details": "1. Search the test suite for mocks of the old `AuthContext`.\n2. Use `vi.mock` (or `jest.mock`) to mock the `better-auth/react` module.\n3. Provide mock implementations for the `useSession` hook that return different states: `{ status: 'authenticated', session: { user: ... } }`, `{ status: 'unauthenticated', session: null }`, and `{ status: 'loading', session: null }`.\n4. Update test cases and assertions to correctly render components based on these mocked states and verify the expected behavior.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run the entire frontend test suite using `pnpm test`. All tests, especially those related to authentication, protected pages, and components displaying user information, must pass. Confirm that test coverage for authentication logic has not decreased."
           }
         ]
@@ -2573,7 +2573,7 @@
     ],
     "metadata": {
       "created": "2025-07-29T14:00:25.533Z",
-      "updated": "2025-09-27T23:47:58.981Z",
+      "updated": "2025-09-28T00:31:15.617Z",
       "description": "Tasks for master context"
     }
   }

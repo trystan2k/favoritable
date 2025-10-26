@@ -5,28 +5,22 @@ import {
   redirect,
 } from '@tanstack/react-router';
 import { ThemeSwitcher } from '../../components/ThemeSwitcher';
-import { type AuthContextType, useAuth } from '../../contexts/AuthContext';
+import { authClient } from '../../lib/auth-client';
 import styles from './layout.module.css';
 
 export const Route = createFileRoute('/(protected)')({
   component: ProtectedLayout,
-  beforeLoad: async ({ location, context }) => {
+  beforeLoad: async ({ location }) => {
     // Access auth context from the router context
-    const auth = (context as { auth?: AuthContextType }).auth;
-
-    // If auth is still loading, we should wait or redirect
-    // In our current setup, the app loads with auth state, so this should be resolved
-    if (!auth) {
-      throw redirect({
-        to: '/login',
-        search: {
-          redirect: location.href,
-        },
-      });
+    const { data, isPending } = await authClient.getSession();
+    if (isPending) {
+      // If auth is still loading, wait for it to complete
+      // In Better Auth, we wait for the session to resolve
+      return;
     }
 
-    // If not authenticated, redirect to login
-    if (!auth.isAuthenticated) {
+    if (!data?.user) {
+      // If there's no session, redirect to login
       throw redirect({
         to: '/login',
         search: {
@@ -38,11 +32,11 @@ export const Route = createFileRoute('/(protected)')({
 });
 
 function ProtectedLayout() {
-  const { user, logout } = useAuth();
+  const { data: session } = authClient.useSession();
 
   const handleLogout = async () => {
     try {
-      await logout();
+      await authClient.signOut();
       // After logout, the route protection will redirect to login
     } catch {
       // Logout failed, but we'll let the user try again
@@ -61,8 +55,10 @@ function ProtectedLayout() {
           </Link>
         </div>
         <div className={styles.navActions}>
-          {user && (
-            <span className={styles.userInfo}>Welcome, {user.name}</span>
+          {session?.user && (
+            <span className={styles.userInfo}>
+              Welcome, {session.user.name}
+            </span>
           )}
           <button
             type='button'

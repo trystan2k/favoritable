@@ -9,7 +9,7 @@ describe('Theme Switcher', () => {
   });
 
   test('should render theme switcher button', async () => {
-    const router = createTestRouter(['/']);
+    const router = await createTestRouter(['/']);
     await renderWithRouter(router);
 
     const themeSwitcher = screen.getByLabelText('Switch to dark theme');
@@ -19,7 +19,7 @@ describe('Theme Switcher', () => {
   });
 
   test('should toggle theme when clicked', async () => {
-    const router = createTestRouter(['/']);
+    const router = await createTestRouter(['/']);
     await renderWithRouter(router);
 
     const user = userEvent.setup();
@@ -37,7 +37,7 @@ describe('Theme Switcher', () => {
   });
 
   test('should initialize with light theme by default', async () => {
-    const router = createTestRouter(['/']);
+    const router = await createTestRouter(['/']);
     await renderWithRouter(router);
 
     const themeSwitcher = screen.getByLabelText('Switch to dark theme');

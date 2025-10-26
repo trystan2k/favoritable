@@ -115,9 +115,9 @@ importers:
       '@tanstack/react-router':
         specifier: ~1.131.5
         version: 1.131.5(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      ky:
-        specifier: ~1.11.0
-        version: 1.11.0
+      better-auth:
+        specifier: 1.3.7
+        version: 1.3.7(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(zod@3.25.76)
       lucide-react:
         specifier: ~0.544.0
         version: 0.544.0(react@19.1.1)
@@ -3310,10 +3310,6 @@ packages:
     peerDependencies:
       '@types/node': '>=18'
       typescript: '>=5.0.4'
-
-  ky@1.11.0:
-    resolution: {integrity: sha512-NEyo0ICpS0cqSuyoJFMCnHOZJILqXsKhIZlHJGDYaH8OB5IFrGzuBpEwyoMZG6gUKMPrazH30Ax5XKaujvD8ag==}
-    engines: {node: '>=18'}
 
   kysely@0.28.5:
     resolution: {integrity: sha512-rlB0I/c6FBDWPcQoDtkxi9zIvpmnV5xoIalfCMSMCa7nuA6VGA3F54TW9mEgX4DVf10sXAWCF5fDbamI/5ZpKA==}
@@ -7813,8 +7809,6 @@ snapshots:
       typescript: 5.9.2
       zod: 3.25.76
       zod-validation-error: 3.5.3(zod@3.25.76)
-
-  ky@1.11.0: {}
 
   kysely@0.28.5: {}
 
