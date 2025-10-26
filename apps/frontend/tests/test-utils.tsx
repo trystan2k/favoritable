@@ -13,7 +13,6 @@ const mocks = vi.hoisted(() => ({
   useSession: vi.fn(() => ({ data: null, isPending: false, error: null })),
   getSession: vi.fn(async () => ({
     data: null,
-    isPending: false,
     error: null,
   })),
   signInSocial: vi.fn(),
@@ -51,19 +50,18 @@ export const setupAuth = async (isAuthenticated: boolean): Promise<void> => {
       },
     };
 
-    // biome-ignore lint/suspicious/noExplicitAny: Mock type
-    (mocks.useSession.mockReturnValue as any)({
+    vi.mocked(mocks.useSession).mockReturnValue({
       data: mockSession,
       isPending: false,
       error: null,
-    });
+      // biome-ignore lint/suspicious/noExplicitAny: Mock type assertion required for flexible test data
+    } as any);
 
-    // biome-ignore lint/suspicious/noExplicitAny: Mock type
-    (mocks.getSession.mockResolvedValue as any)({
+    vi.mocked(mocks.getSession).mockResolvedValue({
       data: mockSession,
-      isPending: false,
       error: null,
-    });
+      // biome-ignore lint/suspicious/noExplicitAny: Mock type assertion required for flexible test data
+    } as any);
   } else {
     mocks.useSession.mockReturnValue({
       data: null,
@@ -73,7 +71,6 @@ export const setupAuth = async (isAuthenticated: boolean): Promise<void> => {
 
     mocks.getSession.mockResolvedValue({
       data: null,
-      isPending: false,
       error: null,
     });
   }

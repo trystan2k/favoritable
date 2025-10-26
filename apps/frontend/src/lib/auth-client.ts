@@ -11,11 +11,8 @@ const getApiBaseUrl = (): string => {
   return window.location.origin;
 };
 
-// Create Better Auth client instance
-const client = createAuthClient({
-  baseURL: getApiBaseUrl(),
-});
-
-// Export client with proper typing
-// biome-ignore lint/suspicious/noExplicitAny: Better Auth client types not fully compatible
-export const authClient: any = client;
+export const authClient: ReturnType<typeof createAuthClient> = createAuthClient(
+  {
+    baseURL: getApiBaseUrl(),
+  }
+);

@@ -6,16 +6,9 @@ import styles from './layout.module.css';
 export const Route = createFileRoute('/login')({
   component: LoginLayout,
   beforeLoad: async () => {
-    const { data, isPending } = await authClient.getSession();
+    const { data: session } = await authClient.getSession();
 
-    if (isPending) {
-      // If auth is still loading, wait for it to complete
-      // In Better Auth, we wait for the session to resolve
-      return;
-    }
-
-    if (data?.user) {
-      // If user is authenticated, redirect to home
+    if (session?.user) {
       throw redirect({
         to: '/home',
       });

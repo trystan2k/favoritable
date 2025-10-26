@@ -17,7 +17,7 @@ function Login() {
           | 'github'
           | 'apple'
           | 'twitter',
-        callbackURL: 'http://localhost:4000', // Redirect to home after successful login
+        callbackURL: window.location.origin,
       });
     } catch (_error) {
       // TODO: Add proper error handling/display to user

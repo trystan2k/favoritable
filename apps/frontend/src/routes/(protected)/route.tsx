@@ -11,16 +11,9 @@ import styles from './layout.module.css';
 export const Route = createFileRoute('/(protected)')({
   component: ProtectedLayout,
   beforeLoad: async ({ location }) => {
-    // Access auth context from the router context
-    const { data, isPending } = await authClient.getSession();
-    if (isPending) {
-      // If auth is still loading, wait for it to complete
-      // In Better Auth, we wait for the session to resolve
-      return;
-    }
+    const { data: session } = await authClient.getSession();
 
-    if (!data?.user) {
-      // If there's no session, redirect to login
+    if (!session?.user) {
       throw redirect({
         to: '/login',
         search: {

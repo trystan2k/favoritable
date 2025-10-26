@@ -58,7 +58,7 @@ describe('Login Route', () => {
 
     expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
       provider: 'google',
-      callbackURL: 'http://localhost:4000',
+      callbackURL: window.location.origin,
     });
   });
 
@@ -74,7 +74,7 @@ describe('Login Route', () => {
 
     expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
       provider: 'facebook',
-      callbackURL: 'http://localhost:4000',
+      callbackURL: window.location.origin,
     });
   });
 
@@ -90,7 +90,7 @@ describe('Login Route', () => {
 
     expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
       provider: 'github',
-      callbackURL: 'http://localhost:4000',
+      callbackURL: window.location.origin,
     });
   });
 
@@ -106,7 +106,7 @@ describe('Login Route', () => {
 
     expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
       provider: 'apple',
-      callbackURL: 'http://localhost:4000',
+      callbackURL: window.location.origin,
     });
   });
 
@@ -122,7 +122,7 @@ describe('Login Route', () => {
 
     expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
       provider: 'twitter',
-      callbackURL: 'http://localhost:4000',
+      callbackURL: window.location.origin,
     });
   });
 
@@ -195,7 +195,7 @@ describe('Login Route', () => {
 
     expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
       provider: 'google',
-      callbackURL: 'http://localhost:4000',
+      callbackURL: window.location.origin,
     });
   });
 
@@ -215,7 +215,7 @@ describe('Login Route', () => {
 
     expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
       provider: 'facebook',
-      callbackURL: 'http://localhost:4000',
+      callbackURL: window.location.origin,
     });
   });
 
@@ -248,7 +248,7 @@ describe('Login Route', () => {
     // Verify that signIn.social was called despite the error
     expect(mockAuthClient.signInSocial).toHaveBeenCalledWith({
       provider: 'google',
-      callbackURL: 'http://localhost:4000',
+      callbackURL: window.location.origin,
     });
   });
 
