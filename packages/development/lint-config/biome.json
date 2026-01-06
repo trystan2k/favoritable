@@ -10,7 +10,9 @@
       "**/*.json",
       "!**/.taskmaster/**",
       "!**/.vscode/**",
-      "!**/.gemini/**"
+      "!**/.gemini/**",
+      "!**/node_modules/**",
+      "!**/dist/**"
     ]
   },
   "assist": {
@@ -33,6 +35,9 @@
           "level": "error",
           "fix": "safe"
         }
+      },
+      "style": {
+        "noNonNullAssertion": "error"
       }
     }
   },
@@ -42,7 +47,7 @@
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "lf",
-    "lineWidth": 80,
+    "lineWidth": 100,
     "attributePosition": "auto"
   },
   "javascript": {
