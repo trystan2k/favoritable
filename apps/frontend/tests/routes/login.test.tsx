@@ -1,7 +1,7 @@
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import styles from '../../src/routes/login/Login.module.css';
+import styles from '../../src/routes/login/login.module.css';
 import { createTestRouter, getMockAuthClient, renderWithRouter } from '../test-utils';
 
 describe('Login Route', () => {

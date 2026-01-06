@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
-import styles from '../../src/routes/(protected)/Layout.module.css';
+import styles from '../../src/routes/(protected)/layout.module.css';
 import { createTestRouter, renderWithRouter } from '../test-utils';
 
 describe('Index Route', () => {
