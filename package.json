@@ -19,6 +19,7 @@
   ],
   "license": "MIT",
   "scripts": {
+    "clean": "find . -name .git -prune -o -type d \\( -name \"node_modules\" -o -name \"dist\" \\) -prune -exec rm -rf '{}' +",
     "complete-check": "pnpm typecheck && pnpm check:fix && pnpm knip && pnpm test:coverage && pnpm build",
     "prepare": "[ -d '.git' ] && husky install || echo 'skipping husky'",
     "preinstall": "npx only-allow pnpm",
