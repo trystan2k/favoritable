@@ -48,7 +48,8 @@
   },
   "lint-staged": {
     "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
-      "pnpm exec biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
+      "biome format --write",
+      "biome lint --write --error-on-warnings"
     ]
   },
   "packageManager": "pnpm@10.20.0",

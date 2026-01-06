@@ -1,2 +1,1 @@
-# Pre-push hook: Run full test suite with coverage
-pnpm test:coverage
+pnpm complete-check
