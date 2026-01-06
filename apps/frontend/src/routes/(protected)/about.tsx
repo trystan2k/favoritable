@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Button } from 'react-aria-components';
 import buttonSharedStyles from '../../shared-styles/Button.module.css';
 import { cx } from '../../utils/cx';
-import styles from './Layout.module.css';
+import styles from './layout.module.css';
 
 export const Route = createFileRoute('/(protected)/about')({
   component: RouteComponent,
