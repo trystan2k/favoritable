@@ -1,9 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import {
-  APIError,
-  MalFormedRequestError,
-  URLContentParseError,
-} from '../../src/errors/errors.js';
+import { APIError, MalFormedRequestError, URLContentParseError } from '../../src/errors/errors.js';
 import { serviceErrorsHandler } from '../../src/errors/service-errors.mappers.js';
 
 describe('authErrorsHandler', () => {

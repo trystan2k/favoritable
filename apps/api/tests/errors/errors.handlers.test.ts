@@ -40,9 +40,7 @@ const createMockContext = (): Context =>
       return undefined;
     }),
     header: vi.fn(),
-    json: vi.fn(
-      (data, status) => new Response(JSON.stringify({ data }), { status })
-    ),
+    json: vi.fn((data, status) => new Response(JSON.stringify({ data }), { status })),
     req: {
       method: 'GET',
       path: '/test',
@@ -130,12 +128,8 @@ describe('errorHandler', () => {
 
     // Mock handlers where first one doesn't match, second one does
     const firstHandler = vi.fn((error: Error) => error);
-    const secondHandler = vi.fn(
-      (_error: Error) => new MalFormedRequestError('Handled by second')
-    );
-    const thirdHandler = vi.fn(
-      (_error: Error) => new UnexpectedError('Should not be called')
-    );
+    const secondHandler = vi.fn((_error: Error) => new MalFormedRequestError('Handled by second'));
+    const thirdHandler = vi.fn((_error: Error) => new UnexpectedError('Should not be called'));
 
     const handler = errorHandler([firstHandler, secondHandler, thirdHandler]);
 

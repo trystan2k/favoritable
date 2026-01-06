@@ -2,11 +2,7 @@ import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import styles from '../../src/routes/login/Login.module.css';
-import {
-  createTestRouter,
-  getMockAuthClient,
-  renderWithRouter,
-} from '../test-utils';
+import { createTestRouter, getMockAuthClient, renderWithRouter } from '../test-utils';
 
 describe('Login Route', () => {
   beforeEach(() => {
@@ -29,21 +25,11 @@ describe('Login Route', () => {
   it('renders all five social login buttons', async () => {
     await renderLoginRoute();
 
-    expect(
-      screen.getByRole('button', { name: /Continue with Google/ })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: /Continue with Facebook/ })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: /Continue with GitHub/ })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: /Continue with Apple/ })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: /Continue with X/ })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Continue with Google/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Continue with Facebook/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Continue with GitHub/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Continue with Apple/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Continue with X/ })).toBeInTheDocument();
   });
 
   it('calls Better Auth signIn.social with correct Google provider when button is clicked', async () => {
@@ -135,9 +121,7 @@ describe('Login Route', () => {
     const buttons = screen.getAllByRole('button');
     expect(buttons).toHaveLength(6); // 5 social buttons + 1 theme switcher
 
-    const socialButtons = buttons.filter((button) =>
-      button.textContent?.includes('Continue with')
-    );
+    const socialButtons = buttons.filter((button) => button.textContent?.includes('Continue with'));
     expect(socialButtons).toHaveLength(5);
 
     socialButtons.forEach((button) => {
@@ -168,15 +152,15 @@ describe('Login Route', () => {
   it('renders terms and conditions text', async () => {
     await renderLoginRoute();
 
-    expect(
-      screen.getByText(/By signing in, you agree to our/)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('link', { name: 'Terms of Service' })
-    ).toHaveAttribute('href', '/terms');
-    expect(
-      screen.getByRole('link', { name: 'Privacy Policy' })
-    ).toHaveAttribute('href', '/privacy');
+    expect(screen.getByText(/By signing in, you agree to our/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Terms of Service' })).toHaveAttribute(
+      'href',
+      '/terms'
+    );
+    expect(screen.getByRole('link', { name: 'Privacy Policy' })).toHaveAttribute(
+      'href',
+      '/privacy'
+    );
   });
 
   it('calls Better Auth signIn.social when Enter key is pressed on Google button', async () => {
@@ -232,9 +216,7 @@ describe('Login Route', () => {
 
     // Mock the signIn.social method to throw an error
     // biome-ignore lint/suspicious/noExplicitAny: Need to access mock methods
-    (mockAuthClient.signInSocial as any).mockRejectedValueOnce(
-      new Error('Login failed')
-    );
+    (mockAuthClient.signInSocial as any).mockRejectedValueOnce(new Error('Login failed'));
 
     await renderLoginRoute();
 

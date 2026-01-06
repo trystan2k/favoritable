@@ -23,9 +23,7 @@ describe('About Route', () => {
       await renderWithRouter(router);
 
       // Should see the login page content
-      expect(
-        screen.getByText('Choose your preferred sign-in method')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Choose your preferred sign-in method')).toBeInTheDocument();
       expect(
         screen.getByRole('button', { name: 'Google Continue with Google' })
       ).toBeInTheDocument();
@@ -37,9 +35,7 @@ describe('About Route', () => {
       const router = await createTestRouter(['/about'], true);
       await renderWithRouter(router);
 
-      expect(
-        screen.getByRole('heading', { level: 3, name: 'About Page' })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: 'About Page' })).toBeInTheDocument();
     });
 
     test('should render description text when navigating to /about with auth', async () => {
@@ -47,9 +43,7 @@ describe('About Route', () => {
       await renderWithRouter(router);
 
       expect(
-        screen.getByText(
-          'This is the about page demonstrating routing with TanStack Router.'
-        )
+        screen.getByText('This is the about page demonstrating routing with TanStack Router.')
       ).toBeInTheDocument();
     });
 
@@ -93,12 +87,8 @@ describe('About Route', () => {
         const children = Array.from(container.children);
         const buttonParent = button.parentElement;
         if (buttonParent) {
-          expect(children.indexOf(heading)).toBeLessThan(
-            children.indexOf(paragraph)
-          );
-          expect(children.indexOf(paragraph)).toBeLessThan(
-            children.indexOf(buttonParent)
-          );
+          expect(children.indexOf(heading)).toBeLessThan(children.indexOf(paragraph));
+          expect(children.indexOf(paragraph)).toBeLessThan(children.indexOf(buttonParent));
         }
       }
     });

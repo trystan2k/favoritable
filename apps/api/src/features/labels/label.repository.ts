@@ -5,8 +5,7 @@ export type LabelDTO = typeof label.$inferSelect;
 
 export type InsertLabelDTO = typeof label.$inferInsert;
 
-export type UpdateLabelDTO = Partial<InsertLabelDTO> &
-  Pick<InsertLabelDTO, 'id'>;
+export type UpdateLabelDTO = Partial<InsertLabelDTO> & Pick<InsertLabelDTO, 'id'>;
 
 export interface LabelRepository {
   findAll(searchQuery?: string): Promise<LabelDTO[]>;

@@ -23,9 +23,7 @@ describe('Index Route', () => {
       await renderWithRouter(router);
 
       // Should see the login page content
-      expect(
-        screen.getByText('Choose your preferred sign-in method')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Choose your preferred sign-in method')).toBeInTheDocument();
       expect(
         screen.getByRole('button', { name: 'Google Continue with Google' })
       ).toBeInTheDocument();
@@ -41,27 +39,17 @@ describe('Index Route', () => {
       await renderWithRouter(router);
 
       // The index route redirects to /home, so we should see the home content
-      expect(
-        screen.getByRole('heading', { level: 3, name: 'Welcome Home!' })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: 'Welcome Home!' })).toBeInTheDocument();
     });
 
     test('should render all button variants when navigating to / with auth', async () => {
       const router = await createTestRouter(['/'], true);
       await renderWithRouter(router);
 
-      expect(
-        screen.getByRole('button', { name: 'Solid Button' })
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', { name: 'Soft Button' })
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', { name: 'Outline Button' })
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', { name: 'Ghost Button' })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Solid Button' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Soft Button' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Outline Button' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Ghost Button' })).toBeInTheDocument();
     });
 
     test('should apply CSS modules classes correctly to components when navigating to / with auth', async () => {
@@ -135,9 +123,7 @@ describe('Index Route', () => {
         const children = Array.from(container.children);
         const cardContainer = descriptionText.parentElement;
         if (cardContainer) {
-          expect(children.indexOf(heading)).toBeLessThan(
-            children.indexOf(cardContainer)
-          );
+          expect(children.indexOf(heading)).toBeLessThan(children.indexOf(cardContainer));
         }
       }
     });

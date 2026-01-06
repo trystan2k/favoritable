@@ -33,8 +33,7 @@ export const Inject = (token: string) => {
     _propertyKey: string | undefined,
     parameterIndex: number
   ) => {
-    const existingInjectedParams: string[] =
-      Reflect.getMetadata(INJECT_METADATA_KEY, target) || [];
+    const existingInjectedParams: string[] = Reflect.getMetadata(INJECT_METADATA_KEY, target) || [];
 
     // Ensure the array has enough elements
     while (existingInjectedParams.length <= parameterIndex) {

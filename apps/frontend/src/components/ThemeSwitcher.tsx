@@ -12,11 +12,7 @@ export const ThemeSwitcher = () => {
     <Button
       onPress={toggleTheme}
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
-      className={cx(
-        buttonSharedStyles.button,
-        buttonSharedStyles.ghost,
-        styles.themeSwitcher
-      )}
+      className={cx(buttonSharedStyles.button, buttonSharedStyles.ghost, styles.themeSwitcher)}
     >
       {theme === 'light' ? (
         <Moon fill='var(--color-amber-400)' />

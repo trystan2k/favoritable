@@ -54,9 +54,7 @@ export async function teardownTestDatabase() {
 
 export function getTestDb() {
   if (!testDb) {
-    throw new Error(
-      'Test database not initialized. Call setupTestDatabase first.'
-    );
+    throw new Error('Test database not initialized. Call setupTestDatabase first.');
   }
   return testDb;
 }

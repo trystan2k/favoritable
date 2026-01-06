@@ -3,14 +3,7 @@ import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { trackingDates } from './common.schema.js';
 import { label } from './label.schema.js';
 
-const providerEnum = [
-  'github',
-  'google',
-  'facebook',
-  'twitter',
-  'apple',
-  'discord',
-] as const;
+const providerEnum = ['github', 'google', 'facebook', 'twitter', 'apple', 'discord'] as const;
 
 export const user = sqliteTable(
   'users',
@@ -26,10 +19,7 @@ export const user = sqliteTable(
     provider: text('provider', { enum: providerEnum }),
     ...trackingDates,
   },
-  (table) => [
-    index('user_id_index').on(table.id),
-    index('user_email_index').on(table.email),
-  ]
+  (table) => [index('user_id_index').on(table.id), index('user_email_index').on(table.email)]
 );
 
 export const usersRelation = relations(user, ({ many }) => ({

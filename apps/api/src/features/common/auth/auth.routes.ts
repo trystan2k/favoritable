@@ -2,10 +2,7 @@ import { Hono } from 'hono';
 import { auth } from '../../../auth.js';
 import { Service } from '../../../core/dependency-injection/di.decorators.js';
 import { NotAuthorizedError } from '../../../errors/errors.js';
-import {
-  authMiddleware,
-  type HonoEnv,
-} from '../../../middleware/auth.middleware.js';
+import { authMiddleware, type HonoEnv } from '../../../middleware/auth.middleware.js';
 
 @Service({ name: 'AuthRoutes' })
 export class AuthRoutes {

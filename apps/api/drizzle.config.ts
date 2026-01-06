@@ -6,9 +6,7 @@ export default defineConfig({
   out: './src/db/migrations',
   schema: './dist/db/schema/*.js',
   dialect:
-    env.DATABASE_TYPE === DATABASE_TYPES.LOCAL
-      ? DATABASE_TYPES.SQLITE
-      : DATABASE_TYPES.TURSO,
+    env.DATABASE_TYPE === DATABASE_TYPES.LOCAL ? DATABASE_TYPES.SQLITE : DATABASE_TYPES.TURSO,
   dbCredentials:
     env.DATABASE_TYPE === DATABASE_TYPES.LOCAL
       ? { url: env.LOCAL_DATABASE_URL }

@@ -1,8 +1,5 @@
 import { eq, inArray } from 'drizzle-orm';
-import {
-  Inject,
-  Service,
-} from '../../core/dependency-injection/di.decorators.js';
+import { Inject, Service } from '../../core/dependency-injection/di.decorators.js';
 import { label } from '../../db/schema/label.schema.js';
 import type { DBTransaction } from '../../db/types.js';
 import type {
@@ -18,9 +15,7 @@ export class SQLiteLabelRepository implements LabelRepository {
 
   findAll(searchQuery?: string): Promise<LabelDTO[]> {
     return this.db.query.label.findMany({
-      where: searchQuery
-        ? (label, { like }) => like(label.name, `%${searchQuery}%`)
-        : undefined,
+      where: searchQuery ? (label, { like }) => like(label.name, `%${searchQuery}%`) : undefined,
     });
   }
 
@@ -50,11 +45,7 @@ export class SQLiteLabelRepository implements LabelRepository {
   }
 
   async delete(ids: string[], tx: DBTransaction = this.db): Promise<string[]> {
-    const deletedLabels = await tx
-      .delete(label)
-      .where(inArray(label.id, ids))
-      .returning()
-      .all();
+    const deletedLabels = await tx.delete(label).where(inArray(label.id, ids)).returning().all();
     return deletedLabels.map((deletedLabel) => deletedLabel.id);
   }
 }

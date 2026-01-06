@@ -8,9 +8,7 @@ const getTitle = async (page: Page) => {
   let title = await page.title();
 
   if (!title) {
-    title = await page
-      .$eval('head > title', (el) => el.textContent)
-      .catch(() => null);
+    title = await page.$eval('head > title', (el) => el.textContent).catch(() => null);
   }
 
   if (!title) {
@@ -39,16 +37,12 @@ const getDescription = async (page: Page) => {
 
   if (!description) {
     description = await page
-      .$eval('meta[property="og:description"]', (el) =>
-        el.getAttribute('content')
-      )
+      .$eval('meta[property="og:description"]', (el) => el.getAttribute('content'))
       .catch(() => null);
   }
 
   if (!description) {
-    description = await page
-      .$eval('body > p', (el) => el.textContent)
-      .catch(() => null);
+    description = await page.$eval('body > p', (el) => el.textContent).catch(() => null);
   }
 
   if (!description) {
@@ -58,9 +52,7 @@ const getDescription = async (page: Page) => {
   }
 
   if (!description) {
-    description = await page
-      .$eval('article', (el) => el.textContent)
-      .catch(() => null);
+    description = await page.$eval('article', (el) => el.textContent).catch(() => null);
   }
 
   return cleanableString(description)
@@ -78,16 +70,12 @@ const getAuthor = async (page: Page) => {
 
   if (!author) {
     author = await page
-      .$eval('article[data-author-name]', (el) =>
-        el.getAttribute('data-author-name')
-      )
+      .$eval('article[data-author-name]', (el) => el.getAttribute('data-author-name'))
       .catch(() => null);
   }
 
   if (!author) {
-    author = await page
-      .$eval('.post-author', (el) => el.textContent)
-      .catch(() => null);
+    author = await page.$eval('.post-author', (el) => el.textContent).catch(() => null);
   }
 
   if (!author) {
@@ -97,9 +85,7 @@ const getAuthor = async (page: Page) => {
   }
 
   if (!author) {
-    author = await page
-      .$eval('.author', (el) => el.textContent)
-      .catch(() => null);
+    author = await page.$eval('.author', (el) => el.textContent).catch(() => null);
   }
 
   return cleanableString(author)
@@ -112,16 +98,12 @@ const getAuthor = async (page: Page) => {
 
 const getPublishedAt = async (page: Page) => {
   let publishedAt = await page
-    .$eval('meta[property="article:published_time"]', (el) =>
-      el.getAttribute('content')
-    )
+    .$eval('meta[property="article:published_time"]', (el) => el.getAttribute('content'))
     .catch(() => null);
 
   if (!publishedAt) {
     publishedAt = await page
-      .$eval('article[data-author-name] > time[datetime]', (el) =>
-        el.getAttribute('datetime')
-      )
+      .$eval('article[data-author-name] > time[datetime]', (el) => el.getAttribute('datetime'))
       .catch(() => null);
   }
 
@@ -172,9 +154,7 @@ const getThumbnail = async (page: Page) => {
 
   if (!thumbnail) {
     thumbnail = await page
-      .$eval('meta[property="twitter:image"]', (el) =>
-        el.getAttribute('content')
-      )
+      .$eval('meta[property="twitter:image"]', (el) => el.getAttribute('content'))
       .catch(() => null);
   }
 

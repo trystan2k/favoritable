@@ -19,30 +19,18 @@ export const authErrorsHandler = (error: Error): Error | APIError => {
 
     switch (statusCode) {
       case 400:
-        return new MalFormedRequestError(
-          'Authentication request is invalid',
-          message
-        );
+        return new MalFormedRequestError('Authentication request is invalid', message);
       case 401:
       case 403:
         return new NotAuthorizedError('Authentication failed', message);
       case 404:
         return new NotFoundError('Authentication failed', message);
       case 422:
-        return new MalFormedRequestError(
-          'Authentication validation failed',
-          message
-        );
+        return new MalFormedRequestError('Authentication validation failed', message);
       case 429:
-        return new NotAcceptedError(
-          'Authentication rate limit exceeded',
-          message
-        );
+        return new NotAcceptedError('Authentication rate limit exceeded', message);
       default:
-        return new UnexpectedError(
-          'An unexpected authentication error occurred',
-          message
-        );
+        return new UnexpectedError('An unexpected authentication error occurred', message);
     }
   }
 

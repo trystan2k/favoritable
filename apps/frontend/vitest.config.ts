@@ -8,11 +8,7 @@ export default mergeConfig(
       environment: 'jsdom',
       setupFiles: ['./tests/setupTest.ts'],
       coverage: {
-        exclude: [
-          'src/routeTree.gen.ts',
-          'src/index.tsx',
-          'src/lib/auth-client.ts',
-        ],
+        exclude: ['src/routeTree.gen.ts', 'src/index.tsx', 'src/lib/auth-client.ts'],
       },
     },
   })

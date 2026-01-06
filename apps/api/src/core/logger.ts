@@ -26,9 +26,7 @@ const getLoggerConfig = () => {
   const isDevelopment = env.NODE_ENV === NodeEnvs.DEVELOPMENT;
 
   return {
-    level:
-      process.env.LOG_LEVEL ||
-      (isProduction ? LogLevels.INFO : LogLevels.DEBUG),
+    level: process.env.LOG_LEVEL || (isProduction ? LogLevels.INFO : LogLevels.DEBUG),
     redact: {
       paths: REDACT_FIELDS,
       censor: '[REDACTED]',

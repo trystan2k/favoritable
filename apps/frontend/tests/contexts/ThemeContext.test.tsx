@@ -1,11 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
-import {
-  getInitialTheme,
-  ThemeProvider,
-  useTheme,
-} from '../../src/contexts/ThemeContext';
+import { getInitialTheme, ThemeProvider, useTheme } from '../../src/contexts/ThemeContext';
 
 const mockMatchMedia = vi.fn();
 const mockLocalStorage = {
@@ -138,10 +134,7 @@ describe('ThemeContext', () => {
       });
 
       expect(result.current.theme).toBe('dark');
-      expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
-        'favoritable-theme',
-        'dark'
-      );
+      expect(mockLocalStorage.setItem).toHaveBeenCalledWith('favoritable-theme', 'dark');
       expect(mockSetAttribute).toHaveBeenCalledWith('data-theme', 'dark');
     });
 
@@ -159,25 +152,18 @@ describe('ThemeContext', () => {
       });
 
       expect(result.current.theme).toBe('dark');
-      expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
-        'favoritable-theme',
-        'dark'
-      );
+      expect(mockLocalStorage.setItem).toHaveBeenCalledWith('favoritable-theme', 'dark');
 
       act(() => {
         result.current.toggleTheme();
       });
 
       expect(result.current.theme).toBe('light');
-      expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
-        'favoritable-theme',
-        'light'
-      );
+      expect(mockLocalStorage.setItem).toHaveBeenCalledWith('favoritable-theme', 'light');
     });
 
     test('should respond to system theme changes when no saved preference', () => {
-      const eventHandlers: { [key: string]: (e: MediaQueryListEvent) => void } =
-        {};
+      const eventHandlers: { [key: string]: (e: MediaQueryListEvent) => void } = {};
       const mockAddEventListener = vi.fn((event, handler) => {
         eventHandlers[event] = handler;
       });
@@ -201,10 +187,7 @@ describe('ThemeContext', () => {
 
       const { result } = renderHook(() => useTheme(), { wrapper });
 
-      expect(mockAddEventListener).toHaveBeenCalledWith(
-        'change',
-        expect.any(Function)
-      );
+      expect(mockAddEventListener).toHaveBeenCalledWith('change', expect.any(Function));
 
       // Test system change to dark theme (e.matches: true)
       act(() => {
@@ -228,8 +211,7 @@ describe('ThemeContext', () => {
     });
 
     test('should doe not respond to system theme changes when theme is saved', () => {
-      const eventHandlers: { [key: string]: (e: MediaQueryListEvent) => void } =
-        {};
+      const eventHandlers: { [key: string]: (e: MediaQueryListEvent) => void } = {};
       const mockAddEventListener = vi.fn((event, handler) => {
         eventHandlers[event] = handler;
       });
@@ -245,9 +227,7 @@ describe('ThemeContext', () => {
         dispatchEvent: vi.fn(),
       });
 
-      mockLocalStorage.getItem
-        .mockReturnValueOnce('light')
-        .mockReturnValue('light');
+      mockLocalStorage.getItem.mockReturnValueOnce('light').mockReturnValue('light');
 
       const wrapper = ({ children }: { children: ReactNode }) => (
         <ThemeProvider>{children}</ThemeProvider>
@@ -288,10 +268,7 @@ describe('ThemeContext', () => {
 
       unmount();
 
-      expect(mockRemoveEventListener).toHaveBeenCalledWith(
-        'change',
-        expect.any(Function)
-      );
+      expect(mockRemoveEventListener).toHaveBeenCalledWith('change', expect.any(Function));
     });
 
     test('should initialize with light theme in SSR environment (window undefined)', () => {

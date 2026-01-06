@@ -11,8 +11,6 @@ const getApiBaseUrl = (): string => {
   return window.location.origin;
 };
 
-export const authClient: ReturnType<typeof createAuthClient> = createAuthClient(
-  {
-    baseURL: getApiBaseUrl(),
-  }
-);
+export const authClient: ReturnType<typeof createAuthClient> = createAuthClient({
+  baseURL: getApiBaseUrl(),
+});

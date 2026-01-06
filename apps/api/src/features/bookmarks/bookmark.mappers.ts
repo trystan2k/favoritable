@@ -46,9 +46,7 @@ export const mapUpdateBookmarkModelToUpdateBookmarkDTO = (
   };
 };
 
-export const mapBookmarkDTOToBookmarkModel = (
-  bookmark: BookmarkWithLabelsDTO
-): BookmarkModel => {
+export const mapBookmarkDTOToBookmarkModel = (bookmark: BookmarkWithLabelsDTO): BookmarkModel => {
   const labels = bookmark.bookmarkLabel?.map((bl) => bl.label);
   return {
     id: bookmark.id,
@@ -77,10 +75,7 @@ export const mapOnmivoreBookmarkToInsertBookmarkDTO = (
     author: bookmark.author || null,
     thumbnail: bookmark.thumbnail || null,
     publishedAt: bookmark.publishedAt ?? null,
-    state:
-      bookmark.state === 'Archived'
-        ? BOOKMARK_STATES.archived
-        : BOOKMARK_STATES.active,
+    state: bookmark.state === 'Archived' ? BOOKMARK_STATES.archived : BOOKMARK_STATES.active,
     labels: [],
   };
 };

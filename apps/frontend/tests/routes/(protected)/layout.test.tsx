@@ -1,12 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test } from 'vitest';
-import {
-  createTestRouter,
-  getMockAuthClient,
-  renderWithRouter,
-  setupAuth,
-} from '../../test-utils';
+import { createTestRouter, getMockAuthClient, renderWithRouter, setupAuth } from '../../test-utils';
 
 describe('Protected Layout', () => {
   describe('Unauthenticated users', () => {
@@ -23,12 +18,8 @@ describe('Protected Layout', () => {
       ).toBeInTheDocument();
 
       // Should not see navigation links
-      expect(
-        screen.queryByRole('link', { name: 'Home' })
-      ).not.toBeInTheDocument();
-      expect(
-        screen.queryByRole('link', { name: 'About' })
-      ).not.toBeInTheDocument();
+      expect(screen.queryByRole('link', { name: 'Home' })).not.toBeInTheDocument();
+      expect(screen.queryByRole('link', { name: 'About' })).not.toBeInTheDocument();
     });
   });
 
@@ -67,9 +58,7 @@ describe('Protected Layout', () => {
       await renderWithRouter(router);
 
       // Check that the home page content is rendered
-      expect(
-        screen.getByRole('heading', { level: 3, name: 'Welcome Home!' })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: 'Welcome Home!' })).toBeInTheDocument();
     });
 
     test('should render child route content in outlet when on about page', async () => {
@@ -78,9 +67,7 @@ describe('Protected Layout', () => {
       await renderWithRouter(router);
 
       // Check that the about page content is rendered
-      expect(
-        screen.getByRole('heading', { level: 3, name: 'About Page' })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: 'About Page' })).toBeInTheDocument();
     });
 
     test('should navigate to home page when clicking Home link from About page', async () => {
@@ -90,18 +77,14 @@ describe('Protected Layout', () => {
       await renderWithRouter(router);
 
       // Verify we're on about page
-      expect(
-        screen.getByRole('heading', { level: 3, name: 'About Page' })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: 'About Page' })).toBeInTheDocument();
 
       // Click Home link
       const homeLink = screen.getByRole('link', { name: 'Home' });
       await user.click(homeLink);
 
       // Verify we're now on home page
-      expect(
-        screen.getByRole('heading', { level: 3, name: 'Welcome Home!' })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: 'Welcome Home!' })).toBeInTheDocument();
       expect(
         screen.queryByRole('heading', { level: 3, name: 'About Page' })
       ).not.toBeInTheDocument();
@@ -114,18 +97,14 @@ describe('Protected Layout', () => {
       await renderWithRouter(router);
 
       // Verify we're on home page
-      expect(
-        screen.getByRole('heading', { level: 3, name: 'Welcome Home!' })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: 'Welcome Home!' })).toBeInTheDocument();
 
       // Click About link
       const aboutLink = screen.getByRole('link', { name: 'About' });
       await user.click(aboutLink);
 
       // Verify we're now on about page
-      expect(
-        screen.getByRole('heading', { level: 3, name: 'About Page' })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: 'About Page' })).toBeInTheDocument();
       expect(
         screen.queryByRole('heading', { level: 3, name: 'Welcome Home!' })
       ).not.toBeInTheDocument();
@@ -155,9 +134,7 @@ describe('Protected Layout', () => {
       const router = await createTestRouter(['/home'], true);
       await renderWithRouter(router);
 
-      const navLinks = within(screen.getByRole('navigation')).getAllByRole(
-        'link'
-      );
+      const navLinks = within(screen.getByRole('navigation')).getAllByRole('link');
 
       expect(navLinks).toHaveLength(2);
       expect(navLinks[0]).toHaveTextContent('Home');
@@ -194,9 +171,7 @@ describe('Protected Layout', () => {
       await renderWithRouter(router);
 
       // Theme switcher should be present in the navigation
-      const themeSwitcher = screen.getByLabelText(
-        /Switch to (dark|light) theme/
-      );
+      const themeSwitcher = screen.getByLabelText(/Switch to (dark|light) theme/);
       expect(themeSwitcher).toBeInTheDocument();
     });
 
@@ -221,9 +196,7 @@ describe('Protected Layout', () => {
       await renderWithRouter(router);
 
       // biome-ignore lint/suspicious/noExplicitAny: Mock type
-      (mockAuthClient.signOut as any).mockRejectedValueOnce(
-        new Error('Logout failed')
-      );
+      (mockAuthClient.signOut as any).mockRejectedValueOnce(new Error('Logout failed'));
 
       const logoutButton = screen.getByRole('button', { name: 'Logout' });
 

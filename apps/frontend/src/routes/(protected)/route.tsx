@@ -1,9 +1,4 @@
-import {
-  createFileRoute,
-  Link,
-  Outlet,
-  redirect,
-} from '@tanstack/react-router';
+import { createFileRoute, Link, Outlet, redirect } from '@tanstack/react-router';
 import { ThemeSwitcher } from '../../components/ThemeSwitcher';
 import { authClient } from '../../lib/auth-client';
 import styles from './layout.module.css';
@@ -48,16 +43,8 @@ function ProtectedLayout() {
           </Link>
         </div>
         <div className={styles.navActions}>
-          {session?.user && (
-            <span className={styles.userInfo}>
-              Welcome, {session.user.name}
-            </span>
-          )}
-          <button
-            type='button'
-            onClick={handleLogout}
-            className={styles.logoutButton}
-          >
+          {session?.user && <span className={styles.userInfo}>Welcome, {session.user.name}</span>}
+          <button type='button' onClick={handleLogout} className={styles.logoutButton}>
             Logout
           </button>
           <ThemeSwitcher />

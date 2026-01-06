@@ -28,10 +28,7 @@ const parseBookmarksFromFolder = (
   return bookmarks;
 };
 
-export const parseHtmlbookmarks = (
-  html: string,
-  folderName?: string
-): HTMLBookmark[] => {
+export const parseHtmlbookmarks = (html: string, folderName?: string): HTMLBookmark[] => {
   const $ = cheerio.load(html);
   const bookmarks: HTMLBookmark[] = [];
 

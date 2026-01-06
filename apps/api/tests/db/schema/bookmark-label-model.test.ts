@@ -1,32 +1,14 @@
 import { eq, like } from 'drizzle-orm';
-import {
-  afterAll,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  test,
-} from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import {
   type BookmarkDTO,
   bookmark,
   type InsertBookmarkDTO,
 } from '../../../src/db/schema/bookmark.schema.js';
 import { bookmarkLabel } from '../../../src/db/schema/bookmark-label.schema.js';
-import {
-  type InsertLabelDTO,
-  type LabelDTO,
-  label,
-} from '../../../src/db/schema/label.schema.js';
-import {
-  type InsertUserDTO,
-  type UserDTO,
-  user,
-} from '../../../src/db/schema/user.schema.js';
-import {
-  setupTestDatabase,
-  teardownTestDatabase,
-} from '../../test-db-setup.js';
+import { type InsertLabelDTO, type LabelDTO, label } from '../../../src/db/schema/label.schema.js';
+import { type InsertUserDTO, type UserDTO, user } from '../../../src/db/schema/user.schema.js';
+import { setupTestDatabase, teardownTestDatabase } from '../../test-db-setup.js';
 
 describe('BookmarkLabel Relationship Tests', () => {
   let testUser: UserDTO;
@@ -57,9 +39,7 @@ describe('BookmarkLabel Relationship Tests', () => {
   beforeEach(async () => {
     // Clean up test data before each test
     await db.delete(bookmarkLabel);
-    await db
-      .delete(bookmark)
-      .where(like(bookmark.url, '%bookmark-label-test%'));
+    await db.delete(bookmark).where(like(bookmark.url, '%bookmark-label-test%'));
     await db.delete(label).where(like(label.name, '%test-label%'));
 
     // Create fresh test bookmark and label for each test
@@ -78,11 +58,7 @@ describe('BookmarkLabel Relationship Tests', () => {
       userId: testUser.id,
     };
 
-    testBookmark = await db
-      .insert(bookmark)
-      .values(newBookmark)
-      .returning()
-      .get();
+    testBookmark = await db.insert(bookmark).values(newBookmark).returning().get();
     testLabel = await db.insert(label).values(newLabel).returning().get();
   });
 
@@ -128,9 +104,7 @@ describe('BookmarkLabel Relationship Tests', () => {
     expect(bookmarkWithLabels).toBeDefined();
     expect(bookmarkWithLabels?.bookmarkLabel).toHaveLength(1);
     expect(bookmarkWithLabels?.bookmarkLabel?.[0]?.label.id).toBe(testLabel.id);
-    expect(bookmarkWithLabels?.bookmarkLabel?.[0]?.label.name).toBe(
-      testLabel.name
-    );
+    expect(bookmarkWithLabels?.bookmarkLabel?.[0]?.label.name).toBe(testLabel.name);
   });
 
   test('should query label with its bookmarks using relations', async () => {
@@ -155,12 +129,8 @@ describe('BookmarkLabel Relationship Tests', () => {
 
     expect(labelWithBookmarks).toBeDefined();
     expect(labelWithBookmarks?.bookmarkLabel).toHaveLength(1);
-    expect(labelWithBookmarks?.bookmarkLabel?.[0]?.bookmark.id).toBe(
-      testBookmark.id
-    );
-    expect(labelWithBookmarks?.bookmarkLabel?.[0]?.bookmark.title).toBe(
-      testBookmark.title
-    );
+    expect(labelWithBookmarks?.bookmarkLabel?.[0]?.bookmark.id).toBe(testBookmark.id);
+    expect(labelWithBookmarks?.bookmarkLabel?.[0]?.bookmark.title).toBe(testBookmark.title);
   });
 
   test('should remove bookmark-label association', async () => {
@@ -235,8 +205,7 @@ describe('BookmarkLabel Relationship Tests', () => {
     });
 
     expect(bookmarkWithLabels?.bookmarkLabel).toHaveLength(2);
-    const labelIds =
-      bookmarkWithLabels?.bookmarkLabel?.map((bl) => bl.label.id) || [];
+    const labelIds = bookmarkWithLabels?.bookmarkLabel?.map((bl) => bl.label.id) || [];
     expect(labelIds).toContain(testLabel.id);
     expect(labelIds).toContain(secondLabel.id);
   });
@@ -282,8 +251,7 @@ describe('BookmarkLabel Relationship Tests', () => {
     });
 
     expect(labelWithBookmarks?.bookmarkLabel).toHaveLength(2);
-    const bookmarkIds =
-      labelWithBookmarks?.bookmarkLabel?.map((bl) => bl.bookmark.id) || [];
+    const bookmarkIds = labelWithBookmarks?.bookmarkLabel?.map((bl) => bl.bookmark.id) || [];
     expect(bookmarkIds).toContain(testBookmark.id);
     expect(bookmarkIds).toContain(secondBookmark.id);
   });
@@ -320,11 +288,7 @@ describe('BookmarkLabel Relationship Tests', () => {
     expect(remainingAssociation).toBeUndefined();
 
     // Verify label still exists
-    const remainingLabel = await db
-      .select()
-      .from(label)
-      .where(eq(label.id, testLabel.id))
-      .get();
+    const remainingLabel = await db.select().from(label).where(eq(label.id, testLabel.id)).get();
     expect(remainingLabel).toBeDefined();
   });
 

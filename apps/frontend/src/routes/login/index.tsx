@@ -11,12 +11,7 @@ function Login() {
   const handleSocialLogin = async (provider: string) => {
     try {
       await authClient.signIn.social({
-        provider: provider as
-          | 'google'
-          | 'facebook'
-          | 'github'
-          | 'apple'
-          | 'twitter',
+        provider: provider as 'google' | 'facebook' | 'github' | 'apple' | 'twitter',
         callbackURL: window.location.origin,
       });
     } catch (_error) {
@@ -30,31 +25,14 @@ function Login() {
       <div className={styles.card}>
         <div className={styles.cardContent}>
           <h1 className={styles.title}>Sign in to Your Account</h1>
-          <p className={styles.subtitle}>
-            Choose your preferred sign-in method
-          </p>
+          <p className={styles.subtitle}>Choose your preferred sign-in method</p>
 
           <div className={styles.buttonContainer}>
-            <SocialLoginButton
-              provider='google'
-              onClick={() => handleSocialLogin('google')}
-            />
-            <SocialLoginButton
-              provider='facebook'
-              onClick={() => handleSocialLogin('facebook')}
-            />
-            <SocialLoginButton
-              provider='github'
-              onClick={() => handleSocialLogin('github')}
-            />
-            <SocialLoginButton
-              provider='apple'
-              onClick={() => handleSocialLogin('apple')}
-            />
-            <SocialLoginButton
-              provider='twitter'
-              onClick={() => handleSocialLogin('twitter')}
-            />
+            <SocialLoginButton provider='google' onClick={() => handleSocialLogin('google')} />
+            <SocialLoginButton provider='facebook' onClick={() => handleSocialLogin('facebook')} />
+            <SocialLoginButton provider='github' onClick={() => handleSocialLogin('github')} />
+            <SocialLoginButton provider='apple' onClick={() => handleSocialLogin('apple')} />
+            <SocialLoginButton provider='twitter' onClick={() => handleSocialLogin('twitter')} />
           </div>
 
           <div className={styles.termsContainer}>

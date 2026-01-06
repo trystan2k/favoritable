@@ -85,18 +85,13 @@ app.use('*', async (c, next) => {
   return next();
 });
 
-const errorHandlers = [
-  authErrorsHandler,
-  serviceErrorsHandler,
-  repositoryErrorsHandler,
-];
+const errorHandlers = [authErrorsHandler, serviceErrorsHandler, repositoryErrorsHandler];
 app.onError(errorHandler(errorHandlers));
 
 const api = app.basePath(routes.basePath);
 
 const authRoutes = Container.getInstance().resolve<AuthRoutes>('AuthRoutes');
-const bookmarkRoutes =
-  Container.getInstance().resolve<BookmarkRoutes>('BookmarkRoutes');
+const bookmarkRoutes = Container.getInstance().resolve<BookmarkRoutes>('BookmarkRoutes');
 const labelRoutes = Container.getInstance().resolve<LabelRoutes>('LabelRoutes');
 
 api.route(routes.auth, authRoutes.routes);
@@ -109,9 +104,7 @@ app.get('/health', (c) => c.text('OK'));
 // Start the server
 serve(app, (info) => {
   logger.info(`Server is running on http://localhost:${info.port}`);
-  logger.info(
-    `API documentation available at http://localhost:${info.port}/api/docs`
-  );
+  logger.info(`API documentation available at http://localhost:${info.port}/api/docs`);
 });
 
 export default app;

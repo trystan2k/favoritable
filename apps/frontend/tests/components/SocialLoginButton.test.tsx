@@ -14,27 +14,21 @@ describe('SocialLoginButton', () => {
   it('renders Google login button with correct text and icon', () => {
     render(<SocialLoginButton provider='google' onClick={mockOnClick} />);
 
-    expect(screen.getByRole('button')).toHaveTextContent(
-      'Continue with Google'
-    );
+    expect(screen.getByRole('button')).toHaveTextContent('Continue with Google');
     expect(screen.getByLabelText('Google')).toBeInTheDocument();
   });
 
   it('renders Facebook login button with correct text and icon', () => {
     render(<SocialLoginButton provider='facebook' onClick={mockOnClick} />);
 
-    expect(screen.getByRole('button')).toHaveTextContent(
-      'Continue with Facebook'
-    );
+    expect(screen.getByRole('button')).toHaveTextContent('Continue with Facebook');
     expect(screen.getByLabelText('Facebook')).toBeInTheDocument();
   });
 
   it('renders GitHub login button with correct text and icon', () => {
     render(<SocialLoginButton provider='github' onClick={mockOnClick} />);
 
-    expect(screen.getByRole('button')).toHaveTextContent(
-      'Continue with GitHub'
-    );
+    expect(screen.getByRole('button')).toHaveTextContent('Continue with GitHub');
     expect(screen.getByLabelText('GitHub')).toBeInTheDocument();
   });
 
@@ -63,9 +57,7 @@ describe('SocialLoginButton', () => {
   });
 
   it('applies correct CSS classes based on provider', () => {
-    const { rerender } = render(
-      <SocialLoginButton provider='google' onClick={mockOnClick} />
-    );
+    const { rerender } = render(<SocialLoginButton provider='google' onClick={mockOnClick} />);
 
     let button = screen.getByRole('button');
     expect(button.className).toContain(styles.button);
@@ -110,9 +102,7 @@ describe('SocialLoginButton', () => {
     ] as const;
 
     providers.forEach(({ provider, expectedText }) => {
-      const { unmount } = render(
-        <SocialLoginButton provider={provider} onClick={mockOnClick} />
-      );
+      const { unmount } = render(<SocialLoginButton provider={provider} onClick={mockOnClick} />);
       expect(screen.getByRole('button')).toHaveTextContent(expectedText);
       unmount();
     });

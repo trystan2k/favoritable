@@ -1,10 +1,5 @@
 import { LibsqlError } from '@libsql/client';
-import {
-  APIError,
-  EntityAlreadyExist,
-  MalFormedRequestError,
-  UnexpectedError,
-} from './errors';
+import { APIError, EntityAlreadyExist, MalFormedRequestError, UnexpectedError } from './errors';
 
 export const repositoryErrorsHandler = (error: Error): Error | APIError => {
   if (error instanceof APIError) {
@@ -33,16 +28,10 @@ export const repositoryErrorsHandler = (error: Error): Error | APIError => {
     }
 
     if (sqlError.code === 'SQLITE_ERROR') {
-      return new UnexpectedError(
-        'An unexpected error has occurred',
-        error.message
-      );
+      return new UnexpectedError('An unexpected error has occurred', error.message);
     }
 
-    return new UnexpectedError(
-      'An unexpected error has occurred in repository',
-      error.message
-    );
+    return new UnexpectedError('An unexpected error has occurred in repository', error.message);
   }
 
   return error;

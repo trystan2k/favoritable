@@ -16,9 +16,7 @@ const BaseEnvSchema = z.object({
   NODE_ENV: z
     .enum([NodeEnvs.DEVELOPMENT, NodeEnvs.TEST, NodeEnvs.PRODUCTION])
     .default(NodeEnvs.DEVELOPMENT),
-  DATABASE_TYPE: z
-    .enum([DATABASE_TYPES.LOCAL, DATABASE_TYPES.TURSO])
-    .default(DATABASE_TYPES.LOCAL),
+  DATABASE_TYPE: z.enum([DATABASE_TYPES.LOCAL, DATABASE_TYPES.TURSO]).default(DATABASE_TYPES.LOCAL),
   LOCAL_DATABASE_URL: z.string().optional(),
   TURSO_DATABASE_URL: z.string().optional(),
   TURSO_AUTH_TOKEN: z.string().optional(),
@@ -74,10 +72,7 @@ const TursoEnvSchema = BaseEnvSchema.extend({
   TURSO_AUTH_TOKEN: z.string(),
 });
 
-const EnvSchema = z.discriminatedUnion('DATABASE_TYPE', [
-  LocalEnvSchema,
-  TursoEnvSchema,
-]);
+const EnvSchema = z.discriminatedUnion('DATABASE_TYPE', [LocalEnvSchema, TursoEnvSchema]);
 
 if (process.env.NODE_ENV === NodeEnvs.TEST) {
   const envFileName = '.env.test';

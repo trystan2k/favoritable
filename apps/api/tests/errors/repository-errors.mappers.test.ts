@@ -19,10 +19,7 @@ describe('repositoryErrorsHandler', () => {
   });
 
   test('should handle SQLITE_CONSTRAINT_UNIQUE with status EntityAlreadyExist', () => {
-    const error = new LibsqlError(
-      'Entity already exist',
-      'SQLITE_CONSTRAINT_UNIQUE'
-    );
+    const error = new LibsqlError('Entity already exist', 'SQLITE_CONSTRAINT_UNIQUE');
 
     const result = repositoryErrorsHandler(error);
 
@@ -32,10 +29,7 @@ describe('repositoryErrorsHandler', () => {
   });
 
   test('should handle SQLITE_CONSTRAINT_NOTNULL with status MalFormedRequestError', () => {
-    const error = new LibsqlError(
-      'Input data is invalid',
-      'SQLITE_CONSTRAINT_NOTNULL'
-    );
+    const error = new LibsqlError('Input data is invalid', 'SQLITE_CONSTRAINT_NOTNULL');
 
     const result = repositoryErrorsHandler(error);
 
@@ -45,10 +39,7 @@ describe('repositoryErrorsHandler', () => {
   });
 
   test('should handle SQLITE_CONSTRAINT_FOREIGNKEY with status MalFormedRequestError', () => {
-    const error = new LibsqlError(
-      'Foreign key constraint failed',
-      'SQLITE_CONSTRAINT_FOREIGNKEY'
-    );
+    const error = new LibsqlError('Foreign key constraint failed', 'SQLITE_CONSTRAINT_FOREIGNKEY');
 
     const result = repositoryErrorsHandler(error);
 
@@ -65,9 +56,7 @@ describe('repositoryErrorsHandler', () => {
     const result = repositoryErrorsHandler(error);
 
     expect(result).toBeInstanceOf(UnexpectedError);
-    expect((result as APIError).message).toBe(
-      'An unexpected error has occurred'
-    );
+    expect((result as APIError).message).toBe('An unexpected error has occurred');
     expect((result as APIError).httpStatusCode).toBe(500);
   });
 
@@ -85,9 +74,7 @@ describe('repositoryErrorsHandler', () => {
     const result = repositoryErrorsHandler(error);
 
     expect(result).toBeInstanceOf(UnexpectedError);
-    expect((result as APIError).message).toBe(
-      'An unexpected error has occurred in repository'
-    );
+    expect((result as APIError).message).toBe('An unexpected error has occurred in repository');
     expect((result as APIError).httpStatusCode).toBe(500);
   });
 
@@ -101,16 +88,11 @@ describe('repositoryErrorsHandler', () => {
   });
 
   test('should preserve the cause from LibsqlError', () => {
-    const error = new LibsqlError(
-      'Entity already exist',
-      'SQLITE_CONSTRAINT_UNIQUE'
-    );
+    const error = new LibsqlError('Entity already exist', 'SQLITE_CONSTRAINT_UNIQUE');
 
     const result = repositoryErrorsHandler(error);
 
     expect(result).toBeInstanceOf(EntityAlreadyExist);
-    expect((result as APIError).cause).toBe(
-      'SQLITE_CONSTRAINT_UNIQUE: Entity already exist'
-    );
+    expect((result as APIError).cause).toBe('SQLITE_CONSTRAINT_UNIQUE: Entity already exist');
   });
 });

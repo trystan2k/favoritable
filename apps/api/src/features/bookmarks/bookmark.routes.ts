@@ -1,13 +1,7 @@
 import { Hono } from 'hono';
-import {
-  Inject,
-  Service,
-} from '../../core/dependency-injection/di.decorators.js';
+import { Inject, Service } from '../../core/dependency-injection/di.decorators.js';
 import { zCustomValidator } from '../../core/validators.wrapper.js';
-import {
-  authMiddleware,
-  type HonoEnv,
-} from '../../middleware/auth.middleware.js';
+import { authMiddleware, type HonoEnv } from '../../middleware/auth.middleware.js';
 import {
   bookmarkIdParamSchema,
   createBookmarkFromURLSchema,
@@ -25,9 +19,7 @@ import type { BookmarkService } from './bookmark.services.js';
 export class BookmarkRoutes {
   private bookmarkRoutes: Hono<HonoEnv>;
 
-  constructor(
-    @Inject('BookmarkService') private bookmarkService: BookmarkService
-  ) {
+  constructor(@Inject('BookmarkService') private bookmarkService: BookmarkService) {
     this.bookmarkRoutes = new Hono();
     this.setupRoutes();
   }
@@ -50,38 +42,27 @@ export class BookmarkRoutes {
         if (!user) {
           return c.json({ error: 'Authentication required' }, 401);
         }
-        const bookmarks = await this.bookmarkService.getBookmarks(
-          queryParams,
-          user.id
-        );
+        const bookmarks = await this.bookmarkService.getBookmarks(queryParams, user.id);
         return c.json(bookmarks, 200);
       }
     );
 
     // Bookmark - Get
-    this.bookmarkRoutes.get(
-      '/:id',
-      zCustomValidator('param', bookmarkIdParamSchema),
-      async (c) => {
-        const { id } = c.req.valid('param');
-        const bookmark = await this.bookmarkService.getBookmark(id);
-        return c.json(bookmark, 200);
-      }
-    );
+    this.bookmarkRoutes.get('/:id', zCustomValidator('param', bookmarkIdParamSchema), async (c) => {
+      const { id } = c.req.valid('param');
+      const bookmark = await this.bookmarkService.getBookmark(id);
+      return c.json(bookmark, 200);
+    });
 
     // Bookmark - Create
-    this.bookmarkRoutes.post(
-      '/',
-      zCustomValidator('json', createBookmarkSchema),
-      async (c) => {
-        const data = c.req.valid('json');
-        const bookmark = await this.bookmarkService.createBookmark(data);
+    this.bookmarkRoutes.post('/', zCustomValidator('json', createBookmarkSchema), async (c) => {
+      const data = c.req.valid('json');
+      const bookmark = await this.bookmarkService.createBookmark(data);
 
-        // Add location header in response, with the url of the newly created bookmark
-        c.header('Location', `${c.req.url}/${bookmark.id}`);
-        return c.json(bookmark, 201);
-      }
-    );
+      // Add location header in response, with the url of the newly created bookmark
+      c.header('Location', `${c.req.url}/${bookmark.id}`);
+      return c.json(bookmark, 201);
+    });
 
     // Bookmark - Create from URL
     this.bookmarkRoutes.post(
@@ -93,10 +74,7 @@ export class BookmarkRoutes {
         if (!user) {
           return c.json({ error: 'Authentication required' }, 401);
         }
-        const bookmark = await this.bookmarkService.createBookmarkFromUrl(
-          url,
-          user.id
-        );
+        const bookmark = await this.bookmarkService.createBookmarkFromUrl(url, user.id);
         const location = c.req.url.replace('/from-url', '');
 
         // Add location header in response, with the url of the newly created bookmark
@@ -115,9 +93,7 @@ export class BookmarkRoutes {
         const { id } = c.req.valid('param');
         data.id = id;
 
-        const bookmark = await this.bookmarkService.updateBookmark(
-          data as UpdateBookmarkModel
-        );
+        const bookmark = await this.bookmarkService.updateBookmark(data as UpdateBookmarkModel);
         return c.json(bookmark, 200);
       }
     );
@@ -127,9 +103,7 @@ export class BookmarkRoutes {
       zCustomValidator('json', updateBookmarkSchema.array()),
       async (c) => {
         const data = c.req.valid('json');
-        const bookmarks = await this.bookmarkService.updateBookmarks(
-          data as UpdateBookmarkModel[]
-        );
+        const bookmarks = await this.bookmarkService.updateBookmarks(data as UpdateBookmarkModel[]);
         return c.json(bookmarks, 200);
       }
     );
@@ -151,9 +125,7 @@ export class BookmarkRoutes {
       zCustomValidator('json', deleteBookmarksSchema),
       async (c) => {
         const data = c.req.valid('json');
-        const deletedBookmarks = await this.bookmarkService.deleteBookmarks(
-          data.ids
-        );
+        const deletedBookmarks = await this.bookmarkService.deleteBookmarks(data.ids);
         return c.json(deletedBookmarks, 200);
       }
     );
@@ -178,10 +150,7 @@ export class BookmarkRoutes {
       async (c) => {
         const { folderName } = c.req.valid('query');
         const html = await c.req.text();
-        const bookmarks = await this.bookmarkService.importFromHtmlFile(
-          html,
-          folderName
-        );
+        const bookmarks = await this.bookmarkService.importFromHtmlFile(html, folderName);
         return c.json(bookmarks, 201);
       }
     );

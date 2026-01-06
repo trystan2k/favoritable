@@ -23,9 +23,7 @@ class TsidGenerator {
   constructor(nodeId?: number) {
     if (nodeId !== undefined) {
       if (nodeId < 0 || nodeId > TsidGenerator.MAX_NODE_ID) {
-        throw new Error(
-          `Node ID must be between 0 and ${TsidGenerator.MAX_NODE_ID}`
-        );
+        throw new Error(`Node ID must be between 0 and ${TsidGenerator.MAX_NODE_ID}`);
       }
       this.nodeId = nodeId;
     } else {
@@ -65,8 +63,7 @@ class TsidGenerator {
 
     // Construct the 64-bit TSID
     const tsid =
-      (BigInt(timestamp) <<
-        BigInt(TsidGenerator.SEQUENCE_BITS + TsidGenerator.NODE_BITS)) |
+      (BigInt(timestamp) << BigInt(TsidGenerator.SEQUENCE_BITS + TsidGenerator.NODE_BITS)) |
       (BigInt(this.nodeId) << BigInt(TsidGenerator.SEQUENCE_BITS)) |
       BigInt(this.sequence);
 
@@ -80,9 +77,7 @@ class TsidGenerator {
    */
   static extractDate(tsid: string): Date {
     const num = BigInt(tsid);
-    const timestamp = Number(
-      num >> BigInt(TsidGenerator.SEQUENCE_BITS + TsidGenerator.NODE_BITS)
-    );
+    const timestamp = Number(num >> BigInt(TsidGenerator.SEQUENCE_BITS + TsidGenerator.NODE_BITS));
     return new Date(timestamp + TsidGenerator.EPOCH);
   }
 }

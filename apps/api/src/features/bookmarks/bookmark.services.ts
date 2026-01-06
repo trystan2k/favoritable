@@ -1,7 +1,4 @@
-import {
-  Inject,
-  Service,
-} from '../../core/dependency-injection/di.decorators.js';
+import { Inject, Service } from '../../core/dependency-injection/di.decorators.js';
 import { logger } from '../../core/logger.js';
 import { scrapper } from '../../core/puppeteer.scrapper.js';
 import type { DBTransaction } from '../../db/types.js';
@@ -34,9 +31,7 @@ const PLACEHOLDER_USER_ID = 'temp-user-id';
 export class BookmarkService {
   private entityName = 'Bookmark';
 
-  constructor(
-    @Inject('BookmarkUnitOfWork') private bookmarkUnitOfWork: BookmarkUnitOfWork
-  ) {}
+  constructor(@Inject('BookmarkUnitOfWork') private bookmarkUnitOfWork: BookmarkUnitOfWork) {}
 
   async getBookmarks(
     queryParams: GetBookmarksQueryParamsModel,
@@ -44,29 +39,18 @@ export class BookmarkService {
   ): Promise<BookmarksModel> {
     const { q: searchQuery, limit, cursor } = queryParams;
 
-    const bookmarks = await this.bookmarkUnitOfWork.bookmarkRepository.findAll(
-      queryParams,
-      userId
-    );
+    const bookmarks = await this.bookmarkUnitOfWork.bookmarkRepository.findAll(queryParams, userId);
 
-    const mappedBookmarks = bookmarks.map((bookmark) =>
-      mapBookmarkDTOToBookmarkModel(bookmark)
-    );
+    const mappedBookmarks = bookmarks.map((bookmark) => mapBookmarkDTOToBookmarkModel(bookmark));
 
     // Check if there are more results
     const hasMore = mappedBookmarks.length > limit;
     const items = hasMore ? mappedBookmarks.slice(0, limit) : mappedBookmarks;
 
-    const searchQueryLimit = `?${
-      searchQuery ? `q=${searchQuery}&` : ''
-    }limit=${limit}`;
+    const searchQueryLimit = `?${searchQuery ? `q=${searchQuery}&` : ''}limit=${limit}`;
     const paginationMetadata = {
-      next: hasMore
-        ? `${searchQueryLimit}&cursor=${items[items.length - 1]?.id}`
-        : null,
-      self: cursor
-        ? `${searchQueryLimit}&cursor=${cursor}`
-        : `${searchQueryLimit}`,
+      next: hasMore ? `${searchQueryLimit}&cursor=${items[items.length - 1]?.id}` : null,
+      self: cursor ? `${searchQueryLimit}&cursor=${cursor}` : `${searchQueryLimit}`,
     };
 
     return {
@@ -76,8 +60,7 @@ export class BookmarkService {
   }
 
   async getBookmark(id: string): Promise<BookmarkModel> {
-    const bookmark =
-      await this.bookmarkUnitOfWork.bookmarkRepository.findById(id);
+    const bookmark = await this.bookmarkUnitOfWork.bookmarkRepository.findById(id);
     if (!bookmark) {
       throw new NotFoundError(`${this.entityName} with id ${id} not found`);
     }
@@ -90,8 +73,7 @@ export class BookmarkService {
       data,
       userId ?? PLACEHOLDER_USER_ID
     );
-    const bookmark =
-      await this.bookmarkUnitOfWork.bookmarkRepository.create(newBookmark);
+    const bookmark = await this.bookmarkUnitOfWork.bookmarkRepository.create(newBookmark);
     return mapBookmarkDTOToBookmarkModel(bookmark);
   }
 
@@ -101,12 +83,9 @@ export class BookmarkService {
   }
 
   async deleteBookmarks(ids: string[]) {
-    const deletedBookmarks =
-      await this.bookmarkUnitOfWork.bookmarkRepository.delete(ids);
+    const deletedBookmarks = await this.bookmarkUnitOfWork.bookmarkRepository.delete(ids);
     for (const bookmarkId of deletedBookmarks) {
-      await this.bookmarkUnitOfWork.bookmarkLabelRepository.deleteByBookmarkId(
-        bookmarkId
-      );
+      await this.bookmarkUnitOfWork.bookmarkLabelRepository.deleteByBookmarkId(bookmarkId);
     }
     return deletedBookmarks;
   }
@@ -117,10 +96,7 @@ export class BookmarkService {
     tx: DBTransaction
   ) {
     const updateBookmark = mapUpdateBookmarkModelToUpdateBookmarkDTO(data);
-    const updatedBookmarkDto = await uow.bookmarkRepository.update(
-      updateBookmark,
-      tx
-    );
+    const updatedBookmarkDto = await uow.bookmarkRepository.update(updateBookmark, tx);
     if (!updatedBookmarkDto) {
       throw new NotFoundError(`bookmark with id ${data.id} not found`);
     }
@@ -131,18 +107,11 @@ export class BookmarkService {
 
       for (const label of data.labels) {
         if (!label.id && label.name) {
-          const labelToCreate = mapCreateLabelModelToInsertLabelDTO(
-            label as CreateLabelModel
-          );
-          const createdLabel = await uow.labelRepository.create(
-            labelToCreate,
-            tx
-          );
+          const labelToCreate = mapCreateLabelModelToInsertLabelDTO(label as CreateLabelModel);
+          const createdLabel = await uow.labelRepository.create(labelToCreate, tx);
           allLabels.push(createdLabel);
         } else if (label.id) {
-          const existingLabelToAdd = await uow.labelRepository.findById(
-            label.id
-          );
+          const existingLabelToAdd = await uow.labelRepository.findById(label.id);
           if (existingLabelToAdd) {
             allLabels.push(existingLabelToAdd);
           }
@@ -153,16 +122,10 @@ export class BookmarkService {
         }
       }
 
-      await uow.bookmarkLabelRepository.deleteByBookmarkId(
-        updatedBookmark.id,
-        tx
-      );
+      await uow.bookmarkLabelRepository.deleteByBookmarkId(updatedBookmark.id, tx);
 
       for (const label of allLabels) {
-        const relation = createBookmarkLabelRelation(
-          updatedBookmark.id,
-          label.id
-        );
+        const relation = createBookmarkLabelRelation(updatedBookmark.id, label.id);
         await uow.bookmarkLabelRepository.create(relation, tx);
       }
       updatedBookmark.labels = allLabels;
@@ -182,11 +145,7 @@ export class BookmarkService {
       const updatedBookmarks: BookmarkModel[] = [];
 
       for (const bookmarkData of data) {
-        const updatedBookmarkData = await this.handleUpdateBookmark(
-          bookmarkData,
-          uow,
-          tx
-        );
+        const updatedBookmarkData = await this.handleUpdateBookmark(bookmarkData, uow, tx);
         updatedBookmarks.push(updatedBookmarkData);
       }
 
@@ -224,9 +183,7 @@ export class BookmarkService {
 
       const createdBookmark = await this.createBookmark(bookmarkData);
 
-      const label = await this.bookmarkUnitOfWork.labelRepository.findByName(
-        bookmark.folderName
-      );
+      const label = await this.bookmarkUnitOfWork.labelRepository.findByName(bookmark.folderName);
 
       const labelData =
         label ||
@@ -238,10 +195,7 @@ export class BookmarkService {
           })
         ));
 
-      const relations = createBookmarkLabelRelation(
-        createdBookmark.id,
-        labelData.id
-      );
+      const relations = createBookmarkLabelRelation(createdBookmark.id, labelData.id);
 
       await this.bookmarkUnitOfWork.bookmarkLabelRepository.create(relations);
       importedBookmarks.push(await this.getBookmark(createdBookmark.id));
@@ -258,9 +212,7 @@ export class BookmarkService {
       context: 'BookmarkService',
       method: 'importFromOmnivore',
     });
-    serviceLogger.info(
-      `Starting Omnivore bookmark import with ${data.length} items`
-    );
+    serviceLogger.info(`Starting Omnivore bookmark import with ${data.length} items`);
 
     const importedBookmarks = [];
 
@@ -275,8 +227,7 @@ export class BookmarkService {
         );
 
         for (const labelName of bookmark.labels) {
-          const label =
-            await this.bookmarkUnitOfWork.labelRepository.findByName(labelName);
+          const label = await this.bookmarkUnitOfWork.labelRepository.findByName(labelName);
           const labelData =
             label ||
             (await this.bookmarkUnitOfWork.labelRepository.create(
@@ -287,22 +238,15 @@ export class BookmarkService {
               })
             ));
 
-          const relations = createBookmarkLabelRelation(
-            createdBookmark.id,
-            labelData.id
-          );
-          await this.bookmarkUnitOfWork.bookmarkLabelRepository.create(
-            relations
-          );
+          const relations = createBookmarkLabelRelation(createdBookmark.id, labelData.id);
+          await this.bookmarkUnitOfWork.bookmarkLabelRepository.create(relations);
         }
       }
 
       importedBookmarks.push(await this.getBookmark(createdBookmark.id));
     }
 
-    serviceLogger.info(
-      `Successfully imported ${importedBookmarks.length} bookmarks from Omnivore`
-    );
+    serviceLogger.info(`Successfully imported ${importedBookmarks.length} bookmarks from Omnivore`);
     return importedBookmarks;
   }
 
@@ -312,9 +256,7 @@ export class BookmarkService {
       method: 'importFromTextFile',
     });
     const urls = data.split('\n').filter((url) => url.trim().length > 0);
-    serviceLogger.info(
-      `Starting text file bookmark import with ${urls.length} URLs`
-    );
+    serviceLogger.info(`Starting text file bookmark import with ${urls.length} URLs`);
 
     const importedBookmarks = [];
 

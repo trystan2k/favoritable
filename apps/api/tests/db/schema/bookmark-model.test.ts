@@ -1,25 +1,12 @@
 import { eq, like } from 'drizzle-orm';
-import {
-  afterAll,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  test,
-} from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import {
   type BookmarkDTO,
   bookmark,
   type InsertBookmarkDTO,
 } from '../../../src/db/schema/bookmark.schema.js';
-import {
-  type InsertUserDTO,
-  user,
-} from '../../../src/db/schema/user.schema.js';
-import {
-  setupTestDatabase,
-  teardownTestDatabase,
-} from '../../test-db-setup.js';
+import { type InsertUserDTO, user } from '../../../src/db/schema/user.schema.js';
+import { setupTestDatabase, teardownTestDatabase } from '../../test-db-setup.js';
 
 describe('Bookmark Model Tests', () => {
   let db: Awaited<ReturnType<typeof setupTestDatabase>>;
@@ -105,10 +92,9 @@ describe('Bookmark Model Tests', () => {
     await db.insert(bookmark).values(newBookmark).returning().get();
 
     // Then read it back
-    const foundBookmark: BookmarkDTO | undefined =
-      await db.query.bookmark.findFirst({
-        where: (bookmarkTable, { eq }) => eq(bookmarkTable.id, newBookmark.id),
-      });
+    const foundBookmark: BookmarkDTO | undefined = await db.query.bookmark.findFirst({
+      where: (bookmarkTable, { eq }) => eq(bookmarkTable.id, newBookmark.id),
+    });
 
     expect(foundBookmark).toBeDefined();
     expect(foundBookmark).toMatchObject({
@@ -148,16 +134,8 @@ describe('Bookmark Model Tests', () => {
     };
 
     // Both bookmarks should succeed - no URL uniqueness constraint
-    const createdBookmark1 = await db
-      .insert(bookmark)
-      .values(bookmark1)
-      .returning()
-      .get();
-    const createdBookmark2 = await db
-      .insert(bookmark)
-      .values(bookmark2)
-      .returning()
-      .get();
+    const createdBookmark1 = await db.insert(bookmark).values(bookmark1).returning().get();
+    const createdBookmark2 = await db.insert(bookmark).values(bookmark2).returning().get();
 
     expect(createdBookmark1.url).toBe(bookmark1.url);
     expect(createdBookmark2.url).toBe(bookmark2.url);
@@ -173,11 +151,7 @@ describe('Bookmark Model Tests', () => {
       provider: 'github',
     };
 
-    const createdUser = await db
-      .insert(user)
-      .values(testUser)
-      .returning()
-      .get();
+    const createdUser = await db.insert(user).values(testUser).returning().get();
 
     // Create a bookmark
     const newBookmark: InsertBookmarkDTO = {
@@ -188,16 +162,11 @@ describe('Bookmark Model Tests', () => {
       userId: createdUser.id,
     };
 
-    const createdBookmark = await db
-      .insert(bookmark)
-      .values(newBookmark)
-      .returning()
-      .get();
+    const createdBookmark = await db.insert(bookmark).values(newBookmark).returning().get();
 
     // Query bookmark with user relationship
     const bookmarkWithUser = await db.query.bookmark.findFirst({
-      where: (bookmarkTable, { eq }) =>
-        eq(bookmarkTable.id, createdBookmark.id),
+      where: (bookmarkTable, { eq }) => eq(bookmarkTable.id, createdBookmark.id),
       with: {
         user: true,
       },
@@ -219,9 +188,7 @@ describe('Bookmark Model Tests', () => {
     };
 
     // Should fail due to foreign key constraint
-    await expect(
-      db.insert(bookmark).values(newBookmark).returning().get()
-    ).rejects.toThrow();
+    await expect(db.insert(bookmark).values(newBookmark).returning().get()).rejects.toThrow();
   });
 
   test('should update bookmark information', async () => {
@@ -244,11 +211,7 @@ describe('Bookmark Model Tests', () => {
       userId: testUser.id,
     };
 
-    const createdBookmark = await db
-      .insert(bookmark)
-      .values(newBookmark)
-      .returning()
-      .get();
+    const createdBookmark = await db.insert(bookmark).values(newBookmark).returning().get();
 
     // Then update it
     const updatedBookmark = await db
@@ -280,11 +243,7 @@ describe('Bookmark Model Tests', () => {
       provider: 'discord',
     };
 
-    const createdUser = await db
-      .insert(user)
-      .values(testUser)
-      .returning()
-      .get();
+    const createdUser = await db.insert(user).values(testUser).returning().get();
 
     // Create a bookmark
     const newBookmark: InsertBookmarkDTO = {
@@ -295,16 +254,11 @@ describe('Bookmark Model Tests', () => {
       userId: createdUser.id,
     };
 
-    const createdBookmark = await db
-      .insert(bookmark)
-      .values(newBookmark)
-      .returning()
-      .get();
+    const createdBookmark = await db.insert(bookmark).values(newBookmark).returning().get();
 
     // Verify bookmark exists
     let foundBookmark = await db.query.bookmark.findFirst({
-      where: (bookmarkTable, { eq }) =>
-        eq(bookmarkTable.id, createdBookmark.id),
+      where: (bookmarkTable, { eq }) => eq(bookmarkTable.id, createdBookmark.id),
     });
     expect(foundBookmark).toBeDefined();
 
@@ -313,8 +267,7 @@ describe('Bookmark Model Tests', () => {
 
     // Bookmark should be cascade deleted
     foundBookmark = await db.query.bookmark.findFirst({
-      where: (bookmarkTable, { eq }) =>
-        eq(bookmarkTable.id, createdBookmark.id),
+      where: (bookmarkTable, { eq }) => eq(bookmarkTable.id, createdBookmark.id),
     });
     expect(foundBookmark).toBeUndefined();
   });

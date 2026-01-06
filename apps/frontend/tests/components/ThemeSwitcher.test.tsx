@@ -28,10 +28,7 @@ describe('Theme Switcher', () => {
     await user.click(themeSwitcher);
 
     // After clicking, the button should now show light mode icon and have updated aria-label
-    expect(themeSwitcher).toHaveAttribute(
-      'aria-label',
-      'Switch to light theme'
-    );
+    expect(themeSwitcher).toHaveAttribute('aria-label', 'Switch to light theme');
     expect(themeSwitcher.querySelector('svg')).toBeInTheDocument();
     expect(themeSwitcher.querySelector('.lucide-sun')).toBeInTheDocument();
   });

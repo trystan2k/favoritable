@@ -34,13 +34,7 @@ export const loggerMiddleware = () => {
 
       // Determine log level based on response status
       const logMethod =
-        status >= 500
-          ? 'error'
-          : status >= 400
-            ? 'warn'
-            : status >= 300
-              ? 'debug'
-              : 'info';
+        status >= 500 ? 'error' : status >= 400 ? 'warn' : status >= 300 ? 'debug' : 'info';
 
       // Log request completion with appropriate level
       requestLogger[logMethod]({

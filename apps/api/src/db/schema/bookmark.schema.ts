@@ -17,10 +17,7 @@ export const bookmark = sqliteTable(
     description: text('description'),
     author: text('author'),
     thumbnail: text('thumbnail'),
-    state: text('state')
-      .$type<BookmarkStateKey>()
-      .notNull()
-      .default(BOOKMARK_STATES.active),
+    state: text('state').$type<BookmarkStateKey>().notNull().default(BOOKMARK_STATES.active),
     publishedAt: integer('published_at', { mode: 'timestamp_ms' }),
     userId: text('user_id')
       .notNull()

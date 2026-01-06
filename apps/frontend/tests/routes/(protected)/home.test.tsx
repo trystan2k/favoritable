@@ -1,10 +1,6 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
-import {
-  createTestRouter,
-  renderWithRouter,
-  setupAuth,
-} from '../../test-utils';
+import { createTestRouter, renderWithRouter, setupAuth } from '../../test-utils';
 
 describe('Home Route', () => {
   describe('Unauthenticated users', () => {
@@ -28,9 +24,7 @@ describe('Home Route', () => {
       const router = await createTestRouter(['/home'], true);
       await renderWithRouter(router);
 
-      expect(
-        screen.getByRole('heading', { level: 3, name: 'Welcome Home!' })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: 'Welcome Home!' })).toBeInTheDocument();
     });
 
     test('should render all button variants when navigating to /home with auth', async () => {
@@ -38,18 +32,10 @@ describe('Home Route', () => {
       const router = await createTestRouter(['/home'], true);
       await renderWithRouter(router);
 
-      expect(
-        screen.getByRole('button', { name: 'Solid Button' })
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', { name: 'Soft Button' })
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', { name: 'Outline Button' })
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', { name: 'Ghost Button' })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Solid Button' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Soft Button' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Outline Button' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Ghost Button' })).toBeInTheDocument();
     });
 
     test('should apply CSS modules classes correctly to components when navigating to /home with auth', async () => {
@@ -76,18 +62,10 @@ describe('Home Route', () => {
       expect(contentButtons.length).toBeGreaterThanOrEqual(4); // Four button variants (might be more with navigation)
 
       // Find the specific content buttons
-      expect(
-        screen.getByRole('button', { name: 'Solid Button' })
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', { name: 'Soft Button' })
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', { name: 'Outline Button' })
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', { name: 'Ghost Button' })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Solid Button' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Soft Button' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Outline Button' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Ghost Button' })).toBeInTheDocument();
     });
 
     test('should render correct layout structure when navigating to /home with auth', async () => {
@@ -103,12 +81,8 @@ describe('Home Route', () => {
       expect(mainHeading).toBeInTheDocument();
 
       // Test that we can find the description text and buttons
-      expect(
-        screen.getByText(/Design tokens are working!/)
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('button', { name: 'Solid Button' })
-      ).toBeInTheDocument();
+      expect(screen.getByText(/Design tokens are working!/)).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Solid Button' })).toBeInTheDocument();
     });
 
     test('should render content in correct order when navigating to /home with auth', async () => {
@@ -129,12 +103,8 @@ describe('Home Route', () => {
       const router = await createTestRouter(['/home'], true);
       await renderWithRouter(router);
 
-      expect(
-        screen.getByText(/Design tokens are working!/)
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(/This card uses theme-aware CSS variables/)
-      ).toBeInTheDocument();
+      expect(screen.getByText(/Design tokens are working!/)).toBeInTheDocument();
+      expect(screen.getByText(/This card uses theme-aware CSS variables/)).toBeInTheDocument();
     });
   });
 });

@@ -17,11 +17,7 @@ function RouteComponent() {
       </p>
       <div className={styles.section}>
         <Button
-          className={cx(
-            buttonSharedStyles.button,
-            buttonSharedStyles.outline,
-            styles.largeButton
-          )}
+          className={cx(buttonSharedStyles.button, buttonSharedStyles.outline, styles.largeButton)}
         >
           Large Outline Button
         </Button>

@@ -12,9 +12,7 @@ const defaultResponseHandler = (err: APIError, c: Context): Response => {
 
   // Sanitize error message for production
   const publicMessage =
-    env.NODE_ENV === NodeEnvs.PRODUCTION
-      ? 'An unexpected error occurred'
-      : err.message;
+    env.NODE_ENV === NodeEnvs.PRODUCTION ? 'An unexpected error occurred' : err.message;
 
   const response: ErrorResponse = {
     error: {
@@ -89,8 +87,7 @@ export const errorHandler = (
       request: {
         method: c.req.method,
         path: c.req.path,
-        headers:
-          env.NODE_ENV === NodeEnvs.DEVELOPMENT ? c.req.header() : undefined,
+        headers: env.NODE_ENV === NodeEnvs.DEVELOPMENT ? c.req.header() : undefined,
       },
       msg: `${logLevel === 'error' ? 'Server error' : 'Client error'} occurred`,
     });

@@ -59,9 +59,7 @@ describe('Auth Error Integration Tests', () => {
         method: 'GET',
       });
 
-      expect(response.headers.get('content-type')).toContain(
-        'application/json'
-      );
+      expect(response.headers.get('content-type')).toContain('application/json');
     });
 
     test('should handle CORS preflight requests to auth endpoints', async () => {

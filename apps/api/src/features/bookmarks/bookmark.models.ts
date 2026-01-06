@@ -37,9 +37,7 @@ export const getBookmarksQueryParamsSchema = z
     state: bookmarkSchema.shape.state.optional(),
   });
 
-export type GetBookmarksQueryParamsModel = z.infer<
-  typeof getBookmarksQueryParamsSchema
->;
+export type GetBookmarksQueryParamsModel = z.infer<typeof getBookmarksQueryParamsSchema>;
 
 export type BookmarksModel = {
   data: BookmarkModel[];
@@ -85,8 +83,7 @@ export const updateBookmarkSchema = bookmarkSchema
       .default([]),
   });
 
-export type UpdateBookmarkModel = z.infer<typeof updateBookmarkSchema> &
-  Pick<BookmarkModel, 'id'>;
+export type UpdateBookmarkModel = z.infer<typeof updateBookmarkSchema> & Pick<BookmarkModel, 'id'>;
 
 export const importOmnivoreBookmarksSchema = z.object({
   id: z.string().nonempty(),
@@ -104,9 +101,7 @@ export const importOmnivoreBookmarksSchema = z.object({
   publishedAt: dateSchema.optional().nullable().default(null),
 });
 
-export type OmnivoreBookmarkModel = z.infer<
-  typeof importOmnivoreBookmarksSchema
->;
+export type OmnivoreBookmarkModel = z.infer<typeof importOmnivoreBookmarksSchema>;
 
 export const importFromHTMLFileQueryParamsSchema = z.object({
   folderName: z.string().optional(),

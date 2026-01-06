@@ -1,8 +1,4 @@
-import {
-  createMemoryHistory,
-  createRouter,
-  RouterProvider,
-} from '@tanstack/react-router';
+import { createMemoryHistory, createRouter, RouterProvider } from '@tanstack/react-router';
 import { render } from '@testing-library/react';
 import { act } from 'react';
 import { vi } from 'vitest';
@@ -76,10 +72,7 @@ export const setupAuth = async (isAuthenticated: boolean): Promise<void> => {
   }
 };
 
-export const createTestRouter = async (
-  initialEntries = ['/'],
-  authenticated = false
-) => {
+export const createTestRouter = async (initialEntries = ['/'], authenticated = false) => {
   await setupAuth(authenticated);
 
   const history = createMemoryHistory({

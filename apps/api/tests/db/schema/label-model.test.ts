@@ -1,26 +1,8 @@
 import { eq, like } from 'drizzle-orm';
-import {
-  afterAll,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  test,
-} from 'vitest';
-import {
-  type InsertLabelDTO,
-  type LabelDTO,
-  label,
-} from '../../../src/db/schema/label.schema.js';
-import {
-  type InsertUserDTO,
-  type UserDTO,
-  user,
-} from '../../../src/db/schema/user.schema.js';
-import {
-  setupTestDatabase,
-  teardownTestDatabase,
-} from '../../test-db-setup.js';
+import { afterAll, beforeAll, beforeEach, describe, expect, test } from 'vitest';
+import { type InsertLabelDTO, type LabelDTO, label } from '../../../src/db/schema/label.schema.js';
+import { type InsertUserDTO, type UserDTO, user } from '../../../src/db/schema/user.schema.js';
+import { setupTestDatabase, teardownTestDatabase } from '../../test-db-setup.js';
 
 describe('Label Model Tests', () => {
   let testUser: UserDTO;
@@ -59,11 +41,7 @@ describe('Label Model Tests', () => {
       userId: testUser.id,
     };
 
-    const createdLabel: LabelDTO = await db
-      .insert(label)
-      .values(newLabel)
-      .returning()
-      .get();
+    const createdLabel: LabelDTO = await db.insert(label).values(newLabel).returning().get();
 
     expect(createdLabel).toMatchObject({
       id: newLabel.id,
@@ -107,11 +85,7 @@ describe('Label Model Tests', () => {
       userId: testUser.id,
     };
 
-    const createdLabel: LabelDTO = await db
-      .insert(label)
-      .values(newLabel)
-      .returning()
-      .get();
+    const createdLabel: LabelDTO = await db.insert(label).values(newLabel).returning().get();
 
     expect(createdLabel.name).toBe(newLabel.name);
     expect(createdLabel.color).toBeNull();
@@ -145,9 +119,7 @@ describe('Label Model Tests', () => {
     };
 
     // Should fail due to foreign key constraint
-    await expect(
-      db.insert(label).values(labelWithInvalidUser).returning().get()
-    ).rejects.toThrow();
+    await expect(db.insert(label).values(labelWithInvalidUser).returning().get()).rejects.toThrow();
   });
 
   test('should retrieve label with user relationship', async () => {
@@ -184,11 +156,7 @@ describe('Label Model Tests', () => {
       provider: 'github',
     };
 
-    const createdTempUser = await db
-      .insert(user)
-      .values(tempUser)
-      .returning()
-      .get();
+    const createdTempUser = await db.insert(user).values(tempUser).returning().get();
 
     // Create a label associated with the temporary user
     const labelForTempUser: InsertLabelDTO = {
@@ -231,9 +199,7 @@ describe('Label Model Tests', () => {
     };
 
     // Should fail due to unique constraint on (name, userId)
-    await expect(
-      db.insert(label).values(duplicateLabel).returning().get()
-    ).rejects.toThrow();
+    await expect(db.insert(label).values(duplicateLabel).returning().get()).rejects.toThrow();
 
     // However, a different user should be able to create a label with the same name
     const anotherUser: InsertUserDTO = {
@@ -243,11 +209,7 @@ describe('Label Model Tests', () => {
       provider: 'google',
     };
 
-    const createdAnotherUser = await db
-      .insert(user)
-      .values(anotherUser)
-      .returning()
-      .get();
+    const createdAnotherUser = await db.insert(user).values(anotherUser).returning().get();
 
     const sameNameDifferentUser: InsertLabelDTO = {
       id: 'test-label-unique-3',
@@ -257,11 +219,7 @@ describe('Label Model Tests', () => {
     };
 
     // This should succeed
-    const createdLabel = await db
-      .insert(label)
-      .values(sameNameDifferentUser)
-      .returning()
-      .get();
+    const createdLabel = await db.insert(label).values(sameNameDifferentUser).returning().get();
 
     expect(createdLabel.name).toBe('Duplicate Name');
     expect(createdLabel.userId).toBe(createdAnotherUser.id);

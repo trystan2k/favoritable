@@ -28,9 +28,7 @@ describe('authErrorsHandler', () => {
     const result = authErrorsHandler(betterAuthError);
 
     expect(result).toBeInstanceOf(MalFormedRequestError);
-    expect((result as APIError).message).toBe(
-      'Authentication request is invalid'
-    );
+    expect((result as APIError).message).toBe('Authentication request is invalid');
     expect((result as APIError).httpStatusCode).toBe(400);
   });
 
@@ -78,9 +76,7 @@ describe('authErrorsHandler', () => {
     const result = authErrorsHandler(betterAuthError);
 
     expect(result).toBeInstanceOf(MalFormedRequestError);
-    expect((result as APIError).message).toBe(
-      'Authentication validation failed'
-    );
+    expect((result as APIError).message).toBe('Authentication validation failed');
     expect((result as APIError).httpStatusCode).toBe(400);
   });
 
@@ -92,9 +88,7 @@ describe('authErrorsHandler', () => {
     const result = authErrorsHandler(betterAuthError);
 
     expect(result).toBeInstanceOf(NotAcceptedError);
-    expect((result as APIError).message).toBe(
-      'Authentication rate limit exceeded'
-    );
+    expect((result as APIError).message).toBe('Authentication rate limit exceeded');
     expect((result as APIError).httpStatusCode).toBe(406);
   });
 
@@ -106,9 +100,7 @@ describe('authErrorsHandler', () => {
     const result = authErrorsHandler(betterAuthError);
 
     expect(result).toBeInstanceOf(UnexpectedError);
-    expect((result as APIError).message).toBe(
-      'An unexpected authentication error occurred'
-    );
+    expect((result as APIError).message).toBe('An unexpected authentication error occurred');
     expect((result as APIError).httpStatusCode).toBe(500);
   });
 

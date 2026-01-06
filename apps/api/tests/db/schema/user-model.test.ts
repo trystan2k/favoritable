@@ -1,21 +1,7 @@
 import { eq, like } from 'drizzle-orm';
-import {
-  afterAll,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  test,
-} from 'vitest';
-import {
-  type InsertUserDTO,
-  type UserDTO,
-  user,
-} from '../../../src/db/schema/user.schema.js';
-import {
-  setupTestDatabase,
-  teardownTestDatabase,
-} from '../../test-db-setup.js';
+import { afterAll, beforeAll, beforeEach, describe, expect, test } from 'vitest';
+import { type InsertUserDTO, type UserDTO, user } from '../../../src/db/schema/user.schema.js';
+import { setupTestDatabase, teardownTestDatabase } from '../../test-db-setup.js';
 
 describe('User Model Tests', () => {
   let db: Awaited<ReturnType<typeof setupTestDatabase>>;
@@ -42,11 +28,7 @@ describe('User Model Tests', () => {
       provider: 'github',
     };
 
-    const createdUser: UserDTO = await db
-      .insert(user)
-      .values(newUser)
-      .returning()
-      .get();
+    const createdUser: UserDTO = await db.insert(user).values(newUser).returning().get();
 
     expect(createdUser).toMatchObject({
       id: newUser.id,
@@ -126,9 +108,7 @@ describe('User Model Tests', () => {
     await db.insert(user).values(user1).returning().get();
 
     // Second user with same email should fail
-    await expect(
-      db.insert(user).values(user2).returning().get()
-    ).rejects.toThrow();
+    await expect(db.insert(user).values(user2).returning().get()).rejects.toThrow();
   });
 
   test('should update user information', async () => {
@@ -156,21 +136,12 @@ describe('User Model Tests', () => {
 
     expect(updatedUser.name).toBe('Updated Name');
     expect(updatedUser.avatarUrl).toBe('https://example.com/new-avatar.png');
-    expect(updatedUser.updatedAt.getTime()).toBeGreaterThan(
-      createdUser.updatedAt.getTime()
-    );
+    expect(updatedUser.updatedAt.getTime()).toBeGreaterThan(createdUser.updatedAt.getTime());
   });
 
   test('should validate provider enum values at compile time', async () => {
     // Test valid providers
-    const validProviders = [
-      'github',
-      'google',
-      'facebook',
-      'twitter',
-      'apple',
-      'discord',
-    ] as const;
+    const validProviders = ['github', 'google', 'facebook', 'twitter', 'apple', 'discord'] as const;
 
     for (const provider of validProviders) {
       const newUser: InsertUserDTO = {
@@ -180,11 +151,7 @@ describe('User Model Tests', () => {
         provider: provider,
       };
 
-      const createdUser = await db
-        .insert(user)
-        .values(newUser)
-        .returning()
-        .get();
+      const createdUser = await db.insert(user).values(newUser).returning().get();
       expect(createdUser.provider).toBe(provider);
 
       // Clean up

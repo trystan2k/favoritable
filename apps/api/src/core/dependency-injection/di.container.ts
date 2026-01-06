@@ -39,11 +39,7 @@ export class Container {
   // biome-ignore lint/suspicious/noExplicitAny: Initialize container with class constructors
   initialize(args: any[]) {
     args.forEach((arg) => {
-      if (
-        typeof arg !== 'function' ||
-        !arg.prototype ||
-        !(arg.prototype.constructor === arg)
-      ) {
+      if (typeof arg !== 'function' || !arg.prototype || !(arg.prototype.constructor === arg)) {
         throw new Error(`Argument "${arg}" is not a valid class constructor`);
       }
     });
@@ -52,11 +48,7 @@ export class Container {
   /**
    * Register a class implementation for a token
    */
-  registerClass<T>(
-    token: string,
-    classDefinition: Constructor<T>,
-    singleton?: boolean
-  ): void {
+  registerClass<T>(token: string, classDefinition: Constructor<T>, singleton?: boolean): void {
     if (this.registry.has(token)) {
       throw new Error(`Instance with key '${token}' already exists.`);
     }

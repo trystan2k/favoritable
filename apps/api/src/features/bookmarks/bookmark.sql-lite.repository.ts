@@ -1,9 +1,6 @@
 import { and, eq, exists, inArray, like, or, sql } from 'drizzle-orm';
 
-import {
-  Inject,
-  Service,
-} from '../../core/dependency-injection/di.decorators.js';
+import { Inject, Service } from '../../core/dependency-injection/di.decorators.js';
 import { bookmark } from '../../db/schema/bookmark.schema.js';
 import { bookmarkLabel } from '../../db/schema/bookmark-label.schema.js';
 import { label } from '../../db/schema/label.schema.js';
@@ -82,18 +79,17 @@ export class SQLiteBookmarkRepository implements BookmarkRepository {
   }
 
   async findById(id: string): Promise<BookmarkWithLabelsDTO | undefined> {
-    const bookmarkDto: BookmarkWithLabelsDTO | undefined =
-      await this.db.query.bookmark.findFirst({
-        where: (bookmark, { eq }) => eq(bookmark.id, id),
-        with: {
-          bookmarkLabel: {
-            columns: {},
-            with: {
-              label: true,
-            },
+    const bookmarkDto: BookmarkWithLabelsDTO | undefined = await this.db.query.bookmark.findFirst({
+      where: (bookmark, { eq }) => eq(bookmark.id, id),
+      with: {
+        bookmarkLabel: {
+          columns: {},
+          with: {
+            label: true,
           },
         },
-      });
+      },
+    });
 
     return bookmarkDto;
   }

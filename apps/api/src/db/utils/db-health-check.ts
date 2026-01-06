@@ -11,10 +11,7 @@ export async function checkDatabaseConnection(): Promise<boolean> {
     logger.info('✅ Database connection successful');
     return true;
   } catch (error) {
-    logger.error(
-      '❌ Database connection failed:',
-      error instanceof Error ? error.message : error
-    );
+    logger.error('❌ Database connection failed:', error instanceof Error ? error.message : error);
     return false;
   }
 }

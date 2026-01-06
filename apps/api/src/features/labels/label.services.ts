@@ -1,7 +1,4 @@
-import {
-  Inject,
-  Service,
-} from '../../core/dependency-injection/di.decorators.js';
+import { Inject, Service } from '../../core/dependency-injection/di.decorators.js';
 import { NotFoundError } from '../../errors/errors.js';
 import type { BookmarkLabelRepository } from '../bookmarkLabel/bookmarkLabel.repository.js';
 import {

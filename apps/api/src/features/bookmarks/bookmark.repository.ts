@@ -13,8 +13,7 @@ export type BookmarkWithLabelsDTO = BookmarkDTO & {
 
 export type InsertBookmarkDTO = typeof bookmark.$inferInsert;
 
-export type UpdateBookmarkDTO = Partial<InsertBookmarkDTO> &
-  Pick<InsertBookmarkDTO, 'id'>;
+export type UpdateBookmarkDTO = Partial<InsertBookmarkDTO> & Pick<InsertBookmarkDTO, 'id'>;
 
 export interface BookmarkRepository {
   findAll(

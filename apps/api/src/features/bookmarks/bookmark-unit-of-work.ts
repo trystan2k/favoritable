@@ -1,7 +1,4 @@
-import {
-  Inject,
-  Service,
-} from '../../core/dependency-injection/di.decorators.js';
+import { Inject, Service } from '../../core/dependency-injection/di.decorators.js';
 import type { DBTransaction } from '../../db/types.js';
 import type { BookmarkLabelRepository } from '../bookmarkLabel/bookmarkLabel.repository.js';
 import type { LabelRepository } from '../labels/label.repository.js';
