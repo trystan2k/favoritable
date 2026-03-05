@@ -35,10 +35,10 @@ importers:
         version: 1.38.4
       '@hono/node-server':
         specifier: ~1.19.10
-        version: 1.19.10(hono@4.11.10)
+        version: 1.19.10(hono@4.12.4)
       '@hono/zod-validator':
         specifier: ~0.4.3
-        version: 0.4.3(hono@4.11.10)(zod@3.25.76)
+        version: 0.4.3(hono@4.12.4)(zod@3.25.76)
       '@libsql/client':
         specifier: ~0.14.0
         version: 0.14.0
@@ -55,8 +55,8 @@ importers:
         specifier: ~0.40.0
         version: 0.40.0(@libsql/client@0.14.0)(gel@2.0.0)(kysely@0.28.9)
       hono:
-        specifier: ~4.11.10
-        version: 4.11.10
+        specifier: ~4.12.4
+        version: 4.12.4
       pino:
         specifier: ~9.7.0
         version: 9.7.0
@@ -3085,8 +3085,8 @@ packages:
   help-me@5.0.0:
     resolution: {integrity: sha512-7xgomUX6ADmcYzFik0HzAxh/73YlKR9bmFzf51CZwR+b6YtzU2m0u49hQCqV6SvlqIqsaxovfwdvbnsw3b/zpg==}
 
-  hono@4.11.10:
-    resolution: {integrity: sha512-kyWP5PAiMooEvGrA9jcD3IXF7ATu8+o7B3KCbPXid5se52NPqnOpM/r9qeW2heMnOekF4kqR1fXJqCYeCLKrZg==}
+  hono@4.12.4:
+    resolution: {integrity: sha512-ooiZW1Xy8rQ4oELQ++otI2T9DsKpV0M6c6cO6JGx4RTfav9poFFLlet9UMXHZnoM1yG0HWGlQLswBGX3RZmHtg==}
     engines: {node: '>=16.9.0'}
 
   html-encoding-sniffer@4.0.0:
@@ -5009,13 +5009,13 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@hono/node-server@1.19.10(hono@4.11.10)':
+  '@hono/node-server@1.19.10(hono@4.12.4)':
     dependencies:
-      hono: 4.11.10
+      hono: 4.12.4
 
-  '@hono/zod-validator@0.4.3(hono@4.11.10)(zod@3.25.76)':
+  '@hono/zod-validator@0.4.3(hono@4.12.4)(zod@3.25.76)':
     dependencies:
-      hono: 4.11.10
+      hono: 4.12.4
       zod: 3.25.76
 
   '@internationalized/date@3.9.0':
@@ -7531,7 +7531,7 @@ snapshots:
 
   help-me@5.0.0: {}
 
-  hono@4.11.10: {}
+  hono@4.12.4: {}
 
   html-encoding-sniffer@4.0.0:
     dependencies:
