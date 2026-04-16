@@ -35,10 +35,10 @@ importers:
         version: 1.38.4
       '@hono/node-server':
         specifier: ~1.19.13
-        version: 1.19.13(hono@4.12.12)
+        version: 1.19.13(hono@4.12.14)
       '@hono/zod-validator':
         specifier: ~0.4.3
-        version: 0.4.3(hono@4.12.12)(zod@3.25.76)
+        version: 0.4.3(hono@4.12.14)(zod@3.25.76)
       '@libsql/client':
         specifier: ~0.14.0
         version: 0.14.0
@@ -55,8 +55,8 @@ importers:
         specifier: ~0.45.2
         version: 0.45.2(@libsql/client@0.14.0)(gel@2.0.0)(kysely@0.28.9)
       hono:
-        specifier: ~4.12.12
-        version: 4.12.12
+        specifier: ~4.12.14
+        version: 4.12.14
       pino:
         specifier: ~9.7.0
         version: 9.7.0
@@ -2364,7 +2364,7 @@ packages:
   basic-ftp@5.0.5:
     resolution: {integrity: sha512-4Bcg1P8xhUuqcii/S0Z9wiHIrQVPMermM1any+MX5GeGD7faD3/msQUDGLol9wOcz4/jbg/WJnGqoJF6LiBdtg==}
     engines: {node: '>=10.0.0'}
-    deprecated: Security vulnerability fixed in 5.2.0, please upgrade
+    deprecated: Security vulnerability fixed in 5.2.1, please upgrade
 
   better-auth@1.4.5:
     resolution: {integrity: sha512-pHV2YE0OogRHvoA6pndHXCei4pcep/mjY7psSaHVrRgjBtumVI68SV1g9U9XPRZ4KkoGca9jfwuv+bB2UILiFw==}
@@ -3088,8 +3088,8 @@ packages:
   help-me@5.0.0:
     resolution: {integrity: sha512-7xgomUX6ADmcYzFik0HzAxh/73YlKR9bmFzf51CZwR+b6YtzU2m0u49hQCqV6SvlqIqsaxovfwdvbnsw3b/zpg==}
 
-  hono@4.12.12:
-    resolution: {integrity: sha512-p1JfQMKaceuCbpJKAPKVqyqviZdS0eUxH9v82oWo1kb9xjQ5wA6iP3FNVAPDFlz5/p7d45lO+BpSk1tuSZMF4Q==}
+  hono@4.12.14:
+    resolution: {integrity: sha512-am5zfg3yu6sqn5yjKBNqhnTX7Cv+m00ox+7jbaKkrLMRJ4rAdldd1xPd/JzbBWspqaQv6RSTrgFN95EsfhC+7w==}
     engines: {node: '>=16.9.0'}
 
   html-encoding-sniffer@4.0.0:
@@ -5012,13 +5012,13 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@hono/node-server@1.19.13(hono@4.12.12)':
+  '@hono/node-server@1.19.13(hono@4.12.14)':
     dependencies:
-      hono: 4.12.12
+      hono: 4.12.14
 
-  '@hono/zod-validator@0.4.3(hono@4.12.12)(zod@3.25.76)':
+  '@hono/zod-validator@0.4.3(hono@4.12.14)(zod@3.25.76)':
     dependencies:
-      hono: 4.12.12
+      hono: 4.12.14
       zod: 3.25.76
 
   '@internationalized/date@3.9.0':
@@ -7534,7 +7534,7 @@ snapshots:
 
   help-me@5.0.0: {}
 
-  hono@4.12.12: {}
+  hono@4.12.14: {}
 
   html-encoding-sniffer@4.0.0:
     dependencies:
