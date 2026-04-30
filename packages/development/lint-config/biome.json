@@ -12,7 +12,8 @@
       "!**/.vscode/**",
       "!**/.gemini/**",
       "!**/node_modules/**",
-      "!**/dist/**"
+      "!**/dist/**",
+      "!**/.agents/**"
     ]
   },
   "assist": {
