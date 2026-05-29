@@ -6,7 +6,7 @@ type ServiceOptions = {
   singleton?: boolean;
 };
 
-type Constructor = new (...args: any[]) => unknown;
+type Constructor = new (...args: never[]) => unknown;
 
 /**
  * Service decorator to mark a class as injectable

@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 import { INJECT_METADATA_KEY } from './di.constants.js';
 
-type Constructor<T = unknown> = new (...args: any[]) => T;
+type Constructor<T = unknown> = new (...args: never[]) => T;
 
 type Registration<T = unknown> =
   | {
@@ -33,7 +33,7 @@ export class Container {
     return Container.instance;
   }
 
-  initialize(args: any[]): void {
+  initialize(args: unknown[]): void {
     args.forEach((arg) => {
       if (typeof arg !== 'function' || !arg.prototype || !(arg.prototype.constructor === arg)) {
         throw new Error(`Argument "${arg}" is not a valid class constructor`);
@@ -90,7 +90,7 @@ export class Container {
     // Resolve each parameter
     const params = injectMetadata.map((paramToken) => this.resolve(paramToken));
 
-    const instance = new ClassDefinition(...params);
+    const instance = new ClassDefinition(...(params as never[]));
 
     if (registration.singleton) {
       this.singletons.set(token, instance);
