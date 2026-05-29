@@ -1,4 +1,5 @@
 import { eq } from 'drizzle-orm';
+
 import { Inject, Service } from '../../core/dependency-injection/di.decorators.js';
 import { bookmarkLabel } from '../../db/schema/bookmark-label.schema.js';
 import type { DBTransaction } from '../../db/types.js';

@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "trailingComma": "es5",
+  "arrowParens": "always",
+  "endOfLine": "lf",
+  "sortPackageJson": false,
+  "sortImports": {
+    "internalPattern": ["^@favoritable/", "^@/"]
+  },
+  "ignorePatterns": [
+    ".agents/**",
+    ".git/**",
+    ".serena/**",
+    ".taskmaster/**",
+    ".turbo/**",
+    ".vscode/**",
+    "**/coverage/**",
+    "**/dist/**",
+    "node_modules/**",
+    "apps/frontend/src/routeTree.gen.ts"
+  ]
+}

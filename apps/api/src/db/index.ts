@@ -1,9 +1,10 @@
 import { type Client, createClient } from '@libsql/client';
 import { drizzle } from 'drizzle-orm/libsql';
+
 import { env } from '../env.js';
 import * as accountSchemas from './schema/account.schema.js';
-import * as bookmarkSchemas from './schema/bookmark.schema.js';
 import * as bookmarkLabelSchemas from './schema/bookmark-label.schema.js';
+import * as bookmarkSchemas from './schema/bookmark.schema.js';
 import * as labelSchemas from './schema/label.schema.js';
 import * as sessionSchemas from './schema/session.schema.js';
 import * as userSchemas from './schema/user.schema.js';

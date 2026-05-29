@@ -1,4 +1,5 @@
 import { defineConfig } from 'drizzle-kit';
+
 import { DATABASE_TYPES } from './src/db/types';
 import { env } from './src/env';
 

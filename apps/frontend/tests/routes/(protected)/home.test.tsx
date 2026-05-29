@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
+
 import { createTestRouter, renderWithRouter, setupAuth } from '../../test-utils';
 
 describe('Home Route', () => {

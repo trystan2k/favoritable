@@ -7,6 +7,7 @@ import { parseHtmlbookmarks } from '../../utils/html-bookmarks-parser.js';
 import { createBookmarkLabelRelation } from '../bookmarkLabel/bookmarkLabel.mappers.js';
 import { mapCreateLabelModelToInsertLabelDTO } from '../labels/label.mappers.js';
 import type { CreateLabelModel, LabelModel } from '../labels/label.models.js';
+import type { BookmarkUnitOfWork } from './bookmark-unit-of-work.js';
 import {
   mapBookmarkDTOToBookmarkModel,
   mapCreateBookmarkModelToInsertBookmarkDTO,
@@ -21,7 +22,6 @@ import type {
   OmnivoreBookmarkModel,
   UpdateBookmarkModel,
 } from './bookmark.models.js';
-import type { BookmarkUnitOfWork } from './bookmark-unit-of-work.js';
 
 // TODO: This is a temporary solution to get the tests running.
 // TODO: Replace with actual user ID when authentication is implemented

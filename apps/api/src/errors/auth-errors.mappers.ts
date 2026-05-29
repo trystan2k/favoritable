@@ -1,4 +1,5 @@
 import { APIError as BetterAuthAPIError } from 'better-auth/api';
+
 import {
   APIError,
   MalFormedRequestError,

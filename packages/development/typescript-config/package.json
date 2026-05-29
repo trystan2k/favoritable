@@ -5,16 +5,15 @@
   "license": "MIT",
   "scripts": {
     "knip": "knip",
-    "lint": "biome lint --error-on-warnings",
-    "lint:fix": "pnpm lint --write",
-    "format": "biome format",
-    "format:fix": "pnpm format --write",
-    "check": "biome check",
-    "check:fix": "pnpm check --write"
+    "lint": "pnpm format:check",
+    "lint:fix": "pnpm format",
+    "format": "pnpm -w exec oxfmt --config .oxfmtrc.json packages/development/typescript-config",
+    "format:check": "pnpm -w exec oxfmt --config .oxfmtrc.json --check packages/development/typescript-config",
+    "format:fix": "pnpm format",
+    "check": "pnpm format:check",
+    "check:fix": "pnpm format"
   },
   "devDependencies": {
-    "@favoritable/lint-config": "workspace:*",
-    "@biomejs/biome": "~2.1.4",
     "knip": "~5.62.0",
     "typescript": "~5.7.3"
   }

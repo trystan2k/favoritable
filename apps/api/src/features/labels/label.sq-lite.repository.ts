@@ -1,4 +1,5 @@
 import { eq, inArray } from 'drizzle-orm';
+
 import { Inject, Service } from '../../core/dependency-injection/di.decorators.js';
 import { label } from '../../db/schema/label.schema.js';
 import type { DBTransaction } from '../../db/types.js';

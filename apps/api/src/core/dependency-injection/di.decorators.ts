@@ -6,13 +6,14 @@ type ServiceOptions = {
   singleton?: boolean;
 };
 
+type Constructor = new (...args: any[]) => unknown;
+
 /**
  * Service decorator to mark a class as injectable
  * @param options Configuration options for the service
  */
 export const Service = (options?: ServiceOptions) => {
-  // biome-ignore lint/suspicious/noExplicitAny: Decorator for service class
-  return <T extends { new (...args: any[]): any }>(ctor: T) => {
+  return <T extends Constructor>(ctor: T) => {
     const name = options?.name || ctor.name;
     const container = Container.getInstance();
 
@@ -27,12 +28,7 @@ export const Service = (options?: ServiceOptions) => {
  * Decorator to mark constructor parameters for injection
  */
 export const Inject = (token: string) => {
-  return (
-    // biome-ignore lint/suspicious/noExplicitAny: Decorator for constructor parameter
-    target: any,
-    _propertyKey: string | undefined,
-    parameterIndex: number
-  ) => {
+  return (target: object, _propertyKey: string | undefined, parameterIndex: number) => {
     const existingInjectedParams: string[] = Reflect.getMetadata(INJECT_METADATA_KEY, target) || [];
 
     // Ensure the array has enough elements

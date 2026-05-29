@@ -2,12 +2,36 @@ import { createMemoryHistory, createRouter, RouterProvider } from '@tanstack/rea
 import { render } from '@testing-library/react';
 import { act } from 'react';
 import { vi } from 'vitest';
+
 import { ThemeProvider } from '../src/contexts/ThemeContext';
 import { routeTree } from '../src/routeTree.gen';
 
+type MockSession = {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    provider: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+};
+
+type UseSessionResult = {
+  data: MockSession | null;
+  isPending: boolean;
+  error: Error | null;
+};
+
+type GetSessionResult = {
+  data: MockSession | null;
+  isPending?: boolean;
+  error: Error | null;
+};
+
 const mocks = vi.hoisted(() => ({
-  useSession: vi.fn(() => ({ data: null, isPending: false, error: null })),
-  getSession: vi.fn(async () => ({
+  useSession: vi.fn<() => UseSessionResult>(() => ({ data: null, isPending: false, error: null })),
+  getSession: vi.fn<() => Promise<GetSessionResult>>(async () => ({
     data: null,
     error: null,
   })),
@@ -50,14 +74,12 @@ export const setupAuth = async (isAuthenticated: boolean): Promise<void> => {
       data: mockSession,
       isPending: false,
       error: null,
-      // biome-ignore lint/suspicious/noExplicitAny: Mock type assertion required for flexible test data
-    } as any);
+    });
 
     vi.mocked(mocks.getSession).mockResolvedValue({
       data: mockSession,
       error: null,
-      // biome-ignore lint/suspicious/noExplicitAny: Mock type assertion required for flexible test data
-    } as any);
+    });
   } else {
     mocks.useSession.mockReturnValue({
       data: null,

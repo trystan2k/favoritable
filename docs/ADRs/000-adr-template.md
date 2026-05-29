@@ -2,11 +2,12 @@
 
 **Date**: YYYY-MM-DD  
 **Status**: [Proposed|Accepted|Deprecated|Superseded]  
-**Deciders**: [List of people involved in the decision]  
+**Deciders**: [List of people involved in the decision]
 
 ## Context
 
 [Describe the context and problem statement. Include:]
+
 - [Business or technical problem that needs to be solved]
 - [Current situation and constraints]
 - [Requirements and goals]
@@ -14,6 +15,7 @@
 - [Any driving factors or deadlines]
 
 [Example format:]
+
 ```
 The [project name] requires [specific need] that meets the following requirements:
 - **Requirement 1**: Description
@@ -37,6 +39,7 @@ We need to [select/implement/decide] [what needs to be decided].
 **Choice**: [Link to solution](URL) [brief description of what was chosen]
 
 **Rationale**:
+
 - **Key Benefit 1**: Explanation of why this matters
 - **Key Benefit 2**: Explanation of advantage
 - **Integration**: How it fits with existing tech
@@ -65,16 +68,19 @@ We need to [select/implement/decide] [what needs to be decided].
 ## Implementation Strategy
 
 ### Phase 1: [Phase Name]
+
 1. [Step 1 description]
 2. [Step 2 description]
 3. [Step 3 description]
 
 ### Phase 2: [Phase Name]
+
 1. [Step 1 description]
 2. [Step 2 description]
 3. [Step 3 description]
 
 ### Phase 3: [Phase Name]
+
 1. [Step 1 description]
 2. [Step 2 description]
 
@@ -82,12 +88,12 @@ We need to [select/implement/decide] [what needs to be decided].
 
 ### [Category] Alternatives
 
-| Option | Pros | Cons | Decision |
-|--------|------|------|----------|
-| **[Selected Option]** | [Benefits] | [Drawbacks] | ✅ **Selected** |
-| **[Alternative 1]** | [Benefits] | [Drawbacks] | ❌ [Reason rejected] |
-| **[Alternative 2]** | [Benefits] | [Drawbacks] | ❌ [Reason rejected] |
-| **[Alternative 3]** | [Benefits] | [Drawbacks] | ❌ [Reason rejected] |
+| Option                | Pros       | Cons        | Decision             |
+| --------------------- | ---------- | ----------- | -------------------- |
+| **[Selected Option]** | [Benefits] | [Drawbacks] | ✅ **Selected**      |
+| **[Alternative 1]**   | [Benefits] | [Drawbacks] | ❌ [Reason rejected] |
+| **[Alternative 2]**   | [Benefits] | [Drawbacks] | ❌ [Reason rejected] |
+| **[Alternative 3]**   | [Benefits] | [Drawbacks] | ❌ [Reason rejected] |
 
 [Optional: Additional comparison sections if needed]
 
@@ -104,14 +110,17 @@ We need to [select/implement/decide] [what needs to be decided].
 ## Risk Assessment and Mitigations
 
 ### Risk: [Risk description]
+
 - **Mitigation**: [How we address this risk]
 - **Fallback**: [What we do if mitigation fails]
 
 ### Risk: [Risk description]
+
 - **Mitigation**: [How we address this risk]
 - **Fallback**: [What we do if mitigation fails]
 
 ### Risk: [Risk description]
+
 - **Mitigation**: [How we address this risk]
 - **Fallback**: [What we do if mitigation fails]
 
@@ -119,13 +128,13 @@ We need to [select/implement/decide] [what needs to be decided].
 
 [Include if relevant - benchmarks, comparisons, metrics]
 
-| Metric | [Selected] | [Alternative 1] | [Alternative 2] | Improvement |
-|--------|------------|-----------------|-----------------|-------------|
-| **[Metric 1]** | [Value] | [Value] | [Value] | [Improvement] |
-| **[Metric 2]** | [Value] | [Value] | [Value] | [Improvement] |
-| **[Metric 3]** | [Value] | [Value] | [Value] | [Improvement] |
+| Metric         | [Selected] | [Alternative 1] | [Alternative 2] | Improvement   |
+| -------------- | ---------- | --------------- | --------------- | ------------- |
+| **[Metric 1]** | [Value]    | [Value]         | [Value]         | [Improvement] |
+| **[Metric 2]** | [Value]    | [Value]         | [Value]         | [Improvement] |
+| **[Metric 3]** | [Value]    | [Value]         | [Value]         | [Improvement] |
 
-*[Note about benchmark conditions]*
+_[Note about benchmark conditions]_
 
 ## References
 

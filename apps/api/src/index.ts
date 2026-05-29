@@ -1,8 +1,8 @@
 import 'reflect-metadata';
-
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { requestId } from 'hono/request-id';
+
 import { auth } from './auth.js';
 import { Container } from './core/dependency-injection/di.container.js';
 import { logger } from './core/logger.js';
@@ -12,10 +12,10 @@ import { errorHandler } from './errors/errors.handlers.js';
 import { repositoryErrorsHandler } from './errors/repository-errors.mappers.js';
 import { serviceErrorsHandler } from './errors/service-errors.mappers.js';
 import { SQLiteBookmarkLabelRepository } from './features/bookmarkLabel/bookmarkLabel.sql-lite.repository.js';
+import { BookmarkUnitOfWork } from './features/bookmarks/bookmark-unit-of-work.js';
 import { BookmarkRoutes } from './features/bookmarks/bookmark.routes.js';
 import { BookmarkService } from './features/bookmarks/bookmark.services.js';
 import { SQLiteBookmarkRepository } from './features/bookmarks/bookmark.sql-lite.repository.js';
-import { BookmarkUnitOfWork } from './features/bookmarks/bookmark-unit-of-work.js';
 import { AuthRoutes } from './features/common/auth/auth.routes.js';
 import { LabelRoutes } from './features/labels/label.routes.js';
 import { LabelService } from './features/labels/label.services.js';

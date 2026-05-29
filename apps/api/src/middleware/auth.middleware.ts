@@ -1,4 +1,5 @@
 import type { Context, Next } from 'hono';
+
 import type { auth } from '../auth.js';
 import { NotAuthorizedError } from '../errors/errors.js';
 

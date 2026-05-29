@@ -1,6 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
+
 import { getInitialTheme, ThemeProvider, useTheme } from '../../src/contexts/ThemeContext';
 
 const mockMatchMedia = vi.fn();

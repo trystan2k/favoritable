@@ -1,4 +1,5 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+
 import { trackingDates } from './common.schema';
 
 export const verification = sqliteTable('verifications', {

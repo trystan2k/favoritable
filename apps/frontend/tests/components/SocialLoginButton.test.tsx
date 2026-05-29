@@ -1,7 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { SocialLoginButton } from '../../src/components/SocialLoginButton';
+
 import styles from '../../src/components/SocialLoginButton.module.css';
 
 const mockOnClick = vi.fn();

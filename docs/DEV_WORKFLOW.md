@@ -69,21 +69,25 @@ Please follow these steps for each task, in the order they appear:
 
 ```markdown
 ## Task Analysis
+
 - Main objective:
 - Identified dependencies:
 - System impact:
 
 ## Chosen Approach
+
 - Proposed solution:
 - Justification for simplicity:
 - Components to be modified/created:
 
 ## Implementation Steps
+
 1. [Specific step]
 2. [Specific step]
 3. [Specific step]
 
 ## Validation
+
 - Success criteria:
 - Checkpoints:
 ```
@@ -337,12 +341,12 @@ Based on your development guidelines, here are the **NO NO actions**:
 
 ## 🔴 Development Workflow Violations
 
-- **NEVER** skip steps in the mandatory development workflow  
-- **NEVER** commit when QA fails (`pnpm complete-check` must pass)  
+- **NEVER** skip steps in the mandatory development workflow
+- **NEVER** commit when QA fails (`pnpm complete-check` must pass)
 - **NEVER** continue if QA check fails because 'errors were already there'. In cases like this, ask me if you can skip or fix them.
 - **NEVER** comment or skip tests because they are failing
-- **NEVER** work without marking task in-progress first  
-- **NEVER** complete task without documentation (development memory logging)  
+- **NEVER** work without marking task in-progress first
+- **NEVER** complete task without documentation (development memory logging)
 - **NEVER** Assume unspecified requirements
 - **NEVER** Overengineer solutions
 - **NEVER** Include any agent information in the commit message (like Co-Authored-By:)
@@ -352,7 +356,7 @@ Based on your development guidelines, here are the **NO NO actions**:
 - **🚨 NEVER assume user approval carries forward after making requested changes** - If user requests ANY changes, ask for approval AGAIN before proceeding
 - **🚨 NEVER run multiple npm/pnpm scripts concurrently** - ALWAYS wait for scripts to finish before running other commands
 - **🚨 NEVER proceed with commit/push/PR without asking user first** - At EVERY gate (commit, push, PR), ALWAYS ask "Do you approve?" and WAIT for explicit response
-- Under **NO** circumstance commit code when there are issues from QA scripts (even warnings)  
+- Under **NO** circumstance commit code when there are issues from QA scripts (even warnings)
 - Code that is not used should be deleted
 - **IMPORTANT**: The main branch will always be in a working state (all QA scripts pass), so if you do any change not matter in what part (code, document, etc) and a test fails or a lint error appears, **FIX IT**. **NEVER** say "I will fix it later" or "It has nothing to do with my changes". Also **NEVER** revert the change so test just pass, check why the test is failing and fix it, if the code change is ok (in case of doubt, ask me what to do).
 
@@ -360,19 +364,19 @@ Based on your development guidelines, here are the **NO NO actions**:
 
 ## 📁 File Creation Violations
 
-- **NEVER** create files unless absolutely necessary for achieving your goal  
-- **NEVER** proactively create documentation files (`*.md`) or README files  
-- **ALWAYS** prefer editing existing files to creating a new one  
+- **NEVER** create files unless absolutely necessary for achieving your goal
+- **NEVER** proactively create documentation files (`*.md`) or README files
+- **ALWAYS** prefer editing existing files to creating a new one
 
 ---
 
 ## 🧪 Testing Violations
 
-- **NEVER** use `.spec.ts` extensions – Use `.test.ts` only  
-- **NEVER** use `specs` directories – Use `tests` only  
-- **NEVER** use `fireEvent` – **ALWAYS** use [`@testing-library/user-event`](https://testing-library.com/docs/user-event/intro)  
-- **NEVER** wrap `userEvent` calls in manual `act()` blocks  
-- **NEVER** commit tests with warnings  
+- **NEVER** use `.spec.ts` extensions – Use `.test.ts` only
+- **NEVER** use `specs` directories – Use `tests` only
+- **NEVER** use `fireEvent` – **ALWAYS** use [`@testing-library/user-event`](https://testing-library.com/docs/user-event/intro)
+- **NEVER** wrap `userEvent` calls in manual `act()` blocks
+- **NEVER** commit tests with warnings
 
 ---
 
@@ -380,10 +384,10 @@ Based on your development guidelines, here are the **NO NO actions**:
 
 - **ALWAYS** get documentation information about libraries from Context7 MCP, before start to using them
 - **ALWAYS** use Serena MCP for codebase exploration before making changes
-- **NEVER** assume libraries are available – Always check existing usage first  
-- **NEVER** add comments unless explicitly asked  
-- **NEVER** skip existing patterns – Follow codebase conventions  
-- **NEVER** commit secrets or keys to repository  
+- **NEVER** assume libraries are available – Always check existing usage first
+- **NEVER** add comments unless explicitly asked
+- **NEVER** skip existing patterns – Follow codebase conventions
+- **NEVER** commit secrets or keys to repository
 - **NEVER** modify code without first understanding the existing structure (use `serena_get_symbols_overview`)
 - **NEVER** use wildcard imports like `import * as React from 'react'` – ALWAYS import only needed elements:
   - ✅ Correct: `import { forwardRef, type HTMLAttributes, type Ref } from 'react'`
@@ -406,8 +410,8 @@ Based on your development guidelines, here are the **NO NO actions**:
 
 ## 📋 TaskMaster Violations
 
-- **NEVER** use `force` when creating new tasks (keep historical reasons)  
-- **NEVER** work on tasks without proper status tracking  
+- **NEVER** use `force` when creating new tasks (keep historical reasons)
+- **NEVER** work on tasks without proper status tracking
 
 ---
 

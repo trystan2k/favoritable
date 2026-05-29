@@ -1,11 +1,12 @@
 # ADR-012: Logging (Pino)
 
 **Date**: 2025-08-11  
-**Status**: Accepted  
+**Status**: Accepted
 
 ## Context
 
 The favoritable project requires a robust logging solution for the backend API to support:
+
 - Structured logging for better observability and debugging
 - High-performance logging that doesn't impact API response times
 - Integration with our Hono-based backend architecture
@@ -27,6 +28,7 @@ Accepted
 ## Consequences
 
 **Positive Consequences:**
+
 - Excellent performance with minimal impact on API response times
 - Structured JSON logging enables better log analysis and monitoring
 - Rich ecosystem of transports and plugins for different deployment scenarios
@@ -36,6 +38,7 @@ Accepted
 - Easy integration with log aggregation services (ELK stack, Datadog, etc.)
 
 **Negative Consequences:**
+
 - JSON output format can be harder to read during local development without pretty-printing
 - Requires additional configuration for optimal development vs production environments
 - Learning curve for developers unfamiliar with structured logging concepts

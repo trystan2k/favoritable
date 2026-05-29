@@ -1,6 +1,7 @@
 import type { Context, Next } from 'hono';
 import { cors } from 'hono/cors';
 import { secureHeaders } from 'hono/secure-headers';
+
 import { NotAcceptedError } from '../errors/errors.js';
 
 export const addCorsHeaders = () => {

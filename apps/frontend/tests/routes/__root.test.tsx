@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
+
 import { createTestRouter, renderWithRouter } from '../test-utils';
 
 describe('Root Layout', () => {

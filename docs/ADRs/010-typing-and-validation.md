@@ -1,11 +1,12 @@
 # ADR-010: Type Safety and Validation (TypeScript and Zod)
 
 **Date**: 2025-08-11  
-**Status**: Accepted  
+**Status**: Accepted
 
 ## Context
 
 The favoritable project requires robust type safety and data validation across both frontend and backend to ensure:
+
 - Compile-time type checking to prevent runtime errors
 - Runtime data validation for API inputs and external data sources
 - Consistent data structures across the full stack
@@ -28,6 +29,7 @@ Accepted
 ## Consequences
 
 **Positive Consequences:**
+
 - Comprehensive type safety from database to UI components
 - Single source of truth for data schemas through Zod schema definitions
 - Excellent developer experience with autocomplete and compile-time error detection
@@ -37,6 +39,7 @@ Accepted
 - Self-documenting API contracts through schema definitions
 
 **Negative Consequences:**
+
 - Additional development overhead for writing and maintaining type definitions
 - Learning curve for developers new to TypeScript or schema validation concepts
 - Potential performance overhead from runtime validation (though minimal with Zod)

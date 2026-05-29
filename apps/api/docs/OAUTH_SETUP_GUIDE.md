@@ -21,6 +21,7 @@ cp .env.example .env
 ## 1. Google OAuth Setup
 
 ### Steps:
+
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a new project or select an existing one
 3. Enable the Google+ API:
@@ -35,12 +36,14 @@ cp .env.example .env
      - Production: `https://yourdomain.com/auth/google/callback`
 
 ### Environment Variables:
+
 ```bash
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 ```
 
 ### Required Scopes:
+
 - `profile` (basic profile information)
 - `email` (email address)
 
@@ -49,6 +52,7 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 ## 2. Facebook OAuth Setup
 
 ### Steps:
+
 1. Go to [Facebook Developers](https://developers.facebook.com/)
 2. Create a new app or select an existing one
 3. Add "Facebook Login" product to your app
@@ -60,12 +64,14 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 5. Get your App ID and App Secret from "Settings" > "Basic"
 
 ### Environment Variables:
+
 ```bash
 FACEBOOK_CLIENT_ID=your_facebook_app_id
 FACEBOOK_CLIENT_SECRET=your_facebook_app_secret
 ```
 
 ### Required Permissions:
+
 - `email` (email address)
 - `public_profile` (basic profile information)
 
@@ -74,6 +80,7 @@ FACEBOOK_CLIENT_SECRET=your_facebook_app_secret
 ## 3. GitHub OAuth Setup
 
 ### Steps:
+
 1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
 2. Click "New OAuth App"
 3. Fill in the application details:
@@ -86,12 +93,14 @@ FACEBOOK_CLIENT_SECRET=your_facebook_app_secret
 5. Copy the Client ID and generate a new Client Secret
 
 ### Environment Variables:
+
 ```bash
 GITHUB_CLIENT_ID=your_github_client_id
 GITHUB_CLIENT_SECRET=your_github_client_secret
 ```
 
 ### Required Scopes:
+
 - `user:email` (email addresses)
 - `read:user` (basic profile information)
 
@@ -100,6 +109,7 @@ GITHUB_CLIENT_SECRET=your_github_client_secret
 ## 4. Apple OAuth Setup
 
 ### Steps:
+
 1. Go to [Apple Developer Portal](https://developer.apple.com/account/)
 2. Sign in with your Apple Developer account (requires paid membership)
 3. Go to "Certificates, Identifiers & Profiles"
@@ -124,6 +134,7 @@ GITHUB_CLIENT_SECRET=your_github_client_secret
    - Download the private key file (.p8)
 
 ### Environment Variables:
+
 ```bash
 APPLE_CLIENT_ID=your_service_id
 APPLE_TEAM_ID=your_team_id
@@ -132,6 +143,7 @@ APPLE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\nYour_Private_Key_Content\n-----EN
 ```
 
 ### Required Information:
+
 - **Client ID**: Your Service ID
 - **Team ID**: Found in your Apple Developer account
 - **Key ID**: From the private key you created
@@ -142,6 +154,7 @@ APPLE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\nYour_Private_Key_Content\n-----EN
 ## 5. Twitter (X) OAuth Setup
 
 ### Steps:
+
 1. Go to [Twitter Developer Portal](https://developer.twitter.com/en/portal/dashboard)
 2. Create a new project and app (or use existing)
 3. Go to your app settings
@@ -153,12 +166,14 @@ APPLE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\nYour_Private_Key_Content\n-----EN
 7. Get your API Key and API Secret Key from "Keys and tokens" tab
 
 ### Environment Variables:
+
 ```bash
 TWITTER_CLIENT_ID=your_twitter_api_key
 TWITTER_CLIENT_SECRET=your_twitter_api_secret_key
 ```
 
 ### Required Permissions:
+
 - Read user profile information
 - Read email address (requires additional approval from Twitter)
 
@@ -169,6 +184,7 @@ TWITTER_CLIENT_SECRET=your_twitter_api_secret_key
 ## Testing Your OAuth Setup
 
 ### 1. Development Testing
+
 1. Start your development server: `pnpm dev`
 2. Navigate to each OAuth endpoint:
    - Google: `http://localhost:3000/auth/google`
@@ -178,11 +194,14 @@ TWITTER_CLIENT_SECRET=your_twitter_api_secret_key
    - Twitter: `http://localhost:3000/auth/twitter`
 
 ### 2. Verify Callback URLs
+
 Ensure all callback URLs are correctly configured in both:
+
 - Your OAuth provider settings
 - Your application configuration
 
 ### 3. Common Issues
+
 - **Redirect URI mismatch**: Ensure URLs match exactly (including trailing slashes)
 - **Domain verification**: Some providers require domain verification for production
 - **HTTPS requirement**: Most providers require HTTPS in production
@@ -223,6 +242,7 @@ If you encounter issues:
 4. **Test Incrementally**: Test one provider at a time
 
 ### Useful Links:
+
 - [Google OAuth Documentation](https://developers.google.com/identity/protocols/oauth2)
 - [Facebook Login Documentation](https://developers.facebook.com/docs/facebook-login/)
 - [GitHub OAuth Documentation](https://docs.github.com/en/developers/apps/building-oauth-apps)

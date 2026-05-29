@@ -1,4 +1,5 @@
 import type { Context, Next } from 'hono';
+
 import { createLogger } from '../core/logger.js';
 
 // Hono middleware for request/response logging

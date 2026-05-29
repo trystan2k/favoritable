@@ -2,11 +2,12 @@
 
 **Date**: 2025-09-21  
 **Status**: Accepted  
-**Deciders**: Development Team  
+**Deciders**: Development Team
 
 ## Context
 
 The favoritable project requires an icon library that meets the following requirements:
+
 - **Consistency**: Clean, uniform design language across all icons
 - **Performance**: Lightweight bundle size with tree-shaking support
 - **Customization**: Easy styling with CSS custom properties and design tokens
@@ -16,6 +17,7 @@ The favoritable project requires an icon library that meets the following requir
 - **Community**: Active maintenance and regular updates
 
 The project tech stack includes:
+
 - React 18+ with TypeScript
 - CSS Modules with design token integration
 - Rsbuild for bundling with tree-shaking optimization
@@ -31,6 +33,7 @@ We need to select an icon library that provides high-quality, consistent icons w
 **Choice**: [Lucide Icons](https://lucide.dev/) via `lucide-react` package
 
 **Rationale**:
+
 - **Design Consistency**: All 1636+ icons follow strict design rules with consistent stroke width, style, and readability
 - **Lightweight**: Individual icon imports with excellent tree-shaking, zero unused icons in bundle
 - **React-First**: Native React components with proper TypeScript definitions and props
@@ -57,16 +60,19 @@ We need to select an icon library that provides high-quality, consistent icons w
 ## Implementation Strategy
 
 ### Phase 1: Core Integration
+
 1. Install `lucide-react` package with specific version pinning
 2. Configure TypeScript definitions for icon components
 3. Establish consistent import patterns across components
 
 ### Phase 2: Icon Usage Standards
+
 1. Define standard props for consistent icon appearance (size, strokeWidth)
 2. Create reusable icon wrapper components if needed
 3. Document icon naming conventions and selection guidelines
 
 ### Phase 3: Theme Integration
+
 1. Integrate icon colors with CSS custom properties
 2. Ensure proper contrast ratios in both light and dark themes
 3. Test icon visibility across all theme variants
@@ -75,13 +81,13 @@ We need to select an icon library that provides high-quality, consistent icons w
 
 ### Icon Library Alternatives
 
-| Option | Pros | Cons | Decision |
-|--------|------|------|----------|
-| **Lucide Icons** | Consistent design, React-native, tree-shakable, active community | Smaller icon count vs some alternatives | ✅ **Selected** |
-| **React Icons** | Massive icon collection (20+ libraries), battle-tested, comprehensive | Inconsistent styles across sets, larger bundle potential | ❌ Style inconsistency conflicts with design system |
-| **Heroicons** | Tailwind ecosystem, well-designed, MIT license | Limited icon count (~460), Tailwind-centric design | ❌ Too limited for comprehensive application needs |
-| **Phosphor Icons** | Large collection (~6000), multiple weights, good React support | Heavier bundle, less community activity | ❌ Bundle size concerns for tree-shaking efficiency |
-| **Ant Design Icons** | Comprehensive set, enterprise-ready, good documentation | Tied to Ant Design aesthetic, heavier bundle | ❌ Design language mismatch with custom design system |
+| Option               | Pros                                                                  | Cons                                                     | Decision                                              |
+| -------------------- | --------------------------------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------- |
+| **Lucide Icons**     | Consistent design, React-native, tree-shakable, active community      | Smaller icon count vs some alternatives                  | ✅ **Selected**                                       |
+| **React Icons**      | Massive icon collection (20+ libraries), battle-tested, comprehensive | Inconsistent styles across sets, larger bundle potential | ❌ Style inconsistency conflicts with design system   |
+| **Heroicons**        | Tailwind ecosystem, well-designed, MIT license                        | Limited icon count (~460), Tailwind-centric design       | ❌ Too limited for comprehensive application needs    |
+| **Phosphor Icons**   | Large collection (~6000), multiple weights, good React support        | Heavier bundle, less community activity                  | ❌ Bundle size concerns for tree-shaking efficiency   |
+| **Ant Design Icons** | Comprehensive set, enterprise-ready, good documentation               | Tied to Ant Design aesthetic, heavier bundle             | ❌ Design language mismatch with custom design system |
 
 ## Benefits
 
@@ -96,28 +102,31 @@ We need to select an icon library that provides high-quality, consistent icons w
 ## Risk Assessment and Mitigations
 
 ### Risk: Limited icon count compared to comprehensive libraries like React Icons
+
 - **Mitigation**: Lucide provides 1636+ icons covering most common UI needs; quality over quantity approach
 - **Fallback**: Can supplement with custom SVG icons using same design principles if specific icons needed
 
 ### Risk: Community size smaller than established libraries
+
 - **Mitigation**: Active GitHub community and Discord support; maintainers are responsive to issues
 - **Fallback**: Icons are standard SVG components; can be extracted and used independently if needed
 
 ### Risk: Design system lock-in to specific visual style
+
 - **Mitigation**: Consistent stroke-based design aligns well with modern UI trends and accessibility standards
 - **Fallback**: SVG nature allows for custom styling or replacement without major refactoring
 
 ## Performance Comparison Data
 
-| Metric | Lucide | React Icons | Heroicons | Phosphor | Ant Design |
-|--------|--------|-------------|-----------|----------|------------|
-| **Bundle Size** (5 icons) | ~2 KB | ~3-15 KB | ~2 KB | ~4 KB | ~8 KB |
-| **Tree Shaking** | Excellent | Good | Excellent | Good | Limited |
-| **Icon Count** | 1636+ | 20,000+ | 460 | 6000+ | 831 |
-| **Design Consistency** | Excellent | Variable | Good | Good | Good |
-| **React Integration** | Native | Good | Good | Good | Native |
+| Metric                    | Lucide    | React Icons | Heroicons | Phosphor | Ant Design |
+| ------------------------- | --------- | ----------- | --------- | -------- | ---------- |
+| **Bundle Size** (5 icons) | ~2 KB     | ~3-15 KB    | ~2 KB     | ~4 KB    | ~8 KB      |
+| **Tree Shaking**          | Excellent | Good        | Excellent | Good     | Limited    |
+| **Icon Count**            | 1636+     | 20,000+     | 460       | 6000+    | 831        |
+| **Design Consistency**    | Excellent | Variable    | Good      | Good     | Good       |
+| **React Integration**     | Native    | Good        | Good      | Good     | Native     |
 
-*Bundle sizes are approximate and vary based on build optimization*
+_Bundle sizes are approximate and vary based on build optimization_
 
 ## References
 

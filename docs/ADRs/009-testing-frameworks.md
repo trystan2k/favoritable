@@ -1,11 +1,12 @@
 # ADR-009: Testing Frameworks (Vitest and React Testing Library)
 
 **Date**: 2025-08-11  
-**Status**: Accepted  
+**Status**: Accepted
 
 ## Context
 
 The favoritable project requires a comprehensive testing strategy covering both backend API logic and frontend React components. We need testing frameworks that provide:
+
 - Fast test execution for rapid development feedback
 - Excellent TypeScript integration matching our tech stack
 - Modern testing capabilities including mocking, assertions, and coverage
@@ -28,6 +29,7 @@ Accepted
 ## Consequences
 
 **Positive Consequences:**
+
 - Extremely fast test execution due to Vitest's Vite integration and parallel testing
 - Seamless TypeScript support without additional configuration
 - Better testing practices encouraged by React Testing Library's user-focused approach
@@ -37,6 +39,7 @@ Accepted
 - Built-in code coverage reporting without additional setup
 
 **Negative Consequences:**
+
 - Smaller community compared to Jest, potentially fewer third-party resources
 - React Testing Library requires learning curve for developers used to Enzyme patterns
 - Some legacy Jest plugins may not be directly compatible with Vitest

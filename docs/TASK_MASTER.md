@@ -193,7 +193,6 @@ For large migrations or multi-step processes:
 4. Work through items systematically, checking them off as completed
 5. Use `task-master update-subtask` to log progress on each task/subtask and/or updating/researching them before/during implementation if getting stuck
 
-
 ## Troubleshooting
 
 ### AI Commands Failing
@@ -265,7 +264,7 @@ These commands make AI calls and may take up to a minute:
 
 ## 📋 TaskMaster Violations
 
-- **NEVER** use `force` when creating new tasks (keep historical reasons)  
-- **NEVER** work on tasks without proper status tracking  
+- **NEVER** use `force` when creating new tasks (keep historical reasons)
+- **NEVER** work on tasks without proper status tracking
 
 _This guide ensures OpenCode has immediate access to Task Master's essential functionality for agentic development workflows._

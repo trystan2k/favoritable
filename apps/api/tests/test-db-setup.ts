@@ -1,10 +1,12 @@
 import { mkdir, rm } from 'node:fs/promises';
 import { dirname } from 'node:path';
+
 import { createClient } from '@libsql/client';
 import { drizzle } from 'drizzle-orm/libsql';
 import { migrate } from 'drizzle-orm/libsql/migrator';
-import * as bookmarkSchemas from '../src/db/schema/bookmark.schema.js';
+
 import * as bookmarkLabelSchemas from '../src/db/schema/bookmark-label.schema.js';
+import * as bookmarkSchemas from '../src/db/schema/bookmark.schema.js';
 import * as labelSchemas from '../src/db/schema/label.schema.js';
 import * as userSchemas from '../src/db/schema/user.schema.js';
 

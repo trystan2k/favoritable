@@ -1,6 +1,8 @@
 import { createFileRoute, Link, Outlet, redirect } from '@tanstack/react-router';
+
 import { ThemeSwitcher } from '../../components/ThemeSwitcher';
 import { authClient } from '../../lib/auth-client';
+
 import styles from './layout.module.css';
 
 export const Route = createFileRoute('/(protected)')({

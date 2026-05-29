@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest';
+
 import { cx } from '../../src/utils/cx';
 
 describe('cx', () => {

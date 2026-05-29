@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest';
+
 import { auth } from '../../src/auth.js';
 
 describe('Session Persistence', () => {

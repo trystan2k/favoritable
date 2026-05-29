@@ -9,27 +9,31 @@
     },
     "lint": {
       "dependsOn": ["^lint"],
-      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
+      "inputs": ["$TURBO_DEFAULT$", ".oxlintrc.json"]
     },
     "lint:fix": {
       "dependsOn": ["^lint:fix"],
-      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
+      "inputs": ["$TURBO_DEFAULT$", ".oxlintrc.json"]
     },
     "format": {
       "dependsOn": ["^format"],
-      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
+      "inputs": ["$TURBO_DEFAULT$", ".oxfmtrc.json"]
+    },
+    "format:check": {
+      "dependsOn": ["^format:check"],
+      "inputs": ["$TURBO_DEFAULT$", ".oxfmtrc.json"]
     },
     "format:fix": {
       "dependsOn": ["^format:fix"],
-      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
+      "inputs": ["$TURBO_DEFAULT$", ".oxfmtrc.json"]
     },
     "check": {
       "dependsOn": ["^check"],
-      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
+      "inputs": ["$TURBO_DEFAULT$", ".oxlintrc.json", ".oxfmtrc.json"]
     },
     "check:fix": {
       "dependsOn": ["^check:fix"],
-      "inputs": ["$TURBO_DEFAULT$", "**/biome.json"]
+      "inputs": ["$TURBO_DEFAULT$", ".oxlintrc.json", ".oxfmtrc.json"]
     },
     "typecheck": {
       "dependsOn": ["^typecheck"],

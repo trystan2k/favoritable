@@ -1,6 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
+
 import { SocialLoginButton } from '../../components/SocialLoginButton';
 import { authClient } from '../../lib/auth-client';
+
 import styles from './login.module.css';
 
 export const Route = createFileRoute('/login/')({
