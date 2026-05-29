@@ -8,7 +8,6 @@ favoritable/
 │   └── frontend/            # React frontend
 ├── packages/
 │   └── development/
-│       ├── lint-config/     # Biome configuration
 │       ├── test-config/     # Vitest configuration
 │       └── typescript-config/ # TypeScript configurations
 ├── docs/                    # Documentation and ADRs
