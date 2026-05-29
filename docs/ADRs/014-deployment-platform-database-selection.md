@@ -2,11 +2,12 @@
 
 **Date**: 2025-01-16  
 **Status**: Proposed  
-**Deciders**: Development Team  
+**Deciders**: Development Team
 
 ## Context
 
 The favoritable project requires a deployment platform and database solution that meets the following requirements:
+
 - **Cost**: Must support free tier for development and low-traffic production use
 - **Web Scraping**: Must support Puppeteer for URL scraping and metadata extraction
 - **Full Stack**: Must host both API backend (Node.js/Hono) and database
@@ -15,6 +16,7 @@ The favoritable project requires a deployment platform and database solution tha
 - **Developer Experience**: Simple deployment workflow with Git integration
 
 The project tech stack includes:
+
 - Node.js with Hono framework
 - Puppeteer for web scraping
 - Drizzle ORM for database operations
@@ -30,6 +32,7 @@ We need to select a deployment platform and database solution that supports web 
 **Choice**: [Render](https://render.com) with Docker deployment + [Turso](https://turso.tech) SQLite database
 
 **Rationale**:
+
 - **Cost Efficiency**: Render free tier (Docker web service) + Turso free tier = $0/month
 - **Web Scraping Support**: Docker deployment allows full Chrome/Chromium installation for Puppeteer
 - **Database Performance**: Turso provides edge-replicated SQLite with excellent read performance
@@ -58,18 +61,21 @@ We need to select a deployment platform and database solution that supports web 
 ## Implementation Strategy
 
 ### Phase 1: Database Migration
+
 1. Configure Turso database instance
 2. Update Drizzle configuration for LibSQL/Turso
 3. Migrate existing schema to Turso
 4. Test database connectivity and operations
 
-### Phase 2: Docker Configuration  
+### Phase 2: Docker Configuration
+
 1. Create Dockerfile with Chrome/Chromium dependencies
 2. Configure Puppeteer for containerized environment
 3. Set up environment variables for Turso connection
 4. Test local Docker build and Puppeteer functionality
 
 ### Phase 3: Render Deployment
+
 1. Connect GitHub repository to Render
 2. Configure Docker deployment settings
 3. Set up environment variables on Render
@@ -79,23 +85,23 @@ We need to select a deployment platform and database solution that supports web 
 
 ### Deployment Platform Alternatives
 
-| Option | Pros | Cons | Decision |
-|--------|------|------|----------|
-| **Render (Docker)** | Free tier, Docker support, Puppeteer compatible | Cold starts on free tier | ✅ **Selected** |
-| **Vercel** | Excellent performance, edge functions | No Puppeteer support (serverless) | ❌ Incompatible with Puppeteer |
-| **Cloudflare Workers** | Global edge, fast cold starts | No Puppeteer support (V8 isolates) | ❌ Incompatible with Puppeteer |
-| **Railway** | Good Docker support | No truly free tier | ❌ Requires payment |
-| **Fly.io** | Always-on instances | No free tier anymore | ❌ Requires payment |
-| **Koyeb** | Docker support | Requires credit card upfront | ❌ Not truly free |
+| Option                 | Pros                                            | Cons                               | Decision                       |
+| ---------------------- | ----------------------------------------------- | ---------------------------------- | ------------------------------ |
+| **Render (Docker)**    | Free tier, Docker support, Puppeteer compatible | Cold starts on free tier           | ✅ **Selected**                |
+| **Vercel**             | Excellent performance, edge functions           | No Puppeteer support (serverless)  | ❌ Incompatible with Puppeteer |
+| **Cloudflare Workers** | Global edge, fast cold starts                   | No Puppeteer support (V8 isolates) | ❌ Incompatible with Puppeteer |
+| **Railway**            | Good Docker support                             | No truly free tier                 | ❌ Requires payment            |
+| **Fly.io**             | Always-on instances                             | No free tier anymore               | ❌ Requires payment            |
+| **Koyeb**              | Docker support                                  | Requires credit card upfront       | ❌ Not truly free              |
 
 ### Database Alternatives
 
-| Option | Pros | Cons | Decision |
-|--------|------|------|----------|
-| **Turso** | Free tier, edge replication, Drizzle compatible | Relatively new platform | ✅ **Selected** |
-| **Render PostgreSQL** | Integrated with platform | Only free for 30 days, then $6/month | ❌ Not permanently free |
-| **PlanetScale** | MySQL compatible, generous free tier | Requires schema changes from SQLite | ❌ Migration complexity |
-| **Supabase** | Full backend platform | PostgreSQL, not SQLite compatible | ❌ Schema migration required |
+| Option                | Pros                                            | Cons                                 | Decision                     |
+| --------------------- | ----------------------------------------------- | ------------------------------------ | ---------------------------- |
+| **Turso**             | Free tier, edge replication, Drizzle compatible | Relatively new platform              | ✅ **Selected**              |
+| **Render PostgreSQL** | Integrated with platform                        | Only free for 30 days, then $6/month | ❌ Not permanently free      |
+| **PlanetScale**       | MySQL compatible, generous free tier            | Requires schema changes from SQLite  | ❌ Migration complexity      |
+| **Supabase**          | Full backend platform                           | PostgreSQL, not SQLite compatible    | ❌ Schema migration required |
 
 ## Benefits
 
@@ -110,14 +116,17 @@ We need to select a deployment platform and database solution that supports web 
 ## Risk Assessment and Mitigations
 
 ### Risk: Cold Start Delays on Render Free Tier
+
 - **Mitigation**: Implement proper loading states in frontend applications
 - **Fallback**: Upgrade to Render paid tier ($7/month) for always-on instances
 
 ### Risk: Turso Platform Maturity
+
 - **Mitigation**: Monitor Turso stability and maintain database backups
 - **Fallback**: Migrate to PlanetScale or Supabase if needed (Drizzle supports both)
 
 ### Risk: Free Tier Limitations Exceeded
+
 - **Mitigation**: Monitor usage metrics and implement rate limiting
 - **Fallback**: Upgrade to paid tiers with clear pricing models
 

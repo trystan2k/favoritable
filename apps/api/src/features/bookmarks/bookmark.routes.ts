@@ -1,4 +1,5 @@
 import { Hono } from 'hono';
+
 import { Inject, Service } from '../../core/dependency-injection/di.decorators.js';
 import { zCustomValidator } from '../../core/validators.wrapper.js';
 import { authMiddleware, type HonoEnv } from '../../middleware/auth.middleware.js';

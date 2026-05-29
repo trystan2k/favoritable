@@ -2,7 +2,7 @@
   "$schema": "https://unpkg.com/knip@latest/schema.json",
   "project": ["src/**/*.ts"],
   "ignore": ["dist/**", "coverage/**"],
-  "ignoreBinaries": ["only-allow"],
+  "ignoreBinaries": ["only-allow", "oxfmt", "oxlint"],
   "ignoreDependencies": ["@favoritable/test-config", "pino-pretty"],
   "treatConfigHintsAsErrors": true
 }

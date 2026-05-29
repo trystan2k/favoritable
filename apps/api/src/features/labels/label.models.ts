@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import { dateSchema } from '../../core/validators.wrapper.js';
 
 export const labelSchema = z.object({

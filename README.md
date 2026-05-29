@@ -10,35 +10,38 @@ This monorepo contains:
 
 - `apps/api`: Fastify backend API with Drizzle ORM, Better Auth, and comprehensive testing
 - `apps/frontend`: React frontend with TanStack Router and Rsbuild
-- `packages/development/lint-config`: Biome configuration for linting and formatting
 - `packages/development/test-config`: Vitest configuration for testing
 - `packages/development/typescript-config`: TypeScript configurations
 
 ## Features
 
 ### Authentication
-- **OAuth Integration**: Support for 5 OAuth providers (GitHub, Google, Facebook, Twitter/X, Apple)  
+
+- **OAuth Integration**: Support for 5 OAuth providers (GitHub, Google, Facebook, Twitter/X, Apple)
 - **Email/Password**: Traditional authentication with secure session management
 - **JWT Support**: Apple OAuth with JWT client secret generation
 - **PKCE Security**: Enhanced OAuth security with Proof Key for Code Exchange
 
-### Bookmark Management  
+### Bookmark Management
+
 - Create, read, update, and delete bookmarks
 - Label-based organization system
 - URL metadata extraction and validation
 - Advanced search and filtering capabilities
 
 ### Technology Stack
+
 - **Backend**: Fastify, Drizzle ORM, Better Auth, Zod validation
 - **Frontend**: React, TanStack Router, Rsbuild
 - **Database**: SQLite with libSQL (Turso) support
 - **Testing**: Vitest with comprehensive test coverage
-- **Quality Tools**: Biome for linting/formatting, Knip for unused code detection
+- **Quality Tools**: Oxlint for linting, Oxfmt for formatting, Knip for unused code detection
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - pnpm 8+
 
 ### Installation
@@ -55,7 +58,7 @@ pnpm install
 cp apps/api/.env.example apps/api/.env
 # Configure your OAuth providers and database settings
 
-# Push database schema 
+# Push database schema
 pnpm --filter @favoritable/api db:push
 
 # Start development servers
@@ -67,7 +70,7 @@ pnpm dev
 The application supports five OAuth providers. See `apps/api/README.md` for detailed setup instructions:
 
 - **GitHub**: Developer Settings → OAuth Apps
-- **Google**: Cloud Console → OAuth 2.0 Client IDs  
+- **Google**: Cloud Console → OAuth 2.0 Client IDs
 - **Facebook**: Meta for Developers → Facebook Login
 - **Twitter/X**: Developer Portal → OAuth 2.0 App
 - **Apple**: Developer Portal → Sign in with Apple (requires JWT configuration)
@@ -91,8 +94,9 @@ pnpm build:frontend   # Build frontend only
 
 # Quality Assurance
 pnpm typecheck        # Type checking across all packages
-pnpm lint             # Lint all packages with Biome
-pnpm format           # Format code with Biome
+pnpm lint             # Lint all packages with Oxlint
+pnpm format           # Format code with Oxfmt
+pnpm format:check     # Check formatting without writing changes
 pnpm knip             # Detect unused code
 pnpm test             # Run all tests
 pnpm test:coverage    # Run tests with coverage reports
@@ -107,14 +111,16 @@ pnpm --filter @favoritable/api db:health   # Test database connection
 ### API Endpoints
 
 #### Authentication
-- `POST /api/auth/sign-up` - Create new user account  
+
+- `POST /api/auth/sign-up` - Create new user account
 - `POST /api/auth/sign-in` - Email/password authentication
 - `GET /api/auth/session` - Get current user session
 - `POST /api/auth/sign-out` - Sign out current user
 - `GET /api/auth/{provider}` - Initiate OAuth flow (github, google, facebook, twitter, apple)
 - `GET /api/auth/callback/{provider}` - OAuth callback endpoints
 
-#### Bookmarks  
+#### Bookmarks
+
 - `GET /api/bookmarks` - List user bookmarks with filtering
 - `POST /api/bookmarks` - Create new bookmark
 - `GET /api/bookmarks/:id` - Get bookmark details
@@ -122,8 +128,9 @@ pnpm --filter @favoritable/api db:health   # Test database connection
 - `DELETE /api/bookmarks/:id` - Delete bookmark
 
 #### Labels
+
 - `GET /api/labels` - List user labels
-- `POST /api/labels` - Create new label  
+- `POST /api/labels` - Create new label
 - `PUT /api/labels/:id` - Update label
 - `DELETE /api/labels/:id` - Delete label
 
@@ -132,7 +139,7 @@ pnpm --filter @favoritable/api db:health   # Test database connection
 The project includes comprehensive test coverage:
 
 - **Unit Tests**: Core business logic and utilities
-- **Integration Tests**: Database operations and API endpoints  
+- **Integration Tests**: Database operations and API endpoints
 - **Error Handling Tests**: Authentication and validation errors
 - **OAuth Configuration Tests**: Provider setup verification
 
@@ -146,7 +153,8 @@ pnpm test:coverage
 
 Automated code quality enforcement using:
 
-- **Biome**: Unified linting and formatting (replaces ESLint + Prettier)
+- **Oxlint**: Fast linting for JavaScript and TypeScript
+- **Oxfmt**: Fast formatting with automatic import sorting
 - **TypeScript**: Strict type checking across all packages
 - **Knip**: Dead code elimination and unused dependency detection
 - **Vitest**: Fast testing with comprehensive coverage reporting
@@ -166,7 +174,7 @@ LOCAL_DATABASE_URL=file:./dev.db
 TURSO_DATABASE_URL=libsql://your-database.turso.io
 TURSO_AUTH_TOKEN=your-auth-token
 
-# OAuth Providers (configure as needed)  
+# OAuth Providers (configure as needed)
 GITHUB_CLIENT_ID=your-github-client-id
 GITHUB_CLIENT_SECRET=your-github-client-secret
 GOOGLE_CLIENT_ID=your-google-client-id
@@ -181,7 +189,7 @@ BETTER_AUTH_URL=https://your-domain.com
 ### Production Deployment
 
 1. **Database**: Set up Turso database and configure connection
-2. **OAuth Apps**: Register applications with each OAuth provider  
+2. **OAuth Apps**: Register applications with each OAuth provider
 3. **Environment**: Configure all required environment variables
 4. **Build**: Run `pnpm build` to create production builds
 5. **Deploy**: Deploy API and frontend to your hosting platform

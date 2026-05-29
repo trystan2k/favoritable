@@ -1,4 +1,5 @@
 import puppeteer, { type Page } from 'puppeteer';
+
 import { URLContentParseError } from '../errors/errors.js';
 import { BOOKMARK_STATES } from '../features/bookmarks/bookmark.constants.js';
 import type { CreateBookmarkModel } from '../features/bookmarks/bookmark.models.js';

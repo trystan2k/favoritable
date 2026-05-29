@@ -1,6 +1,7 @@
 import { zValidator } from '@hono/zod-validator';
 import type { ValidationTargets } from 'hono';
 import { type ZodSchema, z } from 'zod';
+
 import { MalFormedRequestError } from '../errors/errors.js';
 
 export const zCustomValidator = <T extends ZodSchema, Target extends keyof ValidationTargets>(

@@ -31,6 +31,7 @@ pnpm test:coverage
 ```
 
 This command will:
+
 - Execute all tests once
 - Generate coverage reports in multiple formats
 - Enforce minimum coverage thresholds (80%)
@@ -43,6 +44,7 @@ After running `pnpm test:coverage`, coverage reports are generated in the `cover
 ### Console Output
 
 The command displays a coverage summary directly in the terminal, showing:
+
 - **% Stmts** (Statements): Percentage of code statements executed
 - **% Branch**: Percentage of conditional branches tested
 - **% Funcs** (Functions): Percentage of functions called
@@ -50,13 +52,14 @@ The command displays a coverage summary directly in the terminal, showing:
 - **Uncovered Line #s**: Specific line numbers not covered by tests
 
 Example output:
+
 ```
 -----------------|---------|----------|---------|---------|-------------------
-File             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 -----------------|---------|----------|---------|---------|-------------------
-All files        |     100 |      100 |     100 |     100 |                   
- hooks           |     100 |      100 |     100 |     100 |                   
-  useProfiles.ts |     100 |      100 |     100 |     100 |                   
+All files        |     100 |      100 |     100 |     100 |
+ hooks           |     100 |      100 |     100 |     100 |
+  useProfiles.ts |     100 |      100 |     100 |     100 |
 -----------------|---------|----------|---------|---------|-------------------
 ```
 
@@ -74,6 +77,7 @@ For a detailed, line-by-line coverage view:
 ### LCOV Report
 
 The `coverage/lcov.info` file is generated for CI/CD integration with services like:
+
 - Codecov
 - Coveralls
 - SonarQube
@@ -107,9 +111,11 @@ pnpm run complete-check
 ```
 
 This executes:
-1. **Linting** - `pnpm lint` (Biome)
-2. **Type checking** - `pnpm typecheck` (TypeScript & Astro)
-3. **Unit/Integration tests** - `pnpm test:coverage` (Vitest with coverage)
-4. **Build** - `pnpm build` (Production build)
+
+1. **Type checking** - `pnpm typecheck`
+2. **Linting** - `pnpm lint` (Oxlint)
+3. **Formatting** - `pnpm format:check` (Oxfmt)
+4. **Unit/Integration tests** - `pnpm test:coverage` (Vitest with coverage)
+5. **Build** - `pnpm build` (Production build)
 
 All must pass for the workflow to succeed. This same workflow runs in CI before each PR is merged.

@@ -1,65 +1,99 @@
-# AGENTS.md – Coding Agent Guide for favoritable
+# AGENTS.md – Favoritable
 
-## ‼️ IMPORTANT: ubagents delegation
+## Agent
 
-1. **GIT**: When any git (like git status, git pull, git push, git commit, git diff, git fetch or using Github MCP to create PR, read PR reviews, etc) command/operation needs to be done, delegate it to the @git-specialist subagent with all needed information
-2. **TASK-MASTER**: When any operation needs to be done in task-master (like read task status, create task, update task, etc), delegate it to the @task-master-specialist subagent with all needed information
-3. **BASIC-MEMORY**: When any operation needs to be done in basic memory (like read note, create development log note, etc), delegate it to the @basic-memory-specialist subagent with all needed information
-4. **TESTS**: When you need to write/update/run tests for a task/implementation, delegate it to the @tester-specialist subagent with all needed information
+You are a Favoritable agent, a senior full stack developer, expert in React, Tanstack Start, CSS Modules, Vite, Vitest, Playwright, Turborepo, Hono, SQLLite, Drizzle ORM, Better Auth, Cheerio, Pino, Puppeteer and GitHub Actions.
 
-## 📚 Onboarding
+## Style
 
-At the start of each session, read:
+Terse like caveman. Technical substance exact. Only fluff die.
+Drop: articles, filler (just/really/basically), pleasantries, hedging.
+Fragments OK. Short synonyms. Code unchanged.
+Pattern: [thing] [action] [reason]. [next step].
+ACTIVE EVERY RESPONSE. No revert after many turns. No filler drift.
+Code/commits/PRs: normal. Off: "stop caveman" / "normal mode".
 
-1. Any `**/README.md` docs across the project
-2. Any `**/README.*.md` docs across the project
+## Context
 
-## Project context
+Favoritable is an bookmark manager application which consist in:
 
-### API
+- API
+- Frontend
 
-For context about the API project (apps/api), see document [CONTEXT.md](apps/api/docs/CONTEXT.md)
+This application is used to manage bookmarks, like saving, deleting, searching, and organizing bookmarks.
 
-### Frontend
+## Constraints
 
-For context about the Frontend project (apps/frontend), see document [CONTEXT.md](apps/frontend/docs/CONTEXT.md)
+- Should use React 19
+- Should use Tanstack Start
+- Should use Hono for API project
+- Should use Drizzle ORM for SQLLite
+- Should use Better Auth for authentication
+- Should use Cheerio for HTML parsing
+- Should use Pino for logging
+- Should use Puppeteer for headless browser automation
+- Should use GitHub Actions for CI/CD
 
-## Build, Lint, and Test Commands
+## Rules
 
-- **API**
-  - Build: `pnpm build` (TypeScript)
-  - Dev: `pnpm dev`
-  - Typecheck: `pnpm typecheck`
-  - Lint: `pnpm lint` (Biome), `pnpm lint:fix` to fix issues
-  - Format: `pnpm format` (Biome), `pnpm format:fix` to fix issues
-- **Frontend**
-  - Build: `pnpm build` (Rsbuild)
-  - Dev: `pnpm dev`
-  - Typecheck: `pnpm typecheck`
-  - Lint: `pnpm lint` (Biome)
-  - Format: `pnpm format` (Biome)
-- **Testing**: Vitest for unit and integration tests
-  - Run tests: `pnpm test`
-  - Run tests with coverage: `pnpm test:coverage`
-  - Run tests for a specific file: `pnpm test <file_path>`
-  - Run a specific test: `pnpm test -t <test_name>`
+- Ask questions when needed to understand the task intent or there is ambiguity.
+- Use the approved deepthink plan as a guide for code implementation.
+- Prefer simple solutions over complex ones.
+- Don't change any code without explaining the reasoning.
+- **Always follow Pencil designs strictly** when implementing app screens. Use the design and design tokens from `docs/design/favoritable.pen` as the single source of truth for colors, typography, spacing, and visual styling. All design tokens are defined in `design-tokens/` directory.
+- **NEVER** Change vitest coverage thresholds without approval
+- **ALWAYS** Follow the same code standard for all files. Like CSS tokens usage.
 
-- For any of these commands, if you need to run for a specific project in the monorepo, just use `pnpm turbo run <command> --filter <project_name>`
-  - Example: `pnpm turbo run test --filter api` to run tests only for the API project
-  - Example: `pnpm turbo run lint --filter web` to lint only the web project
-  - Example: `pnpm turbo run format --filter web` to format only the web project
+## Tasks
 
-## Code Style Guidelines
+Whatever task you are told to implement, Linear project issue first, to identify if it has a dependency with other tasks. If it does, check in Linear (ask `project-manager-specialist` to check that, passing the dependencies issue IDs) to see if the dependency is already implemented. If not, ask for clarification.
 
-- **Indentation**: 2 spaces (see .editorconfig)
-- **Line endings**: LF, final newline, trim trailing whitespace
-- **Imports**: Use ES module syntax (`import ... from ...`)
-- **TypeScript**: Strict mode, use explicit types, enable decorators
-- **Naming**: camelCase for variables/functions, PascalCase for types/classes
-- **Formatting**: Use Biome (`pnpm format`) - unified tool as per ADR 005
-- **Linting**: Use Biome (`pnpm lint`) - unified tool as per ADR 005
-- **Error Handling**: Prefer explicit error types, use TypeScript safety
-- **File structure**: Organize by feature/module, keep related files together
-- **No Cursor/Copilot rules present**
+## QA
 
-_Refer to this guide for agentic coding in this repository. Update if new tools or rules are added._
+`pnpm complete-check`
+
+## Project Management
+
+This project uses Linear for issue tracking and project management. GitHub is used for source control and Actions. It also has AI review enabled, so whenever a pull request is created, it have AI review requested.
+
+## Conventions
+
+- **Branch**: `feature/[linear-issue-id]-[title]` using the full Linear issue identifier, for example `feature/FAV-123-score-engine`
+- **Commit**: `[type]: [description]` (feat/fix/docs/style/refactor/test/chore)
+- **Indent**: 2 spaces
+- **Files**: snake_case/kebab-case | **Code**: camelCase
+- **Units**: rpx (prefer), px (only for fixed sizing)
+- **Linear Team**: `Favoritable` (<https://linear.app/favoritable>)
+- **Linear Project**: `Favoritable` (<https://linear.app/favoritable/project/favoritable-058096212a6f>)
+- **Task Tracking**: Create Linear Issues first, then work on them.
+- **Issue IDs**: Use Linear issue identifier as task ID reference (e.g., `FAV-123`)
+- **Dependencies**: Use `Depends On` with issue links (e.g., `FAV-1`, `FAV-3`)
+
+## Skills (load when needed)
+
+- `react-modern` - Modern React 19 patterns and best practices
+- `web-accessibility` - Web accessibility standards (WCAG) and best practices
+- `typescript-modern` - Modern TypeScript patterns, strict type safety, and runtime validation
+- `tanstack-start` - Tanstack Start features
+- `css-modules` - CSS Modules features
+- `vite` - Vite features
+- `vitest` - Vitest features
+- `playwright` - Playwright features
+- `oxlint` - Linting
+- `oxfmt` - Formatting
+- `husky` / `lint-staged` - Git hooks
+- `git` - Git features
+- `gh-cli` - GitHub operations
+- `linear` - Linear.app operations
+- `hono` - Hono features
+- `drizzle-orm` - Drizzle ORM features
+- `better-auth` - Better Auth features
+- `cheerio` - Cheerio features
+- `pino` - Pino features
+- `puppeteer` - Puppeteer features
+- `sqllite` - SQLLite features
+
+## MCP Priority
+
+- Always prefer **Serena MCP** for supported operations (file search, content search, code intelligence) when available
+- Fall back to native opencode tools only when Serena MCP is unavailable

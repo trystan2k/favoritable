@@ -1,11 +1,12 @@
 import { eq, like } from 'drizzle-orm';
 import { afterAll, beforeAll, beforeEach, describe, expect, test } from 'vitest';
+
+import { bookmarkLabel } from '../../../src/db/schema/bookmark-label.schema.js';
 import {
   type BookmarkDTO,
   bookmark,
   type InsertBookmarkDTO,
 } from '../../../src/db/schema/bookmark.schema.js';
-import { bookmarkLabel } from '../../../src/db/schema/bookmark-label.schema.js';
 import { type InsertLabelDTO, type LabelDTO, label } from '../../../src/db/schema/label.schema.js';
 import { type InsertUserDTO, type UserDTO, user } from '../../../src/db/schema/user.schema.js';
 import { setupTestDatabase, teardownTestDatabase } from '../../test-db-setup.js';

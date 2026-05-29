@@ -74,7 +74,7 @@ cp .env.example .env
 3. Set Authorization callback URL to: `https://your-domain.com/api/auth/callback/github`
 4. Add `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` to your `.env` file
 
-#### Google OAuth  
+#### Google OAuth
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
 2. Create a new OAuth 2.0 Client ID
@@ -156,10 +156,10 @@ const serviceLogger = createLogger('BookmarkService');
 serviceLogger.info('Bookmark created successfully', { bookmarkId: 'abc123' });
 
 // Create method-specific logger with additional context
-const methodLogger = logger.child({ 
-  context: 'BookmarkService', 
+const methodLogger = logger.child({
+  context: 'BookmarkService',
   method: 'importFromHtmlFile',
-  userId: '123'
+  userId: '123',
 });
 methodLogger.debug('Processing HTML file', { fileSize: 1024 });
 ```
@@ -178,7 +178,7 @@ HTTP requests are automatically logged using the `loggerMiddleware`. Each reques
 app.get('/bookmarks', async (c) => {
   const requestLogger = getRequestLogger(c);
   requestLogger.info('Fetching bookmarks', { userId: c.get('userId') });
-  
+
   return c.json(bookmarks);
 });
 ```
@@ -188,7 +188,7 @@ app.get('/bookmarks', async (c) => {
 The logger automatically redacts sensitive information from logs:
 
 - Passwords, tokens, API keys
-- Authorization headers and cookies  
+- Authorization headers and cookies
 - Credit card information
 - Any field containing variations of "secret", "key", "token", "password"
 
@@ -215,16 +215,16 @@ The logger adapts based on the environment:
      bookmarkId: bookmark.id,
      userId: user.id,
      source: 'html_file',
-     count: bookmarks.length
+     count: bookmarks.length,
    });
    ```
 
 3. **Use child loggers for context**:
 
    ```typescript
-   const operationLogger = logger.child({ 
+   const operationLogger = logger.child({
      operation: 'bulk_import',
-     requestId: c.get('requestId')
+     requestId: c.get('requestId'),
    });
    ```
 

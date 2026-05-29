@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import { dateSchema } from '../../core/validators.wrapper.js';
 import { labelSchema, updateLabelSchema } from '../labels/label.models.js';
 import { BOOKMARK_STATES } from './bookmark.constants.js';

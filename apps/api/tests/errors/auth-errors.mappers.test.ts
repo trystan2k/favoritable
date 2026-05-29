@@ -1,5 +1,6 @@
 import { APIError as BetterAuthAPIError } from 'better-auth/api';
 import { describe, expect, test } from 'vitest';
+
 import { authErrorsHandler } from '../../src/errors/auth-errors.mappers.js';
 import {
   APIError,

@@ -2,13 +2,14 @@
 
 **Date**: 2025-08-11  
 **Status**: Accepted  
-**Deciders**: Development Team  
+**Deciders**: Development Team
 
 ## Context
 
 The favoritable project is a bookmark management application with the following requirements:
+
 - **Backend**: Hono API with TypeScript
-- **Frontend**: React SPA 
+- **Frontend**: React SPA
 - **Mobile Apps**: Future React Native and/or native iOS/Android apps
 - **Current Database**: SQLite with Drizzle ORM
 - **Authentication**: Need for user authentication with session management
@@ -16,6 +17,7 @@ The favoritable project is a bookmark management application with the following 
 - **Deployment**: Traditional backend service deployment for scalability and reliability
 
 We need to make architectural decisions for:
+
 1. Authentication/Authorization library
 2. Database solution for production deployment
 3. Deployment platform strategy
@@ -27,6 +29,7 @@ We need to make architectural decisions for:
 **Choice**: [Better Auth](https://www.better-auth.com/) for authentication and session management
 
 **Rationale**:
+
 - **TypeScript-native**: Perfect alignment with our TypeScript-heavy stack
 - **Hono compatibility**: Official Hono support and adapter
 - **Framework agnostic**: Not tied to specific frameworks, works with our API-first architecture
@@ -44,6 +47,7 @@ We need to make architectural decisions for:
 **Choice**: [Turso](https://turso.tech/) as the production database solution
 
 **Rationale**:
+
 - **SQLite compatibility**: Zero migration effort from current SQLite setup
 - **Drizzle integration**: Official Turso driver for Drizzle ORM
 - **Serverless-first**: Designed specifically for serverless deployments
@@ -58,6 +62,7 @@ We need to make architectural decisions for:
 **Choice**: [Railway](https://railway.app/) or [Fly.io](https://fly.io/) for backend API deployment, [Vercel](https://vercel.com/) for frontend
 
 **Rationale**:
+
 - **Traditional backend hosting**: Designed for long-running API services, not serverless functions
 - **Persistent connections**: Better suited for database connections and session management
 - **Docker support**: Can containerize the Hono API for consistent deployments
@@ -95,33 +100,39 @@ We need to make architectural decisions for:
                         │ Providers    │
                         └──────────────┘
 ```
+
 ## Implementation Strategy
 
 ### Phase 1: Authentication Setup
+
 1. Install Better Auth with Hono adapter and SQLite support
 2. Implement session management with HTTP-only cookies
 3. Create auth middleware for protected routes
 4. Set up user registration and login endpoints
 
 ### Phase 2: OAuth Integration
+
 1. Configure Google OAuth for bookmark import capabilities
 2. Add GitHub OAuth for developer-friendly login
 3. Implement Apple OAuth for iOS users
 4. Create account linking functionality
 
 ### Phase 3: Database Migration
+
 1. Set up Turso database and configure Drizzle connection
 2. Migrate existing SQLite schema to Turso
 3. Update environment configuration for local vs. production
 4. Test session storage and user data persistence
 
 ### Phase 4: Deployment
+
 1. Configure Vercel deployment for React SPA
 2. Set up Railway/Fly.io deployment for Hono API service
 3. Configure environment variables and secrets
 4. Set up OAuth callback URLs for production
 
 ### Phase 5: Mobile App Support (Future)
+
 1. React Native app using same Hono API endpoints
 2. Native iOS/Android apps with HTTP-only cookie authentication
 3. OAuth flows using system webview or in-app browser
@@ -131,32 +142,32 @@ We need to make architectural decisions for:
 
 ### Authentication Alternatives
 
-| Option | Pros | Cons | Decision |
-|--------|------|------|----------|
-| **NextAuth.js** | Popular, feature-rich | Next.js focused, overkill for API-first, complex mobile integration | ❌ Not suitable |
-| **Passport.js** | Mature, many strategies | Complex setup, less TypeScript-friendly | ❌ Too complex |
-| **Supabase Auth** | Easy setup, managed | Vendor lock-in, doesn't fit self-hosted | ❌ Lock-in concerns |
-| **Custom JWT** | Full control | Security complexity, session management | ❌ Reinventing wheel |
-| **Lucia Auth** | TypeScript-native, lightweight | Deprecated, no longer maintained | ❌ Not actively maintained |
+| Option            | Pros                           | Cons                                                                | Decision                   |
+| ----------------- | ------------------------------ | ------------------------------------------------------------------- | -------------------------- |
+| **NextAuth.js**   | Popular, feature-rich          | Next.js focused, overkill for API-first, complex mobile integration | ❌ Not suitable            |
+| **Passport.js**   | Mature, many strategies        | Complex setup, less TypeScript-friendly                             | ❌ Too complex             |
+| **Supabase Auth** | Easy setup, managed            | Vendor lock-in, doesn't fit self-hosted                             | ❌ Lock-in concerns        |
+| **Custom JWT**    | Full control                   | Security complexity, session management                             | ❌ Reinventing wheel       |
+| **Lucia Auth**    | TypeScript-native, lightweight | Deprecated, no longer maintained                                    | ❌ Not actively maintained |
 
 ### Database Alternatives
 
-| Option | Pros | Cons | Decision |
-|--------|------|------|----------|
-| **Neon (PostgreSQL)** | Serverless, SQL standard | Schema migration required | ❌ Migration overhead |
-| **PlanetScale (MySQL)** | Serverless, branching | Schema migration, MySQL syntax | ❌ Migration overhead |
-| **Supabase** | Full-stack, PostgreSQL | Vendor lock-in, migration needed | ❌ Lock-in concerns |
-| **SQLite + Persistent volumes** | No migration | Not truly serverless, scaling issues | ❌ Scaling limitations |
+| Option                          | Pros                     | Cons                                 | Decision               |
+| ------------------------------- | ------------------------ | ------------------------------------ | ---------------------- |
+| **Neon (PostgreSQL)**           | Serverless, SQL standard | Schema migration required            | ❌ Migration overhead  |
+| **PlanetScale (MySQL)**         | Serverless, branching    | Schema migration, MySQL syntax       | ❌ Migration overhead  |
+| **Supabase**                    | Full-stack, PostgreSQL   | Vendor lock-in, migration needed     | ❌ Lock-in concerns    |
+| **SQLite + Persistent volumes** | No migration             | Not truly serverless, scaling issues | ❌ Scaling limitations |
 
 ### Deployment Alternatives
 
-| Option | Pros | Cons | Decision |
-|--------|------|------|----------|
-| **Vercel Functions** | Easy setup, Next.js integration | Serverless limitations, timeout constraints | ❌ Not suitable for backend service |
-| **Netlify Functions** | Good SPA hosting | Limited function capabilities, cold starts | ❌ Limited backend support |
-| **Railway** | Persistent backend, Docker support | Newer platform, pricing at scale | ✅ Good for backend services |
-| **Fly.io** | Excellent for APIs, global edge | Learning curve, complex networking | ✅ Great performance |
-| **Cloudflare Workers** | Excellent performance | Limited runtime, ecosystem constraints | ❌ Too restrictive |
+| Option                 | Pros                               | Cons                                        | Decision                            |
+| ---------------------- | ---------------------------------- | ------------------------------------------- | ----------------------------------- |
+| **Vercel Functions**   | Easy setup, Next.js integration    | Serverless limitations, timeout constraints | ❌ Not suitable for backend service |
+| **Netlify Functions**  | Good SPA hosting                   | Limited function capabilities, cold starts  | ❌ Limited backend support          |
+| **Railway**            | Persistent backend, Docker support | Newer platform, pricing at scale            | ✅ Good for backend services        |
+| **Fly.io**             | Excellent for APIs, global edge    | Learning curve, complex networking          | ✅ Great performance                |
+| **Cloudflare Workers** | Excellent performance              | Limited runtime, ecosystem constraints      | ❌ Too restrictive                  |
 
 ## Benefits
 
@@ -172,18 +183,21 @@ We need to make architectural decisions for:
 ## Mobile App Compatibility
 
 ### React Native Support
+
 - **✅ Excellent compatibility**: Uses same HTTP endpoints as web SPA
 - **✅ Cookie management**: Works with `@react-native-cookies/cookies` or built-in fetch
 - **✅ OAuth flows**: Supports `expo-auth-session` and `react-native-app-auth`
 - **✅ Component reuse**: Can share UI components between web and mobile
 
 ### Native iOS/Android Support
+
 - **✅ HTTP-only cookies**: Automatically handled by `URLSession` (iOS) and `OkHttp` (Android)
 - **✅ OAuth integration**: System webview or in-app browser for OAuth flows
 - **✅ Security**: More secure than JWT token storage in device storage
 - **✅ Session persistence**: Platform handles cookie persistence across app restarts
 
 ### Mobile vs. Auth.js Comparison
+
 - **Better Auth advantage**: HTTP-only cookies are more secure than manually stored JWT tokens
 - **Better Auth advantage**: Platform-native cookie handling vs. custom token management
 - **Better Auth advantage**: Same session-based approach across all platforms
@@ -192,14 +206,17 @@ We need to make architectural decisions for:
 ## Risks and Mitigations
 
 ### Risk: Better Auth adoption/community size
+
 - **Mitigation**: Well-documented, TypeScript-first, active development, modern alternative
 - **Fallback**: Can migrate to other session-based auth if needed
 
 ### Risk: Turso vendor dependency
+
 - **Mitigation**: SQLite compatibility means easy migration path
 - **Fallback**: Can switch to any SQLite-compatible solution
 
 ### Risk: Railway/Fly.io platform dependency
+
 - **Mitigation**: Docker-based deployment allows easy migration between platforms
 - **Fallback**: Can deploy to any platform supporting Node.js/Docker containers
 

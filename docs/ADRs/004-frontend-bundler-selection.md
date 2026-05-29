@@ -2,11 +2,12 @@
 
 **Date**: 2025-01-11  
 **Status**: Accepted  
-**Deciders**: Development Team  
+**Deciders**: Development Team
 
 ## Context
 
 The favoritable frontend application requires a modern, fast, and reliable build tool that meets the following requirements:
+
 - **Development Performance**: Fast development server with reliable hot module replacement (HMR)
 - **Build Performance**: Efficient production builds with optimizations
 - **TypeScript Support**: Out-of-the-box TypeScript compilation and type checking
@@ -17,6 +18,7 @@ The favoritable frontend application requires a modern, fast, and reliable build
 - **Ecosystem**: Plugin support for extensibility
 
 The project tech stack includes:
+
 - React with TypeScript
 - CSS modules for styling
 - Radix UI for components
@@ -32,6 +34,7 @@ We need to select a build tool that prioritizes performance while providing exce
 **Choice**: [Rsbuild](https://rsbuild.dev/) as the primary build tool and bundler for the frontend application
 
 **Rationale**:
+
 - **Performance Excellence**: Built on Rspack (Rust-based), providing significantly faster build times than JavaScript-based alternatives
 - **Zero Configuration**: Works out of the box with TypeScript and CSS modules without complex setup
 - **CSS Modules Native**: Perfect integration with CSS modules, supporting our styling architecture
@@ -59,18 +62,21 @@ We need to select a build tool that prioritizes performance while providing exce
 ## Implementation Strategy
 
 ### Phase 1: Project Initialization
+
 1. Initialize React project with Rsbuild template
 2. Configure TypeScript integration and type checking
 3. Set up CSS modules configuration
 4. Configure development and production scripts
 
 ### Phase 2: Development Workflow
+
 1. Integrate with existing monorepo structure
 2. Configure Vitest to work with Rsbuild build pipeline
 3. Set up build optimization and bundle analysis
 4. Document build configuration and processes
 
 ### Phase 3: Production Setup
+
 1. Configure production build optimizations
 2. Set up deployment integration
 3. Implement build performance monitoring
@@ -80,14 +86,14 @@ We need to select a build tool that prioritizes performance while providing exce
 
 ### Build Tool Alternatives
 
-| Option | Pros | Cons | Decision |
-|--------|------|------|----------|
-| **Rsbuild** | Fastest builds, zero-config, CSS modules | Smaller ecosystem | ✅ **Selected** |
-| **Vite** | Popular, good dev server, large ecosystem | Dev/prod differences, slower builds | ❌ Build performance |
-| **Webpack** | Mature, extensive plugins, proven | Slow builds, complex config | ❌ Performance issues |
-| **Turbopack** | Very fast, Vercel backing | Alpha/beta, Next.js only | ❌ Not production ready |
-| **Parcel** | Zero-config, good performance | Less control, smaller ecosystem | ❌ Limited customization |
-| **esbuild** | Extremely fast | Limited features, build-only | ❌ Missing dev server |
+| Option        | Pros                                      | Cons                                | Decision                 |
+| ------------- | ----------------------------------------- | ----------------------------------- | ------------------------ |
+| **Rsbuild**   | Fastest builds, zero-config, CSS modules  | Smaller ecosystem                   | ✅ **Selected**          |
+| **Vite**      | Popular, good dev server, large ecosystem | Dev/prod differences, slower builds | ❌ Build performance     |
+| **Webpack**   | Mature, extensive plugins, proven         | Slow builds, complex config         | ❌ Performance issues    |
+| **Turbopack** | Very fast, Vercel backing                 | Alpha/beta, Next.js only            | ❌ Not production ready  |
+| **Parcel**    | Zero-config, good performance             | Less control, smaller ecosystem     | ❌ Limited customization |
+| **esbuild**   | Extremely fast                            | Limited features, build-only        | ❌ Missing dev server    |
 
 ## Benefits
 
@@ -102,31 +108,35 @@ We need to select a build tool that prioritizes performance while providing exce
 ## Risks and Mitigations
 
 ### Risk: Smaller ecosystem compared to Vite/Webpack
+
 - **Mitigation**: Rsbuild provides most needed features out of the box
 - **Fallback**: Can migrate to Vite if specific plugins become critical
 
 ### Risk: Team learning curve for Rspack/Rsbuild
+
 - **Mitigation**: Excellent documentation and similar concepts to Webpack
 - **Fallback**: Configuration patterns are transferable to other bundlers
 
 ### Risk: Plugin availability for advanced features
+
 - **Mitigation**: Most common needs covered by built-in features
 - **Fallback**: Rsbuild supports custom Rspack plugins when needed
 
 ### Risk: Community support and resources
+
 - **Mitigation**: Growing community with ByteDance backing
 - **Fallback**: Well-documented migration path to Vite if needed
 
 ## Performance Comparison
 
-| Metric | Rsbuild | Vite | Webpack |
-|--------|---------|------|---------|
-| **Cold Start** | ~2s | ~3s | ~8s |
-| **HMR Speed** | <100ms | ~200ms | ~800ms |
-| **Production Build** | ~15s | ~25s | ~45s |
-| **Bundle Size** | Optimized | Good | Good |
+| Metric               | Rsbuild   | Vite   | Webpack |
+| -------------------- | --------- | ------ | ------- |
+| **Cold Start**       | ~2s       | ~3s    | ~8s     |
+| **HMR Speed**        | <100ms    | ~200ms | ~800ms  |
+| **Production Build** | ~15s      | ~25s   | ~45s    |
+| **Bundle Size**      | Optimized | Good   | Good    |
 
-*Approximate benchmarks based on typical React TypeScript projects*
+_Approximate benchmarks based on typical React TypeScript projects_
 
 ## References
 

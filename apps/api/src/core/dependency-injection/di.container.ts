@@ -2,12 +2,9 @@
 import 'reflect-metadata';
 import { INJECT_METADATA_KEY } from './di.constants.js';
 
-// Type for constructor function
-// biome-ignore lint/suspicious/noExplicitAny: Type for constructor function
-type Constructor<T = any> = new (...args: any[]) => T;
+type Constructor<T = unknown> = new (...args: never[]) => T;
 
-// biome-ignore lint/suspicious/noExplicitAny: Type for registration
-type Registration<T = any> =
+type Registration<T = unknown> =
   | {
       type: 'class';
       value: Constructor<T>;
@@ -25,7 +22,7 @@ type Registration<T = any> =
 export class Container {
   private static instance: Container;
   private registry = new Map<string, Registration>();
-  private singletons: Map<string, Registration> = new Map();
+  private singletons = new Map<string, unknown>();
 
   private constructor() {}
 
@@ -36,8 +33,7 @@ export class Container {
     return Container.instance;
   }
 
-  // biome-ignore lint/suspicious/noExplicitAny: Initialize container with class constructors
-  initialize(args: any[]) {
+  initialize(args: unknown[]): void {
     args.forEach((arg) => {
       if (typeof arg !== 'function' || !arg.prototype || !(arg.prototype.constructor === arg)) {
         throw new Error(`Argument "${arg}" is not a valid class constructor`);
@@ -94,12 +90,12 @@ export class Container {
     // Resolve each parameter
     const params = injectMetadata.map((paramToken) => this.resolve(paramToken));
 
-    const instance = new ClassDefinition(...params);
+    const instance = new ClassDefinition(...(params as never[]));
 
     if (registration.singleton) {
       this.singletons.set(token, instance);
     }
 
-    return instance;
+    return instance as T;
   }
 }

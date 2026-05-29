@@ -1,5 +1,6 @@
 import type { Context } from 'hono';
 import type { ErrorHandler } from 'hono/types';
+
 import { logger } from '../core/logger.js';
 import { env, NodeEnvs } from '../env.js';
 import { APIError, UnexpectedError } from './errors.js';

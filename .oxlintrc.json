@@ -1,0 +1,73 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "eslint",
+    "typescript",
+    "react",
+    "react-perf",
+    "import",
+    "promise",
+    "vitest",
+    "node",
+    "jsx-a11y",
+    "oxc"
+  ],
+  "ignorePatterns": [
+    ".agents/**",
+    ".git/**",
+    ".serena/**",
+    ".taskmaster/**",
+    ".turbo/**",
+    ".vscode/**",
+    "**/coverage/**",
+    "**/dist/**",
+    "node_modules/**",
+    "apps/frontend/src/routeTree.gen.ts"
+  ],
+  "env": {
+    "builtin": true
+  },
+  "rules": {
+    "no-console": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "typescript/no-explicit-any": "error",
+    "typescript/no-non-null-assertion": "error",
+    "jest/no-conditional-expect": "off",
+    "jest/require-to-throw-message": "off",
+    "vitest/no-conditional-expect": "off",
+    "vitest/require-mock-type-parameters": "off"
+  },
+  "overrides": [
+    {
+      "files": ["apps/frontend/**/*.{ts,tsx,js,jsx}"],
+      "env": {
+        "browser": true
+      }
+    },
+    {
+      "files": ["apps/api/**/*.{ts,tsx,js,jsx}"],
+      "env": {
+        "node": true
+      }
+    },
+    {
+      "files": ["**/*.{test,spec}.{ts,tsx,js,jsx}", "apps/**/tests/**/*.{ts,tsx,js,jsx}"],
+      "env": {
+        "node": true,
+        "vitest": true
+      }
+    },
+    {
+      "files": ["**/*.{config,setup}.{ts,js,mjs,cjs}", "*.config.{ts,js,mjs,cjs}"],
+      "env": {
+        "node": true
+      }
+    }
+  ]
+}

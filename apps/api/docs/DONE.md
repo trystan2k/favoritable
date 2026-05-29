@@ -3,22 +3,22 @@
 ## Infrastructure & Setup
 
 - **Logging:** Implemented a logging system/middleware.
-  - *Details:* Used Pino with Hono, implemented a production-grade logger, and changed the error handler to return generic info while logging detailed errors.
-  - *References:*
+  - _Details:_ Used Pino with Hono, implemented a production-grade logger, and changed the error handler to return generic info while logging detailed errors.
+  - _References:_
     - <https://github.com/pinojs/pino/blob/main/docs/web.md#pino-with-hono>
     - <https://medium.com/@artemkhrenov/building-a-production-grade-logger-for-node-js-applications-with-pino-2ebd8447d531>
     - <https://medium.com/@mohantaankit2002/best-practices-for-logging-and-monitoring-in-large-nestjs-applications-ae6e2ed31d93>
 - **API Versioning:** Added versioning using headers.
-  - *Reference:* <https://medium.com/@bubu.tripathy/best-practices-for-designing-rest-apis-2c084ab09059>
+  - _Reference:_ <https://medium.com/@bubu.tripathy/best-practices-for-designing-rest-apis-2c084ab09059>
 - **HTTP Headers:** Configured standard headers (e.g., `Accept`, `Content-Type`).
 - **Error Handling:** Added a `notFound` handler.
-  - *References:*
+  - _References:_
     - <https://github.dev/NicoPlyley/hono-error-handler>
     - <https://app.studyraid.com/en/read/11303/352723/error-handling-middleware>
 - **Caching:** Investigated `ETag` and decided against it as it's not suitable for bookmarks which are not typically cached.
 - **Dependency Injection:** Reviewed and improved the dependency injection for services and repositories.
-  - *Details:* Enabled injection of instances (like DB) and used singletons where appropriate.
-  - *Reference:* <https://pja-g.medium.com/lets-be-serious-about-node-dependency-injection-73bcf9ac394c>
+  - _Details:_ Enabled injection of instances (like DB) and used singletons where appropriate.
+  - _Reference:_ <https://pja-g.medium.com/lets-be-serious-about-node-dependency-injection-73bcf9ac394c>
 
 ## API Design & Endpoints
 
@@ -37,9 +37,9 @@
   - `PATCH /bookmarks/` - Create/Update
 - **Routing:**
   - Created nested routes.
-    - *Reference:* <https://github.com/honojs/examples/blob/main/basic/src/index.ts>
+    - _Reference:_ <https://github.com/honojs/examples/blob/main/basic/src/index.ts>
   - Moved routes to dedicated files for better organization.
-    - *Reference:* <https://hono.dev/docs/guides/best-practices#building-a-larger-application>
+    - _Reference:_ <https://hono.dev/docs/guides/best-practices#building-a-larger-application>
 
 ## Features
 
@@ -62,17 +62,17 @@
 
 - **Web Scrapper:**
   - Reviewed and improved the scrapper, considering Puppeteer or Playwright for dynamic pages.
-    - *References:*
+    - _References:_
       - <https://brightdata.com/blog/how-tos/web-scraping-puppeteer>
       - <https://scrapfly.io/blog/web-scraping-with-puppeteer-and-nodejs/>
       - <https://www.zenrows.com/blog/puppeteer-web-scraping#prerequisites>
   - Added a dedicated scrapper endpoint.
   - Handled redirects in the scrapper.
-    - *Reference:* <https://marvinh.dev/blog/speeding-up-javascript-ecosystem>
+    - _Reference:_ <https://marvinh.dev/blog/speeding-up-javascript-ecosystem>
 - **Data Models:**
   - Repositories now return DTOs, and services convert them to Models.
   - Reviewed all Models/DTOs.
   - Added a response mapper (DTO to Model).
 - **Schema Validation:** Added schema validation using Zod.
-  - *Reference:* <https://chat.qwen.ai/c/3a138e54-fc97-466a-89c3-e61e14cffcb3>
+  - _Reference:_ <https://chat.qwen.ai/c/3a138e54-fc97-466a-89c3-e61e14cffcb3>
 - **Browser Compatibility:** Checked if Firefox/Safari/Edge bookmarks exports are similar to Chrome's.

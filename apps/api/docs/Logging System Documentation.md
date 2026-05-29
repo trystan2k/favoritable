@@ -28,6 +28,7 @@ The logging system supports the following levels (from highest to lowest priorit
 ## Configuration
 
 The log level can be configured via the `LOG_LEVEL` environment variable. If not specified, it defaults to:
+
 - `info` in production
 - `debug` in development
 
@@ -40,10 +41,10 @@ import { createLogger } from '../core/logger.js';
 
 export class MyService {
   private logger = createLogger('MyService');
-  
+
   async doSomething(data) {
     this.logger.debug({ data }, 'Starting operation');
-    
+
     try {
       // Do something
       this.logger.info('Operation completed successfully');
@@ -61,9 +62,9 @@ export class MyService {
 app.get('/resource', async (c) => {
   const logger = c.get('logger');
   logger.debug('Processing request for /resource');
-  
+
   // Process request
-  
+
   logger.info('Request completed successfully');
   return c.json({ success: true });
 });

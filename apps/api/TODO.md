@@ -4,12 +4,12 @@
 
 - **Security:**
   - Add secureHeaders middleware for Hono
-  - *Reference:* <https://hono.dev/middleware/builtin/secure-headers>
+  - _Reference:_ <https://hono.dev/middleware/builtin/secure-headers>
 
 - **Authentication:**
   - Passport.js
   - Auth.js (<https://authjs.dev/>)
-  - *References:*
+  - _References:_
     - <https://x.com/sergiodxa/status/1897067211514372562?t=xVl11pi7stKjwVVgzvQu7g&s=09>
     - <https://www.youtube.com/playlist?app=desktop&list=PLUofhDIg_38qm2oPOV-IRTTEKyrVBBaU7>
     - <https://javascript.plainenglish.io/the-node-js-microservices-masterclass-84c0329ad2d6>
@@ -17,7 +17,7 @@
   - Add user to bookmarks and labels
 - **Backup/Export:**
   - Add endpoint to backup/export bookmarks (Worker?)
-  - *Reference:* <https://medium.com/@mehdibafdil/thread-safe-architecture-in-node-js-from-theory-to-implementation-12aa03b09b4e>
+  - _Reference:_ <https://medium.com/@mehdibafdil/thread-safe-architecture-in-node-js-from-theory-to-implementation-12aa03b09b4e>
 - **AI Label Suggestions:**
   - Use AI to suggest labels when adding a bookmark
 
@@ -25,15 +25,15 @@
 
 - **Linting & Formatting:**
   - Add Lint / Prettier / Biome / Knip
-  - *References:*
+  - _References:_
     - Knip: <https://knip.dev/overview/getting-started>
     - Biome: <https://blog.stackademic.com/biome-a-faster-unified-alternative-to-eslint-and-prettier-7767ed2637bd>
 - **Middlewares:**
   - Review Middlewares
-  - *Reference:* <https://hono.dev/docs/middleware/builtin/timeout>
+  - _Reference:_ <https://hono.dev/docs/middleware/builtin/timeout>
 - **API Documentation:**
   - Add Open API docs (Swagger)
-  - *References:*
+  - _References:_
     - <https://hono.dev/examples/hono-openapi>
     - <https://github.com/honojs/middleware/issues/735>
 - **Testing:**
@@ -43,17 +43,17 @@
   - E2E - Test scrapper for Text files
 - **Logging & Monitoring:**
   - Review Logging Monitoring
-  - *References:*
+  - _References:_
     - <https://medium.com/@mohantaankit2002/best-practices-for-logging-and-monitoring-in-large-nestjs-applications-ae6e2ed31d93>
     - <https://betterstack.com/telemetry>
 - **Production Readiness:**
   - Review for Prod
-  - *References:*
+  - _References:_
     - <https://medium.com/@mehdibafdil/is-your-node-js-application-production-ready-a-complete-checklist-601c9d494f4f>
     - <https://dev.to/minima_desk_cd9b151c4e2fb/dockerize-your-nodejs-application-a-step-by-step-guide-iel?context=digest>
 - **Dependency Management:**
   - Review dependabot
-  - *Reference:* <https://woliveiras.github.io/posts/how-to-schedule-dependabot-to-keep-dependencies-updated/>
+  - _Reference:_ <https://woliveiras.github.io/posts/how-to-schedule-dependabot-to-keep-dependencies-updated/>
 
 ## Deployment & Infrastructure
 

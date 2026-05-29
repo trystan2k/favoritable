@@ -111,6 +111,7 @@ Task [ID] [Full Task Title From Task Master].md
 ```
 
 **CRITICAL REQUIREMENTS:**
+
 1. Start with capital **T**: `Task` (NOT `task`)
 2. Space after ID number: `Task [ID] ` (NOT `Task[ID]` or `task-[ID]`)
 3. Use the **EXACT full title** from Task Master (NOT shortened or modified)
@@ -331,7 +332,6 @@ ls -la docs/memories/development-logs/
 2. Use stdin method for complex content
 3. Verify markdown syntax before writing
 4. Use heredoc for multi-line content
-
 
 ## Important Notes
 

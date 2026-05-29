@@ -1,8 +1,10 @@
 import { Moon, Sun } from 'lucide-react';
 import { Button } from 'react-aria-components';
+
 import { useTheme } from '../contexts/ThemeContext';
-import buttonSharedStyles from '../shared-styles/Button.module.css';
 import { cx } from '../utils/cx';
+
+import buttonSharedStyles from '../shared-styles/Button.module.css';
 import styles from './ThemeSwitcher.module.css';
 
 export const ThemeSwitcher = () => {

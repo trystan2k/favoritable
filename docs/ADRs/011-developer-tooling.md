@@ -1,11 +1,12 @@
 # ADR-011: Developer Tooling (Bruno and Puppeteer)
 
 **Date**: 2025-08-11  
-**Status**: Accepted  
+**Status**: Accepted
 
 ## Context
 
 The favoritable project requires effective developer tooling for two critical areas:
+
 - API client and testing for development and documentation of REST endpoints
 - Web scraping capabilities to fetch metadata (title, description, favicon) from bookmarked URLs
 - Git-friendly API documentation and testing that can be version controlled
@@ -27,6 +28,7 @@ Accepted
 ## Consequences
 
 **Positive Consequences:**
+
 - Version-controlled API documentation and tests through Bruno's file-based collections
 - Reliable metadata extraction from modern JavaScript-heavy websites via Puppeteer
 - Better collaboration through Git-trackable API test collections
@@ -36,6 +38,7 @@ Accepted
 - Precise control over browser behavior for consistent scraping results
 
 **Negative Consequences:**
+
 - Puppeteer adds significant dependency size and system resource requirements
 - Bruno has smaller community and ecosystem compared to established tools like Postman
 - Web scraping may be slower than lightweight HTTP-only solutions

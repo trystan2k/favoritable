@@ -3,7 +3,7 @@
   "entry": ["src/index.tsx"],
   "project": ["src/**/*.{ts,tsx}"],
   "ignore": ["dist/**", ".rsbuild/**", "coverage/**", "src/**/routeTree.gen.ts"],
-  "ignoreBinaries": ["only-allow"],
+  "ignoreBinaries": ["only-allow", "oxfmt", "oxlint"],
   "ignoreDependencies": ["@favoritable/test-config", "@favoritable/themes"],
   "treatConfigHintsAsErrors": true
 }

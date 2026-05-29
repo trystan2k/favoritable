@@ -1,8 +1,10 @@
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import styles from '../../src/routes/login/login.module.css';
+
 import { createTestRouter, getMockAuthClient, renderWithRouter } from '../test-utils';
+
+import styles from '../../src/routes/login/login.module.css';
 
 describe('Login Route', () => {
   beforeEach(() => {
@@ -214,9 +216,7 @@ describe('Login Route', () => {
   it('handles login errors gracefully', async () => {
     const mockAuthClient = getMockAuthClient();
 
-    // Mock the signIn.social method to throw an error
-    // biome-ignore lint/suspicious/noExplicitAny: Need to access mock methods
-    (mockAuthClient.signInSocial as any).mockRejectedValueOnce(new Error('Login failed'));
+    mockAuthClient.signInSocial.mockRejectedValueOnce(new Error('Login failed'));
 
     await renderLoginRoute();
 
@@ -237,8 +237,7 @@ describe('Login Route', () => {
   it('should not redirect when session is pending', async () => {
     const mockAuthClient = getMockAuthClient();
 
-    // biome-ignore lint/suspicious/noExplicitAny: Mock type
-    (mockAuthClient.getSession as any).mockResolvedValueOnce({
+    mockAuthClient.getSession.mockResolvedValueOnce({
       data: null,
       isPending: true,
       error: null,

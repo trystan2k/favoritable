@@ -20,7 +20,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "find . -name .git -prune -o -type d \\( -name \"node_modules\" -o -name \"dist\" \\) -prune -exec rm -rf '{}' +",
-    "complete-check": "pnpm typecheck && pnpm check:fix && pnpm knip && pnpm test:coverage && pnpm build",
+    "complete-check": "pnpm typecheck && pnpm check && pnpm knip && pnpm test:coverage && pnpm build",
     "prepare": "[ -d '.git' ] && husky install || echo 'skipping husky'",
     "preinstall": "npx only-allow pnpm",
     "build": "turbo run build",
@@ -28,6 +28,7 @@
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "format": "turbo run format",
+    "format:check": "turbo run format:check",
     "format:fix": "turbo run format:fix",
     "check": "turbo run check",
     "check:fix": "turbo run check:fix",
@@ -38,19 +39,18 @@
     "test:coverage": "turbo run test:coverage"
   },
   "devDependencies": {
-    "@favoritable/lint-config": "workspace:*",
     "husky": "~9.1.7",
-    "knip": "~5.62.0",
     "lint-staged": "~16.1.5",
+    "oxfmt": "~0.47.0",
+    "oxlint": "~1.62.0",
     "turbo": "~2.9.14"
   },
-  "peerDependencies": {
-    "@biomejs/biome": "~2.1.4"
-  },
   "lint-staged": {
-    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
-      "biome format --write",
-      "biome lint --write --error-on-warnings"
+    "*.{js,ts,cjs,mjs,cts,mts,jsx,tsx,json,jsonc,css,md,yml,yaml}": [
+      "pnpm exec oxfmt --config .oxfmtrc.json --no-error-on-unmatched-pattern"
+    ],
+    "*.{js,ts,cjs,mjs,cts,mts,jsx,tsx}": [
+      "pnpm exec oxlint --config .oxlintrc.json --fix"
     ]
   },
   "packageManager": "pnpm@10.20.0",

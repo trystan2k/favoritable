@@ -1,4 +1,5 @@
 import { Hono } from 'hono';
+
 import { auth } from '../../../auth.js';
 import { Service } from '../../../core/dependency-injection/di.decorators.js';
 import { NotAuthorizedError } from '../../../errors/errors.js';

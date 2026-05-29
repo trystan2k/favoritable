@@ -1,11 +1,12 @@
 # ADR-008: Project Structure (Monorepo with Turborepo)
 
 **Date**: 2025-08-11  
-**Status**: Accepted  
+**Status**: Accepted
 
 ## Context
 
 The favoritable project consists of multiple related packages that need to be managed efficiently:
+
 - Frontend React application
 - Backend API with Hono
 - Shared TypeScript configuration packages
@@ -29,6 +30,7 @@ Accepted
 ## Consequences
 
 **Positive Consequences:**
+
 - Simplified dependency management with shared configurations and utilities
 - Efficient build caching and parallel task execution through Turborepo
 - Consistent code quality and formatting across all packages
@@ -37,6 +39,7 @@ Accepted
 - Atomic changes across multiple packages with unified version control
 
 **Negative Consequences:**
+
 - Larger repository size and complexity compared to separate repositories
 - Potential for tighter coupling between packages if not properly managed
 - Learning curve for developers unfamiliar with monorepo workflows

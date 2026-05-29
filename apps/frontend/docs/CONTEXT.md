@@ -15,7 +15,7 @@ CSS Modules is the **primary and required** styling approach for all React compo
   src/components/
     Button.tsx
     Button.module.css
-    ThemeSwitcher.tsx  
+    ThemeSwitcher.tsx
     ThemeSwitcher.module.css
   ```
 
@@ -48,7 +48,7 @@ All CSS values in `.module.css` files **MUST** use design tokens from the Style 
   background-color: var(--semantic-colors-cta-primary-base);
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);
-  
+
   /* ❌ INCORRECT - Hardcoded values */
   /* padding: 8px 12px; */
   /* background-color: #f59e0b; */
@@ -58,7 +58,7 @@ All CSS values in `.module.css` files **MUST** use design tokens from the Style 
 ### Available Design Token Categories
 
 - **Spacing**: `var(--spacing-1)` through `var(--spacing-96)`
-- **Colors**: 
+- **Colors**:
   - Semantic: `var(--semantic-colors-*)`
   - Theme-aware: `var(--theme-color-*)`
 - **Typography**: `var(--font-size-*)`, `var(--font-weight-*)`
@@ -101,5 +101,6 @@ test('applies correct CSS class', () => {
 ### Build Configuration
 
 CSS Modules are configured in `rsbuild.config.ts` with:
+
 - Development: Human-readable class names (`Component_button__hash123`)
 - Production: Minified class names for optimal bundle size

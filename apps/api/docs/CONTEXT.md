@@ -10,35 +10,35 @@ The API is built to be robust, scalable, and maintainable, following modern best
 
 The API implements and plans to implement the following features:
 
-*   **Bookmark Management:** Full CRUD (Create, Read, Update, Delete) operations for bookmarks.
-*   **Label Management:** Full CRUD operations for labels, allowing bookmarks to be categorized.
-*   **Web Scraping:** A sophisticated web scraper to automatically fetch metadata (title, description, images) from bookmark URLs. It is designed to handle both static and dynamic, JavaScript-heavy websites (e.g., using Puppeteer/Playwright).
-*   **Import/Export:**
-    *   Import bookmarks from various sources, including:
-        *   Chrome/Firefox bookmark export files (HTML).
-        *   Omnivore backup files (JSON).
-        *   Simple text files with one URL per line.
-    *   Endpoint to backup/export all user data.
-*   **Search and Filtering:**
-    *   Full-text search on bookmark titles and descriptions.
-    *   Filter bookmarks by one or more labels.
-*   **Bulk Operations:** Endpoints to archive or delete multiple bookmarks at once.
-*   **AI-Powered Tagging:** A planned feature to use AI for suggesting relevant labels when a new bookmark is added.
+- **Bookmark Management:** Full CRUD (Create, Read, Update, Delete) operations for bookmarks.
+- **Label Management:** Full CRUD operations for labels, allowing bookmarks to be categorized.
+- **Web Scraping:** A sophisticated web scraper to automatically fetch metadata (title, description, images) from bookmark URLs. It is designed to handle both static and dynamic, JavaScript-heavy websites (e.g., using Puppeteer/Playwright).
+- **Import/Export:**
+  - Import bookmarks from various sources, including:
+    - Chrome/Firefox bookmark export files (HTML).
+    - Omnivore backup files (JSON).
+    - Simple text files with one URL per line.
+  - Endpoint to backup/export all user data.
+- **Search and Filtering:**
+  - Full-text search on bookmark titles and descriptions.
+  - Filter bookmarks by one or more labels.
+- **Bulk Operations:** Endpoints to archive or delete multiple bookmarks at once.
+- **AI-Powered Tagging:** A planned feature to use AI for suggesting relevant labels when a new bookmark is added.
 
 ## 3. Technical Stack
 
 The project is built with a modern TypeScript and Node.js stack:
 
-*   **Framework:** Hono - A small, simple, and ultrafast web framework for the Edge. Chosen for its performance and minimalist design.
-*   **Language:** TypeScript - For static typing and improved developer experience.
-*   **Database ORM:** Drizzle ORM - A TypeScript ORM that provides type-safety from the database schema to the application code.
-*   **Database:** The database is not finalized, but the architecture supports standard relational databases like PostgreSQL or SQLite.
-*   **Runtime Environment:** Node.js
-*   **Schema Validation:** Zod - Used for validating incoming request data (bodies, params, queries) and ensuring type safety.
-*   **API Documentation:** OpenAPI (Swagger) - API documentation is generated automatically from the Hono routes and Zod schemas using `@asteasolutions/zod-to-openapi`.
-*   **Logging:** Pino - A high-performance, low-overhead logger for Node.js.
-*   **Configuration:** Environment variables are managed using `dotenv`, and configuration files are loaded with `cosmiconfig`.
-*   **Authentication:** Planned, with Passport.js or Auth.js as likely candidates.
+- **Framework:** Hono - A small, simple, and ultrafast web framework for the Edge. Chosen for its performance and minimalist design.
+- **Language:** TypeScript - For static typing and improved developer experience.
+- **Database ORM:** Drizzle ORM - A TypeScript ORM that provides type-safety from the database schema to the application code.
+- **Database:** The database is not finalized, but the architecture supports standard relational databases like PostgreSQL or SQLite.
+- **Runtime Environment:** Node.js
+- **Schema Validation:** Zod - Used for validating incoming request data (bodies, params, queries) and ensuring type safety.
+- **API Documentation:** OpenAPI (Swagger) - API documentation is generated automatically from the Hono routes and Zod schemas using `@asteasolutions/zod-to-openapi`.
+- **Logging:** Pino - A high-performance, low-overhead logger for Node.js.
+- **Configuration:** Environment variables are managed using `dotenv`, and configuration files are loaded with `cosmiconfig`.
+- **Authentication:** Planned, with Passport.js or Auth.js as likely candidates.
 
 ## 4. Architecture
 
@@ -53,8 +53,8 @@ The structure is layered as follows:
 3.  **Repositories:** This layer abstracts the data source. Its responsibility is to query and manipulate data in the database. It returns raw data or DTOs to the service layer, keeping the database-specific implementation details (like Drizzle ORM queries) hidden from the application logic.
 
 4.  **Models & DTOs:**
-    *   **Models:** Represent the core domain entities of the application (e.g., `Bookmark`, `Label`).
-    *   **DTOs (Data Transfer Objects):** Plain objects used to transfer data between layers, particularly between repositories and services.
+    - **Models:** Represent the core domain entities of the application (e.g., `Bookmark`, `Label`).
+    - **DTOs (Data Transfer Objects):** Plain objects used to transfer data between layers, particularly between repositories and services.
 
 This separation allows for better testability, maintainability, and flexibility, as components like the database or web framework can be swapped with minimal impact on the core business logic. Dependency Injection is used to provide repositories and other dependencies to the services.
 
@@ -73,9 +73,9 @@ The generated documentation will be available via a Swagger UI endpoint.
 
 The project is under active development. The `TODO.md` file tracks the high-level roadmap, which includes:
 
-*   Implementing a robust authentication and authorization system.
-*   Finalizing the choice of database and deployment provider.
-*   Adding comprehensive unit and end-to-end tests.
-*   Setting up production-grade logging and monitoring.
-*   Implementing a background worker system for long-running tasks like backups.
-*   Integrating AI for intelligent label suggestions.
+- Implementing a robust authentication and authorization system.
+- Finalizing the choice of database and deployment provider.
+- Adding comprehensive unit and end-to-end tests.
+- Setting up production-grade logging and monitoring.
+- Implementing a background worker system for long-running tasks like backups.
+- Integrating AI for intelligent label suggestions.

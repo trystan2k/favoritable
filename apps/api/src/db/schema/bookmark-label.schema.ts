@@ -1,5 +1,6 @@
 import { relations } from 'drizzle-orm/relations';
 import { index, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+
 import { bookmark } from './bookmark.schema.js';
 import { trackingDates } from './common.schema.js';
 import { label } from './label.schema.js';

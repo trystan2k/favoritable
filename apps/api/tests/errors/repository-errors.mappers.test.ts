@@ -1,5 +1,6 @@
 import { LibsqlError } from '@libsql/client';
 import { describe, expect, test } from 'vitest';
+
 import {
   APIError,
   EntityAlreadyExist,

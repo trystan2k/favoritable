@@ -1,4 +1,5 @@
 import fs from 'fs/promises';
+
 import StyleDictionary from 'style-dictionary';
 
 const colorTransform = (token) => {
@@ -31,12 +32,7 @@ const createConfig = (theme) => ({
   },
   platforms: {
     css: {
-      transforms: [
-        'size/rem',
-        'size/pxToRem',
-        'color/css',
-        'color/css-with-opacity',
-      ],
+      transforms: ['size/rem', 'size/pxToRem', 'color/css', 'color/css-with-opacity'],
       transformGroup: 'css',
       buildPath: 'dist/',
       files: [
@@ -46,14 +42,9 @@ const createConfig = (theme) => ({
           options: {
             outputReferences: (token) => {
               // Don't output references for tokens with opacity - use the transformed value instead
-              return !(
-                token.type === 'color' && token.original.opacity !== undefined
-              );
+              return !(token.type === 'color' && token.original.opacity !== undefined);
             },
-            selector:
-              theme.name === 'foundations'
-                ? ':root'
-                : `[data-theme="${theme.name}"]`,
+            selector: theme.name === 'foundations' ? ':root' : `[data-theme="${theme.name}"]`,
           },
         },
       ],

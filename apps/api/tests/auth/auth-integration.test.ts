@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest';
+
 import type { ErrorResponse } from '../../src/errors/errors.types.js';
 import app from '../../src/index.js';
 

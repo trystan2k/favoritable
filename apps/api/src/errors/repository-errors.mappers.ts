@@ -1,4 +1,5 @@
 import { LibsqlError } from '@libsql/client';
+
 import { APIError, EntityAlreadyExist, MalFormedRequestError, UnexpectedError } from './errors';
 
 export const repositoryErrorsHandler = (error: Error): Error | APIError => {

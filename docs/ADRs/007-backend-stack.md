@@ -1,11 +1,12 @@
 # ADR-007: Backend Stack (Hono, SQLite, Drizzle)
 
 **Date**: 2025-08-11  
-**Status**: Accepted  
+**Status**: Accepted
 
 ## Context
 
 The favoritable project requires a backend API solution for bookmark management with the following requirements:
+
 - Fast, lightweight HTTP server for REST API endpoints
 - Database solution for storing bookmarks, labels, and user data
 - Type-safe database interactions with schema management
@@ -30,6 +31,7 @@ Accepted
 ## Consequences
 
 **Positive Consequences:**
+
 - Excellent development experience with full TypeScript integration
 - Fast performance due to Hono's lightweight nature and SQLite's embedded architecture
 - Simple deployment with no database server management required
@@ -38,6 +40,7 @@ Accepted
 - Migration and schema management through Drizzle's tooling
 
 **Negative Consequences:**
+
 - SQLite may require migration to a more robust solution for high-scale concurrent write operations
 - Limited to single-node deployments without additional database replication setup
 - Smaller community compared to more established frameworks like Express.js

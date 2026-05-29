@@ -1,4 +1,5 @@
 import pino from 'pino';
+
 import { env, NodeEnvs } from '../env.js';
 import { LogLevels } from './types.js';
 

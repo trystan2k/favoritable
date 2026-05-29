@@ -29,7 +29,7 @@ const getLoggerConfig = () => {
     level: process.env.LOG_LEVEL || (isProduction ? LogLevels.INFO : LogLevels.DEBUG),
     redact: {
       paths: REDACT_FIELDS,
-      censor: '[REDACTED]'
+      censor: '[REDACTED]',
     },
     timestamp: pino.stdTimeFunctions.isoTime,
     transport: isDevelopment ? prettyPrintTransport : undefined,
@@ -43,10 +43,20 @@ The system automatically redacts sensitive fields from log output:
 
 ```typescript
 const REDACT_FIELDS = [
-  'password', 'token', 'authorization', 'cookie', 'secret', 'key',
-  'apiKey', 'api_key', 'access_token', 'refresh_token', 
-  'credit_card', 'creditCard',
-  'req.headers.authorization', 'req.headers.cookie'
+  'password',
+  'token',
+  'authorization',
+  'cookie',
+  'secret',
+  'key',
+  'apiKey',
+  'api_key',
+  'access_token',
+  'refresh_token',
+  'credit_card',
+  'creditCard',
+  'req.headers.authorization',
+  'req.headers.cookie',
 ];
 ```
 
@@ -73,13 +83,13 @@ export const logger = createLogger('app');
 
 ```typescript
 export const LogLevels = {
-  FATAL: 'fatal',    // 60 - System unusable
-  ERROR: 'error',    // 50 - Error conditions  
-  WARN: 'warn',      // 40 - Warning conditions
-  INFO: 'info',      // 30 - Informational
-  DEBUG: 'debug',    // 20 - Debug information
-  TRACE: 'trace',    // 10 - Trace information
-  SILENT: 'silent'   // Infinity - Disable logging
+  FATAL: 'fatal', // 60 - System unusable
+  ERROR: 'error', // 50 - Error conditions
+  WARN: 'warn', // 40 - Warning conditions
+  INFO: 'info', // 30 - Informational
+  DEBUG: 'debug', // 20 - Debug information
+  TRACE: 'trace', // 10 - Trace information
+  SILENT: 'silent', // Infinity - Disable logging
 } as const;
 ```
 
@@ -102,15 +112,19 @@ export const loggerMiddleware = () => {
     const startTime = Date.now();
     const requestLogger = createLogger('http');
     const requestId = crypto.randomUUID();
-    
+
     // Inject logger and request ID into context
     c.set('requestId', requestId);
     c.set('logger', requestLogger.child({ requestId }));
 
     // Log incoming request (DEBUG level)
     requestLogger.debug({
-      requestId, method, path, headers, query,
-      msg: 'Incoming request'
+      requestId,
+      method,
+      path,
+      headers,
+      query,
+      msg: 'Incoming request',
     });
 
     try {
@@ -119,14 +133,21 @@ export const loggerMiddleware = () => {
       const duration = Date.now() - startTime;
       const logLevel = determineLogLevel(c.res.status);
       requestLogger[logLevel]({
-        requestId, method, path, status, duration: `${duration}ms`,
-        msg: `Request completed - ${method} ${path} ${status} ${duration}ms`
+        requestId,
+        method,
+        path,
+        status,
+        duration: `${duration}ms`,
+        msg: `Request completed - ${method} ${path} ${status} ${duration}ms`,
       });
     } catch (error) {
       // Log failed requests
       requestLogger.error({
-        requestId, method, path, error: serializeError(error),
-        msg: `Request failed - ${method} ${path}`
+        requestId,
+        method,
+        path,
+        error: serializeError(error),
+        msg: `Request failed - ${method} ${path}`,
       });
       throw error;
     }
@@ -139,7 +160,7 @@ export const loggerMiddleware = () => {
 Response status codes are automatically mapped to log levels:
 
 - `200-299`: `info` - Successful requests
-- `300-399`: `debug` - Redirects (less interesting for monitoring)  
+- `300-399`: `debug` - Redirects (less interesting for monitoring)
 - `400-499`: `warn` - Client errors
 - `500-599`: `error` - Server errors
 
@@ -149,7 +170,7 @@ Health check and favicon requests are automatically filtered out to reduce noise
 
 ```typescript
 autoLogging: {
-  ignore: (req) => ['/health', '/favicon.ico'].includes(req.url!)
+  ignore: (req) => ['/health', '/favicon.ico'].includes(req.url!);
 }
 ```
 
@@ -161,20 +182,20 @@ autoLogging: {
 // Feature services create contextual loggers
 export class BookmarkService {
   async importFromHtmlFile(htmlContent: string, userId: string) {
-    const serviceLogger = logger.child({ 
-      context: 'BookmarkService', 
+    const serviceLogger = logger.child({
+      context: 'BookmarkService',
       method: 'importFromHtmlFile',
-      userId 
+      userId,
     });
-    
-    serviceLogger.info('Starting HTML file import', { 
-      contentLength: htmlContent.length 
+
+    serviceLogger.info('Starting HTML file import', {
+      contentLength: htmlContent.length,
     });
-    
+
     try {
       // Process...
-      serviceLogger.info('HTML import completed successfully', { 
-        bookmarksImported: bookmarks.length 
+      serviceLogger.info('HTML import completed successfully', {
+        bookmarksImported: bookmarks.length,
       });
       return bookmarks;
     } catch (error) {
@@ -191,18 +212,18 @@ The error handlers use structured logging to track error context:
 
 ```typescript
 export const notFoundHandler = (c: Context) => {
-  const requestLogger = logger.child({ 
+  const requestLogger = logger.child({
     context: 'ErrorHandler',
     requestId: c.get('requestId'),
     method: c.req.method,
-    path: c.req.path
+    path: c.req.path,
   });
-  
+
   requestLogger.warn('Resource not found', {
     requestedUrl: c.req.url,
-    userAgent: c.req.header('User-Agent')
+    userAgent: c.req.header('User-Agent'),
   });
-  
+
   return c.json({ message: 'Not Found' }, 404);
 };
 ```
@@ -215,7 +236,7 @@ export const notFoundHandler = (c: Context) => {
 - **Debug Level**: All log messages including debug/trace
 - **Detailed Context**: Full headers, query params, and request bodies
 
-### Production Mode  
+### Production Mode
 
 - **JSON Output**: Structured logs for aggregation systems (ELK, Splunk, etc.)
 - **Info Level**: Business events and errors only
@@ -229,7 +250,7 @@ export const notFoundHandler = (c: Context) => {
 Pino is chosen for its exceptional performance characteristics:
 
 - **Minimal Overhead**: Asynchronous logging with worker threads
-- **JSON Native**: No string concatenation or formatting overhead  
+- **JSON Native**: No string concatenation or formatting overhead
 - **Serialization**: Efficient object serialization
 - **Benchmarks**: ~10x faster than Winston, ~3x faster than Bunyan
 
@@ -247,7 +268,7 @@ The structured JSON format integrates seamlessly with:
 
 - **ELK Stack** (Elasticsearch, Logstash, Kibana)
 - **Splunk**
-- **DataDog**  
+- **DataDog**
 - **New Relic**
 - **CloudWatch** (AWS)
 - **Stackdriver** (GCP)
@@ -276,7 +297,7 @@ Common queries for setting up alerts:
 // Error rate spike
 level:"error" AND context:"*Service"
 
-// Slow requests  
+// Slow requests
 duration:>5000 AND level:"info" AND msg:"Request completed"
 
 // Authentication failures

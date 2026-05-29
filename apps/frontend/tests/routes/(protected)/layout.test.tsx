@@ -1,6 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, test } from 'vitest';
+
 import { createTestRouter, getMockAuthClient, renderWithRouter, setupAuth } from '../../test-utils';
 
 describe('Protected Layout', () => {
@@ -195,8 +196,7 @@ describe('Protected Layout', () => {
       const router = await createTestRouter(['/home'], true);
       await renderWithRouter(router);
 
-      // biome-ignore lint/suspicious/noExplicitAny: Mock type
-      (mockAuthClient.signOut as any).mockRejectedValueOnce(new Error('Logout failed'));
+      mockAuthClient.signOut.mockRejectedValueOnce(new Error('Logout failed'));
 
       const logoutButton = screen.getByRole('button', { name: 'Logout' });
 
@@ -209,8 +209,7 @@ describe('Protected Layout', () => {
     test('should not redirect when session is pending', async () => {
       const mockAuthClient = getMockAuthClient();
 
-      // biome-ignore lint/suspicious/noExplicitAny: Mock type
-      (mockAuthClient.getSession as any).mockResolvedValueOnce({
+      mockAuthClient.getSession.mockResolvedValueOnce({
         data: null,
         isPending: true,
         error: null,

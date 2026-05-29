@@ -1,5 +1,6 @@
 import type { Context } from 'hono';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
+
 import { errorHandler } from '../../src/errors/errors.handlers.js';
 import {
   APIError,

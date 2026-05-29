@@ -1,5 +1,6 @@
 import { eq, like } from 'drizzle-orm';
 import { afterAll, beforeAll, beforeEach, describe, expect, test } from 'vitest';
+
 import { type InsertLabelDTO, type LabelDTO, label } from '../../../src/db/schema/label.schema.js';
 import { type InsertUserDTO, type UserDTO, user } from '../../../src/db/schema/user.schema.js';
 import { setupTestDatabase, teardownTestDatabase } from '../../test-db-setup.js';

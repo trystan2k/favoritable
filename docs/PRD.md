@@ -1,16 +1,19 @@
 # Product Requirements Document (PRD)
 
 ## Project Name
+
 **Favoritable** — A social-login powered bookmark manager with support for a future Chrome extension.
 
 ---
 
 ## 1. Purpose
+
 Build a personal bookmark management web application where users can log in with social accounts, view their saved bookmarks, add new ones, and organize them with labels. The system will be extendable with a Chrome extension.
 
 ---
 
 ## 2. Target Platforms
+
 - **Web app (initial)**
 - **Chrome Extension** (future)
 - **Mobile App** (future): Android/iOS app to allow sharing and saving URLs from other apps directly into Favoritable
@@ -20,15 +23,17 @@ Build a personal bookmark management web application where users can log in with
 ## 3. Tech Stack
 
 ### Frontend
+
 - **Architecture:** React SPA (Single Page Application)
 - **Routing:** [TanStack Router](https://tanstack.com/router) for type-safe routing (as per ADR 006)
 - **Bundler:** [Rsbuild](https://rsbuild.dev/) for fast build performance (as per ADR 004)
 - **UI Library:** [Radix UI](https://www.radix-ui.com/) for unstyled components with CSS modules for styling (as per ADR 003)
 - **Language:** TypeScript
 - **Testing:** Vitest, React Testing Library
-- **Quality Tools:** [Biome](https://biomejs.dev/) for linting and formatting (as per ADR 005)
+- **Quality Tools:** [Oxlint](https://oxc.rs/docs/guide/usage/linter.html) for linting and [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) for formatting (as per ADR 005)
 
 ### Backend
+
 - **Framework:** Hono (on Node.js)
 - **Database:** SQLite
 - **Authentication:** Auth.js (OAuth providers)
@@ -39,9 +44,11 @@ Build a personal bookmark management web application where users can log in with
 ## 4. Features
 
 ### 4.1 Security
+
 - Add secureHeaders middleware for Hono
 
 ### 4.2 Authentication
+
 - OAuth login (Google, Facebook, GitHub, Twitter)
 - Persistent user sessions (JWT or Auth.js session storage)
 - Show login screen for unauthenticated users
@@ -49,6 +56,7 @@ Build a personal bookmark management web application where users can log in with
 - Add user to bookmarks and labels
 
 ### 4.3 Bookmark Management
+
 - View list/grid of saved bookmarks
 - Favorite/Unfavorite bookmarks
 - Add new bookmark with:
@@ -70,16 +78,19 @@ Build a personal bookmark management web application where users can log in with
 - Should show the title, description, and author on hover, over the image (auto-fetched from metadata) and also the labels and the card.
 
 ### 4.4 Labels
+
 - Sidebar view for label categories
 - Create, rename, delete labels
 - Filter bookmarks by label
 - Use AI to suggest labels when adding a bookmark
 
 ### 4.4 Collections
+
 - Default collections: All, Favorites, Archived
 - Bookmarks can exist in multiple collections
 
 ### 4.5 Search and Sorting
+
 - Search by title, description, or URL
 - Sort by:
   - Recently added
@@ -87,12 +98,14 @@ Build a personal bookmark management web application where users can log in with
   - Alphabetical
 
 ### 4.6 User Interface
+
 - Dark and Light UI
 - Left-side vertical navigation
 - Main grid display of bookmarks with tags and metadata
 - Responsive layout for mobile and desktop
 
 ### 4.7 Future: Chrome Extension
+
 - Authenticate with same credentials as the web app
 - Save the current tab as a bookmark (background script + popup)
 - Autofill metadata
@@ -100,7 +113,8 @@ Build a personal bookmark management web application where users can log in with
 ---
 
 ## 5. Development & Tooling
-- **Linting & Formatting:** [Biome](https://biomejs.dev/) for unified code quality (as per ADR 005)
+
+- **Linting & Formatting:** Oxlint + Oxfmt for unified code quality workflow (as per ADR 005)
 - **Dependency Analysis:** Knip for unused file and dependency detection
 - **Middlewares:** Review Middlewares
 - **API Documentation:** Add Open API docs (Swagger)
@@ -116,6 +130,7 @@ Build a personal bookmark management web application where users can log in with
 ---
 
 ## 7. Deployment & Infrastructure
+
 - Database Hosting:
   - NEON TECH: PostgreSQL. 500MB. 190 horas de computación → neon․tech
   - TURSO: SQLite, 5GB, mil millones de lecturas → turso․com
@@ -134,6 +149,7 @@ Build a personal bookmark management web application where users can log in with
 ## 8. API Endpoints (REST)
 
 ### User
+
 ```ts
 {
   id: string;
@@ -145,6 +161,7 @@ Build a personal bookmark management web application where users can log in with
 ```
 
 ### Bookmark
+
 ```ts
 {
   id: string; // PK
@@ -164,6 +181,7 @@ Build a personal bookmark management web application where users can log in with
 ```
 
 ### Label
+
 ```ts
 {
   id: string; // PK
@@ -176,6 +194,7 @@ Build a personal bookmark management web application where users can log in with
 ```
 
 ### BookmarkLabel (Many-to-many)
+
 ```ts
 {
   id: string; // PK
@@ -191,11 +210,13 @@ Build a personal bookmark management web application where users can log in with
 ## 9. API Endpoints (REST)
 
 ### Auth
+
 - `GET /auth/session` — Get current user
 - `POST /auth/logout`
 - `POST /auth/callback/:provider`
 
 ### Bookmarks
+
 - `GET /bookmarks`
 - `GET /bookmarks/:id`
 - `POST /bookmarks`
@@ -209,6 +230,7 @@ Build a personal bookmark management web application where users can log in with
 - `DELETE /bookmarks/:id`
 
 ### Labels
+
 - `GET /labels`
 - `GET /labels/:id`
 - `POST /labels`
@@ -219,6 +241,7 @@ Build a personal bookmark management web application where users can log in with
 ---
 
 ## 10. Non-Functional Requirements
+
 - Clean code structure, typed end-to-end
 - Component-level tests and API tests
 - Client-side SPA with TanStack Router for navigation
@@ -227,15 +250,17 @@ Build a personal bookmark management web application where users can log in with
 ---
 
 ## 11. Out of Scope (MVP)
+
 - Multi-user sharing of bookmarks
 - Real-time collaboration
-- Favorite collections 
-- Chrome extension 
-- Mobile app 
+- Favorite collections
+- Chrome extension
+- Mobile app
 
 ---
 
 ## 12. Review When Almost Ready
+
 - <https://github.com/colinhacks/zshy>
 - <https://github.com/goldbergyoni/nodejs-testing-best-practices?ck_subscriber_id=2107974869#readme>
 - <https://levelup.gitconnected.com/your-express-app-isn-t-great-here-s-why-84003bbce092>
@@ -247,6 +272,7 @@ Build a personal bookmark management web application where users can log in with
 ---
 
 ## 13. Investigate
+
 - Scrapping Issues:
   - URLs not scrapping correctly: <https://x.com/midudev/status/1807775893135278345?s=09&t=RI5qICHzTKjUht1zGVeR1g> (380_400.json)
 - Performance Improvements:
@@ -258,6 +284,7 @@ Build a personal bookmark management web application where users can log in with
 ---
 
 ## 14. Front-End
+
 - Folder Structure:
   - <https://dev.to/itswillt/folder-structures-in-react-projects-3dp8>
 - General:
