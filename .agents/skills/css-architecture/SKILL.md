@@ -3,6 +3,7 @@ name: css-architecture
 description: >
   Organize CSS using CSS Modules. Use when building scalable, maintainable
   styling systems with scoped styles and proper component isolation.
+license: MIT
 compatibility: OpenCode
 metadata:
   version: "1.0.0"
@@ -88,6 +89,7 @@ Detailed implementations in the `references/` directory:
 - Use camelCase for class names to easily access them in JS
 - Co-locate CSS files with their components
 - Use CSS Variables for theme values (colors, spacing, etc.)
+- Always reuse existing CSS Variables for colors, dimensions, and other tokens when writing new styles to ensure consistency and maintainability.
 
 ### ❌ DON'T
 
