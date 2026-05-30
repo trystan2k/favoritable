@@ -25,7 +25,8 @@ This application is used to manage bookmarks, like saving, deleting, searching, 
 ## Constraints
 
 - Should use React 19
-- Should use Tanstack Start
+- Should use Tanstack Start (in full capacity)
+- Should use Base UI for UI components
 - Should use Hono for API project
 - Should use Drizzle ORM for SQLLite
 - Should use Better Auth for authentication
@@ -43,6 +44,7 @@ This application is used to manage bookmarks, like saving, deleting, searching, 
 - **Always follow Pencil designs strictly** when implementing app screens. Use the design and design tokens from `docs/design/favoritable.pen` as the single source of truth for colors, typography, spacing, and visual styling. All design tokens are defined in `design-tokens/` directory.
 - **NEVER** Change vitest coverage thresholds without approval
 - **ALWAYS** Follow the same code standard for all files. Like CSS tokens usage.
+- **DO NOT** create custom components if they already exist in Base UI
 
 ## Tasks
 
@@ -63,8 +65,8 @@ This project uses Linear for issue tracking and project management. GitHub is us
 - **Indent**: 2 spaces
 - **Files**: snake_case/kebab-case | **Code**: camelCase
 - **Units**: rpx (prefer), px (only for fixed sizing)
-- **Linear Team**: `Favoritable` (<https://linear.app/favoritable>)
-- **Linear Project**: `Favoritable` (<https://linear.app/favoritable/project/favoritable-058096212a6f>)
+- **Linear Team**: `Favoritable` (<https://linear.app/trystanworkspace>)
+- **Linear Project**: `Favoritable` (<https://linear.app/trystanworkspace/project/favoritable-4afa324a565b/overview>)
 - **Task Tracking**: Create Linear Issues first, then work on them.
 - **Issue IDs**: Use Linear issue identifier as task ID reference (e.g., `FAV-123`)
 - **Dependencies**: Use `Depends On` with issue links (e.g., `FAV-1`, `FAV-3`)
