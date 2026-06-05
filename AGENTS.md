@@ -42,7 +42,8 @@ This application is used to manage bookmarks, like saving, deleting, searching, 
 - **Always follow Pencil designs strictly** when implementing app screens. Use the design and design tokens from `docs/design/favoritable.pen` as the single source of truth for colors, typography, spacing, and visual styling. All design tokens are defined in `design-tokens/` directory.
 - **NEVER** Change vitest coverage thresholds without approval
 - **ALWAYS** Follow the same code standard for all files. Like CSS tokens usage.
-- **DO NOT** create custom components if they already exist in Base UI
+- **DO NOT** create custom components if they already exist in Base UI or can extend Base UI **MANDATORY**
+- **ALWAYS** create reusable components (like cards, buttons, etc) in a separate `src/components/` directory, and import them in the screens where they are used. Do not duplicate code.
 
 ## Tasks
 

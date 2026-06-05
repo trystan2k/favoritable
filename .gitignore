@@ -45,3 +45,12 @@ dev-debug.log
 # Misc
 .DS_Store
 *.pem
+
+# Tanstack
+.nitro
+.tanstack
+.wrangler
+.output
+.vinxi
+__unconfig*
+todos.json
