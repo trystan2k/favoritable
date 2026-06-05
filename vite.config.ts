@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite'
-import { devtools } from '@tanstack/devtools-vite'
+import { defineConfig } from 'vite';
+import { devtools } from '@tanstack/devtools-vite';
 
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
+import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 
-import viteReact from '@vitejs/plugin-react'
-import { cloudflare } from '@cloudflare/vite-plugin'
+import viteReact from '@vitejs/plugin-react';
+import { cloudflare } from '@cloudflare/vite-plugin';
 
 import killerInstincts from 'vite-plugin-killer-instincts';
 
@@ -17,7 +17,7 @@ const config = defineConfig({
   plugins: [
     devtools(),
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
-        ...tanstackStart({
+    ...tanstackStart({
       router: {
         routesDirectory: './routes',
         generatedRouteTree: './routeTree.gen.ts',
@@ -27,7 +27,7 @@ const config = defineConfig({
     }),
     viteReact(),
     killerInstincts({ autoKill: true })
-  ],
-})
+  ]
+});
 
-export default config
+export default config;

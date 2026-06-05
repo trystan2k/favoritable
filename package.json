@@ -1,21 +1,21 @@
 {
   "name": "favoritable",
-  "description": "A simple and efficient system for storing, organizing, and accessing personal bookmarks anytime, anywhere.",
   "version": "0.0.1",
-  "author": "Thiago Mendonca",
-  "homepage": "https://github.com/trystan2k/favoritable#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/trystan2k/favoritable"
-  },
-  "bugs": {
-    "url": "https://github.com/trystan2k/favoritable/issues"
-  },
+  "private": true,
+  "description": "A simple and efficient system for storing, organizing, and accessing personal bookmarks anytime, anywhere.",
   "keywords": [
     "bookmarks",
     "favoritable"
   ],
-  "private": true,
+  "homepage": "https://github.com/trystan2k/favoritable#readme",
+  "bugs": {
+    "url": "https://github.com/trystan2k/favoritable/issues"
+  },
+  "author": "Thiago Mendonca",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trystan2k/favoritable"
+  },
   "type": "module",
   "imports": {
     "#/*": "./src/*"
@@ -24,23 +24,33 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "prepare": "husky",
     "test": "vitest run",
-    "complete-check": "pnpm build"
+    "lint": "pnpm lint:oxlint && pnpm lint:stylelint",
+    "lint:oxlint": "oxlint --deny-warnings",
+    "lint:stylelint": "stylelint \"src/**/*.css\" --allow-empty-input",
+    "lint:fix": "pnpm lint:fix:oxlint && pnpm lint:fix:stylelint",
+    "lint:fix:oxlint": "oxlint --fix --deny-warnings",
+    "lint:fix:stylelint": "stylelint \"src/**/*.css\" --allow-empty-input --fix",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
+    "typecheck": "tsc --noEmit",
+    "complete-check": "pnpm typecheck && pnpm lint:fix && pnpm format && pnpm build"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "~1.40.0",
-    "@tanstack/react-devtools": "~0.10.5",
     "@tanstack/react-query": "~5.101.0",
-    "@tanstack/react-query-devtools": "~5.101.0",
     "@tanstack/react-router": "~1.170.11",
-    "@tanstack/react-router-devtools": "~1.167.0",
     "@tanstack/react-router-ssr-query": "~1.167.1",
     "@tanstack/react-start": "~1.168.20",
     "@tanstack/router-plugin": "~1.168.14",
+    "lucide-react": "~1.17.0",
     "react": "~19.2.7",
     "react-dom": "~19.2.7"
   },
   "devDependencies": {
+    "@commitlint/cli": "~21.0.1",
+    "@commitlint/config-conventional": "~21.0.1",
     "@tanstack/devtools-vite": "~0.7.0",
     "@testing-library/dom": "~10.4.1",
     "@testing-library/react": "~16.3.2",
@@ -48,15 +58,22 @@
     "@types/react": "~19.2.16",
     "@types/react-dom": "~19.2.3",
     "@vitejs/plugin-react": "~6.0.2",
+    "husky": "~9.1.7",
     "jsdom": "~29.1.1",
+    "lint-staged": "~17.0.5",
+    "oxfmt": "~0.52.0",
+    "oxlint": "~1.67.0",
+    "oxlint-tsgolint": "~0.23.0",
+    "stylelint": "~17.12.0",
+    "stylelint-config-standard": "~40.0.0",
     "typescript": "~6.0.3",
     "vite": "~8.0.16",
     "vite-plugin-killer-instincts": "~1.1.0",
     "vitest": "~4.1.8"
   },
-  "packageManager": "pnpm@11.5.2",
   "engines": {
     "node": ">=24.16.0",
     "pnpm": ">=10.20.0"
-  }
+  },
+  "packageManager": "pnpm@11.5.2"
 }

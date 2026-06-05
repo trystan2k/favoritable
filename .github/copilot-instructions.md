@@ -5,7 +5,7 @@ These instructions onboard AI agents to this repository with accurate build, tes
 ## High-Level Summary
 
 - Bookmark manager application.
-- Stack: React 19, TanStack Start, Vite 8,  TypeScript 6, CSS Modules, Base UI.
+- Stack: React 19, TanStack Start, Vite 8, TypeScript 6, CSS Modules, Base UI.
 - Testing: Vitest (unit + real Chromium via Playwright), optional Playwright e2e.
 - Lint/Format: Oxlint, Stylelint, Oxfmt. Git hooks via Husky + lint-staged.
 - CI/CD: GitHub Actions for verification and releases; Cloudflare Pages for previews and production.
