@@ -4,8 +4,7 @@ import { devtools } from '@tanstack/devtools-vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 
 import viteReact from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-import { nitro } from 'nitro/vite'
+import { cloudflare } from '@cloudflare/vite-plugin'
 
 import killerInstincts from 'vite-plugin-killer-instincts';
 
@@ -17,9 +16,8 @@ const config = defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
     devtools(),
-    nitro(),
-    tailwindcss(),
-    ...tanstackStart({
+    cloudflare({ viteEnvironment: { name: 'ssr' } }),
+        ...tanstackStart({
       router: {
         routesDirectory: './routes',
         generatedRouteTree: './routeTree.gen.ts',
