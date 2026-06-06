@@ -17,7 +17,6 @@ permissions:
 env:
   NODE_VERSION: 24.16.0
   PNPM_VERSION: 11.5.2
-  PREVIEW_ALIAS: release-please-main
 
 jobs:
   deploy_preview:
@@ -49,16 +48,13 @@ jobs:
       - name: Build application
         run: pnpm build
 
-      - name: Deploy preview to Cloudflare Pages
+      - name: Deploy preview to Cloudflare Workers
         id: deploy
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: >-
-            pages deploy dist/client
-            --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT_NAME }}
-            --branch=${{ env.PREVIEW_ALIAS }}
+          command: versions upload
 
       - name: Set preview URL
         id: preview_url
@@ -74,7 +70,7 @@ jobs:
           number: ${{ github.event.workflow_run.pull_requests[0].number }}
           header: release-preview
           message: |
-            Cloudflare Pages preview refreshed for the Release Please PR.
+            Cloudflare Workers preview refreshed for the Release Please PR.
 
             Preview URL: ${{ steps.preview_url.outputs.preview_url }}
 

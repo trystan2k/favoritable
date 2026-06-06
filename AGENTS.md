@@ -67,7 +67,7 @@ This project uses Linear for issue tracking and project management. GitHub is us
 - **Files**: snake_case/kebab-case | **Code**: camelCase
 - **Units**: rem (prefer), px (only for fixed sizing) - but always use the design tokens for spacing and typography
 - **Linear Team**: `Favoritable` (<https://linear.app/trystanworkspace>)
-- **Linear Project**: `Favoritable` (<https://linear.app/trystanworkspace/project/favoritable-4afa324a565b/overview>)
+- **Linear Project**: `Favoritable` (<https://linear.app/trystanworkspace/project/favoritable-1f39caf3096b/overview)
 - **Task Tracking**: Create Linear Issues first, then work on them.
 - **Issue IDs**: Use Linear issue identifier as task ID reference (e.g., `FAV-123`)
 - **Dependencies**: Use `Depends On` with issue links (e.g., `FAV-1`, `FAV-3`)

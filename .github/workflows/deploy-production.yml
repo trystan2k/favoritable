@@ -19,10 +19,11 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write
 
 env:
-  PRODUCTION_BRANCH: main
+  NODE_VERSION: 24.16.0
+  PNPM_VERSION: 11.5.2
 
 jobs:
   deploy_production:
@@ -32,32 +33,51 @@ jobs:
       name: production
       url: ${{ steps.production_url.outputs.production_url }}
     steps:
-      - name: Download dist artifact from release
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG_NAME: ${{ inputs.tag_name }}
-        run: gh release download "$TAG_NAME" --repo "$GITHUB_REPOSITORY" --pattern "dist.tar.gz"
+      - name: Check out released tag
+        uses: actions/checkout@v6
+        with:
+          ref: refs/tags/${{ inputs.tag_name }}
 
-      - name: Extract dist artifact
-        run: tar -xzf dist.tar.gz
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6.0.8
+        with:
+          version: ${{ env.PNPM_VERSION }}
 
-      - name: Deploy production to Cloudflare Pages
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          cache: pnpm
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build application
+        run: pnpm build
+
+      - name: Deploy to Cloudflare Workers
         id: deploy
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: >-
-            pages deploy dist/client
-            --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT_NAME }}
-            --branch=${{ env.PRODUCTION_BRANCH }}
+          command: deploy
+
+      - name: Archive dist artifact
+        run: tar -czf dist.tar.gz dist/
+
+      - name: Upload dist artifact to GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          TAG_NAME: ${{ inputs.tag_name }}
+        run: gh release upload "$TAG_NAME" dist.tar.gz --clobber
 
       - name: Set production URL
         id: production_url
         shell: bash
         env:
           PROJECT_NAME: ${{ vars.CLOUDFLARE_PAGES_PROJECT_NAME }}
-        run: echo "production_url=https://${PROJECT_NAME}.pages.dev" >> "$GITHUB_OUTPUT"
+        run: echo "production_url=https://${PROJECT_NAME}.trystan2k.workers.dev" >> "$GITHUB_OUTPUT"
 
       - name: Summarize production deployment
         env:
