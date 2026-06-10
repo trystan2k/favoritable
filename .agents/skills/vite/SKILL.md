@@ -1,12 +1,10 @@
 ---
 name: vite
 description: Vite build tool configuration, plugin API, SSR, and Vite 8 Rolldown migration. Use when working with Vite projects, vite.config.ts, Vite plugins, or building libraries/SSR apps with Vite.
-license: MIT
-compatibility: OpenCode
 metadata:
-  version: "1.0.0"
-  references:
-    - https://skills.sh/antfu/skills/vite
+  author: Anthony Fu
+  version: "2026.1.31"
+  source: Generated from https://github.com/vitejs/vite, scripts at https://github.com/antfu/skills
 ---
 
 # Vite
@@ -40,7 +38,6 @@ Vite is a next-generation frontend build tool with fast dev server (native ESM +
 |-------|-------------|-----------|
 | Environment API | Vite 6+ multi-environment support, custom runtimes | [environment-api](references/environment-api.md) |
 | Rolldown Migration | Vite 8 changes: Rolldown bundler, Oxc transformer, config migration | [rolldown-migration](references/rolldown-migration.md) |
-| TypeScript Alias Path | Prefer vite-tsconfig-paths over duplicating TypeScript path aliases in Vite config | [tsconfig-path-aliases](references/tsconfig-path-aliases.md) |
 
 ## Quick Reference
 

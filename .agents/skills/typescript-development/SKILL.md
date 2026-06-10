@@ -142,3 +142,4 @@ export const config = ConfigSchema.parse(process.env);
 ## Specific tasks
 
 * **TypeScript module file naming** [references/module-file-naming.md](references/module-file-naming.md)
+* **TypeScript + Vite path aliases** [references/vite-tsconfig-path-aliases.md](references/vite-tsconfig-path-aliases.md)

@@ -1,14 +1,8 @@
 ---
 name: css-architecture
 description: >
-  Organize CSS using CSS Modules. Use when building scalable, maintainable
-  styling systems with scoped styles and proper component isolation.
-license: MIT
-compatibility: OpenCode
-metadata:
-  version: "1.0.0"
-  references:
-    - https://skills.sh/aj-geddes/useful-ai-prompts/css-architecture
+  Organize CSS using BEM, SMACSS, and CSS-in-JS patterns. Use when building
+  scalable, maintainable styling systems with proper naming conventions.
 ---
 
 # CSS Architecture
@@ -23,22 +17,22 @@ metadata:
 
 ## Overview
 
-Build maintainable CSS systems using **CSS Modules** to ensure locally scoped styles, avoiding global namespace pollution and enabling better component isolation.
+Build maintainable CSS systems using methodologies like BEM (Block Element Modifier), SMACSS, and CSS-in-JS patterns with proper organization and conventions.
 
 ## When to Use
 
-- Component-based styling (React, etc.)
-- Large-scale applications where global CSS conflicts are a concern
+- Large-scale stylesheets
+- Component-based styling
 - Design system development
 - Multiple team collaboration
 - CSS scalability and reusability
 
 ## Quick Start
 
-Minimal working example using CSS Modules:
+Minimal working example:
 
-**Button.module.css**
 ```css
+/* Block - standalone component */
 .button {
   display: inline-block;
   padding: 10px 20px;
@@ -49,27 +43,21 @@ Minimal working example using CSS Modules:
   transition: all 0.3s ease;
 }
 
-.primary {
+/* Element - component part */
+.button__icon {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Modifier - variant */
+.button--primary {
   background-color: #007bff;
   color: white;
 }
 
-.primary:hover {
+.button--primary:hover {
   background-color: #0056b3;
-}
-```
-
-**Button.tsx**
-```tsx
-import styles from './Button.module.css';
-
-export function Button({ type = 'primary', children }) {
-  return (
-    <button className={`${styles.button} ${styles[type]}`}>
-      {children}
-    </button>
-  );
-}
+// ... (see reference guides for full implementation)
 ```
 
 ## Reference Guides
@@ -78,21 +66,23 @@ Detailed implementations in the `references/` directory:
 
 | Guide | Contents |
 |---|---|
-| [CSS Modules Pattern](references/css-modules.md) | CSS Modules Pattern |
+| [BEM (Block Element Modifier) Pattern](references/bem-block-element-modifier-pattern.md) | BEM (Block Element Modifier) Pattern |
+| [SMACSS (Scalable and Modular Architecture for CSS)](references/smacss-scalable-and-modular-architecture-for-css.md) | SMACSS (Scalable and Modular Architecture for CSS) |
+| [CSS-in-JS with Styled Components](references/css-in-js-with-styled-components.md) | CSS-in-JS with Styled Components |
 | [CSS Variables (Custom Properties)](references/css-variables-custom-properties.md) | CSS Variables (Custom Properties) |
+| [Utility-First CSS (Tailwind Pattern)](references/utility-first-css-tailwind-pattern.md) | Utility-First CSS (Tailwind Pattern) |
 
 ## Best Practices
 
 ### ✅ DO
 
-- Use `.module.css` extension for component styles
-- Use camelCase for class names to easily access them in JS
-- Co-locate CSS files with their components
-- Use CSS Variables for theme values (colors, spacing, etc.)
-- Always reuse existing CSS Variables for colors, dimensions, and other tokens when writing new styles to ensure consistency and maintainability.
+- Follow established patterns and conventions
+- Write clean, maintainable code
+- Add appropriate documentation
+- Test thoroughly before deploying
 
 ### ❌ DON'T
 
-- Use global styles unless absolutely necessary
-- Nest selectors deeply (keep them flat)
-- Use ID selectors for styling
+- Skip testing or validation
+- Ignore error handling
+- Hard-code configuration values

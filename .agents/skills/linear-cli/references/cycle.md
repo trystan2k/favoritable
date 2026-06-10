@@ -6,7 +6,6 @@
 
 ```
 Usage:   linear cycle
-Version: 1.11.1      
 
 Description:
 
@@ -14,8 +13,8 @@ Description:
 
 Options:
 
-  -h, --help               - Show this help.                      
-  -w, --workspace  <slug>  - Target workspace (uses credentials)  
+  -h, --help           - Show this help.                      
+  --workspace  <slug>  - Target workspace (uses credentials)  
 
 Commands:
 
@@ -31,7 +30,6 @@ Commands:
 
 ```
 Usage:   linear cycle list
-Version: 1.11.1           
 
 Description:
 
@@ -39,9 +37,9 @@ Description:
 
 Options:
 
-  -h, --help               - Show this help.                      
-  -w, --workspace  <slug>  - Target workspace (uses credentials)  
-  --team           <team>  - Team key (defaults to current team)
+  -h, --help           - Show this help.                      
+  --workspace  <slug>  - Target workspace (uses credentials)  
+  --team       <team>  - Team key (defaults to current team)
 ```
 
 ### view
@@ -50,7 +48,6 @@ Options:
 
 ```
 Usage:   linear cycle view <cycleRef>
-Version: 1.11.1                      
 
 Description:
 
@@ -58,7 +55,7 @@ Description:
 
 Options:
 
-  -h, --help               - Show this help.                      
-  -w, --workspace  <slug>  - Target workspace (uses credentials)  
-  --team           <team>  - Team key (defaults to current team)
+  -h, --help           - Show this help.                      
+  --workspace  <slug>  - Target workspace (uses credentials)  
+  --team       <team>  - Team key (defaults to current team)
 ```
