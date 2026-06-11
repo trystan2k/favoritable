@@ -51,6 +51,14 @@ Whatever task you are told to implement, check the Linear project issue first, t
 
 If no Linear task number is given, ignore the Linear project and just implement the task.
 
+## Support Libraries
+
+If for any task, any of these libraries would help, please use them.
+
+- 'tanstack-query'
+- 'tanstack-query-ssr'
+- 'lucide-react'
+
 ## QA
 
 `pnpm complete-check`

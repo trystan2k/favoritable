@@ -1,0 +1,18 @@
+{
+  "layout": {
+    "viewport": {
+      "mobile": {
+        "value": "20rem",
+        "type": "dimension"
+      },
+      "tablet": {
+        "value": "48rem",
+        "type": "dimension"
+      },
+      "desktop": {
+        "value": "64rem",
+        "type": "dimension"
+      }
+    }
+  }
+}

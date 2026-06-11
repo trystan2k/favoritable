@@ -124,22 +124,22 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # - name: Cache Playwright browsers
-      #   id: playwright-cache
-      #   uses: actions/cache@v5
-      #   with:
-      #     path: ~/.cache/ms-playwright
-      #     key: playwright-chromium-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ hashFiles('pnpm-lock.yaml') }}
 
-      # - name: Install Playwright Chromium
-      #   if: steps.playwright-cache.outputs.cache-hit != 'true'
-      #   run: pnpm exec playwright install chromium
+      - name: Install Playwright Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install chromium
 
-      # - name: Install Playwright system dependencies
-      #   run: pnpm exec playwright install-deps chromium
+      - name: Install Playwright system dependencies
+        run: pnpm exec playwright install-deps chromium
 
-      # - name: Knip unused dependencies
-      #   run: pnpm knip
+      - name: Knip unused dependencies
+        run: pnpm knip
 
       - name: Type check
         run: pnpm typecheck
@@ -150,20 +150,20 @@ jobs:
       - name: Check formatting
         run: pnpm format:check
 
-      # - name: Run tests
-      #   run: pnpm test
+      - name: Run tests
+        run: pnpm test
 
       - name: Build application
         run: pnpm build
 
-      # - name: Upload coverage artifact
-      #   if: always() && !cancelled()
-      #   uses: actions/upload-artifact@v7
-      #   with:
-      #     if-no-files-found: ignore
-      #     name: coverage-${{ github.sha }}
-      #     path: coverage/
-      #     retention-days: 7
+      - name: Upload coverage artifact
+        if: always() && !cancelled()
+        uses: actions/upload-artifact@v7
+        with:
+          if-no-files-found: ignore
+          name: coverage-${{ github.sha }}
+          path: coverage/
+          retention-days: 7
 
       - name: Upload Pages artifact
         uses: actions/upload-artifact@v7
@@ -175,7 +175,7 @@ jobs:
   e2e_tests:
     name: E2E Tests
     needs: detect_changes
-    if: needs.detect_changes.outputs.docs_only != 'true' && (startsWith(github.head_ref, 'release-please--branches--main') || contains(github.event.pull_request.labels.*.name, 'dependabot'))
+    if: needs.detect_changes.outputs.docs_only != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -195,30 +195,38 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # - name: Cache Playwright browsers
-      #   id: playwright-cache
-      #   uses: actions/cache@v5
-      #   with:
-      #     path: ~/.cache/ms-playwright
-      #     key: playwright-chromium-webkit-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-webkit-${{ hashFiles('pnpm-lock.yaml') }}
 
-      # - name: Install Playwright browsers
-      #   if: steps.playwright-cache.outputs.cache-hit != 'true'
-      #   run: pnpm exec playwright install chromium webkit
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install chromium webkit
 
-      # - name: Install Playwright system dependencies
-      #   run: pnpm exec playwright install-deps chromium webkit
+      - name: Install Playwright system dependencies
+        run: pnpm exec playwright install-deps chromium webkit
 
-      # - name: Run E2E tests
-      #   run: pnpm test:e2e
+      - name: Run E2E tests
+        env:
+          IS_RELEASE: ${{ startsWith(github.head_ref, 'release-please--branches--main') }}
+          IS_DEPENDABOT: ${{ contains(github.event.pull_request.labels.*.name, 'dependabot') }}
+        run: |
+          if [ "$IS_RELEASE" = "true" ] || [ "$IS_DEPENDABOT" = "true" ]; then
+            pnpm test:e2e
+          else
+            pnpm test:e2e:smoke
+          fi
 
-      # - name: Upload Playwright report
-      #   if: always() && !cancelled()
-      #   uses: actions/upload-artifact@v7
-      #   with:
-      #     name: playwright-report-${{ github.sha }}
-      #     path: playwright-report/
-      #     retention-days: 7
+      - name: Upload Playwright report
+        if: always() && !cancelled()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report-${{ github.sha }}
+          path: playwright-report/
+          retention-days: 7
 
   ci:
     name: CI

@@ -1,0 +1,46 @@
+{
+  "layout": {
+    "shell": {
+      "sidebar": {
+        "value": "15.5rem",
+        "type": "dimension"
+      },
+      "sidebar-compact": {
+        "value": "5.75rem",
+        "type": "dimension"
+      },
+      "main-card": {
+        "value": "44.875rem",
+        "type": "dimension"
+      }
+    },
+    "panel": {
+      "install-modal": {
+        "value": "21.375rem",
+        "type": "dimension"
+      },
+      "install-sheet": {
+        "value": "37.25rem",
+        "type": "dimension"
+      },
+      "auth-sheet": {
+        "value": "18rem",
+        "type": "dimension"
+      },
+      "auth-drawer": {
+        "value": "14.75rem",
+        "type": "dimension"
+      },
+      "auth-hero": {
+        "value": "17.5rem",
+        "type": "dimension"
+      }
+    },
+    "bar": {
+      "status": {
+        "value": "3.875rem",
+        "type": "dimension"
+      }
+    }
+  }
+}

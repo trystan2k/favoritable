@@ -34,6 +34,9 @@ out/
 build
 dist
 playwright/
+.playwright/
+playwright-report/
+
 
 
 # Debug
@@ -54,3 +57,6 @@ dev-debug.log
 .vinxi
 __unconfig*
 todos.json
+
+# AI
+.serena/
