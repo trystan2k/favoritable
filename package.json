@@ -33,7 +33,7 @@
     "test:e2e:smoke": "playwright test --grep @smoke",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
-    "test:e2e:setup": "playwright install --with-deps chromium",
+    "test:e2e:setup": "playwright install --with-deps chromium webkit",
     "lint": "pnpm lint:oxlint && pnpm lint:stylelint",
     "lint:oxlint": "oxlint --deny-warnings",
     "lint:stylelint": "stylelint \"src/**/*.css\" --allow-empty-input",

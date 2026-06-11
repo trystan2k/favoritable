@@ -25,9 +25,9 @@ permalink: docs/development-logs/task-FAV-17-initial-technical-setup
 - Installed `@playwright/test` v1.60.0 as dev dependency.
 - Created `e2e/` directory structure: `tests/`, `fixtures/`, `utils/`.
 - Implemented smoke test contract: home route renders app shell (title matches `/favoritable/i`, visible h1, URL ends with `/`).
-- Configured `playwright.config.ts` with `testDir: './e2e/tests'`, chromium-only project, HTML + list reporters, screenshot on failure, trace on first retry, video on failure.
-- Playwright webServer reuses `pnpm dev` via shared `dev-server.config.ts` origin.
-- Added npm scripts: `test:e2e`, `test:e2e:smoke` (grep `@smoke`), `test:e2e:setup` (install chromium with deps).
+- Configured `playwright.config.ts` with `testDir: './e2e/tests'`, Chromium + WebKit projects, HTML + JSON reporters, screenshot on failure, trace on first retry, video on failure.
+- Playwright webServer runs `pnpm preview:e2e` (Vite preview on port 4173) for deterministic test runs.
+- Added npm scripts: `test:e2e`, `test:e2e:smoke` (grep `@smoke`), `test:e2e:setup` (install Chromium + WebKit with deps).
 
 ### FAV-19 — Style Dictionary Pipeline
 

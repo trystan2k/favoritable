@@ -209,16 +209,59 @@ jobs:
       - name: Install Playwright system dependencies
         run: pnpm exec playwright install-deps chromium webkit
 
-      - name: Run E2E tests
+      - name: Select E2E suite
+        id: e2e_suite
+        shell: bash
         env:
-          IS_RELEASE: ${{ startsWith(github.head_ref, 'release-please--branches--main') }}
-          IS_DEPENDABOT: ${{ contains(github.event.pull_request.labels.*.name, 'dependabot') }}
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          HEAD_REF: ${{ github.head_ref }}
+          ACTOR: ${{ github.actor }}
+          PR_LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
         run: |
-          if [ "$IS_RELEASE" = "true" ] || [ "$IS_DEPENDABOT" = "true" ]; then
-            pnpm test:e2e
-          else
-            pnpm test:e2e:smoke
+          branch_name="$REF_NAME"
+
+          if [[ "$EVENT_NAME" == "pull_request" && -n "$HEAD_REF" ]]; then
+            branch_name="$HEAD_REF"
           fi
+
+          is_release=false
+          is_dependabot=false
+          e2e_command="pnpm test:e2e:smoke"
+          e2e_reason="default smoke"
+
+          if [[ "$branch_name" == release-please--branches--main* ]]; then
+            is_release=true
+          fi
+
+          if [[ ",$PR_LABELS," == *,dependabot,* ]] || [[ "$ACTOR" == "dependabot[bot]" ]]; then
+            is_dependabot=true
+          fi
+
+          if [[ "$is_release" == "true" || "$is_dependabot" == "true" ]]; then
+            e2e_command="pnpm test:e2e"
+            e2e_reason="release or dependabot"
+          fi
+
+          echo "command=$e2e_command" >> "$GITHUB_OUTPUT"
+          echo "reason=$e2e_reason" >> "$GITHUB_OUTPUT"
+          echo "branch_name=$branch_name" >> "$GITHUB_OUTPUT"
+
+          {
+            echo "## E2E suite selection"
+            echo ""
+            echo "- event: $EVENT_NAME"
+            echo "- branch: $branch_name"
+            echo "- actor: $ACTOR"
+            echo "- labels: ${PR_LABELS:-none}"
+            echo "- is_release: $is_release"
+            echo "- is_dependabot: $is_dependabot"
+            echo "- command: $e2e_command"
+            echo "- reason: $e2e_reason"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Run E2E tests
+        run: ${{ steps.e2e_suite.outputs.command }}
 
       - name: Upload Playwright report
         if: always() && !cancelled()

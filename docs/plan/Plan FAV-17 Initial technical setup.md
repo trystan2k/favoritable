@@ -31,8 +31,8 @@
 
 ## Implementation Steps
 
-1. FAV-18 — Add Playwright dev dependency and scripts in `package.json` (`e2e`, optional `e2e:headed` or `e2e:ui` only if they help local smoke debugging) without touching `complete-check` or Vitest coverage rules.
-2. FAV-18 — Create `playwright.config.ts` aligned to current Vite server settings: test dir `e2e/tests`, base URL `http://127.0.0.1:4000`, `webServer` command based on the repo’s dev script, headless/trace-friendly defaults, and `reuseExistingServer` enabled outside CI.
+1. FAV-18 — Add Playwright dev dependency and scripts in `package.json` (`test:e2e`, optional `test:e2e:headed`/`test:e2e:ui`) and wire the new commands into the local/CI quality gates as needed.
+2. FAV-18 — Create `playwright.config.ts` aligned to the repo’s preview server: base URL `http://127.0.0.1:4173`, `webServer` command `pnpm preview:e2e`, headless/trace-friendly defaults, and `reuseExistingServer` enabled outside CI.
 3. FAV-18 — Create the approved E2E structure with minimal future-proofing: `e2e/fixtures/test.ts` exports shared `test`/`expect`, `e2e/utils/routes.ts` or equivalent holds stable path helpers, and `e2e/tests/smoke.spec.ts` verifies the current public starter route renders expected content. Mitigation: keep smoke assertions route-level only so later auth-shell work can swap internals with minimal test churn.
 4. FAV-19 — Add `style-dictionary` dependency and create root `style-dictionary.config.mjs` that reads token source files from `design-tokens/` and writes CSS custom properties to `design-tokens/dist/variables.css`.
 5. FAV-19 — Define a minimal source structure under `design-tokens/` that matches the approved creation order and future scale, with separate files or folders for `base` and `semantic` tokens plus room for component token namespaces, but no extra platforms or output targets.
