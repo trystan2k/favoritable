@@ -63,6 +63,10 @@ If for any task, any of these libraries would help, please use them.
 
 `pnpm complete-check`
 
+### End-to-End Tests
+
+When writing end-to-end tests, use the `@smoke`, write happy paths tests tagged as smoke test (`@smoke`), so they always run in all CI/CD pipelines.
+
 ## Project Management
 
 This project uses Linear for issue tracking and project management. GitHub is used for source control and Actions. It also has AI review enabled, so whenever a pull request is created, it have AI review requested.
