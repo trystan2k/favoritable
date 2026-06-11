@@ -41,7 +41,7 @@
 8. FAV-20 — Author foundation tokens first: raw palette, background/surface primitives, spacing scale, radius scale, border widths/colors, typography primitives (family, size, weight, line-height), and shadow primitives. Normalize numeric tokens to CSS-friendly units consistent with project standards (`rem` where practical, `px` only when fixed sizing is required by design).
 9. FAV-20 — Author semantic and component-level tokens second: app background/text/surface/border/state tokens for light/dark themes plus component namespaces already evidenced in the design (`card`, `chip`, `banner`, selection/accent states, gradient surfaces). Keep naming aligned with generated CSS variable usage rather than ad-hoc screen-specific names.
 10. FAV-20 — Generate `design-tokens/dist/variables.css`, import it at the top of `src/styles.css`, and keep `src/styles.css` focused on global resets/base selectors so tokens remain the source of truth rather than duplicated literal values.
-11. Epic verification — Run `pnpm tokens:build`, `pnpm e2e`, and `pnpm complete-check`; inspect generated CSS for both `:root` and dark-theme overrides, and confirm no step introduced unrelated styling architecture or CI scope creep. Rollback note: if themed single-file generation becomes unstable, fall back to one custom Style Dictionary format in the same config instead of adding another build tool or changing epic scope.
+11. Epic verification — Run `pnpm tokens:build`, `pnpm test:e2e`, and `pnpm complete-check`; inspect generated CSS for both `:root` and dark-theme overrides, and confirm no step introduced unrelated styling architecture or CI scope creep. Rollback note: if themed single-file generation becomes unstable, fall back to one custom Style Dictionary format in the same config instead of adding another build tool or changing epic scope.
 
 ## Validation
 
@@ -51,6 +51,6 @@
   - FAV-20: Generated CSS contains foundation plus semantic/component tokens for light and dark themes, `src/styles.css` imports it, and the repo still passes `pnpm complete-check` plus the new token/E2E commands.
 - Checkpoints:
   - Pre-implementation: confirm `/` remains the smoke target and token output remains an uncommitted generated artifact because nested `dist` is ignored today.
-  - During FAV-18: `pnpm e2e --list` or equivalent recognizes the smoke spec, and the config resolves the existing port `4000` without custom server bootstrapping.
+  - During FAV-18: `pnpm test:e2e --list` or equivalent recognizes the smoke spec, and the config resolves the existing port `4000` without custom server bootstrapping.
   - During FAV-19/FAV-20: generated CSS includes stable variable names, no missing-file import in `src/styles.css`, and dark-theme overrides appear in a dedicated selector block.
-  - Post-implementation/regression: `pnpm e2e`, `pnpm tokens:build`, and `pnpm complete-check` all succeed; future feature work can consume variables from CSS Modules without hard-coded design values.
+  - Post-implementation/regression: `pnpm test:e2e`, `pnpm tokens:build`, and `pnpm complete-check` all succeed; future feature work can consume variables from CSS Modules without hard-coded design values.

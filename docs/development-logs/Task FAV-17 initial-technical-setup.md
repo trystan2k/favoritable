@@ -55,7 +55,7 @@ permalink: docs/development-logs/task-FAV-17-initial-technical-setup
 - `vite.config.ts` detects Vitest mode (`mode === 'test' || process.env.VITEST === 'true'`).
 - When `isVitest` is true, `cloudflare()` plugin is excluded from plugins array.
 - Prevents Cloudflare Workers runtime conflict with jsdom test environment.
-- Vitest config inline in vite.config.ts: `environment: 'jsdom'`, `include: ['src/**/*.{test,spec}.{ts,tsx}']`.
+- Vitest config inline in vite.config.ts: multi-project setup with a `node` project for `test/**/*.test.*` and a `browser` project for `test/**/*.browser.test.*` using `@vitest/browser-playwright` (Chromium).
 
 ### Shared Dev-Server Config
 
@@ -66,8 +66,7 @@ permalink: docs/development-logs/task-FAV-17-initial-technical-setup
 
 ### QA Contract and Script Arrangement
 
-- `complete-check` script: typecheck → lint:fix → format → test → build (sequential).
-- `postcomplete-check` hook: runs `test:e2e:smoke` after complete-check passes.
+- `complete-check` script: knip:fix → typecheck → lint:fix → format → test → build → test:e2e (sequential).
 - Linting: oxlint (JS/TS) + stylelint (CSS) with separate scripts.
 - Formatting: oxfmt with check mode.
 - Stylelint configured for CSS Modules: ignores `composes`, allows CSS Module pseudo-classes (`:export`, `:global`, `:import`, `:local`), nullifies `selector-class-pattern`.
