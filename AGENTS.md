@@ -51,9 +51,21 @@ Whatever task you are told to implement, check the Linear project issue first, t
 
 If no Linear task number is given, ignore the Linear project and just implement the task.
 
+## Support Libraries
+
+If for any task, any of these libraries would help, please use them.
+
+- 'tanstack-query'
+- 'tanstack-query-ssr'
+- 'lucide-react'
+
 ## QA
 
 `pnpm complete-check`
+
+### End-to-End Tests
+
+When writing end-to-end tests, use the `@smoke`, write happy paths tests tagged as smoke test (`@smoke`), so they always run in all CI/CD pipelines.
 
 ## Project Management
 

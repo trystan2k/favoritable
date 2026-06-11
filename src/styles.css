@@ -1,13 +1,27 @@
+@import url('../design-tokens/dist/variables.css');
+
+:root {
+  color: var(--color-text-primary);
+  font-family: var(--typography-font-family-body);
+}
+
 * {
   box-sizing: border-box;
 }
 
 html,
-body,
-#app {
+body {
   min-height: 100%;
+}
+
+html {
+  background: var(--gradient-background-app);
+  color: inherit;
 }
 
 body {
   margin: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
 }

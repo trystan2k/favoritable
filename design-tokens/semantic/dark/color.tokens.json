@@ -1,0 +1,178 @@
+{
+  "color": {
+    "background": {
+      "app": {
+        "value": "{color.palette.slate.900}",
+        "type": "color"
+      },
+      "app-alt": {
+        "value": "{color.palette.slate.950}",
+        "type": "color"
+      },
+      "surface": {
+        "value": "{color.palette.slate.850}",
+        "type": "color"
+      },
+      "surface-selected": {
+        "value": "{color.palette.slate.600}",
+        "type": "color"
+      },
+      "surface-soft": {
+        "value": "{color.palette.slate.800}",
+        "type": "color"
+      },
+      "surface-banner": {
+        "value": "{color.palette.gray.900}",
+        "type": "color"
+      },
+      "surface-accent-soft": {
+        "value": "{color.palette.slate.600}",
+        "type": "color"
+      },
+      "surface-danger-soft": {
+        "value": "{color.palette.red.950}",
+        "type": "color"
+      },
+      "surface-success-soft": {
+        "value": "{color.palette.emerald.900}",
+        "type": "color"
+      },
+      "surface-info-soft": {
+        "value": "{color.palette.slate.700}",
+        "type": "color"
+      },
+      "surface-inverse": {
+        "value": "{color.palette.white}",
+        "type": "color"
+      }
+    },
+    "text": {
+      "primary": {
+        "value": "{color.palette.slate.50}",
+        "type": "color"
+      },
+      "heading": {
+        "value": "{color.palette.slate.100}",
+        "type": "color"
+      },
+      "secondary": {
+        "value": "{color.palette.slate.350}",
+        "type": "color"
+      },
+      "muted": {
+        "value": "{color.palette.slate.400}",
+        "type": "color"
+      },
+      "tertiary": {
+        "value": "{color.palette.slate.450}",
+        "type": "color"
+      },
+      "inverse": {
+        "value": "{color.palette.black}",
+        "type": "color"
+      },
+      "accent": {
+        "value": "{color.palette.sky.200}",
+        "type": "color"
+      }
+    },
+    "border": {
+      "subtle": {
+        "value": "{color.palette.gray.800}",
+        "type": "color"
+      },
+      "card": {
+        "value": "{color.palette.gray.800}",
+        "type": "color"
+      },
+      "strong": {
+        "value": "{color.palette.gray.700}",
+        "type": "color"
+      },
+      "inverse": {
+        "value": "{color.palette.white}",
+        "type": "color"
+      }
+    },
+    "accent": {
+      "primary": {
+        "value": "{color.palette.teal.500}",
+        "type": "color"
+      },
+      "primary-contrast": {
+        "value": "{color.palette.white}",
+        "type": "color"
+      },
+      "secondary": {
+        "value": "{color.palette.indigo.600}",
+        "type": "color"
+      }
+    },
+    "state": {
+      "selected": {
+        "value": "{color.palette.slate.600}",
+        "type": "color"
+      },
+      "overlay": {
+        "value": "{color.palette.overlay.scrim}",
+        "type": "color"
+      },
+      "hover-overlay": {
+        "value": "{color.palette.overlay.hover}",
+        "type": "color"
+      }
+    },
+    "status": {
+      "success": {
+        "value": "{color.palette.emerald.500}",
+        "type": "color"
+      },
+      "success-surface": {
+        "value": "{color.palette.emerald.900}",
+        "type": "color"
+      },
+      "success-text": {
+        "value": "{color.palette.emerald.200}",
+        "type": "color"
+      },
+      "info": {
+        "value": "{color.palette.sky.400}",
+        "type": "color"
+      },
+      "info-surface": {
+        "value": "{color.palette.slate.700}",
+        "type": "color"
+      },
+      "info-text": {
+        "value": "{color.palette.sky.200}",
+        "type": "color"
+      },
+      "danger": {
+        "value": "{color.palette.red.300}",
+        "type": "color"
+      },
+      "danger-surface": {
+        "value": "{color.palette.red.950}",
+        "type": "color"
+      },
+      "danger-text": {
+        "value": "{color.palette.red.300}",
+        "type": "color"
+      }
+    }
+  },
+  "gradient": {
+    "background": {
+      "app": {
+        "value": "linear-gradient(180deg, {color.palette.slate.900} 0%, {color.palette.slate.950} 100%)",
+        "type": "other"
+      }
+    },
+    "brand": {
+      "primary": {
+        "value": "linear-gradient(135deg, {color.palette.teal.500} 0%, {color.palette.indigo.600} 100%)",
+        "type": "other"
+      }
+    }
+  }
+}

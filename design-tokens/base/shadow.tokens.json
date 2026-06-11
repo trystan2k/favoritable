@@ -1,0 +1,32 @@
+{
+  "shadow": {
+    "elevation": {
+      "overlay": {
+        "light": {
+          "value": "0 0.75rem 1.75rem #0F172A14",
+          "type": "shadow"
+        },
+        "dark": {
+          "value": "0 0.75rem 1.75rem #00000066",
+          "type": "shadow"
+        }
+      },
+      "sheet": {
+        "light": {
+          "value": "0 0.625rem 1.5rem #0F172A14",
+          "type": "shadow"
+        },
+        "dark": {
+          "value": "0 0.625rem 1.5rem #00000066",
+          "type": "shadow"
+        }
+      }
+    },
+    "backdrop": {
+      "blur-md": {
+        "value": "0.625rem",
+        "type": "dimension"
+      }
+    }
+  }
+}

@@ -124,22 +124,22 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # - name: Cache Playwright browsers
-      #   id: playwright-cache
-      #   uses: actions/cache@v5
-      #   with:
-      #     path: ~/.cache/ms-playwright
-      #     key: playwright-chromium-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ hashFiles('pnpm-lock.yaml') }}
 
-      # - name: Install Playwright Chromium
-      #   if: steps.playwright-cache.outputs.cache-hit != 'true'
-      #   run: pnpm exec playwright install chromium
+      - name: Install Playwright Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install chromium
 
-      # - name: Install Playwright system dependencies
-      #   run: pnpm exec playwright install-deps chromium
+      - name: Install Playwright system dependencies
+        run: pnpm exec playwright install-deps chromium
 
-      # - name: Knip unused dependencies
-      #   run: pnpm knip
+      - name: Knip unused dependencies
+        run: pnpm knip
 
       - name: Type check
         run: pnpm typecheck
@@ -150,20 +150,20 @@ jobs:
       - name: Check formatting
         run: pnpm format:check
 
-      # - name: Run tests
-      #   run: pnpm test
+      - name: Run tests
+        run: pnpm test
 
       - name: Build application
         run: pnpm build
 
-      # - name: Upload coverage artifact
-      #   if: always() && !cancelled()
-      #   uses: actions/upload-artifact@v7
-      #   with:
-      #     if-no-files-found: ignore
-      #     name: coverage-${{ github.sha }}
-      #     path: coverage/
-      #     retention-days: 7
+      - name: Upload coverage artifact
+        if: always() && !cancelled()
+        uses: actions/upload-artifact@v7
+        with:
+          if-no-files-found: ignore
+          name: coverage-${{ github.sha }}
+          path: coverage/
+          retention-days: 7
 
       - name: Upload Pages artifact
         uses: actions/upload-artifact@v7
@@ -175,7 +175,7 @@ jobs:
   e2e_tests:
     name: E2E Tests
     needs: detect_changes
-    if: needs.detect_changes.outputs.docs_only != 'true' && (startsWith(github.head_ref, 'release-please--branches--main') || contains(github.event.pull_request.labels.*.name, 'dependabot'))
+    if: needs.detect_changes.outputs.docs_only != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -195,30 +195,81 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # - name: Cache Playwright browsers
-      #   id: playwright-cache
-      #   uses: actions/cache@v5
-      #   with:
-      #     path: ~/.cache/ms-playwright
-      #     key: playwright-chromium-webkit-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-webkit-${{ hashFiles('pnpm-lock.yaml') }}
 
-      # - name: Install Playwright browsers
-      #   if: steps.playwright-cache.outputs.cache-hit != 'true'
-      #   run: pnpm exec playwright install chromium webkit
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install chromium webkit
 
-      # - name: Install Playwright system dependencies
-      #   run: pnpm exec playwright install-deps chromium webkit
+      - name: Install Playwright system dependencies
+        run: pnpm exec playwright install-deps chromium webkit
 
-      # - name: Run E2E tests
-      #   run: pnpm test:e2e
+      - name: Select E2E suite
+        id: e2e_suite
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          HEAD_REF: ${{ github.head_ref }}
+          ACTOR: ${{ github.actor }}
+          PR_LABELS: ${{ github.event_name == 'pull_request' && join(github.event.pull_request.labels.*.name, ',') || '' }}
+        run: |
+          branch_name="$REF_NAME"
 
-      # - name: Upload Playwright report
-      #   if: always() && !cancelled()
-      #   uses: actions/upload-artifact@v7
-      #   with:
-      #     name: playwright-report-${{ github.sha }}
-      #     path: playwright-report/
-      #     retention-days: 7
+          if [[ "$EVENT_NAME" == "pull_request" && -n "$HEAD_REF" ]]; then
+            branch_name="$HEAD_REF"
+          fi
+
+          is_release=false
+          is_dependabot=false
+          e2e_command="pnpm test:e2e:smoke"
+          e2e_reason="default smoke"
+
+          if [[ "$branch_name" == release-please--branches--main* ]]; then
+            is_release=true
+          fi
+
+          if [[ ",$PR_LABELS," == *,dependabot,* ]] || [[ "$ACTOR" == "dependabot[bot]" ]]; then
+            is_dependabot=true
+          fi
+
+          if [[ "$is_release" == "true" || "$is_dependabot" == "true" ]]; then
+            e2e_command="pnpm test:e2e"
+            e2e_reason="release or dependabot"
+          fi
+
+          echo "command=$e2e_command" >> "$GITHUB_OUTPUT"
+          echo "reason=$e2e_reason" >> "$GITHUB_OUTPUT"
+          echo "branch_name=$branch_name" >> "$GITHUB_OUTPUT"
+
+          {
+            echo "## E2E suite selection"
+            echo ""
+            echo "- event: $EVENT_NAME"
+            echo "- branch: $branch_name"
+            echo "- actor: $ACTOR"
+            echo "- labels: ${PR_LABELS:-none}"
+            echo "- is_release: $is_release"
+            echo "- is_dependabot: $is_dependabot"
+            echo "- command: $e2e_command"
+            echo "- reason: $e2e_reason"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Run E2E tests
+        run: ${{ steps.e2e_suite.outputs.command }}
+
+      - name: Upload Playwright report
+        if: always() && !cancelled()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report-${{ github.sha }}
+          path: playwright-report/
+          retention-days: 7
 
   ci:
     name: CI

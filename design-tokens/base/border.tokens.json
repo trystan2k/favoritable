@@ -1,0 +1,14 @@
+{
+  "border": {
+    "width": {
+      "none": {
+        "value": "0",
+        "type": "borderWidth"
+      },
+      "subtle": {
+        "value": "1px",
+        "type": "borderWidth"
+      }
+    }
+  }
+}
