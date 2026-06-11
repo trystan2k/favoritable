@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
-import { HomePage } from '@/components/home_page';
+import { HomePage } from '@/components/HomePage';
 import { appRoutes } from '@test/utils/routes';
 
 describe('HomePage', () => {
