@@ -8,10 +8,9 @@ import { getAuthEnvironment } from '@/features/auth/server/env.server';
 let database: ReturnType<typeof drizzle<typeof schema>> | null = null;
 
 export function createDb(databaseUrl?: string, databaseAuthToken?: string) {
-  const needsEnvironment = databaseUrl === undefined || databaseAuthToken === undefined;
-  const environment = needsEnvironment ? getAuthEnvironment() : null;
+  const environment = databaseUrl === undefined ? getAuthEnvironment() : null;
   const resolvedDatabaseUrl = databaseUrl ?? environment!.databaseUrl;
-  const resolvedDatabaseAuthToken = databaseAuthToken ?? environment!.databaseAuthToken;
+  const resolvedDatabaseAuthToken = databaseAuthToken ?? environment?.databaseAuthToken;
   const databaseClient = createClient(
     resolveDatabaseCredentials(resolvedDatabaseUrl, resolvedDatabaseAuthToken)
   );

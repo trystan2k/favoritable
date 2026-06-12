@@ -17641,16 +17641,6 @@
                       "fontFamily": "Inter",
                       "fontSize": 18,
                       "fontWeight": "800"
-                    },
-                    {
-                      "type": "text",
-                      "id": "Wzrcz",
-                      "name": "App Tagline",
-                      "fill": "$subtext-light",
-                      "content": "Modern bookmark library",
-                      "fontFamily": "Inter",
-                      "fontSize": 12,
-                      "fontWeight": "normal"
                     }
                   ]
                 }
@@ -17889,16 +17879,6 @@
                       "fontFamily": "Inter",
                       "fontSize": 18,
                       "fontWeight": "800"
-                    },
-                    {
-                      "type": "text",
-                      "id": "b0vha4",
-                      "name": "App Tagline",
-                      "fill": "$subtext-dark-alt",
-                      "content": "Modern bookmark library",
-                      "fontFamily": "Inter",
-                      "fontSize": 12,
-                      "fontWeight": "normal"
                     }
                   ]
                 }
@@ -18137,16 +18117,6 @@
                       "fontFamily": "Inter",
                       "fontSize": 18,
                       "fontWeight": "800"
-                    },
-                    {
-                      "type": "text",
-                      "id": "xQHzv",
-                      "name": "App Tagline",
-                      "fill": "$subtext-light",
-                      "content": "Modern bookmark library",
-                      "fontFamily": "Inter",
-                      "fontSize": 12,
-                      "fontWeight": "normal"
                     }
                   ]
                 }
@@ -18385,16 +18355,6 @@
                       "fontFamily": "Inter",
                       "fontSize": 18,
                       "fontWeight": "800"
-                    },
-                    {
-                      "type": "text",
-                      "id": "iWdkz",
-                      "name": "App Tagline",
-                      "fill": "$subtext-dark-alt",
-                      "content": "Modern bookmark library",
-                      "fontFamily": "Inter",
-                      "fontSize": 12,
-                      "fontWeight": "normal"
                     }
                   ]
                 }
@@ -18633,16 +18593,6 @@
                       "fontFamily": "Inter",
                       "fontSize": 16,
                       "fontWeight": "800"
-                    },
-                    {
-                      "type": "text",
-                      "id": "d3IvJ",
-                      "name": "App Tagline",
-                      "fill": "$subtext-light",
-                      "content": "Modern bookmark library",
-                      "fontFamily": "Inter",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
                     }
                   ]
                 }
@@ -18881,16 +18831,6 @@
                       "fontFamily": "Inter",
                       "fontSize": 16,
                       "fontWeight": "800"
-                    },
-                    {
-                      "type": "text",
-                      "id": "q1dul",
-                      "name": "App Tagline",
-                      "fill": "$subtext-dark-alt",
-                      "content": "Modern bookmark library",
-                      "fontFamily": "Inter",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
                     }
                   ]
                 }
