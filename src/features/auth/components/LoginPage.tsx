@@ -126,7 +126,7 @@ export function LoginPage({ isGoogleAuthAvailable }: LoginPageProps) {
             ) : null}
 
             {errorMessage ? (
-              <p aria-live="polite" className={styles.errorMessage} role="alert">
+              <p className={styles.errorMessage} role="alert">
                 {errorMessage}
               </p>
             ) : null}

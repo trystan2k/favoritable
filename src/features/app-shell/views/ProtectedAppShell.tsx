@@ -98,7 +98,7 @@ export function ProtectedAppShell({ children, userEmail, userName }: ProtectedAp
           </div>
 
           {signOutError ? (
-            <p aria-live="polite" className={styles.signOutError} role="alert">
+            <p className={styles.signOutError} role="alert">
               {signOutError}
             </p>
           ) : null}
