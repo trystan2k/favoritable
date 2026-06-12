@@ -50,6 +50,7 @@ function createMatchMediaEventTarget() {
 
 describe('ThemeToggle', () => {
   beforeEach(() => {
+    vi.unstubAllGlobals();
     window.localStorage.clear();
     document.documentElement.removeAttribute('data-theme');
     document.documentElement.style.colorScheme = '';
