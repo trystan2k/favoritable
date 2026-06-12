@@ -9,7 +9,14 @@ import {
 const originalEnvironment = { ...process.env };
 
 afterEach(() => {
-  process.env = { ...originalEnvironment };
+  for (const key of Object.keys(process.env)) {
+    if (!(key in originalEnvironment)) {
+      delete process.env[key];
+    }
+  }
+  for (const [key, value] of Object.entries(originalEnvironment)) {
+    process.env[key] = value;
+  }
   vi.restoreAllMocks();
 });
 

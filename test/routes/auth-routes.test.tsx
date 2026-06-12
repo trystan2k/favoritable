@@ -118,14 +118,13 @@ describe('auth routes', () => {
         saveUser: authTestSaveUserMock
       }
     });
-    process.env.E2E_PREVIEW = 'false';
-    process.env.E2E_TEST_SESSION_SECRET = testSessionSecret;
+    vi.stubEnv('E2E_PREVIEW', 'false');
+    vi.stubEnv('E2E_TEST_SESSION_SECRET', testSessionSecret);
     vi.stubGlobal('fetch', fetchMock);
   });
 
   afterEach(() => {
-    delete process.env.E2E_PREVIEW;
-    delete process.env.E2E_TEST_SESSION_SECRET;
+    vi.unstubAllEnvs();
     vi.unstubAllGlobals();
   });
 
