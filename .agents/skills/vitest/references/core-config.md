@@ -65,7 +65,7 @@ defineConfig({
     environment: 'node',
     
     // Setup files to run before each test file
-    setupFiles: ['./test/setup.ts'],
+    setupFiles: ['./tests/setup.ts'],
     
     // Include patterns for test files
     include: ['**/*.{test,spec}.{js,ts,jsx,tsx}'],

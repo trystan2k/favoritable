@@ -11,6 +11,6 @@ describe('getRouter', () => {
     expect(router.options.defaultPreload).toBe('intent');
     expect(router.options.defaultPreloadStaleTime).toBe(0);
     expect(router.options.routeTree?.id).toBe('__root__');
-    expect(router.routesById['/']).toBeDefined();
+    expect(router.routesById['/_protected/']).toBeDefined();
   });
 });

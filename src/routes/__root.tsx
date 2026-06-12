@@ -1,5 +1,8 @@
+import type { ReactNode } from 'react';
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router';
 
+import { ThemeProvider } from '@/shared/theme/ThemeProvider';
+import { themeBootstrapScript } from '@/shared/theme/theme';
 import appCss from '@/styles.css?url';
 
 export const Route = createRootRoute({
@@ -26,15 +29,21 @@ export const Route = createRootRoute({
   shellComponent: RootDocument
 });
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+const themeBootstrapScriptMarkup = { __html: themeBootstrapScript };
+
+function RootDocument({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+        {/* Keep theme bootstrap inline before hydration. If CSP nonces land later, apply same nonce here. */}
+        <script dangerouslySetInnerHTML={themeBootstrapScriptMarkup} />
       </head>
       <body>
-        {children}
-        <Scripts />
+        <ThemeProvider>
+          {children}
+          <Scripts />
+        </ThemeProvider>
       </body>
     </html>
   );

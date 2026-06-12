@@ -1,0 +1,377 @@
+.viewport {
+  display: grid;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.srOnly {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  padding: 0;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.page {
+  --login-provider-button-gap: var(--space-100);
+  --login-provider-button-icon-size: 1rem;
+  --login-provider-button-label-size: var(--typography-font-size-md);
+  --login-provider-button-min-height: 2.25rem;
+  --login-provider-button-padding-block: var(--space-125);
+  --login-provider-button-padding-inline: var(--space-175);
+
+  display: grid;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  border: var(--border-width-subtle) solid var(--color-border-strong);
+  overflow: hidden;
+  background: var(--component-auth-panel-surface);
+}
+
+.hero,
+.panel {
+  min-width: 0;
+}
+
+.hero {
+  display: grid;
+  align-content: space-between;
+  gap: var(--space-125);
+  min-height: 17.5rem;
+  padding: var(--space-175);
+  background: var(--component-auth-hero-gradient);
+  color: var(--component-auth-hero-text);
+}
+
+.heroContent,
+.heroCopy,
+.heroFooter,
+.panelContent {
+  display: grid;
+}
+
+.heroContent {
+  gap: var(--space-125);
+}
+
+.heroBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-100);
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-sm);
+  background: var(--component-auth-logo-surface);
+  color: var(--component-auth-logo-accent);
+  font-size: var(--typography-font-size-lg);
+  font-weight: var(--typography-font-weight-extrabold);
+}
+
+.heroLabel {
+  font-size: var(--typography-font-size-base);
+  font-weight: var(--typography-font-weight-extrabold);
+}
+
+.heroCopy {
+  gap: var(--space-125);
+}
+
+.heroHeading,
+.heroBody,
+.heroFootnote,
+.panelHeading,
+.panelBody,
+.footnote,
+.errorMessage {
+  margin: 0;
+}
+
+.heroHeading {
+  font-size: var(--typography-font-size-4xl);
+  font-weight: var(--typography-font-weight-extrabold);
+  line-height: var(--typography-line-height-compact);
+}
+
+.heroBody {
+  max-width: 16.25rem;
+  font-size: var(--typography-font-size-md);
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.heroFooter {
+  gap: var(--space-050);
+}
+
+.heroShapes {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-100);
+  min-height: 3.125rem;
+}
+
+.heroShapes span {
+  display: block;
+  background: currentcolor;
+}
+
+.shapeCircleLarge {
+  width: 2.1875rem;
+  height: 2.1875rem;
+  border-radius: var(--radius-full);
+  opacity: 0.15;
+}
+
+.shapeDiamond {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  opacity: 0.1;
+  transform: rotate(45deg);
+}
+
+.shapeCircleSmall {
+  display: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-full);
+  opacity: 0.2;
+}
+
+.heroFootnote {
+  font-size: var(--typography-font-size-xs);
+  opacity: 0.7;
+}
+
+.panel {
+  display: grid;
+  padding: var(--space-200);
+  background: var(--component-auth-panel-surface);
+}
+
+.panelContent {
+  align-content: center;
+  justify-items: center;
+  gap: var(--space-200);
+}
+
+.panelHeading {
+  color: var(--component-auth-panel-heading);
+  font-size: var(--typography-font-size-lg);
+  font-weight: var(--typography-font-weight-extrabold);
+  line-height: var(--typography-line-height-compact);
+  text-align: center;
+}
+
+.panelBody,
+.footnote {
+  color: var(--component-auth-panel-body);
+  font-size: var(--typography-font-size-md);
+  line-height: var(--typography-line-height-compact);
+  text-align: center;
+}
+
+.actions {
+  display: grid;
+  gap: var(--space-100);
+  width: 100%;
+}
+
+.errorMessage {
+  color: var(--color-status-danger-text);
+  font-size: var(--typography-font-size-md);
+  line-height: var(--typography-line-height-body);
+  text-align: center;
+}
+
+.footnote {
+  max-width: 15rem;
+  color: var(--component-auth-panel-footnote);
+}
+
+.desktopOnly {
+  display: none;
+}
+
+@media (width >= 48rem) {
+  .page {
+    --login-provider-button-gap: var(--space-125);
+    --login-provider-button-min-height: 2.5rem;
+    --login-provider-button-padding-block: var(--space-125);
+    --login-provider-button-padding-inline: var(--space-175);
+
+    grid-template-rows: 23.75rem minmax(0, 1fr);
+  }
+
+  .hero {
+    gap: var(--space-150);
+    min-height: 23.75rem;
+    padding: var(--space-225);
+  }
+
+  .heroContent {
+    gap: var(--space-150);
+  }
+
+  .heroHeading {
+    font-size: var(--typography-font-size-4xl);
+  }
+
+  .heroBody {
+    max-width: 20rem;
+    font-size: var(--typography-font-size-md);
+  }
+
+  .heroFooter {
+    gap: var(--space-075);
+  }
+
+  .heroShapes {
+    min-height: 5rem;
+    gap: var(--space-125);
+  }
+
+  .shapeCircleLarge {
+    width: 2.1875rem;
+    height: 2.1875rem;
+  }
+
+  .shapeDiamond {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .panel {
+    padding: var(--space-300);
+  }
+
+  .panelContent {
+    gap: var(--space-250);
+  }
+
+  .footnote {
+    max-width: 17.5rem;
+  }
+
+  .mobileOnly {
+    display: none;
+  }
+
+  .desktopOnly {
+    display: inline;
+  }
+}
+
+@media (width >= 64rem) {
+  .page {
+    --login-provider-button-label-size: var(--typography-font-size-base);
+    --login-provider-button-icon-size: 1.25rem;
+    --login-provider-button-min-height: 3rem;
+    --login-provider-button-padding-block: var(--space-150);
+    --login-provider-button-padding-inline: var(--space-250);
+
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: none;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .hero {
+    gap: var(--space-300);
+    min-height: 43.75rem;
+    padding: var(--space-300);
+  }
+
+  .heroBrand {
+    gap: var(--space-150);
+  }
+
+  .heroBadge {
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-lg);
+    font-size: var(--typography-font-size-2xl);
+  }
+
+  .heroLabel {
+    font-size: var(--typography-font-size-lg);
+  }
+
+  .heroContent,
+  .heroCopy {
+    gap: var(--space-200);
+  }
+
+  .heroHeading {
+    font-size: var(--typography-font-size-5xl);
+  }
+
+  .heroBody {
+    max-width: 23.75rem;
+    font-size: var(--typography-font-size-base);
+    line-height: 1.5;
+  }
+
+  .heroFooter {
+    gap: var(--space-100);
+  }
+
+  .heroShapes {
+    min-height: 7.5rem;
+    gap: var(--space-150);
+  }
+
+  .shapeCircleLarge {
+    width: 3.75rem;
+    height: 3.75rem;
+  }
+
+  .shapeDiamond {
+    width: 5rem;
+    height: 5rem;
+    border-radius: var(--radius-2xl);
+  }
+
+  .shapeCircleSmall {
+    display: block;
+  }
+
+  .heroFootnote {
+    font-size: var(--typography-font-size-xs);
+  }
+
+  .panel {
+    padding: 0;
+  }
+
+  .panelContent {
+    gap: var(--space-300);
+    padding-inline: var(--space-300);
+  }
+
+  .panelHeading {
+    font-size: var(--typography-font-size-xl);
+  }
+
+  .panelBody,
+  .footnote,
+  .errorMessage {
+    font-size: var(--typography-font-size-base);
+  }
+
+  .footnote {
+    max-width: 20rem;
+    line-height: 1.5;
+  }
+}

@@ -1,88 +1,88 @@
-Welcome to your new TanStack Start app!
+# Favoritable
+
+TanStack Start bookmark manager foundation with Better Auth, Drizzle, Base UI, CSS Modules, and design-token-driven styling.
 
 # Getting Started
 
-To run this application:
+Install dependencies and start local dev:
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
-# Building For Production
+## Building
 
-To build this application for production:
+Production build gate:
 
 ```bash
-npm run build
+pnpm build
+```
+
+Playwright preview build contract:
+
+```bash
+pnpm build:e2e:preview
+pnpm preview:e2e
 ```
 
 ## Testing
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+Run unit/browser coverage tests:
 
 ```bash
-npm run test
+pnpm test
+```
+
+Run smoke E2E:
+
+```bash
+pnpm test:e2e:smoke
 ```
 
 ## Styling
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `npm install @tailwindcss/vite tailwindcss -D`
-
-## Deploy with Nitro
-
-This project uses Nitro as a generic server adapter, so it can run on any Node-compatible host.
+Favoritable uses CSS Modules plus generated design tokens from `design-tokens/`. Rebuild tokens with:
 
 ```bash
-npm run build
-node dist/server/index.mjs
+pnpm tokens:build
 ```
 
-The build output is a self-contained Node server. To deploy, push the `dist/` directory to your host (Render, Fly.io, your own VPS, etc.) and run the server command above.
+## Build Output
 
-For host-specific presets (Vercel, Netlify, Cloudflare, AWS Lambda, etc.) and tuning, see https://v3.nitro.build/deploy.
+`pnpm build` writes the main app bundles to `dist/client` and `dist/server`.
+`pnpm build:e2e:preview` writes the preview-compatible server bundle used by Playwright smoke and extended E2E runs.
 
 ## Setting up Better Auth
 
-1. Generate and set the `BETTER_AUTH_SECRET` environment variable in your `.env.local`:
+1. Copy `.env.example` to `.env.local`.
+2. Keep `BETTER_AUTH_URL` aligned with the actual app origin. Local dev default is `http://localhost:4000`.
+3. Generate and set the `BETTER_AUTH_SECRET` environment variable in your `.env.local`:
 
    ```bash
    npx -y @better-auth/cli secret
    ```
 
-2. Visit the [Better Auth documentation](https://www.better-auth.com) to unlock the full potential of authentication in your app.
+4. Visit the [Better Auth documentation](https://www.better-auth.com) to unlock the full potential of authentication in your app.
 
-### Adding a Database (Optional)
+### Local Google OAuth setup
 
-Better Auth can work in stateless mode, but to persist user data, add a database:
+If you enable Google OAuth locally, Google Cloud must use the exact values derived from `BETTER_AUTH_URL`:
 
-```typescript
-// src/lib/auth.ts
-import { betterAuth } from 'better-auth';
-import { Pool } from 'pg';
+- Authorized JavaScript origin: `http://localhost:4000`
+- Authorized redirect URI: `http://localhost:4000/api/auth/callback/google`
 
-export const auth = betterAuth({
-  database: new Pool({
-    connectionString: process.env.DATABASE_URL
-  })
-  // ... rest of config
-});
-```
+If you change `BETTER_AUTH_URL` for local work, update both Google Cloud values to the same origin and callback shape immediately. `redirect_uri_mismatch` usually means `BETTER_AUTH_URL` and the Google callback config drifted apart.
 
-Then run migrations:
+### Database bootstrap
+
+Favoritable persists Better Auth data in SQLite through Drizzle. Copy `.env.example`, then bootstrap auth tables before the first auth-enabled run:
 
 ```bash
-npx -y @better-auth/cli migrate
+pnpm db:bootstrap:auth
 ```
+
+`pnpm dev`, `pnpm test`, and the preview E2E path already run this bootstrap step for fresh local databases.
 
 ## Routing
 

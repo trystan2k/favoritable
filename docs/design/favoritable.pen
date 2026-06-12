@@ -17526,6 +17526,1494 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "eRzDZ",
+      "x": 4586,
+      "y": 0,
+      "name": "Not Found Desktop Light",
+      "clip": true,
+      "width": 1024,
+      "height": 900,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 180,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "$bg-light-1",
+            "position": 0
+          },
+          {
+            "color": "$bg-light-2",
+            "position": 1
+          }
+        ]
+      },
+      "cornerRadius": "$radius-4xl",
+      "stroke": "$line-light",
+      "strokeWidth": 1,
+      "strokeAlignment": "inner",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "fZkeR",
+          "name": "Shell",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": "$space-8",
+          "padding": [
+            "$space-7",
+            "$space-6"
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "X8UeO3",
+              "name": "Header",
+              "width": "fill_container",
+              "gap": "$space-6",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "X895E7",
+                  "name": "Logo Icon",
+                  "width": 44,
+                  "height": 44,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "$accent",
+                        "position": 0
+                      },
+                      {
+                        "color": "$accent-alt",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": "$radius-lg",
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Y7lyYX",
+                      "name": "Logo Letter",
+                      "fill": "$text-on-accent",
+                      "content": "F",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "800"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "JeIMB",
+                  "name": "Logo Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$space-1",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "w6CWhr",
+                      "name": "App Name",
+                      "fill": "$text-light",
+                      "content": "Favoritable",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "800"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Wzrcz",
+                      "name": "App Tagline",
+                      "fill": "$subtext-light",
+                      "content": "Modern bookmark library",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "W9WoZ9",
+              "name": "Center Wrap",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "e7VEFX",
+                  "name": "404 Content",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$space-8",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "V8ylJ",
+                      "name": "Error Code",
+                      "fill": "$line-light",
+                      "content": "404",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 96,
+                      "fontWeight": "800",
+                      "letterSpacing": -2
+                    },
+                    {
+                      "type": "text",
+                      "id": "Urxk2",
+                      "name": "Error Title",
+                      "fill": "$text-light",
+                      "content": "Page not found",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": "$text-3xl",
+                      "fontWeight": "800",
+                      "letterSpacing": -0.4
+                    },
+                    {
+                      "type": "text",
+                      "id": "zwYvh",
+                      "name": "Error Description",
+                      "fill": "$subtext-light",
+                      "textGrowth": "fixed-width",
+                      "width": 400,
+                      "content": "The page you're looking for doesn't exist or has been moved.",
+                      "textAlign": "center",
+                      "fontFamily": "Inter",
+                      "fontSize": "$text-base",
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "S13mQT",
+                      "name": "Go Home Button",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "$accent",
+                            "position": 0
+                          },
+                          {
+                            "color": "$accent-alt",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": "$radius-xl",
+                      "stroke": "$accent",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": "$space-5",
+                      "padding": [
+                        "$space-5",
+                        "$space-7"
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "ffb8p",
+                          "name": "Home Icon",
+                          "width": 16,
+                          "height": 16,
+                          "icon": "arrow-left",
+                          "library": "lucide",
+                          "fill": "$text-on-accent"
+                        },
+                        {
+                          "type": "text",
+                          "id": "yRCo1",
+                          "name": "Button Label",
+                          "fill": "$text-on-accent",
+                          "content": "Go Home",
+                          "fontFamily": "Inter",
+                          "fontSize": "$text-base",
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "XkZgJ",
+      "x": 5690,
+      "y": 0,
+      "name": "Not Found Desktop Dark",
+      "clip": true,
+      "width": 1024,
+      "height": 900,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 180,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "$bg-dark-1",
+            "position": 0
+          },
+          {
+            "color": "$bg-dark-2",
+            "position": 1
+          }
+        ]
+      },
+      "cornerRadius": "$radius-4xl",
+      "stroke": "$line-dark",
+      "strokeWidth": 1,
+      "strokeAlignment": "inner",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "NDuh1",
+          "name": "Shell",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": "$space-8",
+          "padding": [
+            "$space-7",
+            "$space-6"
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "axnml",
+              "name": "Header",
+              "width": "fill_container",
+              "gap": "$space-6",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "m9Nro",
+                  "name": "Logo Icon",
+                  "width": 44,
+                  "height": 44,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "$accent",
+                        "position": 0
+                      },
+                      {
+                        "color": "$accent-alt",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": 14,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Bwzgt",
+                      "name": "Logo Letter",
+                      "fill": "$text-dark-alt",
+                      "content": "F",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "800"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "V8IylO",
+                  "name": "Logo Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "yjZdk",
+                      "name": "App Name",
+                      "fill": "$text-dark-alt",
+                      "content": "Favoritable",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "800"
+                    },
+                    {
+                      "type": "text",
+                      "id": "b0vha4",
+                      "name": "App Tagline",
+                      "fill": "$subtext-dark-alt",
+                      "content": "Modern bookmark library",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ETe5N",
+              "name": "Center Wrap",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nfLHO",
+                  "name": "404 Content",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$space-8",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "VFBIi",
+                      "name": "Error Code",
+                      "fill": "$line-dark",
+                      "content": "404",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 96,
+                      "fontWeight": "800",
+                      "letterSpacing": -2
+                    },
+                    {
+                      "type": "text",
+                      "id": "HThbI",
+                      "name": "Error Title",
+                      "fill": "$text-dark",
+                      "content": "Page not found",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": "$text-3xl",
+                      "fontWeight": "800",
+                      "letterSpacing": -0.4
+                    },
+                    {
+                      "type": "text",
+                      "id": "Q8mEV2",
+                      "name": "Error Description",
+                      "fill": "$subtext-dark",
+                      "textGrowth": "fixed-width",
+                      "width": 400,
+                      "content": "The page you're looking for doesn't exist or has been moved.",
+                      "textAlign": "center",
+                      "fontFamily": "Inter",
+                      "fontSize": "$text-base",
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "tLfDX",
+                      "name": "Go Home Button",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "$accent",
+                            "position": 0
+                          },
+                          {
+                            "color": "$accent-alt",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": "$radius-xl",
+                      "stroke": "$accent",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": "$space-5",
+                      "padding": [
+                        "$space-5",
+                        "$space-7"
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "GJMTE",
+                          "name": "Home Icon",
+                          "width": 16,
+                          "height": 16,
+                          "icon": "arrow-left",
+                          "library": "lucide",
+                          "fill": "$text-on-accent"
+                        },
+                        {
+                          "type": "text",
+                          "id": "NuzgG",
+                          "name": "Button Label",
+                          "fill": "$text-on-accent",
+                          "content": "Go Home",
+                          "fontFamily": "Inter",
+                          "fontSize": "$text-base",
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "E7QhE",
+      "x": 3738,
+      "y": 1140,
+      "name": "Not Found Tablet Light",
+      "clip": true,
+      "width": 768,
+      "height": 1100,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 180,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "$bg-light-1",
+            "position": 0
+          },
+          {
+            "color": "$bg-light-2",
+            "position": 1
+          }
+        ]
+      },
+      "cornerRadius": "$radius-4xl",
+      "stroke": "$line-light",
+      "strokeWidth": 1,
+      "strokeAlignment": "inner",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "Yvtx1",
+          "name": "Shell",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": "$space-8",
+          "padding": [
+            "$space-7",
+            "$space-6"
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "vkAGW",
+              "name": "Header",
+              "width": "fill_container",
+              "gap": "$space-6",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "XB8G0",
+                  "name": "Logo Icon",
+                  "width": 44,
+                  "height": 44,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "$accent",
+                        "position": 0
+                      },
+                      {
+                        "color": "$accent-alt",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": "$radius-lg",
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ClhKW",
+                      "name": "Logo Letter",
+                      "fill": "$text-on-accent",
+                      "content": "F",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "800"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "pWa7g",
+                  "name": "Logo Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$space-1",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "PjdVY",
+                      "name": "App Name",
+                      "fill": "$text-light",
+                      "content": "Favoritable",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "800"
+                    },
+                    {
+                      "type": "text",
+                      "id": "xQHzv",
+                      "name": "App Tagline",
+                      "fill": "$subtext-light",
+                      "content": "Modern bookmark library",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "dqX2H",
+              "name": "Center Wrap",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Lb1TJ",
+                  "name": "404 Content",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$space-8",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "F3y8Jg",
+                      "name": "Error Code",
+                      "fill": "$line-light",
+                      "content": "404",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 80,
+                      "fontWeight": "800",
+                      "letterSpacing": -2
+                    },
+                    {
+                      "type": "text",
+                      "id": "hWrCb",
+                      "name": "Error Title",
+                      "fill": "$text-light",
+                      "content": "Page not found",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": "$text-2xl",
+                      "fontWeight": "800",
+                      "letterSpacing": -0.4
+                    },
+                    {
+                      "type": "text",
+                      "id": "m0Jq0",
+                      "name": "Error Description",
+                      "fill": "$subtext-light",
+                      "textGrowth": "fixed-width",
+                      "width": 360,
+                      "content": "The page you're looking for doesn't exist or has been moved.",
+                      "textAlign": "center",
+                      "fontFamily": "Inter",
+                      "fontSize": "$text-base",
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "PiCyw",
+                      "name": "Go Home Button",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "$accent",
+                            "position": 0
+                          },
+                          {
+                            "color": "$accent-alt",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": "$radius-xl",
+                      "stroke": "$accent",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": "$space-5",
+                      "padding": [
+                        "$space-5",
+                        "$space-7"
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "xsiaU",
+                          "name": "Home Icon",
+                          "width": 16,
+                          "height": 16,
+                          "icon": "arrow-left",
+                          "library": "lucide",
+                          "fill": "$text-on-accent"
+                        },
+                        {
+                          "type": "text",
+                          "id": "l6AN2A",
+                          "name": "Button Label",
+                          "fill": "$text-on-accent",
+                          "content": "Go Home",
+                          "fontFamily": "Inter",
+                          "fontSize": "$text-base",
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "isokL",
+      "x": 4660,
+      "y": 1140,
+      "name": "Not Found Tablet Dark",
+      "clip": true,
+      "width": 768,
+      "height": 1100,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 180,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "$bg-dark-1",
+            "position": 0
+          },
+          {
+            "color": "$bg-dark-2",
+            "position": 1
+          }
+        ]
+      },
+      "cornerRadius": "$radius-4xl",
+      "stroke": "$line-dark",
+      "strokeWidth": 1,
+      "strokeAlignment": "inner",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "SWCxB",
+          "name": "Shell",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": "$space-8",
+          "padding": [
+            "$space-7",
+            "$space-6"
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "t1Ag2u",
+              "name": "Header",
+              "width": "fill_container",
+              "gap": "$space-6",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "liMLU",
+                  "name": "Logo Icon",
+                  "width": 44,
+                  "height": 44,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "$accent",
+                        "position": 0
+                      },
+                      {
+                        "color": "$accent-alt",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": 14,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Qtods",
+                      "name": "Logo Letter",
+                      "fill": "$text-dark-alt",
+                      "content": "F",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "800"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "s7WD7",
+                  "name": "Logo Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "q8dSkI",
+                      "name": "App Name",
+                      "fill": "$text-dark-alt",
+                      "content": "Favoritable",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "800"
+                    },
+                    {
+                      "type": "text",
+                      "id": "iWdkz",
+                      "name": "App Tagline",
+                      "fill": "$subtext-dark-alt",
+                      "content": "Modern bookmark library",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ke2bo",
+              "name": "Center Wrap",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "N5j63",
+                  "name": "404 Content",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$space-8",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "cmXdw",
+                      "name": "Error Code",
+                      "fill": "$line-dark",
+                      "content": "404",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 80,
+                      "fontWeight": "800",
+                      "letterSpacing": -2
+                    },
+                    {
+                      "type": "text",
+                      "id": "O2g63",
+                      "name": "Error Title",
+                      "fill": "$text-dark",
+                      "content": "Page not found",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": "$text-2xl",
+                      "fontWeight": "800",
+                      "letterSpacing": -0.4
+                    },
+                    {
+                      "type": "text",
+                      "id": "uSOjb",
+                      "name": "Error Description",
+                      "fill": "$subtext-dark",
+                      "textGrowth": "fixed-width",
+                      "width": 360,
+                      "content": "The page you're looking for doesn't exist or has been moved.",
+                      "textAlign": "center",
+                      "fontFamily": "Inter",
+                      "fontSize": "$text-base",
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "l8zoAv",
+                      "name": "Go Home Button",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "$accent",
+                            "position": 0
+                          },
+                          {
+                            "color": "$accent-alt",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": "$radius-xl",
+                      "stroke": "$accent",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": "$space-5",
+                      "padding": [
+                        "$space-5",
+                        "$space-7"
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "ecNFF",
+                          "name": "Home Icon",
+                          "width": 16,
+                          "height": 16,
+                          "icon": "arrow-left",
+                          "library": "lucide",
+                          "fill": "$text-on-accent"
+                        },
+                        {
+                          "type": "text",
+                          "id": "uAwOV",
+                          "name": "Button Label",
+                          "fill": "$text-on-accent",
+                          "content": "Go Home",
+                          "fontFamily": "Inter",
+                          "fontSize": "$text-base",
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "CpzQj",
+      "x": 2096,
+      "y": 2508,
+      "name": "Not Found Mobile Light",
+      "clip": true,
+      "width": 320,
+      "height": 960,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 180,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "$bg-light-1",
+            "position": 0
+          },
+          {
+            "color": "$bg-light-2",
+            "position": 1
+          }
+        ]
+      },
+      "cornerRadius": "$radius-4xl",
+      "stroke": "$line-light",
+      "strokeWidth": 1,
+      "strokeAlignment": "inner",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "sjuhn",
+          "name": "Shell",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": "$space-8",
+          "padding": [
+            "$space-7",
+            "$space-5"
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "ZfkhF",
+              "name": "Header",
+              "width": "fill_container",
+              "gap": "$space-5",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Jdewc",
+                  "name": "Logo Icon",
+                  "width": 40,
+                  "height": 40,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "$accent",
+                        "position": 0
+                      },
+                      {
+                        "color": "$accent-alt",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": "$radius-lg",
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Oq6GX",
+                      "name": "Logo Letter",
+                      "fill": "$text-on-accent",
+                      "content": "F",
+                      "fontFamily": "Inter",
+                      "fontSize": 20,
+                      "fontWeight": "800"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "st6BF",
+                  "name": "Logo Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$space-1",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Axp61",
+                      "name": "App Name",
+                      "fill": "$text-light",
+                      "content": "Favoritable",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "800"
+                    },
+                    {
+                      "type": "text",
+                      "id": "d3IvJ",
+                      "name": "App Tagline",
+                      "fill": "$subtext-light",
+                      "content": "Modern bookmark library",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "aHmuR",
+              "name": "Center Wrap",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "K7fJcu",
+                  "name": "404 Content",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$space-7",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "lc4jt",
+                      "name": "Error Code",
+                      "fill": "$line-light",
+                      "content": "404",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 72,
+                      "fontWeight": "800",
+                      "letterSpacing": -2
+                    },
+                    {
+                      "type": "text",
+                      "id": "g06kt",
+                      "name": "Error Title",
+                      "fill": "$text-light",
+                      "content": "Page not found",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": "$text-xl",
+                      "fontWeight": "800",
+                      "letterSpacing": -0.4
+                    },
+                    {
+                      "type": "text",
+                      "id": "PtUpz",
+                      "name": "Error Description",
+                      "fill": "$subtext-light",
+                      "textGrowth": "fixed-width",
+                      "width": 260,
+                      "content": "The page you're looking for doesn't exist or has been moved.",
+                      "textAlign": "center",
+                      "fontFamily": "Inter",
+                      "fontSize": "$text-sm",
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ckpQc",
+                      "name": "Go Home Button",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "$accent",
+                            "position": 0
+                          },
+                          {
+                            "color": "$accent-alt",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": "$radius-xl",
+                      "stroke": "$accent",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": "$space-4",
+                      "padding": [
+                        "$space-5",
+                        "$space-6"
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "Znhaj",
+                          "name": "Home Icon",
+                          "width": 16,
+                          "height": 16,
+                          "icon": "arrow-left",
+                          "library": "lucide",
+                          "fill": "$text-on-accent"
+                        },
+                        {
+                          "type": "text",
+                          "id": "M42yf7",
+                          "name": "Button Label",
+                          "fill": "$text-on-accent",
+                          "content": "Go Home",
+                          "fontFamily": "Inter",
+                          "fontSize": "$text-base",
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "vE1Kn",
+      "x": 2532,
+      "y": 2508,
+      "name": "Not Found Mobile Dark",
+      "clip": true,
+      "width": 320,
+      "height": 960,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 180,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "$bg-dark-1",
+            "position": 0
+          },
+          {
+            "color": "$bg-dark-2",
+            "position": 1
+          }
+        ]
+      },
+      "cornerRadius": "$radius-4xl",
+      "stroke": "$line-dark",
+      "strokeWidth": 1,
+      "strokeAlignment": "inner",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "edcow",
+          "name": "Shell",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": "$space-8",
+          "padding": [
+            "$space-7",
+            "$space-5"
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "WAz1G",
+              "name": "Header",
+              "width": "fill_container",
+              "gap": "$space-5",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ohctq",
+                  "name": "Logo Icon",
+                  "width": 40,
+                  "height": 40,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 135,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "$accent",
+                        "position": 0
+                      },
+                      {
+                        "color": "$accent-alt",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": 14,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "FdSrb",
+                      "name": "Logo Letter",
+                      "fill": "$text-dark-alt",
+                      "content": "F",
+                      "fontFamily": "Inter",
+                      "fontSize": 20,
+                      "fontWeight": "800"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Sz4Up",
+                  "name": "Logo Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "MgapX",
+                      "name": "App Name",
+                      "fill": "$text-dark-alt",
+                      "content": "Favoritable",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "800"
+                    },
+                    {
+                      "type": "text",
+                      "id": "q1dul",
+                      "name": "App Tagline",
+                      "fill": "$subtext-dark-alt",
+                      "content": "Modern bookmark library",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "hBoLM",
+              "name": "Center Wrap",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "T80cF4",
+                  "name": "404 Content",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": "$space-7",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "P9VaP",
+                      "name": "Error Code",
+                      "fill": "$line-dark",
+                      "content": "404",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": 72,
+                      "fontWeight": "800",
+                      "letterSpacing": -2
+                    },
+                    {
+                      "type": "text",
+                      "id": "DMU47",
+                      "name": "Error Title",
+                      "fill": "$text-dark",
+                      "content": "Page not found",
+                      "fontFamily": "Plus Jakarta Sans",
+                      "fontSize": "$text-xl",
+                      "fontWeight": "800",
+                      "letterSpacing": -0.4
+                    },
+                    {
+                      "type": "text",
+                      "id": "w5rnR",
+                      "name": "Error Description",
+                      "fill": "$subtext-dark",
+                      "textGrowth": "fixed-width",
+                      "width": 260,
+                      "content": "The page you're looking for doesn't exist or has been moved.",
+                      "textAlign": "center",
+                      "fontFamily": "Inter",
+                      "fontSize": "$text-sm",
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "UByjC",
+                      "name": "Go Home Button",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "$accent",
+                            "position": 0
+                          },
+                          {
+                            "color": "$accent-alt",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": "$radius-xl",
+                      "stroke": "$accent",
+                      "strokeWidth": 1,
+                      "strokeAlignment": "inner",
+                      "gap": "$space-4",
+                      "padding": [
+                        "$space-5",
+                        "$space-6"
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "iRWbO",
+                          "name": "Home Icon",
+                          "width": 16,
+                          "height": 16,
+                          "icon": "arrow-left",
+                          "library": "lucide",
+                          "fill": "$text-on-accent"
+                        },
+                        {
+                          "type": "text",
+                          "id": "J5n7l",
+                          "name": "Button Label",
+                          "fill": "$text-on-accent",
+                          "content": "Go Home",
+                          "fontFamily": "Inter",
+                          "fontSize": "$text-base",
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "variables": {

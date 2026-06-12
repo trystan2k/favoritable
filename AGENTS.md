@@ -44,6 +44,7 @@ This application is used to manage bookmarks, like saving, deleting, searching, 
 - **ALWAYS** Follow the same code standard for all files. Like CSS tokens usage.
 - **DO NOT** create custom components if they already exist in Base UI or can extend Base UI **MANDATORY**
 - **ALWAYS** create reusable components (like cards, buttons, etc) in a separate `src/components/` directory, and import them in the screens where they are used. Do not duplicate code.
+- Use correct component naming, following react-development skill conventions.
 
 ## Tasks
 
@@ -76,7 +77,7 @@ This project uses Linear for issue tracking and project management. GitHub is us
 - **Branch**: `feature/[linear-issue-id]-[title]` using the full Linear issue identifier, for example `feature/FAV-123-score-engine`
 - **Commit**: `[type]: [description]` (feat/fix/docs/style/refactor/test/chore)
 - **Indent**: 2 spaces
-- **Files**: snake_case/kebab-case | **Code**: camelCase
+- **Files**: React component files use PascalCase matching exported component name; component CSS Modules use same PascalCase basename; component browser tests use same basename; non-component modules/tests/scripts use kebab-case; TanStack route reserved filenames exempt | **Code**: camelCase
 - **Units**: rem (prefer), px (only for fixed sizing) - but always use the design tokens for spacing and typography
 - **Linear Team**: `Favoritable` (<https://linear.app/trystanworkspace>)
 - **Linear Project**: `Favoritable` (<https://linear.app/trystanworkspace/project/favoritable-1f39caf3096b/overview)
@@ -104,6 +105,7 @@ This project uses Linear for issue tracking and project management. GitHub is us
 - `react-development` - Modern React 19 patterns and best practices
 - `react-view-transitions` - React View Transitions
 - `tanstack-start` - Tanstack Start features
+- `tanstack-start-architecture` - Favoritable feature-sliced TanStack Start architecture rules
 - `typescript-development` - Modern TypeScript patterns and strict type safety
 - `ui-ux-pro-max` - Advanced UI/UX principles
 - `vite` - Vite features

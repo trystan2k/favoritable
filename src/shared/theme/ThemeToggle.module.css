@@ -1,0 +1,63 @@
+.field {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-125);
+  padding: var(--space-075) var(--space-125);
+  border: var(--border-width-subtle) solid var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  background: var(--color-background-surface);
+}
+
+.label {
+  color: var(--color-text-secondary);
+  font-size: var(--typography-font-size-md);
+  font-weight: var(--typography-font-weight-semibold);
+}
+
+.control {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 2.75rem;
+  height: 1.625rem;
+  padding: var(--space-025);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-background-surface-soft);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.control[aria-checked='true'] {
+  background: var(--color-accent-primary);
+}
+
+.control:focus-visible {
+  outline: 0.125rem solid var(--color-accent-primary);
+  outline-offset: 0.125rem;
+}
+
+.thumb {
+  display: block;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: var(--radius-full);
+  background: var(--component-auth-logo-surface);
+  box-shadow: var(--shadow-elevation-sheet-light);
+  transition: transform 150ms ease;
+}
+
+.control[aria-checked='true'] .thumb {
+  transform: translateX(1.125rem);
+}
+
+:global(:root[data-theme='dark']) .thumb {
+  box-shadow: var(--shadow-elevation-sheet-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .control,
+  .thumb {
+    transition: none;
+  }
+}
