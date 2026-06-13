@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/trystan2k/favoritable/compare/v0.2.0...v0.3.0) (2026-06-13)
+
+
+### Features
+
+* add auth shell foundation ([802eb7f](https://github.com/trystan2k/favoritable/commit/802eb7f533236e680ee12b822eb1b7ec9c892c5d))
+
 ## [0.2.0](https://github.com/trystan2k/favoritable/compare/v0.1.0...v0.2.0) (2026-06-11)
 
 
