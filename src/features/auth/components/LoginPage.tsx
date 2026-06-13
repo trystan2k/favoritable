@@ -6,6 +6,7 @@ import { authProviderCopy, placeholderAuthProviderIds } from '../lib/auth-provid
 
 import { ProviderButton } from './ProviderButton';
 import styles from './LoginPage.module.css';
+import { APP_VERSION } from '@/version';
 
 type LoginPageProps = {
   isGoogleAuthAvailable: boolean;
@@ -87,6 +88,7 @@ export function LoginPage({ isGoogleAuthAvailable }: LoginPageProps) {
               <span className={styles.desktopOnly}>
                 © {currentYear} Favoritable. All rights reserved.
               </span>
+              <span className={styles.desktopOnly}>{APP_VERSION}</span>
             </p>
           </div>
         </section>

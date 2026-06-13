@@ -152,6 +152,8 @@
 .heroFootnote {
   font-size: var(--typography-font-size-xs);
   opacity: 0.7;
+  display: flex;
+  justify-content: space-between;
 }
 
 .panel {
