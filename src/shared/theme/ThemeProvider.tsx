@@ -47,6 +47,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [selectedTheme, theme]);
 
   useEffect(() => {
+    if (typeof window.matchMedia !== 'function') {
+      return;
+    }
+
     const mediaQueryList = window.matchMedia(themeMediaQuery);
 
     const handleMediaQueryChange = () => {
@@ -60,6 +64,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     handleMediaQueryChange();
     mediaQueryList.addEventListener('change', handleMediaQueryChange);
 
+    // oxlint-disable-next-line typescript/consistent-return
     return () => {
       mediaQueryList.removeEventListener('change', handleMediaQueryChange);
     };

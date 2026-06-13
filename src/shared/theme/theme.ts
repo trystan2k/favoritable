@@ -10,7 +10,7 @@ export function isTheme(value: unknown): value is Theme {
 }
 
 export function getSystemTheme(): Theme {
-  if (typeof window === 'undefined') {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
     return 'light';
   }
 
@@ -57,18 +57,17 @@ export const themeBootstrapScript = `(() => {
   const mediaQuery = '${themeMediaQuery}';
   const root = document.documentElement;
 
+  const prefersDark =
+  typeof window.matchMedia === 'function' && window.matchMedia(mediaQuery).matches;
+
   try {
     const storedTheme = window.localStorage.getItem(storageKey);
-    const theme = storedTheme === 'dark' || storedTheme === 'light'
-      ? storedTheme
-      : window.matchMedia(mediaQuery).matches
-        ? 'dark'
-        : 'light';
+    const theme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : prefersDark ? 'dark' : 'light';
 
     root.dataset.theme = theme;
     root.style.colorScheme = theme;
   } catch {
-    const fallbackTheme = window.matchMedia(mediaQuery).matches ? 'dark' : 'light';
+    const fallbackTheme = prefersDark ? 'dark' : 'light';
 
     root.dataset.theme = fallbackTheme;
     root.style.colorScheme = fallbackTheme;
