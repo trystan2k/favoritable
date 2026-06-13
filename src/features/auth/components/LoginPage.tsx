@@ -115,6 +115,7 @@ export function LoginPage({ isGoogleAuthAvailable }: LoginPageProps) {
                   disabled
                   key={provider}
                   provider={provider}
+                  badgeLabel="soon"
                 />
               ))}
             </div>

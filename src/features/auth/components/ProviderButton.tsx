@@ -24,7 +24,11 @@ export function ProviderButton({
   provider
 }: ProviderButtonProps) {
   const copy = authProviderCopy[provider];
-  const buttonClassName = [styles.button, styles[provider], disabled ? styles.disabled : '']
+  const buttonClassName = [
+    styles.button,
+    styles[provider],
+    disabled || isLoading ? styles.disabled : ''
+  ]
     .filter(Boolean)
     .join(' ');
   const buttonLabel = label ?? (isLoading ? copy.loadingLabel : copy.label);
