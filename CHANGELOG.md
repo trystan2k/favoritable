@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/trystan2k/favoritable/compare/v0.3.0...v0.3.1) (2026-06-13)
+
+
+### Bug Fixes
+
+* **config:** update ci and wrangler configuration ([9566041](https://github.com/trystan2k/favoritable/commit/95660412f20ccf842301314d3dd100af0cbd8cb5))
+
 ## [0.3.0](https://github.com/trystan2k/favoritable/compare/v0.2.0...v0.3.0) (2026-06-13)
 
 
