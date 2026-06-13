@@ -1,0 +1,189 @@
+.shell {
+  display: grid;
+  min-height: 100vh;
+  background: var(--gradient-background-app);
+}
+
+.skipLink {
+  position: absolute;
+  top: var(--space-100);
+  left: var(--space-100);
+  z-index: 1;
+  padding: var(--space-100) var(--space-150);
+  border: var(--border-width-subtle) solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-background-surface);
+  color: var(--color-text-primary);
+  font-size: var(--typography-font-size-sm);
+  font-weight: var(--typography-font-weight-semibold);
+  text-decoration: none;
+  transform: translateY(calc(-100% - var(--space-100)));
+}
+
+.skipLink:focus-visible {
+  transform: translateY(0);
+}
+
+.sidebar {
+  display: grid;
+  align-content: start;
+  gap: var(--space-200);
+  padding: var(--space-200);
+  border-right: var(--border-width-subtle) solid var(--color-border-subtle);
+  background: var(--color-background-surface);
+}
+
+.sidebarBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-125);
+}
+
+.sidebarBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-lg);
+  background: var(--component-auth-hero-gradient);
+  color: var(--component-auth-hero-text);
+  font-size: var(--typography-font-size-xl);
+  font-weight: var(--typography-font-weight-extrabold);
+}
+
+.sidebarCopy,
+.headerCopy {
+  display: grid;
+  gap: var(--space-050);
+}
+
+.sidebarEyebrow,
+.sidebarTitle,
+.sidebarFootnote,
+.headerEyebrow,
+.headerTitle,
+.headerCaption,
+.headerIdentity,
+.headerBody,
+.signOutError {
+  margin: 0;
+}
+
+.sidebarEyebrow,
+.headerEyebrow {
+  color: var(--color-text-muted);
+  font-size: var(--typography-font-size-sm);
+  font-weight: var(--typography-font-weight-semibold);
+  letter-spacing: var(--typography-letter-spacing-count);
+  text-transform: uppercase;
+}
+
+.sidebarTitle,
+.headerTitle {
+  color: var(--color-text-heading);
+  font-family: var(--typography-font-family-display);
+  line-height: var(--typography-line-height-compact);
+}
+
+.sidebarTitle {
+  font-size: var(--typography-font-size-xl);
+}
+
+.sidebarNav {
+  display: grid;
+  gap: var(--space-100);
+}
+
+.sidebarItem {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 var(--space-150);
+  border: var(--border-width-subtle) solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: var(--typography-font-size-base);
+  font-weight: var(--typography-font-weight-semibold);
+}
+
+.sidebarItemActive {
+  border-color: var(--color-border-subtle);
+  background: var(--color-background-surface-selected);
+  color: var(--color-text-primary);
+}
+
+.sidebarFootnote,
+.headerBody {
+  color: var(--color-text-secondary);
+  font-size: var(--typography-font-size-base);
+  line-height: var(--typography-line-height-body);
+}
+
+.mainColumn {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.header {
+  display: grid;
+  gap: var(--space-200);
+  padding: var(--space-200);
+  border-bottom: var(--border-width-subtle) solid var(--color-border-subtle);
+}
+
+.headerTitle {
+  font-size: var(--typography-font-size-3xl);
+}
+
+.headerCaption {
+  color: var(--color-text-muted);
+  font-size: var(--typography-font-size-sm);
+  font-weight: var(--typography-font-weight-semibold);
+}
+
+.headerIdentity {
+  color: var(--color-text-primary);
+  font-size: var(--typography-font-size-base);
+  font-weight: var(--typography-font-weight-semibold);
+}
+
+.headerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-100);
+}
+
+.signOutError {
+  color: var(--color-text-danger);
+  font-size: var(--typography-font-size-sm);
+  font-weight: var(--typography-font-weight-semibold);
+}
+
+.content {
+  display: grid;
+  align-content: start;
+  padding: var(--space-200);
+}
+
+@media (width >= 64rem) {
+  .shell {
+    grid-template-columns: var(--layout-shell-sidebar) minmax(0, 1fr);
+  }
+
+  .header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .content {
+    padding: var(--space-300);
+  }
+}
+
+@media (width < 64rem) {
+  .sidebar {
+    border-right: 0;
+    border-bottom: var(--border-width-subtle) solid var(--color-border-subtle);
+  }
+}

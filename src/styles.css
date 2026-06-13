@@ -15,13 +15,26 @@ body {
 }
 
 html {
-  background: var(--gradient-background-app);
+  background: var(--color-background-app);
   color: inherit;
 }
 
 body {
   margin: 0;
-  background: transparent;
+  background: var(--gradient-background-app);
   color: inherit;
   font: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
 }

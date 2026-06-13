@@ -1,0 +1,122 @@
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-100);
+  min-height: 2.75rem;
+  padding: var(--space-075) var(--space-100) var(--space-075) var(--space-075);
+  border: var(--border-width-subtle) solid var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  background: var(--color-background-surface);
+  color: var(--color-text-primary);
+  font: inherit;
+  cursor: pointer;
+}
+
+.trigger:focus-visible {
+  outline: 0.125rem solid var(--color-accent-primary);
+  outline-offset: 0.125rem;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.125rem;
+  height: 2.125rem;
+  border-radius: var(--radius-full);
+  background: var(--color-background-surface-soft);
+  color: var(--color-text-heading);
+  font-size: var(--typography-font-size-md);
+  font-weight: var(--typography-font-weight-extrabold);
+}
+
+.identity {
+  display: grid;
+  min-width: 0;
+}
+
+.name,
+.email {
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.name {
+  color: var(--color-text-heading);
+  font-size: var(--typography-font-size-md);
+  font-weight: var(--typography-font-weight-semibold);
+}
+
+.email {
+  color: var(--color-text-muted);
+  font-size: var(--typography-font-size-sm);
+}
+
+.popup {
+  z-index: 20;
+}
+
+.panel {
+  display: grid;
+  gap: var(--space-075);
+  width: min(18rem, calc(100vw - (var(--space-200) * 2)));
+  padding: var(--space-175);
+  border: var(--border-width-subtle) solid var(--color-border-subtle);
+  border-radius: var(--radius-3xl);
+  background: var(--color-background-surface);
+  box-shadow: var(--shadow-elevation-sheet-light);
+}
+
+.kicker,
+.menuName,
+.menuEmail {
+  margin: 0;
+}
+
+.kicker {
+  color: var(--color-text-muted);
+  font-size: var(--typography-font-size-sm);
+  font-weight: var(--typography-font-weight-semibold);
+  letter-spacing: var(--typography-letter-spacing-count);
+  text-transform: uppercase;
+}
+
+.menuName {
+  color: var(--color-text-heading);
+  font-size: var(--typography-font-size-lg);
+  font-weight: var(--typography-font-weight-bold);
+}
+
+.menuEmail {
+  color: var(--color-text-secondary);
+  font-size: var(--typography-font-size-base);
+}
+
+.action {
+  min-height: 2.75rem;
+  margin-top: var(--space-125);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-background-surface-danger-soft);
+  color: var(--color-status-danger-text);
+  font: inherit;
+  font-weight: var(--typography-font-weight-semibold);
+  cursor: pointer;
+}
+
+.action:focus-visible {
+  outline: 0.125rem solid var(--color-accent-primary);
+  outline-offset: 0.125rem;
+}
+
+:global(:root[data-theme='dark']) .panel {
+  box-shadow: var(--shadow-elevation-sheet-dark);
+}
+
+@media (width < 48rem) {
+  .identity {
+    display: none;
+  }
+}

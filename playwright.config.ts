@@ -1,7 +1,13 @@
+import { randomUUID } from 'node:crypto';
+
 import { defineConfig, devices } from '@playwright/test';
 
 const E2E_PORT = 4173;
 const E2E_BASE_URL = `http://127.0.0.1:${E2E_PORT}`;
+const E2E_TEST_SESSION_SECRET =
+  process.env.E2E_TEST_SESSION_SECRET ?? `${randomUUID()}-${randomUUID()}`;
+
+process.env.E2E_TEST_SESSION_SECRET = E2E_TEST_SESSION_SECRET;
 
 export default defineConfig({
   testDir: './e2e/tests',

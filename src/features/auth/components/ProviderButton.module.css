@@ -1,0 +1,84 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--login-provider-button-gap, var(--space-125));
+  width: 100%;
+  min-height: var(--login-provider-button-min-height, 3rem);
+  padding: var(--login-provider-button-padding-block, var(--space-150))
+    var(--login-provider-button-padding-inline, var(--space-250));
+  border: var(--border-width-subtle) solid transparent;
+  border-radius: var(--radius-md);
+  font: inherit;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.7;
+}
+
+.button:focus-visible {
+  outline: 0.125rem solid var(--color-accent-primary);
+  outline-offset: 0.125rem;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--login-provider-button-icon-size, 1.25rem);
+  min-width: var(--login-provider-button-icon-size, 1.25rem);
+  font-size: var(--login-provider-button-label-size, var(--typography-font-size-base));
+  font-weight: var(--typography-font-weight-extrabold);
+  line-height: 1;
+}
+
+.label {
+  font-size: var(--login-provider-button-label-size, var(--typography-font-size-base));
+  font-weight: var(--typography-font-weight-bold);
+  line-height: var(--typography-line-height-compact);
+  text-align: center;
+}
+
+.badge {
+  padding: var(--space-025) var(--space-100);
+  border-radius: var(--radius-full);
+  background: var(--color-state-overlay);
+  color: inherit;
+  font-size: var(--typography-font-size-sm);
+  font-weight: var(--typography-font-weight-semibold);
+}
+
+.google {
+  border-color: var(--component-provider-google-border);
+  background: var(--component-provider-google-surface);
+  color: var(--component-provider-google-text);
+}
+
+.facebook {
+  border-color: var(--component-provider-facebook-border);
+  background: var(--component-provider-facebook-surface);
+  color: var(--component-provider-facebook-text);
+}
+
+.github {
+  border-color: var(--component-provider-github-border);
+  background: var(--component-provider-github-surface);
+  color: var(--component-provider-github-text);
+}
+
+.apple {
+  border-color: var(--component-provider-apple-border);
+  background: var(--component-provider-apple-surface);
+  color: var(--component-provider-apple-text);
+}
+
+.x {
+  border-color: var(--component-provider-x-border);
+  background: var(--component-provider-x-surface);
+  color: var(--component-provider-x-text);
+}
+
+.disabled {
+  cursor: not-allowed;
+}

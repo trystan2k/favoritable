@@ -24,6 +24,7 @@ https://github.com/trystan2k/skills:oxlint
 https://github.com/currents-dev/playwright-best-practices-skill:playwright-best-practices
 https://github.com/microsoft/playwright-cli:playwright-cli
 https://github.com/deckardger/tanstack-agent-skills:tanstack-start-best-practices
+https://github.com/trystan2k/skills:tanstack-start-architecture
 https://github.com/trystan2k/skills:react-development
 https://github.com/trystan2k/skills:typescript-development
 https://github.com/nextlevelbuilder/ui-ux-pro-max-skill:ui-ux-pro-max

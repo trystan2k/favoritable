@@ -5,6 +5,9 @@
 
 # Local Dev DB
 **/local.db
+/data/*.db
+/data/*.db-shm
+/data/*.db-wal
 
 # Test DB
 **/tests/**/test-**.db
@@ -17,10 +20,15 @@ node_modules
 
 # Local env files
 .env
+.env.local
+.env.*.local
 !.env.test
 
 # Testing
 coverage
+.vitest-attachments/
+test-results/
+**/__screenshots__/
 
 # Turbo
 .turbo
@@ -36,8 +44,6 @@ dist
 playwright/
 .playwright/
 playwright-report/
-
-
 
 # Debug
 npm-debug.log*

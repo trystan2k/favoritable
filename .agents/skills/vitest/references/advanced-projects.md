@@ -131,7 +131,7 @@ defineConfig({
 // vitest.shared.ts
 export const sharedConfig = {
   testTimeout: 10000,
-  setupFiles: ['./test/setup.ts'],
+  setupFiles: ['./tests/setup.ts'],
 }
 
 // vitest.config.ts
