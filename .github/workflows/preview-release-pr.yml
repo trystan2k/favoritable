@@ -55,13 +55,13 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: versions upload --preview-alias release-pr-${{ github.event.workflow_run.pull_requests[0].number }}
+          command: versions upload --preview-alias release-preview
 
       - name: Set preview URL
         id: preview_url
         shell: bash
         env:
-          PREVIEW_ALIAS: release-pr-${{ github.event.workflow_run.pull_requests[0].number }}
+          PREVIEW_ALIAS: release-preview
           PRODUCTION_WORKERS_URL: ${{ env.PRODUCTION_WORKERS_URL }}
         run: |
           PREVIEW_HOST="${PREVIEW_ALIAS}-${PRODUCTION_WORKERS_URL#https://}"

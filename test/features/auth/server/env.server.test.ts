@@ -111,18 +111,18 @@ describe('getAuthEnvironment', () => {
       'https://favoritable.trystan2k.workers.dev, https://*-favoritable.trystan2k.workers.dev';
 
     const environment = getAuthEnvironment(
-      new Request('https://release-pr-42-favoritable.trystan2k.workers.dev/login', {
+      new Request('https://release-preview-favoritable.trystan2k.workers.dev/login', {
         headers: {
-          host: 'release-pr-42-favoritable.trystan2k.workers.dev',
+          host: 'release-preview-favoritable.trystan2k.workers.dev',
           'x-forwarded-proto': 'https'
         }
       })
     );
 
-    expect(environment.baseUrl).toBe('https://release-pr-42-favoritable.trystan2k.workers.dev');
+    expect(environment.baseUrl).toBe('https://release-preview-favoritable.trystan2k.workers.dev');
     expect(environment.trustedOrigins).toEqual(
       expect.arrayContaining([
-        'https://release-pr-42-favoritable.trystan2k.workers.dev',
+        'https://release-preview-favoritable.trystan2k.workers.dev',
         'https://favoritable.trystan2k.workers.dev',
         'https://*-favoritable.trystan2k.workers.dev'
       ])
