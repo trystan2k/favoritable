@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/trystan2k/favoritable/compare/v0.3.1...v0.4.0) (2026-06-13)
+
+
+### Features
+
+* add request-based auth and improve previews ([634887a](https://github.com/trystan2k/favoritable/commit/634887a88bc0c785bf2c0197df37648fbccbab5c))
+
 ## [0.3.1](https://github.com/trystan2k/favoritable/compare/v0.3.0...v0.3.1) (2026-06-13)
 
 
