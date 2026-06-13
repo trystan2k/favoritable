@@ -5,8 +5,8 @@ import { getAuth } from '@/features/auth/server/auth.server';
 export const Route = createFileRoute('/api/auth/$')({
   server: {
     handlers: {
-      GET: ({ request }) => getAuth().handler(request),
-      POST: ({ request }) => getAuth().handler(request)
+      GET: ({ request }) => getAuth(request).handler(request),
+      POST: ({ request }) => getAuth(request).handler(request)
     }
   }
 });

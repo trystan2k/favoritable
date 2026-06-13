@@ -13,9 +13,10 @@ type AuthPlugin = NonNullable<Parameters<typeof betterAuth>[0]['plugins']>[numbe
 type CreateAuthOptions = {
   additionalPlugins?: AuthPlugin[];
   environment?: AuthEnvironment;
+  request?: Request;
 };
 
-let authInstance: ReturnType<typeof createAuth> | undefined;
+const authInstances = new Map<string, ReturnType<typeof createAuth>>();
 
 function getConfiguredSocialProviders(authEnvironment: AuthEnvironment) {
   const { googleProvider } = authEnvironment;
@@ -32,7 +33,7 @@ function getConfiguredSocialProviders(authEnvironment: AuthEnvironment) {
 }
 
 export function createAuth(options: CreateAuthOptions = {}) {
-  const authEnvironment = options.environment ?? getAuthEnvironment();
+  const authEnvironment = options.environment ?? getAuthEnvironment(options.request);
   const database = options.environment
     ? createDb(authEnvironment.databaseUrl, authEnvironment.databaseAuthToken)
     : getDb();
@@ -62,20 +63,24 @@ export function createAuth(options: CreateAuthOptions = {}) {
   });
 }
 
-export function getAuth() {
-  if (authInstance) {
-    return authInstance;
+export function getAuth(request?: Request) {
+  const authEnvironment = getAuthEnvironment(request);
+  const cacheKey = authEnvironment.baseUrl;
+  const cachedAuth = authInstances.get(cacheKey);
+
+  if (cachedAuth) {
+    return cachedAuth;
   }
 
-  const auth = createAuth();
+  const auth = createAuth({ environment: authEnvironment });
 
-  authInstance = auth;
+  authInstances.set(cacheKey, auth);
 
   return auth;
 }
 
 export async function getServerAuthSession(request = getRequest()) {
-  return getAuth().api.getSession({
+  return getAuth(request).api.getSession({
     headers: request.headers
   });
 }

@@ -17,6 +17,7 @@ permissions:
 env:
   NODE_VERSION: 24.16.0
   PNPM_VERSION: 11.5.2
+  PRODUCTION_WORKERS_URL: https://favoritable.trystan2k.workers.dev
 
 jobs:
   deploy_preview:
@@ -54,14 +55,17 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --env preview
+          command: versions upload --preview-alias release-pr-${{ github.event.workflow_run.pull_requests[0].number }}
 
       - name: Set preview URL
         id: preview_url
         shell: bash
         env:
-          PREVIEW_URL: ${{ steps.deploy.outputs.deployment-url }}
-        run: echo "preview_url=$PREVIEW_URL" >> "$GITHUB_OUTPUT"
+          PREVIEW_ALIAS: release-pr-${{ github.event.workflow_run.pull_requests[0].number }}
+          PRODUCTION_WORKERS_URL: ${{ env.PRODUCTION_WORKERS_URL }}
+        run: |
+          PREVIEW_HOST="${PREVIEW_ALIAS}-${PRODUCTION_WORKERS_URL#https://}"
+          echo "preview_url=https://${PREVIEW_HOST}" >> "$GITHUB_OUTPUT"
 
       - name: Comment preview URL on the release PR
         uses: marocchino/sticky-pull-request-comment@v3

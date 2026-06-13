@@ -102,6 +102,34 @@ describe('getAuthEnvironment', () => {
     expect(environment.googleProvider.clientSecret).toBe('google-client-secret');
   });
 
+  test('prefers request origin for base url in production-like runs', () => {
+    process.env.NODE_ENV = 'production';
+    process.env.VITEST = 'false';
+    process.env.BETTER_AUTH_URL = 'https://favoritable.trystan2k.workers.dev';
+    process.env.BETTER_AUTH_SECRET = 'super-secret-value';
+    process.env.BETTER_AUTH_TRUSTED_ORIGINS =
+      'https://favoritable.trystan2k.workers.dev, https://*-favoritable.trystan2k.workers.dev';
+
+    const environment = getAuthEnvironment(
+      new Request('https://release-pr-42-favoritable.trystan2k.workers.dev/login', {
+        headers: {
+          host: 'release-pr-42-favoritable.trystan2k.workers.dev',
+          'x-forwarded-proto': 'https'
+        }
+      })
+    );
+
+    expect(environment.baseUrl).toBe('https://release-pr-42-favoritable.trystan2k.workers.dev');
+    expect(environment.trustedOrigins).toEqual(
+      expect.arrayContaining([
+        'https://release-pr-42-favoritable.trystan2k.workers.dev',
+        'https://favoritable.trystan2k.workers.dev',
+        'https://*-favoritable.trystan2k.workers.dev'
+      ])
+    );
+    expect(environment.useSecureCookies).toBe(true);
+  });
+
   test('rejects non-local deployments without an explicit secret', () => {
     process.env.NODE_ENV = 'production';
     process.env.VITEST = 'false';

@@ -27,6 +27,20 @@ export type AuthEnvironment = {
   useSecureCookies: boolean;
 };
 
+function getRequestOrigin(request: Request) {
+  const host = request.headers.get('x-forwarded-host') || request.headers.get('host');
+
+  if (!host) {
+    return undefined;
+  }
+
+  const protocolHeader = request.headers.get('x-forwarded-proto');
+  const protocol =
+    protocolHeader?.split(',')[0]?.trim() || new URL(request.url).protocol.slice(0, -1);
+
+  return `${protocol}://${host}`;
+}
+
 function readEnvironmentVariable(name: string) {
   const value = process.env[name]?.trim();
 
@@ -193,8 +207,9 @@ function warnAboutLocalGoogleOAuthConfiguration(
   }
 }
 
-export function getAuthEnvironment(): AuthEnvironment {
-  const baseUrl = getAuthBaseUrl();
+export function getAuthEnvironment(request?: Request): AuthEnvironment {
+  const configuredBaseUrl = getAuthBaseUrl();
+  const baseUrl = request ? getRequestOrigin(request) || configuredBaseUrl : configuredBaseUrl;
   const googleProvider = getGoogleProviderCredentials();
 
   warnAboutLocalGoogleOAuthConfiguration(baseUrl, googleProvider);
