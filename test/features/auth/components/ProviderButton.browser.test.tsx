@@ -1,10 +1,16 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { ProviderButton } from '@/features/auth/components/ProviderButton';
 import { TestI18nProvider } from '@/test-support/TestI18nProvider';
 
 describe('ProviderButton', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+    window.localStorage.setItem('favoritable-locale', 'en');
+    document.documentElement.lang = 'en';
+  });
+
   test.each([
     ['google', 'Continue with Google'],
     ['facebook', 'Continue with Facebook'],
