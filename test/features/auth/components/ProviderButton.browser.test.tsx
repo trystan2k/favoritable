@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
 
 import { ProviderButton } from '@/features/auth/components/ProviderButton';
+import { TestI18nProvider } from '@/test-support/TestI18nProvider';
 
 describe('ProviderButton', () => {
   test.each([
@@ -10,13 +11,21 @@ describe('ProviderButton', () => {
     ['github', 'Continue with GitHub'],
     ['apple', 'Continue with Apple']
   ] as const)('renders %s provider copy', (provider, label) => {
-    render(<ProviderButton provider={provider} />);
+    render(
+      <TestI18nProvider>
+        <ProviderButton provider={provider} />
+      </TestI18nProvider>
+    );
 
     expect(screen.getByRole('button', { name: label })).toBeDefined();
   });
 
   test('shows provider-specific loading copy for Google sign-in launch', () => {
-    render(<ProviderButton isLoading provider="google" />);
+    render(
+      <TestI18nProvider>
+        <ProviderButton isLoading provider="google" />
+      </TestI18nProvider>
+    );
 
     expect(screen.getByRole('button', { name: 'Starting Google sign-in…' })).toBeDisabled();
     expect(screen.queryByText('soon')).toBeNull();
@@ -26,13 +35,15 @@ describe('ProviderButton', () => {
     const onClick = vi.fn<() => void>();
 
     render(
-      <ProviderButton
-        badgeLabel="setup required"
-        disabled
-        label="Google OAuth unavailable"
-        onClick={onClick}
-        provider="google"
-      />
+      <TestI18nProvider>
+        <ProviderButton
+          badgeLabel="setup required"
+          disabled
+          label="Google OAuth unavailable"
+          onClick={onClick}
+          provider="google"
+        />
+      </TestI18nProvider>
     );
 
     const button = screen.getByRole('button', { name: 'Google OAuth unavailable' });

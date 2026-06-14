@@ -1,4 +1,5 @@
 export const appRoutes = {
   home: '/',
-  login: '/login'
+  login: '/login',
+  unknownPublic: '/this-route-does-not-exist'
 } as const;

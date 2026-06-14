@@ -3,11 +3,15 @@ import { createIsomorphicFn, createServerOnlyFn } from '@tanstack/react-start';
 
 import { getBrowserAuthClient } from '../lib/auth-client';
 
-const routeAuthErrorMessage = 'Failed to load Better Auth session.';
+export const routeAuthErrorMessage = 'Failed to load Better Auth session.';
 
 type BrowserRouteAuthSessionResult = Awaited<
   ReturnType<ReturnType<typeof getBrowserAuthClient>['getSession']>
 >;
+type RouteAuthSession = Awaited<ReturnType<typeof getRouteAuthSession>>;
+type RouteAuthContext = {
+  session?: RouteAuthSession;
+};
 
 const getServerRouteAuthSession = createServerOnlyFn(async () => {
   const { getRequest } = await import('@tanstack/react-start/server');
@@ -34,8 +38,16 @@ export const getRouteAuthSession = createIsomorphicFn()
   .server(() => getServerRouteAuthSession())
   .client(async () => resolveBrowserRouteAuthSession(await getBrowserAuthClient().getSession()));
 
-export async function redirectIfLoggedOut() {
-  const session = await getRouteAuthSession();
+export function getRouteContextAuthSession(context: unknown) {
+  if (!context || typeof context !== 'object' || !('session' in context)) {
+    return undefined;
+  }
+
+  return (context as RouteAuthContext).session;
+}
+
+export async function redirectIfLoggedOut(routeAuthSession?: RouteAuthSession) {
+  const session = routeAuthSession ?? (await getRouteAuthSession());
 
   if (!session) {
     throw redirect({ to: '/login' });

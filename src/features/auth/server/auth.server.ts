@@ -1,10 +1,17 @@
 import { getRequest } from '@tanstack/react-start/server';
 import { drizzleAdapter } from '@better-auth/drizzle-adapter';
 import { betterAuth } from 'better-auth';
+import { APIError } from 'better-auth/api';
 import { tanstackStartCookies } from 'better-auth/tanstack-start';
 
 import { createDb, getDb } from '@/db/client';
 import * as schema from '@/db/schema/auth';
+import {
+  defaultLocale,
+  getLocaleHintFromCookieHeader,
+  isLocale,
+  type Locale
+} from '@/shared/i18n/locale';
 import { getAuthEnvironment, hasProviderCredentials } from './env.server';
 import type { AuthEnvironment } from './env.server';
 
@@ -16,6 +23,15 @@ type CreateAuthOptions = {
   request?: Request;
 };
 
+type BetterAuthSession = Awaited<ReturnType<ReturnType<typeof createAuth>['api']['getSession']>>;
+type BaseAuthSession = NonNullable<BetterAuthSession>;
+type AuthSessionWithLocale =
+  | null
+  | (BaseAuthSession & {
+      user: BaseAuthSession['user'] & {
+        locale: Locale;
+      };
+    });
 const authInstances = new Map<string, ReturnType<typeof createAuth>>();
 
 function getConfiguredSocialProviders(authEnvironment: AuthEnvironment) {
@@ -32,6 +48,49 @@ function getConfiguredSocialProviders(authEnvironment: AuthEnvironment) {
     : undefined;
 }
 
+function getLocaleProperty(value: object) {
+  return Reflect.get(value, 'locale');
+}
+
+function resolveCanonicalLocale(
+  request: Request | null | undefined,
+  candidateLocale?: unknown,
+  fallback: Locale = defaultLocale
+) {
+  if (isLocale(candidateLocale)) {
+    return candidateLocale;
+  }
+
+  return getLocaleHintFromCookieHeader(request?.headers.get('cookie')) ?? fallback;
+}
+
+async function repairSessionLocale(
+  request: Request,
+  session: BetterAuthSession
+): Promise<AuthSessionWithLocale> {
+  if (!session) {
+    return null;
+  }
+
+  const storedLocale = getLocaleProperty(session.user);
+  const locale = resolveCanonicalLocale(request, storedLocale);
+
+  if (!isLocale(storedLocale)) {
+    await getAuth(request).api.updateUser({
+      body: { locale },
+      headers: request.headers
+    });
+  }
+
+  return {
+    ...session,
+    user: {
+      ...session.user,
+      locale
+    }
+  };
+}
+
 export function createAuth(options: CreateAuthOptions = {}) {
   const authEnvironment = options.environment ?? getAuthEnvironment(options.request);
   const database = options.environment
@@ -44,6 +103,9 @@ export function createAuth(options: CreateAuthOptions = {}) {
     secret: authEnvironment.secret,
     trustedOrigins: authEnvironment.trustedOrigins,
     advanced: {
+      ipAddress: {
+        ipAddressHeaders: ['cf-connecting-ip', 'x-forwarded-for', 'x-real-ip']
+      },
       useSecureCookies: authEnvironment.useSecureCookies
     },
     session: {
@@ -52,6 +114,50 @@ export function createAuth(options: CreateAuthOptions = {}) {
       cookieCache: {
         enabled: true,
         maxAge: 60 * 5
+      }
+    },
+    user: {
+      additionalFields: {
+        locale: {
+          type: 'string',
+          input: true,
+          required: false,
+          returned: true
+        }
+      }
+    },
+    databaseHooks: {
+      user: {
+        create: {
+          before: async (user, context) => ({
+            data: {
+              ...user,
+              locale: resolveCanonicalLocale(context?.request, getLocaleProperty(user))
+            }
+          })
+        },
+        update: {
+          before: async (user) => {
+            const locale = getLocaleProperty(user);
+
+            if (!Object.prototype.hasOwnProperty.call(user, 'locale') || locale === undefined) {
+              return undefined;
+            }
+
+            if (!isLocale(locale)) {
+              throw APIError.fromStatus('BAD_REQUEST', {
+                message: 'Unsupported locale.'
+              });
+            }
+
+            return {
+              data: {
+                ...user,
+                locale
+              }
+            };
+          }
+        }
       }
     },
     database: drizzleAdapter(database, {
@@ -72,15 +178,17 @@ export function getAuth(request?: Request) {
     return cachedAuth;
   }
 
-  const auth = createAuth({ environment: authEnvironment });
+  const authInstance = createAuth({ environment: authEnvironment });
 
-  authInstances.set(cacheKey, auth);
+  authInstances.set(cacheKey, authInstance);
 
-  return auth;
+  return authInstance;
 }
 
-export async function getServerAuthSession(request = getRequest()) {
-  return getAuth(request).api.getSession({
+export async function getServerAuthSession(request = getRequest()): Promise<AuthSessionWithLocale> {
+  const session = await getAuth(request).api.getSession({
     headers: request.headers
   });
+
+  return repairSessionLocale(request, session);
 }

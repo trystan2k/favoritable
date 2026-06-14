@@ -1,6 +1,7 @@
 import type { MouseEventHandler } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { authProviderCopy, type AuthProviderId } from '../lib/auth-providers';
+import { authProviderIcons, type AuthProviderId } from '../lib/auth-providers';
 
 import styles from './ProviderButton.module.css';
 
@@ -23,7 +24,7 @@ export function ProviderButton({
   onClick,
   provider
 }: ProviderButtonProps) {
-  const copy = authProviderCopy[provider];
+  const { t } = useTranslation();
   const buttonClassName = [
     styles.button,
     styles[provider],
@@ -31,7 +32,11 @@ export function ProviderButton({
   ]
     .filter(Boolean)
     .join(' ');
-  const buttonLabel = label ?? (isLoading ? copy.loadingLabel : copy.label);
+  const buttonLabel =
+    label ??
+    (isLoading
+      ? t(`auth.providers.${provider}.loadingLabel`)
+      : t(`auth.providers.${provider}.label`));
 
   return (
     <button
@@ -42,7 +47,7 @@ export function ProviderButton({
       type="button"
     >
       <span aria-hidden="true" className={styles.icon}>
-        {copy.icon}
+        {authProviderIcons[provider]}
       </span>
       <span className={styles.label}>{buttonLabel}</span>
       {badgeLabel ? (

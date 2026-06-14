@@ -1,24 +1,25 @@
+import { useTranslation } from 'react-i18next';
+
 import styles from './ProtectedHomePage.module.css';
 
 export function ProtectedHomePage() {
+  const { t } = useTranslation();
+
   return (
     <section aria-labelledby="protected-home-heading" className={styles.panel}>
-      <p className={styles.eyebrow}>Empty shell</p>
+      <p className={styles.eyebrow}>{t('home.eyebrow')}</p>
       <h2 className={styles.heading} id="protected-home-heading">
-        Auth foundation ready for bookmark features
+        {t('home.heading')}
       </h2>
-      <p className={styles.body}>
-        Google OAuth, persisted sessions, and protected shell access now replace the placeholder
-        auth seam from FAV-21.
-      </p>
+      <p className={styles.body}>{t('home.body')}</p>
       <div className={styles.statusRow}>
         <div className={styles.statusCard}>
-          <span className={styles.statusLabel}>Session</span>
-          <strong className={styles.statusValue}>Protected</strong>
+          <span className={styles.statusLabel}>{t('home.status.session')}</span>
+          <strong className={styles.statusValue}>{t('home.status.protected')}</strong>
         </div>
         <div className={styles.statusCard}>
-          <span className={styles.statusLabel}>Theme</span>
-          <strong className={styles.statusValue}>Persisted runtime toggle</strong>
+          <span className={styles.statusLabel}>{t('home.status.theme')}</span>
+          <strong className={styles.statusValue}>{t('home.status.themeValue')}</strong>
         </div>
       </div>
     </section>

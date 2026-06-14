@@ -1,6 +1,10 @@
 import { Popover } from '@base-ui/react/popover';
 import type { ComponentPropsWithoutRef } from 'react';
 import { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { LanguageSwitcher } from '@/shared/i18n/components/LanguageSwitcher';
+import { useLocale } from '@/shared/i18n/LocaleProvider';
 
 import styles from './ProfileMenu.module.css';
 
@@ -23,12 +27,15 @@ function getInitials(userName: string) {
 }
 
 export function ProfileMenu({ isSigningOut, onSignOut, userEmail, userName }: ProfileMenuProps) {
+  const { t } = useTranslation();
+  const { clearLocaleUpdateError, isUpdatingLocale, locale, localeUpdateError, setLocale } =
+    useLocale();
   const initials = useMemo(() => getInitials(userName), [userName]);
   const triggerLabel = useMemo(() => {
     const identity = userName ? `${userName} (${userEmail})` : userEmail;
 
-    return `Open account menu for ${identity}`;
-  }, [userEmail, userName]);
+    return t('profileMenu.openMenuForIdentity', { identity });
+  }, [t, userEmail, userName]);
   const renderTrigger = useCallback(
     (props: ComponentPropsWithoutRef<'button'>) => (
       <button {...props} type="button">
@@ -43,6 +50,13 @@ export function ProfileMenu({ isSigningOut, onSignOut, userEmail, userName }: Pr
     ),
     [initials, userEmail, userName]
   );
+  const handleLocaleChange = useCallback(
+    async (nextLocale: typeof locale) => {
+      clearLocaleUpdateError();
+      await setLocale(nextLocale);
+    },
+    [clearLocaleUpdateError, setLocale]
+  );
 
   return (
     <Popover.Root>
@@ -55,16 +69,28 @@ export function ProfileMenu({ isSigningOut, onSignOut, userEmail, userName }: Pr
         <Popover.Positioner align="end" side="bottom" sideOffset={12}>
           <Popover.Popup className={styles.popup}>
             <div className={styles.panel}>
-              <p className={styles.kicker}>Signed in</p>
+              <p className={styles.kicker}>{t('profileMenu.signedIn')}</p>
               <p className={styles.menuName}>{userName}</p>
               <p className={styles.menuEmail}>{userEmail}</p>
+              <LanguageSwitcher
+                align="end"
+                className={styles.languageSwitcher}
+                disabled={isUpdatingLocale}
+                locale={locale}
+                onLocaleChange={handleLocaleChange}
+              />
+              {localeUpdateError ? (
+                <output aria-live="polite" className={styles.statusMessage}>
+                  {t('appShell.localeSaveError')}
+                </output>
+              ) : null}
               <button
                 className={styles.action}
                 disabled={isSigningOut}
                 onClick={onSignOut}
                 type="button"
               >
-                {isSigningOut ? 'Signing out…' : 'Sign out'}
+                {isSigningOut ? t('profileMenu.signingOut') : t('profileMenu.signOut')}
               </button>
             </div>
           </Popover.Popup>

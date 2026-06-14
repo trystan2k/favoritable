@@ -1,0 +1,230 @@
+.hero {
+  display: grid;
+  align-content: space-between;
+  gap: var(--space-125);
+  min-height: 17.5rem;
+  padding: var(--space-175);
+  background: var(--component-auth-hero-gradient);
+  color: var(--component-auth-hero-text);
+}
+
+.heroContent,
+.heroCopy,
+.heroFooter {
+  display: grid;
+}
+
+.heroContent {
+  gap: var(--space-125);
+}
+
+.heroBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-100);
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-sm);
+  background: var(--component-auth-logo-surface);
+  color: var(--component-auth-logo-accent);
+  font-size: var(--typography-font-size-lg);
+  font-weight: var(--typography-font-weight-extrabold);
+}
+
+.heroLabel {
+  font-size: var(--typography-font-size-base);
+  font-weight: var(--typography-font-weight-extrabold);
+}
+
+.heroCopy {
+  gap: var(--space-125);
+}
+
+.heroHeading,
+.heroBody,
+.heroFootnote {
+  margin: 0;
+}
+
+.heroHeading {
+  font-size: var(--typography-font-size-4xl);
+  font-weight: var(--typography-font-weight-extrabold);
+  line-height: var(--typography-line-height-compact);
+}
+
+.heroBody {
+  max-width: 16.25rem;
+  font-size: var(--typography-font-size-md);
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.heroFooter {
+  gap: var(--space-050);
+}
+
+.heroShapes {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-100);
+  min-height: 3.125rem;
+}
+
+.heroShapes span {
+  display: block;
+  background: currentcolor;
+}
+
+.shapeCircleLarge {
+  width: 2.1875rem;
+  height: 2.1875rem;
+  border-radius: var(--radius-full);
+  opacity: 0.15;
+}
+
+.shapeDiamond {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  opacity: 0.1;
+  transform: rotate(45deg);
+}
+
+.shapeCircleSmall {
+  display: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-full);
+  opacity: 0.2;
+}
+
+.heroFootnote {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--typography-font-size-xs);
+  opacity: 0.7;
+}
+
+.desktopOnly {
+  display: none;
+}
+
+@media (width >= 48rem) {
+  .hero {
+    gap: var(--space-150);
+    min-height: 23.75rem;
+    padding: var(--space-225);
+  }
+
+  .heroContent {
+    gap: var(--space-150);
+  }
+
+  .heroHeading {
+    font-size: var(--typography-font-size-4xl);
+  }
+
+  .heroBody {
+    max-width: 20rem;
+    font-size: var(--typography-font-size-md);
+  }
+
+  .heroFooter {
+    gap: var(--space-075);
+  }
+
+  .heroShapes {
+    min-height: 5rem;
+    gap: var(--space-125);
+  }
+
+  .shapeCircleLarge {
+    width: 2.1875rem;
+    height: 2.1875rem;
+  }
+
+  .shapeDiamond {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .mobileOnly {
+    display: none;
+  }
+
+  .desktopOnly {
+    display: inline;
+  }
+}
+
+@media (width >= 64rem) {
+  .hero {
+    gap: var(--space-300);
+    min-height: 43.75rem;
+    padding: var(--space-300);
+  }
+
+  .heroBrand {
+    gap: var(--space-150);
+  }
+
+  .heroBadge {
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-lg);
+    font-size: var(--typography-font-size-2xl);
+  }
+
+  .heroLabel {
+    font-size: var(--typography-font-size-lg);
+  }
+
+  .heroContent,
+  .heroCopy {
+    gap: var(--space-200);
+  }
+
+  .heroHeading {
+    font-size: var(--typography-font-size-5xl);
+  }
+
+  .heroBody {
+    max-width: 23.75rem;
+    font-size: var(--typography-font-size-base);
+    line-height: 1.5;
+  }
+
+  .heroFooter {
+    gap: var(--space-100);
+  }
+
+  .heroShapes {
+    min-height: 7.5rem;
+    gap: var(--space-150);
+  }
+
+  .shapeCircleLarge {
+    width: 3.75rem;
+    height: 3.75rem;
+  }
+
+  .shapeDiamond {
+    width: 5rem;
+    height: 5rem;
+    border-radius: var(--radius-2xl);
+  }
+
+  .shapeCircleSmall {
+    display: block;
+  }
+
+  .heroFootnote {
+    font-size: var(--typography-font-size-xs);
+  }
+}

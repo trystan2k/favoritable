@@ -2844,21 +2844,21 @@
           "id": "M7V0c",
           "x": 748,
           "y": 100,
-          "width": 236,
-          "height": "fit_content(216)",
+          "width": "fit_content(236)",
           "fill": "$surface-light",
           "cornerRadius": "$radius-3xl",
           "stroke": "$line-light",
           "strokeWidth": 1,
           "strokeAlignment": "inner",
-          "layout": "none",
+          "layout": "vertical",
+          "gap": 8,
+          "padding": 16,
+          "alignItems": "center",
           "children": [
             {
               "type": "frame",
               "id": "thUzO",
-              "x": 12,
-              "y": 12,
-              "width": "fill_container(244)",
+              "width": "fill_container",
               "gap": 14,
               "alignItems": "center",
               "children": [
@@ -2952,15 +2952,15 @@
             },
             {
               "type": "frame",
-              "id": "ZVOl4",
-              "x": 12,
-              "y": 68,
-              "width": "fill_container(210)",
+              "id": "O9YTe",
+              "name": "Profile Row",
+              "width": "fill_container",
               "fill": "$surface-light",
               "cornerRadius": 14,
               "stroke": "$line-light",
               "strokeWidth": 1,
               "strokeAlignment": "inner",
+              "gap": "$space-7",
               "padding": [
                 12,
                 14
@@ -2968,8 +2968,19 @@
               "alignItems": "center",
               "children": [
                 {
+                  "type": "icon",
+                  "id": "g03CP2",
+                  "name": "User Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "user",
+                  "library": "lucide",
+                  "fill": "$text-light"
+                },
+                {
                   "type": "text",
-                  "id": "e9S1S",
+                  "id": "tv1ph",
+                  "name": "Profile Label",
                   "fill": "$text-light",
                   "content": "Profile settings",
                   "fontFamily": "Inter",
@@ -2980,15 +2991,15 @@
             },
             {
               "type": "frame",
-              "id": "r1nou",
-              "x": 12,
-              "y": 116,
-              "width": "fill_container(210)",
+              "id": "HNtef",
+              "name": "Theme Row",
+              "width": "fill_container",
               "fill": "$surface-light",
               "cornerRadius": 14,
               "stroke": "$line-light",
               "strokeWidth": 1,
               "strokeAlignment": "inner",
+              "gap": "$space-7",
               "padding": [
                 12,
                 14
@@ -2996,10 +3007,21 @@
               "alignItems": "center",
               "children": [
                 {
+                  "type": "icon",
+                  "id": "BnDqh",
+                  "name": "Sun Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "sun",
+                  "library": "lucide",
+                  "fill": "$text-light"
+                },
+                {
                   "type": "text",
-                  "id": "mGzHf",
+                  "id": "aEyOJ",
+                  "name": "Theme Label",
                   "fill": "$text-light",
-                  "content": "Theme and colors",
+                  "content": "Light",
                   "fontFamily": "Inter",
                   "fontSize": 13,
                   "fontWeight": "600"
@@ -3008,15 +3030,15 @@
             },
             {
               "type": "frame",
-              "id": "bYcN7",
-              "x": 12,
-              "y": 164,
-              "width": "fill_container(210)",
+              "id": "ZFCbx",
+              "name": "Language Row",
+              "width": "fill_container",
               "fill": "$surface-light",
               "cornerRadius": 14,
               "stroke": "$line-light",
               "strokeWidth": 1,
               "strokeAlignment": "inner",
+              "gap": "$space-7",
               "padding": [
                 12,
                 14
@@ -3024,8 +3046,58 @@
               "alignItems": "center",
               "children": [
                 {
+                  "type": "icon",
+                  "id": "NsHFj",
+                  "name": "Globe Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "globe",
+                  "library": "lucide",
+                  "fill": "$text-light"
+                },
+                {
                   "type": "text",
-                  "id": "Bi7KB",
+                  "id": "j0zc4",
+                  "name": "Language Label",
+                  "fill": "$text-light",
+                  "content": "English",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "K5nb4q",
+              "name": "Sign Out Row",
+              "width": "fill_container",
+              "fill": "$surface-light",
+              "cornerRadius": 14,
+              "stroke": "$line-light",
+              "strokeWidth": 1,
+              "strokeAlignment": "inner",
+              "gap": "$space-7",
+              "padding": [
+                12,
+                14
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "d2Cw4W",
+                  "name": "Log Out Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "log-out",
+                  "library": "lucide",
+                  "fill": "$danger-light"
+                },
+                {
+                  "type": "text",
+                  "id": "fqEdB",
+                  "name": "Sign Out Label",
                   "fill": "$danger-light",
                   "content": "Sign out",
                   "fontFamily": "Inter",
@@ -5845,20 +5917,20 @@
           "x": 748,
           "y": 101,
           "width": "fit_content(236)",
-          "height": "fit_content(216)",
           "fill": "$surface-dark",
           "cornerRadius": "$radius-3xl",
           "stroke": "$line-dark",
           "strokeWidth": 1,
           "strokeAlignment": "inner",
-          "layout": "none",
+          "layout": "vertical",
+          "gap": 8,
+          "padding": 16,
+          "alignItems": "center",
           "children": [
             {
               "type": "frame",
               "id": "I3PUc",
-              "x": 10,
-              "y": 10,
-              "width": "fill_container(216)",
+              "width": "fill_container",
               "gap": "$space-7",
               "alignItems": "center",
               "children": [
@@ -5916,15 +5988,15 @@
             },
             {
               "type": "frame",
-              "id": "hT8wE",
-              "x": 10,
-              "y": 62,
-              "width": "fill_container(216)",
+              "id": "lQRO5",
+              "name": "Profile Row",
+              "width": "fill_container",
               "fill": "$surface-dark",
               "cornerRadius": 14,
               "stroke": "$line-dark",
               "strokeWidth": 1,
               "strokeAlignment": "inner",
+              "gap": "$space-7",
               "padding": [
                 12,
                 14
@@ -5932,8 +6004,19 @@
               "alignItems": "center",
               "children": [
                 {
+                  "type": "icon",
+                  "id": "GYih0",
+                  "name": "User Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "user",
+                  "library": "lucide",
+                  "fill": "$text-dark"
+                },
+                {
                   "type": "text",
-                  "id": "lSzZ5",
+                  "id": "v6TYes",
+                  "name": "Profile Label",
                   "fill": "$text-dark",
                   "content": "Profile",
                   "fontFamily": "Inter",
@@ -5944,15 +6027,15 @@
             },
             {
               "type": "frame",
-              "id": "Xjtu3",
-              "x": 10,
-              "y": 112,
-              "width": "fill_container(216)",
+              "id": "DJf6s",
+              "name": "Theme Row",
+              "width": "fill_container",
               "fill": "$surface-dark",
               "cornerRadius": 14,
               "stroke": "$line-dark",
               "strokeWidth": 1,
               "strokeAlignment": "inner",
+              "gap": "$space-7",
               "padding": [
                 12,
                 14
@@ -5960,10 +6043,21 @@
               "alignItems": "center",
               "children": [
                 {
+                  "type": "icon",
+                  "id": "nJNsB",
+                  "name": "Moon Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "moon",
+                  "library": "lucide",
+                  "fill": "$text-dark"
+                },
+                {
                   "type": "text",
-                  "id": "rovYl",
+                  "id": "Ud2gu",
+                  "name": "Theme Label",
                   "fill": "$text-dark",
-                  "content": "Theme colors",
+                  "content": "Dark",
                   "fontFamily": "Inter",
                   "fontSize": 13,
                   "fontWeight": "600"
@@ -5972,15 +6066,15 @@
             },
             {
               "type": "frame",
-              "id": "TL73y",
-              "x": 10,
-              "y": 162,
-              "width": "fill_container(216)",
+              "id": "Agqy4",
+              "name": "Language Row",
+              "width": "fill_container",
               "fill": "$surface-dark",
               "cornerRadius": 14,
               "stroke": "$line-dark",
               "strokeWidth": 1,
               "strokeAlignment": "inner",
+              "gap": "$space-7",
               "padding": [
                 12,
                 14
@@ -5988,8 +6082,58 @@
               "alignItems": "center",
               "children": [
                 {
+                  "type": "icon",
+                  "id": "P80RzQ",
+                  "name": "Globe Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "globe",
+                  "library": "lucide",
+                  "fill": "$text-dark"
+                },
+                {
                   "type": "text",
-                  "id": "O90LkY",
+                  "id": "oaKCn",
+                  "name": "Language Label",
+                  "fill": "$text-dark",
+                  "content": "English",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sOzjj",
+              "name": "Sign Out Row",
+              "width": "fill_container",
+              "fill": "$surface-dark",
+              "cornerRadius": 14,
+              "stroke": "$line-dark",
+              "strokeWidth": 1,
+              "strokeAlignment": "inner",
+              "gap": "$space-7",
+              "padding": [
+                12,
+                14
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "cbnhC",
+                  "name": "Log Out Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "log-out",
+                  "library": "lucide",
+                  "fill": "$danger-dark"
+                },
+                {
+                  "type": "text",
+                  "id": "LxCD3",
+                  "name": "Sign Out Label",
                   "fill": "$danger-dark",
                   "content": "Sign out",
                   "fontFamily": "Inter",
@@ -9730,20 +9874,20 @@
           "x": 506,
           "y": 95,
           "width": "fit_content(236)",
-          "height": "fit_content(216)",
           "fill": "$surface-dark",
           "cornerRadius": "$radius-3xl",
           "stroke": "$line-dark",
           "strokeWidth": 1,
           "strokeAlignment": "inner",
-          "layout": "none",
+          "layout": "vertical",
+          "gap": 8,
+          "padding": 16,
+          "alignItems": "center",
           "children": [
             {
               "type": "frame",
               "id": "ty8gy",
-              "x": 10,
-              "y": 10,
-              "width": "fill_container(216)",
+              "width": "fill_container",
               "gap": "$space-7",
               "alignItems": "center",
               "children": [
@@ -9801,15 +9945,15 @@
             },
             {
               "type": "frame",
-              "id": "u9F69",
-              "x": 10,
-              "y": 62,
-              "width": "fill_container(216)",
+              "id": "tqhti",
+              "name": "Profile Row",
+              "width": "fill_container",
               "fill": "$surface-dark",
               "cornerRadius": 14,
               "stroke": "$line-dark",
               "strokeWidth": 1,
               "strokeAlignment": "inner",
+              "gap": "$space-7",
               "padding": [
                 12,
                 14
@@ -9817,8 +9961,19 @@
               "alignItems": "center",
               "children": [
                 {
+                  "type": "icon",
+                  "id": "U2276",
+                  "name": "User Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "user",
+                  "library": "lucide",
+                  "fill": "$text-dark"
+                },
+                {
                   "type": "text",
-                  "id": "GqhGs",
+                  "id": "D109Y8",
+                  "name": "Profile Label",
                   "fill": "$text-dark",
                   "content": "Profile",
                   "fontFamily": "Inter",
@@ -9829,15 +9984,15 @@
             },
             {
               "type": "frame",
-              "id": "X4YWg",
-              "x": 10,
-              "y": 112,
-              "width": "fill_container(216)",
+              "id": "OmPu9",
+              "name": "Theme Row",
+              "width": "fill_container",
               "fill": "$surface-dark",
               "cornerRadius": 14,
               "stroke": "$line-dark",
               "strokeWidth": 1,
               "strokeAlignment": "inner",
+              "gap": "$space-7",
               "padding": [
                 12,
                 14
@@ -9845,10 +10000,21 @@
               "alignItems": "center",
               "children": [
                 {
+                  "type": "icon",
+                  "id": "EUzY4",
+                  "name": "Moon Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "moon",
+                  "library": "lucide",
+                  "fill": "$text-dark"
+                },
+                {
                   "type": "text",
-                  "id": "q4FSEc",
+                  "id": "fNifn",
+                  "name": "Theme Label",
                   "fill": "$text-dark",
-                  "content": "Theme colors",
+                  "content": "Dark",
                   "fontFamily": "Inter",
                   "fontSize": 13,
                   "fontWeight": "600"
@@ -9857,15 +10023,15 @@
             },
             {
               "type": "frame",
-              "id": "G6pmAw",
-              "x": 10,
-              "y": 162,
-              "width": "fill_container(216)",
+              "id": "VTbYq",
+              "name": "Language Row",
+              "width": "fill_container",
               "fill": "$surface-dark",
               "cornerRadius": 14,
               "stroke": "$line-dark",
               "strokeWidth": 1,
               "strokeAlignment": "inner",
+              "gap": "$space-7",
               "padding": [
                 12,
                 14
@@ -9873,8 +10039,58 @@
               "alignItems": "center",
               "children": [
                 {
+                  "type": "icon",
+                  "id": "yD6JC",
+                  "name": "Globe Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "globe",
+                  "library": "lucide",
+                  "fill": "$text-dark"
+                },
+                {
                   "type": "text",
-                  "id": "YZ3dY",
+                  "id": "Z27VwR",
+                  "name": "Language Label",
+                  "fill": "$text-dark",
+                  "content": "English",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "CRqPo",
+              "name": "Sign Out Row",
+              "width": "fill_container",
+              "fill": "$surface-dark",
+              "cornerRadius": 14,
+              "stroke": "$line-dark",
+              "strokeWidth": 1,
+              "strokeAlignment": "inner",
+              "gap": "$space-7",
+              "padding": [
+                12,
+                14
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "R5ot4",
+                  "name": "Log Out Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "log-out",
+                  "library": "lucide",
+                  "fill": "$danger-dark"
+                },
+                {
+                  "type": "text",
+                  "id": "DzlPA",
+                  "name": "Sign Out Label",
                   "fill": "$danger-dark",
                   "content": "Sign out",
                   "fontFamily": "Inter",
@@ -12761,21 +12977,21 @@
           "id": "xVWNN",
           "x": 68,
           "y": 122,
-          "width": 236,
-          "height": "fit_content(220)",
+          "width": "fit_content(236)",
           "fill": "$surface-dark",
           "cornerRadius": "$radius-3xl",
           "stroke": "$line-dark",
           "strokeWidth": 1,
           "strokeAlignment": "inner",
-          "layout": "none",
+          "layout": "vertical",
+          "gap": 8,
+          "padding": 16,
+          "alignItems": "center",
           "children": [
             {
               "type": "frame",
               "id": "HVhKv",
-              "x": 12,
-              "y": 12,
-              "width": "fill_container(212)",
+              "width": "fill_container",
               "gap": "$space-7",
               "alignItems": "center",
               "children": [
@@ -12833,15 +13049,15 @@
             },
             {
               "type": "frame",
-              "id": "cs9BT",
-              "x": 12,
-              "y": 64,
-              "width": "fill_container(212)",
+              "id": "Cu0fC",
+              "name": "Profile Row",
+              "width": "fill_container",
               "fill": "$surface-dark",
               "cornerRadius": 14,
               "stroke": "$line-dark",
               "strokeWidth": 1,
               "strokeAlignment": "inner",
+              "gap": "$space-7",
               "padding": [
                 12,
                 14
@@ -12849,8 +13065,19 @@
               "alignItems": "center",
               "children": [
                 {
+                  "type": "icon",
+                  "id": "ro1wF",
+                  "name": "User Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "user",
+                  "library": "lucide",
+                  "fill": "$text-dark"
+                },
+                {
                   "type": "text",
-                  "id": "SkDdJ",
+                  "id": "CNBNF",
+                  "name": "Profile Label",
                   "fill": "$text-dark",
                   "content": "Profile settings",
                   "fontFamily": "Inter",
@@ -12861,15 +13088,15 @@
             },
             {
               "type": "frame",
-              "id": "fpByH",
-              "x": 12,
-              "y": 114,
-              "width": "fill_container(212)",
+              "id": "bXebE",
+              "name": "Theme Row",
+              "width": "fill_container",
               "fill": "$surface-dark",
               "cornerRadius": 14,
               "stroke": "$line-dark",
               "strokeWidth": 1,
               "strokeAlignment": "inner",
+              "gap": "$space-7",
               "padding": [
                 12,
                 14
@@ -12877,10 +13104,21 @@
               "alignItems": "center",
               "children": [
                 {
+                  "type": "icon",
+                  "id": "FCjwQ",
+                  "name": "Moon Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "moon",
+                  "library": "lucide",
+                  "fill": "$text-dark"
+                },
+                {
                   "type": "text",
-                  "id": "Z4irqI",
+                  "id": "fqFfO",
+                  "name": "Theme Label",
                   "fill": "$text-dark",
-                  "content": "Theme colors",
+                  "content": "Dark",
                   "fontFamily": "Inter",
                   "fontSize": 13,
                   "fontWeight": "600"
@@ -12889,16 +13127,54 @@
             },
             {
               "type": "frame",
-              "id": "vc0a0",
-              "x": 12,
-              "y": 164,
-              "width": "fill_container(212)",
-              "height": 44,
+              "id": "mWzPd",
+              "name": "Language Row",
+              "width": "fill_container",
               "fill": "$surface-dark",
               "cornerRadius": 14,
               "stroke": "$line-dark",
               "strokeWidth": 1,
               "strokeAlignment": "inner",
+              "gap": "$space-7",
+              "padding": [
+                12,
+                14
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "d30sp",
+                  "name": "Globe Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "globe",
+                  "library": "lucide",
+                  "fill": "$text-dark"
+                },
+                {
+                  "type": "text",
+                  "id": "e5hE2N",
+                  "name": "Language Label",
+                  "fill": "$text-dark",
+                  "content": "English",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "CDkcQ",
+              "name": "Sign Out Row",
+              "width": "fill_container",
+              "fill": "$surface-dark",
+              "cornerRadius": 14,
+              "stroke": "$line-dark",
+              "strokeWidth": 1,
+              "strokeAlignment": "inner",
+              "gap": "$space-7",
               "padding": [
                 12,
                 14,
@@ -12908,8 +13184,19 @@
               "alignItems": "center",
               "children": [
                 {
+                  "type": "icon",
+                  "id": "o5g9I",
+                  "name": "Log Out Icon",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "log-out",
+                  "library": "lucide",
+                  "fill": "$danger-dark"
+                },
+                {
                   "type": "text",
-                  "id": "mPlMG",
+                  "id": "k2DMJT",
+                  "name": "Sign Out Label",
                   "fill": "$danger-dark",
                   "content": "Sign out",
                   "fontFamily": "Inter",

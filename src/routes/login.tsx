@@ -4,13 +4,13 @@ import {
   getClientAuthProviderAvailability,
   getRouteAuthProviderAvailability
 } from '@/features/auth/routes/login-route';
-import { getRouteAuthSession, redirectIfLoggedIn } from '@/features/auth/routes/route-auth';
+import { getRouteContextAuthSession, redirectIfLoggedIn } from '@/features/auth/routes/route-auth';
 
 export { getClientAuthProviderAvailability };
 
 export const Route = createFileRoute('/login')({
-  beforeLoad: async () => {
-    const routeAuthSessionPromise = getRouteAuthSession();
+  beforeLoad: async (options) => {
+    const routeAuthSessionPromise = Promise.resolve(getRouteContextAuthSession(options?.context));
     const providerAvailabilityPromise = getRouteAuthProviderAvailability();
 
     await redirectIfLoggedIn(routeAuthSessionPromise);

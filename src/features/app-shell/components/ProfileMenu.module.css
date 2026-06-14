@@ -71,7 +71,8 @@
 
 .kicker,
 .menuName,
-.menuEmail {
+.menuEmail,
+.statusMessage {
   margin: 0;
 }
 
@@ -92,6 +93,16 @@
 .menuEmail {
   color: var(--color-text-secondary);
   font-size: var(--typography-font-size-base);
+}
+
+.languageSwitcher {
+  margin-top: var(--space-050);
+}
+
+.statusMessage {
+  color: var(--color-status-danger-text);
+  font-size: var(--typography-font-size-sm);
+  line-height: var(--typography-line-height-body);
 }
 
 .action {

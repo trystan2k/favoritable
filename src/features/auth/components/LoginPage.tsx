@@ -1,26 +1,38 @@
 import { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { getBrowserAuthClient } from '../lib/auth-client';
-import { googleOAuthSetupMessage } from '../lib/auth-defaults';
-import { authProviderCopy, placeholderAuthProviderIds } from '../lib/auth-providers';
-
+import { LanguageSwitcher } from '@/shared/i18n/components/LanguageSwitcher';
+import { setLocaleHintCookie } from '@/shared/i18n/locale';
+import { useLocale } from '@/shared/i18n/LocaleProvider';
+import { AuthPageHero } from './AuthPageHero';
 import { ProviderButton } from './ProviderButton';
+import { getBrowserAuthClient } from '../lib/auth-client';
+import { googleOAuthCallbackPath } from '../lib/auth-defaults';
+import { placeholderAuthProviderIds } from '../lib/auth-providers';
 import styles from './LoginPage.module.css';
-import { APP_VERSION } from '@/version';
 
 type LoginPageProps = {
   isGoogleAuthAvailable: boolean;
 };
 
 export function LoginPage({ isGoogleAuthAvailable }: LoginPageProps) {
+  const { t } = useTranslation();
+  const { locale, setLocale } = useLocale();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isStartingGoogleAuth, setIsStartingGoogleAuth] = useState(false);
   const isGoogleButtonDisabled = !isGoogleAuthAvailable || isStartingGoogleAuth;
   const googleButtonLabel = useMemo(
-    () => (isGoogleAuthAvailable ? undefined : 'Google OAuth unavailable'),
-    [isGoogleAuthAvailable]
+    () => (isGoogleAuthAvailable ? undefined : t('auth.googleOauthUnavailableButton')),
+    [isGoogleAuthAvailable, t]
   );
-  const currentYear = useMemo(() => new Date().getFullYear(), []);
+  const googleOAuthSetupMessage = useMemo(
+    () =>
+      t('auth.googleOauthUnavailableMessage', {
+        callbackPath: googleOAuthCallbackPath
+      }),
+    [t]
+  );
+  const soonLabel = useMemo(() => t('common.soon'), [t]);
 
   const handleGoogleSignIn = useCallback(async () => {
     if (!isGoogleAuthAvailable) {
@@ -30,6 +42,7 @@ export function LoginPage({ isGoogleAuthAvailable }: LoginPageProps) {
 
     setErrorMessage(null);
     setIsStartingGoogleAuth(true);
+    setLocaleHintCookie(locale);
 
     try {
       const response = await getBrowserAuthClient().signIn.social({
@@ -45,53 +58,14 @@ export function LoginPage({ isGoogleAuthAvailable }: LoginPageProps) {
     } finally {
       setIsStartingGoogleAuth(false);
     }
-  }, [isGoogleAuthAvailable]);
+  }, [googleOAuthSetupMessage, isGoogleAuthAvailable, locale]);
 
   return (
     <main className={styles.viewport}>
-      <h1 className={styles.srOnly}>Favoritable login shell</h1>
+      <h1 className={styles.srOnly}>{t('auth.loginShellHeading')}</h1>
 
       <div className={styles.page}>
-        <section aria-labelledby="login-welcome" className={styles.hero}>
-          <div className={styles.heroContent}>
-            <div className={styles.heroBrand}>
-              <span aria-hidden="true" className={styles.heroBadge}>
-                F
-              </span>
-              <span className={styles.heroLabel}>Favoritable</span>
-            </div>
-
-            <div className={styles.heroCopy}>
-              <p className={styles.heroHeading} id="login-welcome">
-                Welcome
-              </p>
-              <p className={styles.heroBody}>
-                <span className={styles.mobileOnly}>
-                  Save, organize, and rediscover your favorite pages.
-                </span>
-                <span className={styles.desktopOnly}>
-                  Save, organize, and rediscover your favorite pages from across the web. Your
-                  modern bookmark library awaits.
-                </span>
-              </p>
-            </div>
-          </div>
-
-          <div className={styles.heroFooter}>
-            <div aria-hidden="true" className={styles.heroShapes}>
-              <span className={styles.shapeCircleLarge} />
-              <span className={styles.shapeDiamond} />
-              <span className={styles.shapeCircleSmall} />
-            </div>
-            <p className={styles.heroFootnote}>
-              <span className={styles.mobileOnly}>© {currentYear} Favoritable</span>
-              <span className={styles.desktopOnly}>
-                © {currentYear} Favoritable. All rights reserved.
-              </span>
-              <span className={styles.desktopOnly}>{APP_VERSION}</span>
-            </p>
-          </div>
-        </section>
+        <AuthPageHero />
 
         <section aria-labelledby="login-heading" className={styles.panel}>
           <div className={styles.panelContent}>
@@ -99,8 +73,8 @@ export function LoginPage({ isGoogleAuthAvailable }: LoginPageProps) {
               Favoritable
             </h2>
             <p className={styles.panelBody}>
-              <span className={styles.mobileOnly}>Sign in to continue</span>
-              <span className={styles.desktopOnly}>Sign in to your account to continue</span>
+              <span className={styles.mobileOnly}>{t('auth.panel.body.mobile')}</span>
+              <span className={styles.desktopOnly}>{t('auth.panel.body.desktop')}</span>
             </p>
 
             <div className={styles.actions}>
@@ -111,15 +85,19 @@ export function LoginPage({ isGoogleAuthAvailable }: LoginPageProps) {
                 onClick={handleGoogleSignIn}
                 provider="google"
               />
-              {placeholderAuthProviderIds.map((provider) => (
-                <ProviderButton
-                  accessibleLabel={`${authProviderCopy[provider].label} soon`}
-                  disabled
-                  key={provider}
-                  provider={provider}
-                  badgeLabel="soon"
-                />
-              ))}
+              {placeholderAuthProviderIds.map((provider) => {
+                const providerLabel = t(`auth.providers.${provider}.label`);
+
+                return (
+                  <ProviderButton
+                    accessibleLabel={`${providerLabel} ${soonLabel.toLowerCase()}`}
+                    badgeLabel={soonLabel}
+                    disabled
+                    key={provider}
+                    provider={provider}
+                  />
+                );
+              })}
             </div>
 
             {!isGoogleAuthAvailable ? (
@@ -135,13 +113,13 @@ export function LoginPage({ isGoogleAuthAvailable }: LoginPageProps) {
             ) : null}
 
             <p className={styles.footnote}>
-              <span className={styles.mobileOnly}>
-                By signing in, you agree to our Terms and Privacy Policy
-              </span>
-              <span className={styles.desktopOnly}>
-                By signing in, you agree to our Terms of Service and Privacy Policy
-              </span>
+              <span className={styles.mobileOnly}>{t('auth.footer.mobile')}</span>
+              <span className={styles.desktopOnly}>{t('auth.footer.desktop')}</span>
             </p>
+          </div>
+
+          <div className={styles.localeSwitcherCorner}>
+            <LanguageSwitcher hideLabel locale={locale} onLocaleChange={setLocale} />
           </div>
         </section>
       </div>

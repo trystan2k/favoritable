@@ -2,11 +2,13 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { ProtectedAppShell } from '@/features/app-shell/views/ProtectedAppShell';
-import { signOutErrorMessage } from '@/features/auth/lib/auth-defaults';
+import { TestI18nProvider } from '@/test-support/TestI18nProvider';
 
-const { navigateMock, signOutMock } = vi.hoisted(() => ({
+const { navigateMock, signOutMock, updateUserMock } = vi.hoisted(() => ({
   signOutMock: vi.fn<() => Promise<{ error?: { message?: string } | null } | void>>(),
-  navigateMock: vi.fn<(options: { to: string }) => Promise<void>>()
+  navigateMock: vi.fn<(options: { to: string }) => Promise<void>>(),
+  updateUserMock:
+    vi.fn<(data: { locale: string }) => Promise<{ error?: { message?: string } | null }>>()
 }));
 
 vi.mock('@tanstack/react-router', async () => {
@@ -22,20 +24,25 @@ vi.mock('@tanstack/react-router', async () => {
 vi.mock('@/features/auth/lib/auth-client', () => ({
   getBrowserAuthClient: () => ({
     signOut: signOutMock
-  })
+  }),
+  updateBrowserUserLocale: updateUserMock
 }));
 
 describe('ProtectedAppShell', () => {
   beforeEach(() => {
     signOutMock.mockReset();
     navigateMock.mockReset();
+    updateUserMock.mockReset();
+    window.localStorage.clear();
   });
 
   test('renders current user details', () => {
     render(
-      <ProtectedAppShell userEmail="hello@favoritable.app" userName="Thiago">
-        <div>Protected content</div>
-      </ProtectedAppShell>
+      <TestI18nProvider isAuthenticated serverLocale="en">
+        <ProtectedAppShell userEmail="hello@favoritable.app" userName="Thiago">
+          <div>Protected content</div>
+        </ProtectedAppShell>
+      </TestI18nProvider>
     );
 
     expect(screen.getByRole('link', { name: 'Skip to main content' })).toHaveAttribute(
@@ -57,11 +64,14 @@ describe('ProtectedAppShell', () => {
         })
     );
     navigateMock.mockResolvedValue(undefined);
+    updateUserMock.mockResolvedValue({ error: null });
 
     render(
-      <ProtectedAppShell userEmail="hello@favoritable.app" userName="Thiago">
-        <div>Protected content</div>
-      </ProtectedAppShell>
+      <TestI18nProvider isAuthenticated serverLocale="en">
+        <ProtectedAppShell userEmail="hello@favoritable.app" userName="Thiago">
+          <div>Protected content</div>
+        </ProtectedAppShell>
+      </TestI18nProvider>
     );
 
     fireEvent.click(
@@ -96,11 +106,14 @@ describe('ProtectedAppShell', () => {
         message: 'Sign-out failed.'
       }
     });
+    updateUserMock.mockResolvedValue({ error: null });
 
     render(
-      <ProtectedAppShell userEmail="hello@favoritable.app" userName="Thiago">
-        <div>Protected content</div>
-      </ProtectedAppShell>
+      <TestI18nProvider isAuthenticated serverLocale="en">
+        <ProtectedAppShell userEmail="hello@favoritable.app" userName="Thiago">
+          <div>Protected content</div>
+        </ProtectedAppShell>
+      </TestI18nProvider>
     );
 
     fireEvent.click(
@@ -127,11 +140,14 @@ describe('ProtectedAppShell', () => {
 
   test('shows fallback sign-out error feedback when Better Auth throws', async () => {
     signOutMock.mockRejectedValue(new Error('network failed'));
+    updateUserMock.mockResolvedValue({ error: null });
 
     render(
-      <ProtectedAppShell userEmail="hello@favoritable.app" userName="Thiago">
-        <div>Protected content</div>
-      </ProtectedAppShell>
+      <TestI18nProvider isAuthenticated serverLocale="en">
+        <ProtectedAppShell userEmail="hello@favoritable.app" userName="Thiago">
+          <div>Protected content</div>
+        </ProtectedAppShell>
+      </TestI18nProvider>
     );
 
     fireEvent.click(
@@ -143,7 +159,7 @@ describe('ProtectedAppShell', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Sign out' }));
 
     await waitFor(() => {
-      expect(screen.getByRole('alert')).toHaveTextContent(signOutErrorMessage);
+      expect(screen.getByRole('alert')).toHaveTextContent('Sign-out failed. Try again.');
     });
 
     expect(navigateMock).not.toHaveBeenCalled();
