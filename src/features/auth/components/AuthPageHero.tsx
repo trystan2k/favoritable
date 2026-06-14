@@ -20,9 +20,9 @@ export function AuthPageHero() {
         </div>
 
         <div className={styles.heroCopy}>
-          <p className={styles.heroHeading} id="login-welcome">
+          <h2 className={styles.heroHeading} id="login-welcome">
             {t('auth.hero.welcome')}
-          </p>
+          </h2>
           <p className={styles.heroBody}>
             <span className={styles.mobileOnly}>{t('auth.hero.body.mobile')}</span>
             <span className={styles.desktopOnly}>{t('auth.hero.body.desktop')}</span>

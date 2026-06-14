@@ -2,6 +2,7 @@ import { afterEach, describe, expect, test, vi } from 'vitest';
 
 import {
   applyDocumentLocale,
+  clearLocaleHintCookie,
   defaultLocale,
   getBrowserLocale,
   getLocaleHintFromCookieHeader,
@@ -9,7 +10,8 @@ import {
   isLocale,
   localeBootstrapScript,
   mapBrowserLanguageToLocale,
-  resolveClientLocale
+  resolveClientLocale,
+  setLocaleHintCookie
 } from '@/shared/i18n/locale';
 
 afterEach(() => {
@@ -80,6 +82,21 @@ describe('locale helpers', () => {
     expect(document.documentElement.lang).toBe('es');
     expect(getLocaleHintFromCookieHeader('favoritable-locale-hint=es')).toBe('es');
     expect(getLocaleHintFromCookieHeader('favoritable-locale-hint=fr-FR')).toBeNull();
+  });
+
+  test('uses secure locale hint cookies on https and mirrors that on clear', () => {
+    stubDocument();
+    vi.stubGlobal('location', {
+      protocol: 'https:'
+    });
+
+    setLocaleHintCookie('pt-BR');
+    expect(document.cookie).toContain('favoritable-locale-hint=pt-BR');
+    expect(document.cookie).toContain('Secure');
+
+    clearLocaleHintCookie();
+    expect(document.cookie).toContain('favoritable-locale-hint=; Max-Age=0');
+    expect(document.cookie).toContain('Secure');
   });
 
   test('keeps bootstrap logic english-safe and auth-lock aware', () => {

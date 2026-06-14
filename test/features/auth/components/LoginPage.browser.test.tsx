@@ -42,6 +42,7 @@ describe('LoginPage', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: 'Favoritable login shell' })
     ).toBeDefined();
+    expect(screen.getByRole('heading', { level: 2, name: 'Welcome' })).toBeDefined();
     expect(screen.getByRole('button', { name: 'Continue with Google' })).toBeEnabled();
     expect(screen.getByRole('button', { name: 'Continue with Facebook soon' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Continue with GitHub soon' })).toBeDisabled();

@@ -13,6 +13,10 @@ const localeStorageKey = 'favoritable-locale';
 const localeHintCookieName = 'favoritable-locale-hint';
 const localeHintCookieMaxAgeSeconds = 60 * 10;
 
+function getLocaleHintCookieSecureAttribute() {
+  return globalThis.location?.protocol === 'https:' ? '; Secure' : '';
+}
+
 export function isLocale(value: unknown): value is Locale {
   return value === 'en' || value === 'pt-BR' || value === 'es';
 }
@@ -110,7 +114,7 @@ export function setLocaleHintCookie(locale: Locale) {
     return;
   }
 
-  document.cookie = `${localeHintCookieName}=${encodeURIComponent(locale)}; Max-Age=${localeHintCookieMaxAgeSeconds}; Path=/; SameSite=Lax`;
+  document.cookie = `${localeHintCookieName}=${encodeURIComponent(locale)}; Max-Age=${localeHintCookieMaxAgeSeconds}; Path=/; SameSite=Lax${getLocaleHintCookieSecureAttribute()}`;
 }
 
 export function clearLocaleHintCookie() {
@@ -118,7 +122,7 @@ export function clearLocaleHintCookie() {
     return;
   }
 
-  document.cookie = `${localeHintCookieName}=; Max-Age=0; Path=/; SameSite=Lax`;
+  document.cookie = `${localeHintCookieName}=; Max-Age=0; Path=/; SameSite=Lax${getLocaleHintCookieSecureAttribute()}`;
 }
 
 export function getLocaleHintFromCookieHeader(
