@@ -1,19 +1,31 @@
-type LogContext = Record<string, unknown>;
+import pino from 'pino';
 
-function writeConsoleLog(method: 'warn' | 'error', message: string, context?: LogContext) {
+type LogContext = Record<string, unknown>;
+type LogLevel = 'warn' | 'error';
+
+const pinoLogger = pino({
+  base: undefined,
+  browser: {
+    asObject: true
+  },
+  level: import.meta.env.MODE === 'test' ? 'silent' : 'info',
+  name: 'favoritable'
+});
+
+function writePinoLog(level: LogLevel, message: string, context?: LogContext) {
   if (context) {
-    console[method](message, context);
+    pinoLogger[level](context, message);
     return;
   }
 
-  console[method](message);
+  pinoLogger[level](message);
 }
 
 export const appLogger = {
   error(message: string, context?: LogContext) {
-    writeConsoleLog('error', message, context);
+    writePinoLog('error', message, context);
   },
   warn(message: string, context?: LogContext) {
-    writeConsoleLog('warn', message, context);
+    writePinoLog('warn', message, context);
   }
 };

@@ -127,6 +127,16 @@ describe('route auth helpers', () => {
     expect(getRequestMock).not.toHaveBeenCalled();
   });
 
+  test('treats explicit null session as signed-out state without loading again', async () => {
+    await expect(redirectIfLoggedOut(null)).rejects.toMatchObject({
+      options: {
+        statusCode: 307,
+        to: '/login'
+      }
+    });
+    expect(getRequestMock).not.toHaveBeenCalled();
+  });
+
   test('redirects logged-in users back to home target', async () => {
     await expect(
       redirectIfLoggedIn(Promise.resolve({ user: { id: 'user-3' } }))

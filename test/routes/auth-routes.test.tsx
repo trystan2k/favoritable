@@ -262,12 +262,29 @@ describe('auth routes', () => {
       }
     };
 
+    protectedRedirectMock.mockResolvedValueOnce(session);
+
     await expect(
       ProtectedRoute.options.beforeLoad?.({
         context: { session }
       } as never)
     ).resolves.toEqual({ session });
-    expect(protectedRedirectMock).not.toHaveBeenCalled();
+    expect(protectedRedirectMock).toHaveBeenCalledTimes(1);
+    expect(protectedRedirectMock).toHaveBeenCalledWith(session);
+  });
+
+  test('protected route reuses explicit signed-out root session context', async () => {
+    const protectedRedirect = redirect({ to: '/login' });
+
+    protectedRedirectMock.mockRejectedValueOnce(protectedRedirect);
+
+    await expect(
+      ProtectedRoute.options.beforeLoad?.({
+        context: { session: null }
+      } as never)
+    ).rejects.toBe(protectedRedirect);
+    expect(protectedRedirectMock).toHaveBeenCalledTimes(1);
+    expect(protectedRedirectMock).toHaveBeenCalledWith(null);
   });
 
   test('auth api route forwards GET requests to Better Auth handler', async () => {

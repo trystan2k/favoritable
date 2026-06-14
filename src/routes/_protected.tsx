@@ -6,7 +6,7 @@ import { getRouteContextAuthSession, redirectIfLoggedOut } from '@/features/auth
 export const Route = createFileRoute('/_protected')({
   beforeLoad: async (options) => {
     const rootSession = getRouteContextAuthSession(options?.context);
-    const session = rootSession ?? (await redirectIfLoggedOut());
+    const session = await redirectIfLoggedOut(rootSession);
 
     return { session };
   },
