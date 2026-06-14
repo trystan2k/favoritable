@@ -24,11 +24,7 @@ vi.mock('@base-ui/react/select', () => ({
       selectState.onValueChange = onValueChange;
       return <div>{children}</div>;
     },
-    Trigger: ({ children, ...props }: { children: ReactNode }) => (
-      <button {...props} role="combobox" type="button">
-        {children}
-      </button>
-    ),
+    Trigger: ({ children, ...props }: { children: ReactNode }) => <div {...props}>{children}</div>,
     Value: ({ children }: { children: (value: unknown) => ReactNode }) => (
       <>{children(selectState.renderedValue)}</>
     ),
@@ -65,7 +61,7 @@ describe('LanguageSwitcher', () => {
       </TestI18nProvider>
     );
 
-    expect(screen.getByRole('combobox', { name: 'Language' })).toBeDefined();
+    expect(screen.getByText('Language')).toBeDefined();
 
     selectState.onValueChange?.(null);
     selectState.onValueChange?.('fr');
@@ -93,10 +89,13 @@ describe('LanguageSwitcher', () => {
 
     render(
       <TestI18nProvider>
-        <LanguageSwitcher locale="pt-BR" onLocaleChange={vi.fn()} />
+        <LanguageSwitcher
+          locale="pt-BR"
+          onLocaleChange={vi.fn<(locale: 'en' | 'es' | 'pt-BR') => void>()}
+        />
       </TestI18nProvider>
     );
 
-    expect(screen.getByRole('combobox', { name: 'Language' })).toHaveTextContent('Português');
+    expect(screen.getByText('Language').parentElement).toHaveTextContent('Português');
   });
 });

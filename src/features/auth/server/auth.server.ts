@@ -12,6 +12,7 @@ import {
   isLocale,
   type Locale
 } from '@/shared/i18n/locale';
+import { appLogger } from '@/shared/logging/logger';
 import { getAuthEnvironment, hasProviderCredentials } from './env.server';
 import type { AuthEnvironment } from './env.server';
 
@@ -76,10 +77,20 @@ async function repairSessionLocale(
   const locale = resolveCanonicalLocale(request, storedLocale);
 
   if (!isLocale(storedLocale)) {
-    await getAuth(request).api.updateUser({
-      body: { locale },
-      headers: request.headers
-    });
+    try {
+      await getAuth(request).api.updateUser({
+        body: { locale },
+        headers: request.headers
+      });
+    } catch (error) {
+      appLogger.warn(
+        '[auth] Failed to repair Better Auth session locale. Returning normalized session.',
+        {
+          error,
+          locale
+        }
+      );
+    }
   }
 
   return {

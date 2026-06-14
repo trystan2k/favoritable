@@ -144,6 +144,7 @@ describe('auth routes', () => {
     });
 
     expect(loginRedirectMock).toHaveBeenCalledTimes(1);
+    expect(loginRedirectMock.mock.calls[0]).toEqual([]);
   });
 
   test('login route reuses root session context for redirect checks', async () => {
@@ -170,6 +171,26 @@ describe('auth routes', () => {
     ];
 
     await expect(routeAuthSessionPromise).resolves.toBe(session);
+  });
+
+  test('login route preserves explicit signed-out root session context', async () => {
+    fetchMock.mockResolvedValue(
+      new Response(JSON.stringify({ google: true }), {
+        headers: { 'content-type': 'application/json' },
+        status: 200
+      })
+    );
+
+    await LoginRoute.options.beforeLoad?.({
+      context: { session: null }
+    } as never);
+
+    expect(loginRedirectMock).toHaveBeenCalledTimes(1);
+    const [routeAuthSessionPromise] = loginRedirectMock.mock.calls[0] as unknown as [
+      Promise<unknown>
+    ];
+
+    await expect(routeAuthSessionPromise).resolves.toBeNull();
   });
 
   test('login route rejects with a real redirect for authenticated users', async () => {

@@ -17,7 +17,7 @@ export function PublicNotFoundPage() {
       <div className={loginStyles.page}>
         <AuthPageHero />
 
-        <section aria-labelledby="not-found-heading" className={loginStyles.panel}>
+        <div className={loginStyles.panel}>
           <div className={`${loginStyles.panelContent} ${styles.publicPanelContent}`}>
             <NotFoundContent actionHref="/login" actionLabel={t('notFound.actions.login')} />
           </div>
@@ -25,7 +25,7 @@ export function PublicNotFoundPage() {
           <div className={loginStyles.localeSwitcherCorner}>
             <LanguageSwitcher hideLabel locale={locale} onLocaleChange={setLocale} />
           </div>
-        </section>
+        </div>
       </div>
     </main>
   );

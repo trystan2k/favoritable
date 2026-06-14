@@ -61,6 +61,8 @@ describe('RootNotFoundComponent', () => {
       expect(screen.getByRole('heading', { level: 1, name: 'Página no encontrada' })).toBeDefined();
     });
 
+    expect(screen.getAllByRole('main')).toHaveLength(1);
+    expect(screen.getAllByRole('region', { name: 'Página no encontrada' })).toHaveLength(1);
     expect(screen.getByText('Favoritable')).toBeDefined();
     expect(screen.getByRole('combobox', { name: 'Idioma' })).toBeDefined();
     expect(screen.getByRole('link', { name: 'Ir al acceso' })).toHaveAttribute('href', '/login');
