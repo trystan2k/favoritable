@@ -48,6 +48,7 @@ vi.mock('@/features/app-shell/views/ProtectedAppShell', () => ({
 }));
 
 vi.mock('@/features/auth/routes/route-auth', () => ({
+  getRouteContextAuthSession: (context: { session?: unknown } | undefined) => context?.session,
   getRouteAuthSession: vi.fn<() => Promise<unknown>>(async () => null),
   redirectIfLoggedIn: loginRedirectMock,
   redirectIfLoggedOut: protectedRedirectMock
@@ -143,6 +144,53 @@ describe('auth routes', () => {
     });
 
     expect(loginRedirectMock).toHaveBeenCalledTimes(1);
+    expect(loginRedirectMock.mock.calls[0]).toEqual([]);
+  });
+
+  test('login route reuses root session context for redirect checks', async () => {
+    fetchMock.mockResolvedValue(
+      new Response(JSON.stringify({ google: true }), {
+        headers: { 'content-type': 'application/json' },
+        status: 200
+      })
+    );
+    const session = {
+      user: {
+        email: 'hello@favoritable.app',
+        name: 'Thiago'
+      }
+    };
+
+    await LoginRoute.options.beforeLoad?.({
+      context: { session }
+    } as never);
+
+    expect(loginRedirectMock).toHaveBeenCalledTimes(1);
+    const [routeAuthSessionPromise] = loginRedirectMock.mock.calls[0] as unknown as [
+      Promise<unknown>
+    ];
+
+    await expect(routeAuthSessionPromise).resolves.toBe(session);
+  });
+
+  test('login route preserves explicit signed-out root session context', async () => {
+    fetchMock.mockResolvedValue(
+      new Response(JSON.stringify({ google: true }), {
+        headers: { 'content-type': 'application/json' },
+        status: 200
+      })
+    );
+
+    await LoginRoute.options.beforeLoad?.({
+      context: { session: null }
+    } as never);
+
+    expect(loginRedirectMock).toHaveBeenCalledTimes(1);
+    const [routeAuthSessionPromise] = loginRedirectMock.mock.calls[0] as unknown as [
+      Promise<unknown>
+    ];
+
+    await expect(routeAuthSessionPromise).resolves.toBeNull();
   });
 
   test('login route rejects with a real redirect for authenticated users', async () => {
@@ -204,6 +252,39 @@ describe('auth routes', () => {
         }
       }
     });
+  });
+
+  test('protected route reuses root session context when available', async () => {
+    const session = {
+      user: {
+        email: 'hello@favoritable.app',
+        name: 'Thiago'
+      }
+    };
+
+    protectedRedirectMock.mockResolvedValueOnce(session);
+
+    await expect(
+      ProtectedRoute.options.beforeLoad?.({
+        context: { session }
+      } as never)
+    ).resolves.toEqual({ session });
+    expect(protectedRedirectMock).toHaveBeenCalledTimes(1);
+    expect(protectedRedirectMock).toHaveBeenCalledWith(session);
+  });
+
+  test('protected route reuses explicit signed-out root session context', async () => {
+    const protectedRedirect = redirect({ to: '/login' });
+
+    protectedRedirectMock.mockRejectedValueOnce(protectedRedirect);
+
+    await expect(
+      ProtectedRoute.options.beforeLoad?.({
+        context: { session: null }
+      } as never)
+    ).rejects.toBe(protectedRedirect);
+    expect(protectedRedirectMock).toHaveBeenCalledTimes(1);
+    expect(protectedRedirectMock).toHaveBeenCalledWith(null);
   });
 
   test('auth api route forwards GET requests to Better Auth handler', async () => {

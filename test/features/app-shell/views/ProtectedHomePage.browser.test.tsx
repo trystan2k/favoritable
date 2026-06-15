@@ -2,10 +2,15 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
 import { ProtectedHomePage } from '@/features/app-shell/views/ProtectedHomePage';
+import { TestI18nProvider } from '@/test-support/TestI18nProvider';
 
 describe('ProtectedHomePage', () => {
   test('renders auth foundation copy', () => {
-    render(<ProtectedHomePage />);
+    render(
+      <TestI18nProvider isAuthenticated serverLocale="en">
+        <ProtectedHomePage />
+      </TestI18nProvider>
+    );
 
     expect(
       screen.getByRole('heading', { level: 2, name: 'Auth foundation ready for bookmark features' })

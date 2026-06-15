@@ -1,0 +1,59 @@
+import { expect, test } from '../fixtures/test';
+import { appRoutes } from '../utils/routes';
+
+test('@smoke signed-out locale switch persists across reload', async ({ page }) => {
+  await page.goto(appRoutes.login);
+
+  await expect(page).toHaveURL(/\/login$/);
+
+  // Open language switcher and select Português (Brasil)
+  await page.getByLabel('Language').click();
+  await page.getByRole('option', { name: 'Português (Brasil)' }).click();
+
+  // Verify Portuguese copy is visible after switch
+  await expect(page.getByText('Boas-vindas')).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR');
+
+  // Reload — locale must persist from localStorage
+  await page.reload();
+
+  await expect(page).toHaveURL(/\/login$/);
+  await expect(page.getByText('Boas-vindas')).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR');
+});
+
+test('@smoke authenticated profile locale switch persists across reload', async ({
+  authenticateSession,
+  page
+}) => {
+  await authenticateSession();
+
+  await page.goto(appRoutes.home);
+
+  await expect(
+    page.getByRole('heading', { level: 2, name: 'Protected library shell ready' })
+  ).toBeVisible();
+
+  await page.getByRole('button', { name: /open account menu/i }).click();
+  await page.getByLabel('Language').click();
+  await page.getByRole('option', { name: 'Português (Brasil)' }).click();
+
+  await expect(
+    page.getByRole('heading', {
+      level: 2,
+      name: 'Base de autenticação pronta para recursos de favoritos'
+    })
+  ).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR');
+
+  await page.reload();
+
+  await expect(page).toHaveURL(/\/($|\?)/);
+  await expect(
+    page.getByRole('heading', {
+      level: 2,
+      name: 'Base de autenticação pronta para recursos de favoritos'
+    })
+  ).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR');
+});

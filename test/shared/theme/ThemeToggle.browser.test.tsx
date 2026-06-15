@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
+import { TestI18nProvider } from '@/test-support/TestI18nProvider';
 import { ThemeProvider } from '@/shared/theme/ThemeProvider';
 import { ThemeToggle } from '@/shared/theme/ThemeToggle';
 
@@ -62,9 +63,11 @@ describe('ThemeToggle', () => {
     vi.stubGlobal('matchMedia', vi.fn().mockReturnValue(mediaQueryList));
 
     render(
-      <ThemeProvider>
-        <ThemeToggle />
-      </ThemeProvider>
+      <TestI18nProvider>
+        <ThemeProvider>
+          <ThemeToggle />
+        </ThemeProvider>
+      </TestI18nProvider>
     );
 
     const switchControl = screen.getByRole('switch', { name: 'Dark mode' });
@@ -90,9 +93,11 @@ describe('ThemeToggle', () => {
     vi.stubGlobal('matchMedia', vi.fn().mockReturnValue(mediaQueryList));
 
     render(
-      <ThemeProvider>
-        <ThemeToggle />
-      </ThemeProvider>
+      <TestI18nProvider>
+        <ThemeProvider>
+          <ThemeToggle />
+        </ThemeProvider>
+      </TestI18nProvider>
     );
 
     await waitFor(() => {
@@ -115,9 +120,11 @@ describe('ThemeToggle', () => {
     window.localStorage.setItem('favoritable-theme', 'dark');
 
     render(
-      <ThemeProvider>
-        <ThemeToggle />
-      </ThemeProvider>
+      <TestI18nProvider>
+        <ThemeProvider>
+          <ThemeToggle />
+        </ThemeProvider>
+      </TestI18nProvider>
     );
 
     const switchControl = screen.getByRole('switch', { name: 'Dark mode' });

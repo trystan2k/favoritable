@@ -1,11 +1,12 @@
 import { Outlet, createFileRoute } from '@tanstack/react-router';
 
 import { ProtectedAppShell } from '@/features/app-shell/views/ProtectedAppShell';
-import { redirectIfLoggedOut } from '@/features/auth/routes/route-auth';
+import { getRouteContextAuthSession, redirectIfLoggedOut } from '@/features/auth/routes/route-auth';
 
 export const Route = createFileRoute('/_protected')({
-  beforeLoad: async () => {
-    const session = await redirectIfLoggedOut();
+  beforeLoad: async (options) => {
+    const rootSession = getRouteContextAuthSession(options?.context);
+    const session = await redirectIfLoggedOut(rootSession);
 
     return { session };
   },
