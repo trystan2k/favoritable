@@ -50,4 +50,24 @@ describe('NotFoundContent', () => {
     expect(screen.getByText('A página que você procura não existe ou foi movida.')).toBeDefined();
     expect(screen.getByRole('link', { name: 'Ir para o login' })).toHaveAttribute('href', '/login');
   });
+
+  test('generates unique heading ids for each instance', () => {
+    render(
+      <TestI18nProvider>
+        <>
+          <NotFoundContent actionHref="/" actionLabel="Go home" />
+          <NotFoundContent actionHref="/login" actionLabel="Go login" />
+        </>
+      </TestI18nProvider>
+    );
+
+    const headings = screen.getAllByRole('heading', { level: 1, name: 'Page not found' });
+    const regions = screen.getAllByRole('region', { name: 'Page not found' });
+
+    expect(headings[0]?.id).toBeTruthy();
+    expect(headings[1]?.id).toBeTruthy();
+    expect(headings[0]?.id).not.toBe(headings[1]?.id);
+    expect(regions[0]).toHaveAttribute('aria-labelledby', headings[0]?.id);
+    expect(regions[1]).toHaveAttribute('aria-labelledby', headings[1]?.id);
+  });
 });

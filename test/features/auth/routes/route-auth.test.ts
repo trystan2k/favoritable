@@ -127,6 +127,19 @@ describe('route auth helpers', () => {
     expect(getRequestMock).not.toHaveBeenCalled();
   });
 
+  test('treats explicit undefined session as load-needed state', async () => {
+    const request = new Request('https://favoritable.test', {
+      headers: { cookie: 'better-auth.session_token=token' }
+    });
+    const session = { user: { id: 'user-5' } };
+
+    getRequestMock.mockReturnValue(request);
+    getServerAuthSessionMock.mockResolvedValue(session);
+
+    await expect(redirectIfLoggedOut(undefined)).resolves.toBe(session);
+    expect(getServerAuthSessionMock).toHaveBeenCalledWith(request);
+  });
+
   test('treats explicit null session as signed-out state without loading again', async () => {
     await expect(redirectIfLoggedOut(null)).rejects.toMatchObject({
       options: {

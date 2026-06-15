@@ -47,7 +47,7 @@ export function getRouteContextAuthSession(context: unknown) {
 }
 
 export async function redirectIfLoggedOut(routeAuthSession?: RouteAuthSession) {
-  const session = arguments.length > 0 ? routeAuthSession : await getRouteAuthSession();
+  const session = routeAuthSession === undefined ? await getRouteAuthSession() : routeAuthSession;
 
   if (!session) {
     throw redirect({ to: '/login' });

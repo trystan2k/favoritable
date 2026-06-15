@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router';
+import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import styles from './NotFoundContent.module.css';
@@ -15,15 +16,16 @@ export function NotFoundContent({
   headingLevel = 'h1'
 }: NotFoundContentProps) {
   const { t } = useTranslation();
+  const headingId = useId();
   const Heading = headingLevel;
 
   return (
-    <section aria-labelledby="not-found-heading" className={styles.content}>
+    <section aria-labelledby={headingId} className={styles.content}>
       <p aria-hidden="true" className={styles.code}>
         404
       </p>
       <div className={styles.copy}>
-        <Heading className={styles.title} id="not-found-heading">
+        <Heading className={styles.title} id={headingId}>
           {t('notFound.title')}
         </Heading>
         <p className={styles.description}>{t('notFound.description')}</p>

@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { useLocale } from '@/shared/i18n/LocaleProvider';
 import { TestI18nProvider } from '@/test-support/TestI18nProvider';
@@ -29,6 +29,10 @@ function LocaleHarness() {
 }
 
 describe('LocaleProvider', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
   beforeEach(() => {
     updateUserMock.mockReset();
     window.localStorage.clear();
@@ -48,6 +52,26 @@ describe('LocaleProvider', () => {
     await waitFor(() => {
       expect(screen.getByTestId('locale-value')).toHaveTextContent('pt-BR');
       expect(document.documentElement.lang).toBe('pt-BR');
+    });
+  });
+
+  test('falls back to default locale for signed-out tests when no locale is preset', async () => {
+    document.documentElement.lang = '';
+    vi.stubGlobal('navigator', {
+      language: 'es-AR',
+      languages: ['es-AR']
+    });
+
+    render(
+      <TestI18nProvider>
+        <LocaleHarness />
+      </TestI18nProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('locale-value')).toHaveTextContent('en');
+      expect(document.documentElement.lang).toBe('en');
+      expect(window.localStorage.getItem('favoritable-locale')).toBe('en');
     });
   });
 
