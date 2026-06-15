@@ -2,11 +2,11 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { useLocale } from '@/shared/i18n/LocaleProvider';
+import type { Locale } from '@/shared/i18n/locale';
 import { TestI18nProvider } from '@/test-support/TestI18nProvider';
 
 const { updateUserMock } = vi.hoisted(() => ({
-  updateUserMock:
-    vi.fn<(data: { locale: string }) => Promise<{ error?: { message?: string } | null }>>()
+  updateUserMock: vi.fn<(locale: Locale) => Promise<{ error?: { message?: string } | null }>>()
 }));
 
 vi.mock('@/features/auth/lib/auth-client', () => ({

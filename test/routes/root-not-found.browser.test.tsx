@@ -3,13 +3,13 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import type { ReactNode } from 'react';
 
 import { RootNotFoundComponent, Route as RootRoute } from '@/routes/__root';
+import type { Locale } from '@/shared/i18n/locale';
 import { TestI18nProvider } from '@/test-support/TestI18nProvider';
 
 const { navigateMock, signOutMock, updateUserMock } = vi.hoisted(() => ({
   signOutMock: vi.fn<() => Promise<{ error?: { message?: string } | null } | void>>(),
   navigateMock: vi.fn<(options: { to: string }) => Promise<void>>(),
-  updateUserMock:
-    vi.fn<(data: { locale: string }) => Promise<{ error?: { message?: string } | null }>>()
+  updateUserMock: vi.fn<(locale: Locale) => Promise<{ error?: { message?: string } | null }>>()
 }));
 
 vi.mock('@tanstack/react-router', async () => {
