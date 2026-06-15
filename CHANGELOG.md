@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/trystan2k/favoritable/compare/v0.5.0...v0.6.0) (2026-06-15)
+
+
+### Features
+
+* **deps:** bump the prod-dependencies group across 1 directory with 6 updates ([c96ccbc](https://github.com/trystan2k/favoritable/commit/c96ccbc8762483c699acbea729755fc7461069fb))
+
 ## [0.5.0](https://github.com/trystan2k/favoritable/compare/v0.4.0...v0.5.0) (2026-06-15)
 
 
