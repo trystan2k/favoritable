@@ -1,5 +1,5 @@
 import { renderToStaticMarkup } from 'react-dom/server';
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { TestI18nProvider } from '@/test-support/TestI18nProvider';
 
@@ -11,6 +11,11 @@ describe('TestI18nProvider', () => {
       language: 'es-AR',
       languages: ['es-AR']
     });
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
   });
 
   test('does not mutate locale storage or document lang during render', () => {

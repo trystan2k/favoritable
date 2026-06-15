@@ -13,6 +13,17 @@ vi.mock('@/features/auth/lib/auth-client', () => ({
   updateBrowserUserLocale: updateUserMock
 }));
 
+function createDeferred<T>() {
+  let resolve!: (value: T) => void;
+  let reject!: (reason?: unknown) => void;
+  const promise = new Promise<T>((promiseResolve, promiseReject) => {
+    resolve = promiseResolve;
+    reject = promiseReject;
+  });
+
+  return { promise, reject, resolve };
+}
+
 function LocaleHarness() {
   const { isUpdatingLocale, locale, localeUpdateError, setLocale } = useLocale();
 
@@ -130,6 +141,48 @@ describe('LocaleProvider', () => {
       expect(screen.getByTestId('locale-value')).toHaveTextContent('en');
       expect(document.documentElement.lang).toBe('en');
       expect(screen.getByTestId('locale-error')).toHaveTextContent('yes');
+    });
+  });
+
+  test('rolls back to latest confirmed locale when server locale changes mid-request', async () => {
+    const deferredUpdate = createDeferred<{ error?: { message?: string } | null }>();
+    updateUserMock.mockReturnValue(deferredUpdate.promise);
+
+    const { rerender } = render(
+      <TestI18nProvider isAuthenticated serverLocale="en">
+        <LocaleHarness />
+      </TestI18nProvider>
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Switch to Spanish' }));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('locale-value')).toHaveTextContent('es');
+      expect(screen.getByTestId('locale-updating')).toHaveTextContent('yes');
+    });
+
+    rerender(
+      <TestI18nProvider isAuthenticated serverLocale="pt-BR">
+        <LocaleHarness />
+      </TestI18nProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('locale-value')).toHaveTextContent('pt-BR');
+      expect(document.documentElement.lang).toBe('pt-BR');
+    });
+
+    deferredUpdate.resolve({
+      error: {
+        message: 'nope'
+      }
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('locale-value')).toHaveTextContent('pt-BR');
+      expect(document.documentElement.lang).toBe('pt-BR');
+      expect(screen.getByTestId('locale-error')).toHaveTextContent('yes');
+      expect(screen.getByTestId('locale-updating')).toHaveTextContent('no');
     });
   });
 });

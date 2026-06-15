@@ -104,7 +104,6 @@ export function LocaleProvider({
         return;
       }
 
-      const previousConfirmedLocale = confirmedLocaleRef.current;
       const requestId = localeUpdateRequestIdRef.current + 1;
 
       localeUpdateRequestIdRef.current = requestId;
@@ -124,8 +123,9 @@ export function LocaleProvider({
           return;
         }
 
-        confirmedLocaleRef.current = previousConfirmedLocale;
-        setLocaleState(previousConfirmedLocale);
+        const rollbackLocale = confirmedLocaleRef.current;
+
+        setLocaleState(rollbackLocale);
         setLocaleUpdateError(true);
       } finally {
         if (localeUpdateRequestIdRef.current === requestId) {
