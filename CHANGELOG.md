@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.0](https://github.com/trystan2k/favoritable/compare/v0.6.0...v0.7.0) (2026-06-15)
+
+
+### Features
+
+* add playwright caching and update e2e test job dependencies ([0ff6cae](https://github.com/trystan2k/favoritable/commit/0ff6cae6a6fcc2cac0f769b41ab0707fe3b3ec4b))
+* simplify E2E CI and add dynamic test modes ([bb20d10](https://github.com/trystan2k/favoritable/commit/bb20d10b57404d00f35c1050631c07681adb933b))
+
 ## [0.6.0](https://github.com/trystan2k/favoritable/compare/v0.5.0...v0.6.0) (2026-06-15)
 
 
