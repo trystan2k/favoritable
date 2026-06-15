@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/trystan2k/favoritable/compare/v0.4.0...v0.5.0) (2026-06-15)
+
+
+### Features
+
+* add localization and shell-aware 404 ([91e6060](https://github.com/trystan2k/favoritable/commit/91e6060b46ebd26106c4f154f03aa6ae6a294a3a))
+
 ## [0.4.0](https://github.com/trystan2k/favoritable/compare/v0.3.1...v0.4.0) (2026-06-13)
 
 
