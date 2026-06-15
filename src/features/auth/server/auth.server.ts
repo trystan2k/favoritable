@@ -87,7 +87,8 @@ async function repairSessionLocale(
         '[auth] Failed to repair Better Auth session locale. Returning normalized session.',
         {
           error,
-          locale
+          locale,
+          storedLocale
         }
       );
     }

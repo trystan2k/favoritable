@@ -81,7 +81,7 @@ A canonical plan was authored at `docs/plan/Plan FAV-25 Improve application loca
 
 ### Shared logging (`src/shared/logging/`)
 
-- `logger.ts`: minimal `appLogger` (`error`/`warn` with optional context object) wrapping `console`. Used by root optional-session error handling. Pino deferred to later wiring (AGENTS.md lists Pino as preferred logger; current scaffold is console-based).
+- `logger.ts`: Pino-backed `appLogger` (`error`/`warn` with optional context object) for shared application logging. Config strips default base fields, emits browser logs as objects, and stays silent in tests.
 
 ### QA / Review Fix Loops & Smoke / E2E Additions
 
@@ -204,7 +204,7 @@ A canonical plan was authored at `docs/plan/Plan FAV-25 Improve application loca
 
 9. **`data-locale-locked` bootstrap short-circuit**: Authenticated SSR emits canonical `<html lang>` and locks the bootstrap script to prevent client override flash; anonymous SSR stays English-safe and corrects post-hydration.
 
-10. **Minimal console-based logger scaffold**: `appLogger` wraps console for root optional-session error handling. Pino (AGENTS.md preferred) deferred to dedicated wiring task.
+10. **Pino-backed shared logger**: `appLogger` fronts Pino for shared application logging, keeps browser output structured, strips default base fields, and stays silent in tests.
 
 ## Validation Performed
 
@@ -220,7 +220,7 @@ A canonical plan was authored at `docs/plan/Plan FAV-25 Improve application loca
 - **Anonymous SSR cannot know browser/localStorage locale**: Bootstrap script + provider correct client state as early as possible; anonymous first paint is English-safe by design. Acceptable per plan.
 - **OAuth callback timing for hint cookie**: First-login seeding bridge is isolated to auth config. If brittle, fall back to a first-post-auth sync without reworking the locale architecture.
 - **Better Auth inferred-additional-field client typing gap**: `updateBrowserUserLocale` uses direct POST until upstream client typing flows `locale` into `authClient.updateUser`. Revisit on better-auth upgrade.
-- **Pino not yet wired**: `appLogger` is console-based. Replace with Pino (AGENTS.md preferred logger) in a dedicated logging task.
+- **Logger surface intentionally minimal**: `appLogger` currently exposes only `warn`/`error` on top of Pino because current localization/not-found flow only needs failure-path logging. Expand only if broader log levels become necessary.
 - **`user.locale` self-heal read path**: `repairSessionLocale` writes on read when locale missing/invalid. Monitor for write-amplification if locale hints arrive stale repeatedly.
 - **Translation completeness**: Only `en`/`es`/`pt-BR` ship now. Adding locales requires updating `supportedLocales`, resource files, browser mapping, and bootstrap script in lockstep.
 - **404 design-token drift**: Styling must stay token-only. Future 404 tweaks should map to existing token variables before any hard-coded values.
