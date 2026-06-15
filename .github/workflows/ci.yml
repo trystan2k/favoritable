@@ -124,6 +124,20 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-webkit-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install chromium webkit
+
+      - name: Install Playwright system dependencies
+        run: pnpm exec playwright install-deps chromium webkit
+
       - name: Knip unused dependencies
         run: pnpm knip
 
@@ -160,7 +174,9 @@ jobs:
 
   e2e_tests:
     name: E2E Tests
-    needs: detect_changes
+    needs:
+      - detect_changes
+      - full_checks
     if: needs.detect_changes.outputs.docs_only != 'true'
     runs-on: ubuntu-latest
     steps:
