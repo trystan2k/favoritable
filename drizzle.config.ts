@@ -6,7 +6,7 @@ const databaseCredentials = resolveDatabaseCredentials();
 
 export default defineConfig({
   out: './drizzle',
-  schema: './src/db/schema/auth.ts',
+  schema: './src/db/schema/schema.ts',
   dialect: 'sqlite',
   dbCredentials: databaseCredentials
 });

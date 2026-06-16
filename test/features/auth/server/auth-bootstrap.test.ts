@@ -1,15 +1,12 @@
-import { execFile } from 'node:child_process';
-import { mkdtemp, rm } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import path from 'node:path';
-import { promisify } from 'node:util';
-
-import { createClient } from '@libsql/client';
 import { describe, expect, test } from 'vitest';
 import { testUtils } from 'better-auth/plugins';
 
 import { createAuth, getServerAuthSession } from '@/features/auth/server/auth.server';
 import type { AuthEnvironment } from '@/features/auth/server/env.server';
+import {
+  createBootstrappedTempDatabase,
+  disposeBootstrappedTempDatabase
+} from '@test/lib/bootstrapped-temp-db';
 
 type AuthTestHelpers = {
   createUser(overrides?: Record<string, unknown>): {
@@ -25,23 +22,15 @@ type AuthTestHelpers = {
   }>;
 };
 
-const execFileAsync = promisify(execFile);
-
 describe('auth database bootstrap', () => {
   test('migrates a fresh database and preserves auth sessions across auth instances', async () => {
-    const tempDirectory = await mkdtemp(path.join(tmpdir(), 'favoritable-auth-bootstrap-'));
-    const databasePath = path.join(tempDirectory, 'fresh-auth.db');
-    const databaseUrl = `file:${databasePath}`;
+    const database = await createBootstrappedTempDatabase(
+      'favoritable-auth-bootstrap-',
+      'fresh-auth.db'
+    );
+    const { databaseUrl } = database;
 
     try {
-      await execFileAsync('node', ['./scripts/bootstrap-auth-db.mjs'], {
-        cwd: process.cwd(),
-        env: {
-          ...process.env,
-          DATABASE_URL: databaseUrl
-        }
-      });
-
       const authEnvironment: AuthEnvironment = {
         baseUrl: 'http://127.0.0.1:4174',
         databaseAuthToken: undefined,
@@ -75,7 +64,7 @@ describe('auth database bootstrap', () => {
       }).api.getSession({
         headers: login.headers
       });
-      const databaseClient = createClient({ url: databaseUrl });
+      const databaseClient = database.client;
 
       try {
         const [userCountResult, sessionCountResult, userLocaleResult] = await Promise.all([
@@ -146,8 +135,6 @@ describe('auth database bootstrap', () => {
         } else {
           process.env.BETTER_AUTH_SECRET = previousBetterAuthSecret;
         }
-
-        databaseClient.close();
       }
 
       expect(sessionFromInitialAuth?.user.id).toBe(savedUser.id);
@@ -155,7 +142,7 @@ describe('auth database bootstrap', () => {
       expect(sessionFromFreshAuth?.user.id).toBe(savedUser.id);
       expect(sessionFromFreshAuth?.user.locale).toBe('en');
     } finally {
-      await rm(tempDirectory, { force: true, recursive: true });
+      await disposeBootstrappedTempDatabase(database);
     }
   });
 });

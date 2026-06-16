@@ -55,7 +55,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
-        run: pnpm db:bootstrap:auth
+        run: pnpm db:bootstrap
 
       - name: Summarize migration
         env:

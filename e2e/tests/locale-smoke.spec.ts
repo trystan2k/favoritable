@@ -1,5 +1,5 @@
-import { expect, test } from '../fixtures/test';
-import { appRoutes } from '../utils/routes';
+import { expect, test } from '@e2e/fixtures/test';
+import { appRoutes } from '@e2e/utils/routes';
 
 test('@smoke signed-out locale switch persists across reload', async ({ page }) => {
   await page.goto(appRoutes.login);
