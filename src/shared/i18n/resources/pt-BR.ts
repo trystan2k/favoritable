@@ -83,6 +83,14 @@ export const ptBr = {
       themeValue: 'Alternância persistida em runtime'
     }
   },
+  authError: {
+    actions: {
+      login: 'Ir para o login'
+    },
+    code: 'Erro',
+    description: 'Algo deu errado durante a autenticação. Tente novamente.',
+    title: 'Erro de autenticação'
+  },
   notFound: {
     actions: {
       home: 'Ir para o início',

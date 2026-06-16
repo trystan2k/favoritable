@@ -84,6 +84,14 @@ export const es = {
       themeValue: 'Interruptor persistido en tiempo de ejecución'
     }
   },
+  authError: {
+    actions: {
+      login: 'Ir al acceso'
+    },
+    code: 'Error',
+    description: 'Algo salió mal durante la autenticación. Intenta de nuevo.',
+    title: 'Error de autenticación'
+  },
   notFound: {
     actions: {
       home: 'Ir al inicio',

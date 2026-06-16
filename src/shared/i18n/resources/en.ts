@@ -83,6 +83,14 @@ export const en = {
       themeValue: 'Persisted runtime toggle'
     }
   },
+  authError: {
+    actions: {
+      login: 'Go to login'
+    },
+    code: 'Error',
+    description: 'Something went wrong during authentication. Please try again.',
+    title: 'Authentication error'
+  },
   notFound: {
     actions: {
       home: 'Go home',

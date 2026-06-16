@@ -114,6 +114,9 @@ export function createAuth(options: CreateAuthOptions = {}) {
     baseURL: authEnvironment.baseUrl,
     secret: authEnvironment.secret,
     trustedOrigins: authEnvironment.trustedOrigins,
+    onAPIError: {
+      errorURL: '/auth-error'
+    },
     advanced: {
       ipAddress: {
         ipAddressHeaders: ['cf-connecting-ip', 'x-forwarded-for', 'x-real-ip']
