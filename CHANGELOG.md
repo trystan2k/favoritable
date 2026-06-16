@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/trystan2k/favoritable/compare/v0.7.0...v0.8.0) (2026-06-16)
+
+
+### Features
+
+* add auth error page, translations, and redirects ([f73fa80](https://github.com/trystan2k/favoritable/commit/f73fa80e994299ff032ca5f1d094c6da2632899a))
+
 ## [0.7.0](https://github.com/trystan2k/favoritable/compare/v0.6.0...v0.7.0) (2026-06-15)
 
 
