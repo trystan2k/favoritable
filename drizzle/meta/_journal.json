@@ -15,6 +15,13 @@
       "when": 1781339456890,
       "tag": "0001_strange_medusa",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1781604015302,
+      "tag": "0002_violet_union_jack",
+      "breakpoints": true
     }
   ]
 }

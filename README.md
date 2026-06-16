@@ -76,10 +76,10 @@ If you change `BETTER_AUTH_URL` for local work, update both Google Cloud values 
 
 ### Database bootstrap
 
-Favoritable persists Better Auth data in SQLite through Drizzle. Copy `.env.example`, then bootstrap auth tables before the first auth-enabled run:
+Favoritable persists Better Auth data in SQLite through Drizzle. Copy `.env.example`, then run the canonical bootstrap before the first auth-enabled run:
 
 ```bash
-pnpm db:bootstrap:auth
+pnpm db:bootstrap
 ```
 
 `pnpm dev`, `pnpm test`, and the preview E2E path already run this bootstrap step for fresh local databases.

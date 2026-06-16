@@ -5,7 +5,7 @@ import { APIError } from 'better-auth/api';
 import { tanstackStartCookies } from 'better-auth/tanstack-start';
 
 import { createDb, getDb } from '@/db/client';
-import * as schema from '@/db/schema/auth';
+import * as schema from '@/db/schema/schema';
 import {
   defaultLocale,
   getLocaleHintFromCookieHeader,
