@@ -21,24 +21,31 @@ export async function createBootstrappedTempDatabase(
   const tempDirectory = await mkdtemp(path.join(tmpdir(), prefix));
   const databasePath = path.join(tempDirectory, databaseFileName);
   const databaseUrl = `file:${databasePath}`;
+  let client: ReturnType<typeof createClient> | null = null;
 
-  await execFileAsync('node', ['./scripts/bootstrap-db.mjs'], {
-    cwd: process.cwd(),
-    env: {
-      ...process.env,
-      DATABASE_URL: databaseUrl
-    }
-  });
+  try {
+    await execFileAsync('node', ['./scripts/bootstrap-db.mjs'], {
+      cwd: process.cwd(),
+      env: {
+        ...process.env,
+        DATABASE_URL: databaseUrl
+      }
+    });
 
-  const client = createClient({ url: databaseUrl });
+    client = createClient({ url: databaseUrl });
 
-  await client.execute('PRAGMA foreign_keys = ON');
+    await client.execute('PRAGMA foreign_keys = ON');
 
-  return {
-    client,
-    databaseUrl,
-    tempDirectory
-  };
+    return {
+      client,
+      databaseUrl,
+      tempDirectory
+    };
+  } catch (error) {
+    client?.close();
+    await rm(tempDirectory, { force: true, recursive: true });
+    throw error;
+  }
 }
 
 export async function disposeBootstrappedTempDatabase(
