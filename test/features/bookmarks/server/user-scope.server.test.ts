@@ -24,7 +24,7 @@ import {
   createBootstrappedTempDatabase,
   disposeBootstrappedTempDatabase,
   type BootstrappedTempDatabase
-} from '../../../lib/bootstrapped-temp-db';
+} from '@test/lib/bootstrapped-temp-db';
 
 type TempDatabaseContext = BootstrappedTempDatabase & {
   db: ReturnType<typeof createDb>;

@@ -6,7 +6,7 @@ import type { AuthEnvironment } from '@/features/auth/server/env.server';
 import {
   createBootstrappedTempDatabase,
   disposeBootstrappedTempDatabase
-} from '../../../lib/bootstrapped-temp-db';
+} from '@test/lib/bootstrapped-temp-db';
 
 type AuthTestHelpers = {
   createUser(overrides?: Record<string, unknown>): {

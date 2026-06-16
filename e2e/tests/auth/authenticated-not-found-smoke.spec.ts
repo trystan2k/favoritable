@@ -1,5 +1,5 @@
-import { expect, test } from '../../fixtures/test';
-import { appRoutes } from '../../utils/routes';
+import { expect, test } from '@e2e/fixtures/test';
+import { appRoutes } from '@e2e/utils/routes';
 
 test('@smoke unknown authenticated route renders shell-wrapped localized 404 with CTA to home', async ({
   authenticateSession,
