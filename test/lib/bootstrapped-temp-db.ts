@@ -24,7 +24,7 @@ export async function createBootstrappedTempDatabase(
   let client: ReturnType<typeof createClient> | null = null;
 
   try {
-    await execFileAsync('node', ['./scripts/bootstrap-db.mjs'], {
+    await execFileAsync(process.execPath, ['./scripts/bootstrap-db.mjs'], {
       cwd: process.cwd(),
       env: {
         ...process.env,
