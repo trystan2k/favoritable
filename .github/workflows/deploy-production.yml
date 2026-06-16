@@ -26,8 +26,16 @@ env:
   PNPM_VERSION: 11.5.2
 
 jobs:
+  migrate_production_db:
+    name: Migrate production DB
+    uses: ./.github/workflows/migrate-production-db.yml
+    with:
+      tag_name: ${{ inputs.tag_name }}
+    secrets: inherit
+
   deploy_production:
     name: Deploy production
+    needs: migrate_production_db
     runs-on: ubuntu-latest
     environment:
       name: production

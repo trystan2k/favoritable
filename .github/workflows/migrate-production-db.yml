@@ -1,0 +1,69 @@
+name: Migrate Production DB
+
+on:
+  workflow_call:
+    inputs:
+      tag_name:
+        description: 'Release tag containing the migration (e.g. v1.2.3)'
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Release tag containing the migration (e.g. v1.2.3)'
+        required: true
+        type: string
+
+concurrency:
+  group: migrate-production-db
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: 24.16.0
+  PNPM_VERSION: 11.5.2
+
+jobs:
+  migrate_production_db:
+    name: Migrate production DB
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - name: Check out released tag
+        uses: actions/checkout@v6
+        with:
+          ref: refs/tags/${{ inputs.tag_name }}
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6.0.8
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          cache: pnpm
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run database migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
+        run: pnpm db:bootstrap:auth
+
+      - name: Summarize migration
+        env:
+          RELEASE_TAG: ${{ inputs.tag_name }}
+        run: |
+          {
+            echo "## Production DB migration"
+            echo ""
+            echo "- Release tag: $RELEASE_TAG"
+            echo "- Status: completed"
+          } >> "$GITHUB_STEP_SUMMARY"
