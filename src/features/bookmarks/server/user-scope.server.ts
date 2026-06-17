@@ -7,21 +7,8 @@ const bookmarkNotFoundForUserMessage = 'Bookmark not found.';
 const labelNotFoundForUserMessage = 'Label not found.';
 
 type Database = ReturnType<typeof import('@/db/client').createDb>;
-type BookmarkRecord = {
-  createdAt: Date;
-  description: string | null;
-  id: string;
-  slug: string;
-  title: string;
-  updatedAt: Date;
-  url: string;
-  userId: string;
-};
-type LabelRecord = {
-  id: string;
-  name: string;
-  userId: string;
-};
+type BookmarkRecord = typeof import('@/db/schema/bookmarks').bookmark.$inferSelect;
+type LabelRecord = typeof import('@/db/schema/bookmarks').label.$inferSelect;
 
 type BookmarkLookup = {
   bookmarkId: string;

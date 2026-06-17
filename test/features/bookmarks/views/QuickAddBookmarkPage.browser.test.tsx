@@ -144,11 +144,19 @@ describe('QuickAddBookmarkPage', () => {
     });
   });
 
-  test('starts library navigation immediately after a successful save', async () => {
+  test('invalidates the library before starting success navigation', async () => {
+    let resolveInvalidate: (() => void) | undefined;
     const submitBookmark = vi.fn<() => Promise<CreateBookmarkResult>>(async () => ({
       bookmarkId: 'bookmark-1',
       success: true as const
     }));
+
+    invalidateMock.mockImplementation(
+      () =>
+        new Promise<void>((resolve) => {
+          resolveInvalidate = resolve;
+        })
+    );
 
     render(
       <TestI18nProvider isAuthenticated serverLocale="en">
@@ -162,12 +170,15 @@ describe('QuickAddBookmarkPage', () => {
     fireEvent.submit(screen.getByRole('button', { name: 'Save bookmark' }).closest('form')!);
 
     await waitFor(() => {
-      expect(navigateMock).toHaveBeenCalledWith({ to: '/' });
+      expect(invalidateMock).toHaveBeenCalledTimes(1);
+      expect(navigateMock).not.toHaveBeenCalled();
       expect(screen.getByRole('button', { name: 'Save bookmark' })).not.toBeDisabled();
     });
 
+    resolveInvalidate?.();
+
     await waitFor(() => {
-      expect(invalidateMock).toHaveBeenCalledTimes(1);
+      expect(navigateMock).toHaveBeenCalledWith({ to: '/' });
     });
   });
 
@@ -191,6 +202,7 @@ describe('QuickAddBookmarkPage', () => {
     fireEvent.submit(screen.getByRole('button', { name: 'Save bookmark' }).closest('form')!);
 
     await waitFor(() => {
+      expect(invalidateMock).toHaveBeenCalledTimes(1);
       expect(navigateMock).toHaveBeenCalledWith({ to: '/' });
       expect(screen.getByRole('button', { name: 'Save bookmark' })).not.toBeDisabled();
       expect(screen.getByRole('link', { name: 'Back to library' })).not.toHaveAttribute(

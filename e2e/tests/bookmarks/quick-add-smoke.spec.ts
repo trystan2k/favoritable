@@ -34,6 +34,7 @@ test('@smoke quick add shows duplicate error when saving same url twice', async 
   await page.getByLabel('URL').fill('https://example.com/docs/fav-3-duplicate');
   await page.getByRole('button', { name: 'Save bookmark' }).click();
 
+  await expect(page.getByRole('heading', { level: 2, name: 'Your bookmarks' })).toBeVisible();
   await expect(page).toHaveURL(/\/$/);
 
   await page.goto(appRoutes.quickAddBookmark);

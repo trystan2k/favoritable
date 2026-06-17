@@ -85,9 +85,8 @@ export function QuickAddBookmarkPage({ onSuccess, submitBookmark }: QuickAddBook
       return;
     }
 
-    void navigate({ to: '/' })
-      .then(() => router.invalidate())
-      .catch(() => undefined);
+    await router.invalidate();
+    await navigate({ to: '/' });
   }, [navigate, onSuccess, router]);
   const handleUnauthorized = useCallback(async () => {
     await router.invalidate();
