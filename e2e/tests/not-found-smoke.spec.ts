@@ -8,7 +8,7 @@ test('@smoke unknown public route renders standalone localized 404 with CTA to l
 
   // Standalone 404 — no protected shell chrome
   await expect(
-    page.getByRole('heading', { level: 2, name: 'Protected library shell ready' })
+    page.getByRole('heading', { level: 2, name: 'Protected bookmark library' })
   ).toHaveCount(0);
 
   // Localized 404 content

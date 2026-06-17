@@ -6,6 +6,7 @@ import { tanstackStartCookies } from 'better-auth/tanstack-start';
 
 import { createDb, getDb } from '@/db/client';
 import * as schema from '@/db/schema/schema';
+import type { MaybeAuthenticatedServerSession } from '@/features/auth/lib/auth-session';
 import {
   defaultLocale,
   getLocaleHintFromCookieHeader,
@@ -25,14 +26,6 @@ type CreateAuthOptions = {
 };
 
 type BetterAuthSession = Awaited<ReturnType<ReturnType<typeof createAuth>['api']['getSession']>>;
-type BaseAuthSession = NonNullable<BetterAuthSession>;
-type AuthSessionWithLocale =
-  | null
-  | (BaseAuthSession & {
-      user: BaseAuthSession['user'] & {
-        locale: Locale;
-      };
-    });
 const authInstances = new Map<string, ReturnType<typeof createAuth>>();
 
 function getConfiguredSocialProviders(authEnvironment: AuthEnvironment) {
@@ -68,7 +61,7 @@ function resolveCanonicalLocale(
 async function repairSessionLocale(
   request: Request,
   session: BetterAuthSession
-): Promise<AuthSessionWithLocale> {
+): Promise<MaybeAuthenticatedServerSession> {
   if (!session) {
     return null;
   }
@@ -200,7 +193,9 @@ export function getAuth(request?: Request) {
   return authInstance;
 }
 
-export async function getServerAuthSession(request = getRequest()): Promise<AuthSessionWithLocale> {
+export async function getServerAuthSession(
+  request = getRequest()
+): Promise<MaybeAuthenticatedServerSession> {
   const session = await getAuth(request).api.getSession({
     headers: request.headers
   });

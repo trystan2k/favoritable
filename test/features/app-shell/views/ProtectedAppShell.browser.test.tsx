@@ -49,7 +49,7 @@ describe('ProtectedAppShell', () => {
       'href',
       '#main-content'
     );
-    expect(screen.getByText('Protected shell with Better Auth session')).toBeDefined();
+    expect(screen.getByText('Protected library with Better Auth session')).toBeDefined();
     expect(screen.getByText('Thiago · hello@favoritable.app')).toBeDefined();
     expect(screen.getByText('Protected content')).toBeDefined();
   });

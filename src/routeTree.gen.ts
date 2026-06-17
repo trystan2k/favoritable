@@ -13,9 +13,11 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthErrorRouteImport } from './routes/auth-error'
 import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as ProtectedIndexRouteImport } from './routes/_protected/index'
+import { Route as ApiBookmarksRouteImport } from './routes/api/bookmarks'
 import { Route as ApiAuthTestSessionRouteImport } from './routes/api/auth/test-session'
 import { Route as ApiAuthProvidersRouteImport } from './routes/api/auth/providers'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ProtectedBookmarksNewRouteImport } from './routes/_protected/bookmarks/new'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -36,6 +38,11 @@ const ProtectedIndexRoute = ProtectedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ProtectedRoute,
 } as any)
+const ApiBookmarksRoute = ApiBookmarksRouteImport.update({
+  id: '/api/bookmarks',
+  path: '/api/bookmarks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthTestSessionRoute = ApiAuthTestSessionRouteImport.update({
   id: '/api/auth/test-session',
   path: '/api/auth/test-session',
@@ -51,11 +58,18 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProtectedBookmarksNewRoute = ProtectedBookmarksNewRouteImport.update({
+  id: '/bookmarks/new',
+  path: '/bookmarks/new',
+  getParentRoute: () => ProtectedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof ProtectedIndexRoute
   '/auth-error': typeof AuthErrorRoute
   '/login': typeof LoginRoute
+  '/api/bookmarks': typeof ApiBookmarksRoute
+  '/bookmarks/new': typeof ProtectedBookmarksNewRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/auth/providers': typeof ApiAuthProvidersRoute
   '/api/auth/test-session': typeof ApiAuthTestSessionRoute
@@ -63,7 +77,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/auth-error': typeof AuthErrorRoute
   '/login': typeof LoginRoute
+  '/api/bookmarks': typeof ApiBookmarksRoute
   '/': typeof ProtectedIndexRoute
+  '/bookmarks/new': typeof ProtectedBookmarksNewRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/auth/providers': typeof ApiAuthProvidersRoute
   '/api/auth/test-session': typeof ApiAuthTestSessionRoute
@@ -73,7 +89,9 @@ export interface FileRoutesById {
   '/_protected': typeof ProtectedRouteWithChildren
   '/auth-error': typeof AuthErrorRoute
   '/login': typeof LoginRoute
+  '/api/bookmarks': typeof ApiBookmarksRoute
   '/_protected/': typeof ProtectedIndexRoute
+  '/_protected/bookmarks/new': typeof ProtectedBookmarksNewRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/auth/providers': typeof ApiAuthProvidersRoute
   '/api/auth/test-session': typeof ApiAuthTestSessionRoute
@@ -84,6 +102,8 @@ export interface FileRouteTypes {
     | '/'
     | '/auth-error'
     | '/login'
+    | '/api/bookmarks'
+    | '/bookmarks/new'
     | '/api/auth/$'
     | '/api/auth/providers'
     | '/api/auth/test-session'
@@ -91,7 +111,9 @@ export interface FileRouteTypes {
   to:
     | '/auth-error'
     | '/login'
+    | '/api/bookmarks'
     | '/'
+    | '/bookmarks/new'
     | '/api/auth/$'
     | '/api/auth/providers'
     | '/api/auth/test-session'
@@ -100,7 +122,9 @@ export interface FileRouteTypes {
     | '/_protected'
     | '/auth-error'
     | '/login'
+    | '/api/bookmarks'
     | '/_protected/'
+    | '/_protected/bookmarks/new'
     | '/api/auth/$'
     | '/api/auth/providers'
     | '/api/auth/test-session'
@@ -110,6 +134,7 @@ export interface RootRouteChildren {
   ProtectedRoute: typeof ProtectedRouteWithChildren
   AuthErrorRoute: typeof AuthErrorRoute
   LoginRoute: typeof LoginRoute
+  ApiBookmarksRoute: typeof ApiBookmarksRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiAuthProvidersRoute: typeof ApiAuthProvidersRoute
   ApiAuthTestSessionRoute: typeof ApiAuthTestSessionRoute
@@ -145,6 +170,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedIndexRouteImport
       parentRoute: typeof ProtectedRoute
     }
+    '/api/bookmarks': {
+      id: '/api/bookmarks'
+      path: '/api/bookmarks'
+      fullPath: '/api/bookmarks'
+      preLoaderRoute: typeof ApiBookmarksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/test-session': {
       id: '/api/auth/test-session'
       path: '/api/auth/test-session'
@@ -166,15 +198,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_protected/bookmarks/new': {
+      id: '/_protected/bookmarks/new'
+      path: '/bookmarks/new'
+      fullPath: '/bookmarks/new'
+      preLoaderRoute: typeof ProtectedBookmarksNewRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
   }
 }
 
 interface ProtectedRouteChildren {
   ProtectedIndexRoute: typeof ProtectedIndexRoute
+  ProtectedBookmarksNewRoute: typeof ProtectedBookmarksNewRoute
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedIndexRoute: ProtectedIndexRoute,
+  ProtectedBookmarksNewRoute: ProtectedBookmarksNewRoute,
 }
 
 const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
@@ -185,6 +226,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProtectedRoute: ProtectedRouteWithChildren,
   AuthErrorRoute: AuthErrorRoute,
   LoginRoute: LoginRoute,
+  ApiBookmarksRoute: ApiBookmarksRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiAuthProvidersRoute: ApiAuthProvidersRoute,
   ApiAuthTestSessionRoute: ApiAuthTestSessionRoute,

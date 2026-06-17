@@ -30,9 +30,7 @@ test('@smoke authenticated profile locale switch persists across reload', async 
 
   await page.goto(appRoutes.home);
 
-  await expect(
-    page.getByRole('heading', { level: 2, name: 'Protected library shell ready' })
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Your bookmarks' })).toBeVisible();
 
   await page.getByRole('button', { name: /open account menu/i }).click();
   await page.getByLabel('Language').click();
@@ -41,7 +39,7 @@ test('@smoke authenticated profile locale switch persists across reload', async 
   await expect(
     page.getByRole('heading', {
       level: 2,
-      name: 'Base de autenticação pronta para recursos de favoritos'
+      name: 'Seus favoritos'
     })
   ).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR');
@@ -52,7 +50,7 @@ test('@smoke authenticated profile locale switch persists across reload', async 
   await expect(
     page.getByRole('heading', {
       level: 2,
-      name: 'Base de autenticação pronta para recursos de favoritos'
+      name: 'Seus favoritos'
     })
   ).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR');

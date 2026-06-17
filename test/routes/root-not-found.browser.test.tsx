@@ -66,7 +66,7 @@ describe('RootNotFoundComponent', () => {
     expect(screen.getByText('Favoritable')).toBeDefined();
     expect(screen.getByRole('combobox', { name: 'Idioma' })).toBeDefined();
     expect(screen.getByRole('link', { name: 'Ir al acceso' })).toHaveAttribute('href', '/login');
-    expect(screen.queryByText('Protected shell with Better Auth session')).toBeNull();
+    expect(screen.queryByText('Protected library with Better Auth session')).toBeNull();
   });
 
   test('renders protected-shell 404 for signed-in sessions', async () => {
@@ -91,7 +91,7 @@ describe('RootNotFoundComponent', () => {
       expect(screen.getByRole('heading', { level: 2, name: 'Page not found' })).toBeDefined();
     });
 
-    expect(screen.getByText('Protected shell with Better Auth session')).toBeDefined();
+    expect(screen.getByText('Protected library with Better Auth session')).toBeDefined();
     expect(screen.getByText('Thiago · hello@favoritable.app')).toBeDefined();
     expect(screen.getByRole('link', { name: 'Go home' })).toHaveAttribute('href', '/');
   });

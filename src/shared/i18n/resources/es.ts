@@ -1,18 +1,18 @@
 export const es = {
   appShell: {
     header: {
-      body: 'La persistencia del tema, las acciones del perfil y los redireccionamientos de autenticación siguen activos.',
-      caption: 'Shell protegida con sesión de Better Auth',
-      eyebrow: 'Shell de tema',
-      title: 'Shell protegida de la biblioteca lista'
+      body: 'La persistencia del tema, las acciones del perfil, el agregado rápido y los redireccionamientos de autenticación siguen activos.',
+      caption: 'Biblioteca protegida con sesión de Better Auth',
+      eyebrow: 'Shell de biblioteca',
+      title: 'Biblioteca protegida de marcadores'
     },
     localeSaveError: 'No se pudo guardar el idioma. Se restauró el idioma anterior.',
     sidebar: {
-      activeSection: 'Shell de biblioteca',
+      activeSection: 'Biblioteca',
       collections: 'Colecciones después',
       eyebrow: 'Ruta protegida',
       footnote:
-        'Solo chrome vacío de la app. Los flujos de marcadores llegan en tareas hijas posteriores.',
+        'La biblioteca mínima ya está activa. Colecciones, ajustes y pulido llegan después.',
       navLabel: 'Secciones de la shell',
       settings: 'Configuración después'
     },
@@ -73,15 +73,63 @@ export const es = {
     language: 'Idioma',
     soon: 'Pronto'
   },
-  home: {
-    body: 'Google OAuth, las sesiones persistidas y el acceso a la shell protegida ahora reemplazan la costura temporal de autenticación de FAV-21.',
-    eyebrow: 'Shell vacía',
-    heading: 'Base de autenticación lista para funciones de marcadores',
-    status: {
-      protected: 'Protegida',
-      session: 'Sesión',
-      theme: 'Tema',
-      themeValue: 'Interruptor persistido en tiempo de ejecución'
+  bookmarks: {
+    library: {
+      actions: {
+        add: 'Agregar marcador'
+      },
+      body: 'Tus enlaces guardados más recientes aparecen aquí primero.',
+      empty: {
+        body: 'Guarda tu primer marcador para empezar a construir tu biblioteca.',
+        title: 'Aún no hay marcadores guardados'
+      },
+      eyebrow: 'Biblioteca',
+      heading: 'Tus marcadores',
+      linkOpensInNewTab: 'se abre en una pestaña nueva'
+    },
+    quickAdd: {
+      actions: {
+        cancel: 'Volver a la biblioteca',
+        save: 'Guardar marcador',
+        saving: 'Guardando…'
+      },
+      body: 'Pega una URL y luego ajusta el título o la descripción si quieres.',
+      errors: {
+        duplicateUrl: 'Esta URL ya está guardada en tu biblioteca.',
+        genericSave: 'No se pudo guardar el marcador. Intenta de nuevo.'
+      },
+      eyebrow: 'Agregar rápido',
+      fields: {
+        description: {
+          label: 'Descripción',
+          placeholder: 'Nota opcional sobre este marcador'
+        },
+        title: {
+          hint: 'Déjalo en blanco para usar el hostname y la ruta de la URL.',
+          label: 'Título',
+          placeholder: 'Reemplazo opcional del título'
+        },
+        url: {
+          label: 'URL',
+          placeholder: 'https://example.com/article'
+        }
+      },
+      heading: 'Guardar un marcador',
+      validation: {
+        description: {
+          invalid: 'La descripción debe ser una cadena.',
+          tooLong: 'La descripción debe tener 4096 caracteres o menos.'
+        },
+        invalidInput: 'La entrada del marcador es inválida.',
+        title: {
+          invalid: 'El título debe ser una cadena.',
+          tooLong: 'El título debe tener 512 caracteres o menos.'
+        },
+        url: {
+          invalid: 'Ingresa una URL de marcador válida.',
+          tooLong: 'La URL del marcador debe tener 2048 caracteres o menos.'
+        }
+      }
     }
   },
   authError: {

@@ -32,6 +32,7 @@ export const bookmark = sqliteTable(
   },
   (table) => [
     index('bookmark_userId_idx').on(table.userId),
+    uniqueIndex('bookmark_userId_url_unique').on(table.userId, table.url),
     check('bookmark_state_check', sql`${table.state} in (${sql.raw(bookmarkStateCheckValues)})`)
   ]
 );

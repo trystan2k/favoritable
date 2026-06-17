@@ -3,9 +3,9 @@ import { beforeEach, describe, expect, test, vi } from 'vitest';
 import {
   authenticatedMiddleware,
   createAuthenticatedServerFn,
-  requireAuthenticatedServerSession,
-  unauthorizedServerFunctionError
+  requireAuthenticatedServerSession
 } from '@/features/auth/server/authenticated-middleware';
+import { unauthorizedServerFunctionError } from '@/features/auth/lib/unauthorized-error';
 
 async function expectUnauthorizedResponse(error: unknown) {
   expect(error).toBeInstanceOf(Response);

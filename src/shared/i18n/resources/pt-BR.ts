@@ -1,17 +1,17 @@
 export const ptBr = {
   appShell: {
     header: {
-      body: 'Persistência de tema, ações de perfil e redirecionamentos de autenticação seguem ativos.',
-      caption: 'Shell protegida com sessão do Better Auth',
-      eyebrow: 'Shell de tema',
-      title: 'Shell protegida da biblioteca pronta'
+      body: 'Persistência de tema, ações de perfil, adição rápida e redirecionamentos de autenticação seguem ativos.',
+      caption: 'Biblioteca protegida com sessão do Better Auth',
+      eyebrow: 'Shell da biblioteca',
+      title: 'Biblioteca protegida de favoritos'
     },
     localeSaveError: 'Não foi possível salvar o idioma. Idioma anterior restaurado.',
     sidebar: {
-      activeSection: 'Shell da biblioteca',
+      activeSection: 'Biblioteca',
       collections: 'Coleções depois',
       eyebrow: 'Rota protegida',
-      footnote: 'Só chrome vazio do app. Fluxos de favoritos chegam em tarefas filhas futuras.',
+      footnote: 'Biblioteca mínima agora está ativa. Coleções, ajustes e polimento chegam depois.',
       navLabel: 'Seções da shell',
       settings: 'Configurações depois'
     },
@@ -72,15 +72,63 @@ export const ptBr = {
     language: 'Idioma',
     soon: 'Em breve'
   },
-  home: {
-    body: 'Google OAuth, sessões persistidas e acesso à shell protegida agora substituem a costura temporária de autenticação da FAV-21.',
-    eyebrow: 'Shell vazia',
-    heading: 'Base de autenticação pronta para recursos de favoritos',
-    status: {
-      protected: 'Protegida',
-      session: 'Sessão',
-      theme: 'Tema',
-      themeValue: 'Alternância persistida em runtime'
+  bookmarks: {
+    library: {
+      actions: {
+        add: 'Adicionar favorito'
+      },
+      body: 'Seus links salvos mais recentes aparecem aqui primeiro.',
+      empty: {
+        body: 'Salve seu primeiro favorito para começar sua biblioteca.',
+        title: 'Nenhum favorito salvo ainda'
+      },
+      eyebrow: 'Biblioteca',
+      heading: 'Seus favoritos',
+      linkOpensInNewTab: 'abre em uma nova aba'
+    },
+    quickAdd: {
+      actions: {
+        cancel: 'Voltar para a biblioteca',
+        save: 'Salvar favorito',
+        saving: 'Salvando…'
+      },
+      body: 'Cole uma URL e depois ajuste o título ou a descrição se quiser.',
+      errors: {
+        duplicateUrl: 'Esta URL já está salva na sua biblioteca.',
+        genericSave: 'Não foi possível salvar o favorito. Tente de novo.'
+      },
+      eyebrow: 'Adição rápida',
+      fields: {
+        description: {
+          label: 'Descrição',
+          placeholder: 'Nota opcional sobre este favorito'
+        },
+        title: {
+          hint: 'Deixe em branco para usar o hostname e o caminho da URL.',
+          label: 'Título',
+          placeholder: 'Sobrescrita opcional do título'
+        },
+        url: {
+          label: 'URL',
+          placeholder: 'https://example.com/article'
+        }
+      },
+      heading: 'Salvar um favorito',
+      validation: {
+        description: {
+          invalid: 'A descrição deve ser uma string.',
+          tooLong: 'A descrição deve ter no máximo 4096 caracteres.'
+        },
+        invalidInput: 'A entrada do favorito é inválida.',
+        title: {
+          invalid: 'O título deve ser uma string.',
+          tooLong: 'O título deve ter no máximo 512 caracteres.'
+        },
+        url: {
+          invalid: 'Informe uma URL de favorito válida.',
+          tooLong: 'A URL do favorito deve ter no máximo 2048 caracteres.'
+        }
+      }
     }
   },
   authError: {

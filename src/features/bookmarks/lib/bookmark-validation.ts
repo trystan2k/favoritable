@@ -22,6 +22,7 @@ import {
   isBookmarkState as isKnownBookmarkState,
   type BookmarkState
 } from '@/db/schema/bookmark-state';
+import { bookmarkMessageKeys } from '@/features/bookmarks/lib/bookmark-messages';
 
 export const bookmarkValidationLimits = {
   author: 256,
@@ -55,8 +56,19 @@ export type CreateBookmarkInput = {
   url: string;
 };
 
+export type QuickAddBookmarkField = 'description' | 'title' | 'url';
+type QuickAddBookmarkInput = {
+  description?: string;
+  title?: string;
+  url: string;
+};
+
 export type UpdateBookmarkInput = Partial<CreateBookmarkInput>;
 export type BookmarkValidationResult<TData> = ValidationResult<TData, BookmarkValidationField>;
+export type QuickAddBookmarkValidationResult = ValidationResult<
+  QuickAddBookmarkInput,
+  QuickAddBookmarkField
+>;
 
 export function validateCreateBookmarkInput(
   input: unknown
@@ -330,6 +342,48 @@ export function validateUpdateBookmarkInput(
   }
 
   return createValidationSuccess<UpdateBookmarkInput, BookmarkValidationField>(data);
+}
+
+export function validateQuickAddBookmarkInput(input: unknown): QuickAddBookmarkValidationResult {
+  if (!isRecord(input)) {
+    return createValidationFailure<QuickAddBookmarkInput, QuickAddBookmarkField>(
+      {},
+      bookmarkMessageKeys.quickAddInvalidInput
+    );
+  }
+
+  const fieldErrors: ValidationFieldErrors<QuickAddBookmarkField> = {};
+  const url = normalizeRequiredUrl(input.url);
+  const title = normalizeOptionalString(input.title);
+  const description = normalizeOptionalString(input.description);
+
+  if (url === invalidValue) {
+    addFieldError(fieldErrors, 'url', bookmarkMessageKeys.quickAddUrlInvalid);
+  } else if (url.length > bookmarkValidationLimits.url) {
+    addFieldError(fieldErrors, 'url', bookmarkMessageKeys.quickAddUrlTooLong);
+  }
+
+  if (title === invalidValue) {
+    addFieldError(fieldErrors, 'title', bookmarkMessageKeys.quickAddTitleInvalid);
+  } else if (title && title.length > bookmarkValidationLimits.title) {
+    addFieldError(fieldErrors, 'title', bookmarkMessageKeys.quickAddTitleTooLong);
+  }
+
+  if (description === invalidValue) {
+    addFieldError(fieldErrors, 'description', bookmarkMessageKeys.quickAddDescriptionInvalid);
+  } else if (description && description.length > bookmarkValidationLimits.description) {
+    addFieldError(fieldErrors, 'description', bookmarkMessageKeys.quickAddDescriptionTooLong);
+  }
+
+  if (hasFieldErrors(fieldErrors)) {
+    return createValidationFailure<QuickAddBookmarkInput, QuickAddBookmarkField>(fieldErrors);
+  }
+
+  return createValidationSuccess<QuickAddBookmarkInput, QuickAddBookmarkField>({
+    description: unwrapOptionalValidatedValue(description),
+    title: unwrapOptionalValidatedValue(title),
+    url: unwrapRequiredValidatedValue(url)
+  });
 }
 
 function normalizeBookmarkOptionalString(

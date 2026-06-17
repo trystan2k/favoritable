@@ -1,14 +1,7 @@
 import { createMiddleware, createServerFn } from '@tanstack/react-start';
 
-import { getServerAuthSession } from './auth.server';
-
-export const unauthorizedServerFunctionError = {
-  code: 'UNAUTHORIZED',
-  message: 'Authentication required.',
-  statusCode: 401
-} as const;
-
-type AuthenticatedServerSession = NonNullable<Awaited<ReturnType<typeof getServerAuthSession>>>;
+import type { AuthenticatedServerSession } from '@/features/auth/lib/auth-session';
+import { unauthorizedServerFunctionError } from '@/features/auth/lib/unauthorized-error';
 
 export type AuthenticatedServerContext = {
   session: AuthenticatedServerSession;
@@ -18,6 +11,7 @@ export type AuthenticatedServerContext = {
 export async function requireAuthenticatedServerSession(
   request: Request
 ): Promise<AuthenticatedServerSession> {
+  const { getServerAuthSession } = await import('./auth.server');
   const session = await getServerAuthSession(request);
 
   if (!session) {
