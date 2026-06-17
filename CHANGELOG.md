@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/trystan2k/favoritable/compare/v0.9.0...v0.10.0) (2026-06-17)
+
+
+### Features
+
+* add quick-add bookmark form with manual fields and URL canonicalization ([9e75eca](https://github.com/trystan2k/favoritable/commit/9e75ecacf67034d3000b473b9a4fbc1b6ffdfc21))
+
 ## [0.9.0](https://github.com/trystan2k/favoritable/compare/v0.8.0...v0.9.0) (2026-06-16)
 
 
