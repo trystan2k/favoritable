@@ -144,13 +144,11 @@ describe('QuickAddBookmarkPage', () => {
     });
   });
 
-  test('navigates to the library without blocking on route invalidation after a successful save', async () => {
+  test('awaits route invalidation then navigates to the library after a successful save', async () => {
     const submitBookmark = vi.fn<() => Promise<CreateBookmarkResult>>(async () => ({
       bookmarkId: 'bookmark-1',
       success: true as const
     }));
-
-    invalidateMock.mockImplementation(() => new Promise<void>(() => undefined));
 
     render(
       <TestI18nProvider isAuthenticated serverLocale="en">
@@ -164,8 +162,8 @@ describe('QuickAddBookmarkPage', () => {
     fireEvent.submit(screen.getByRole('button', { name: 'Save bookmark' }).closest('form')!);
 
     await waitFor(() => {
+      expect(invalidateMock).toHaveBeenCalledTimes(1);
       expect(navigateMock).toHaveBeenCalledWith({ to: '/' });
-      expect(invalidateMock).not.toHaveBeenCalled();
       expect(screen.getByRole('button', { name: 'Save bookmark' })).not.toBeDisabled();
     });
   });
@@ -286,7 +284,7 @@ describe('QuickAddBookmarkPage', () => {
 
     await waitFor(() => {
       expect(navigateMock).toHaveBeenCalledWith({ to: '/' });
-      expect(invalidateMock).not.toHaveBeenCalled();
+      expect(invalidateMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -362,7 +360,7 @@ describe('QuickAddBookmarkPage', () => {
           url: 'https://favoritable.app/articles/default-submit'
         }
       });
-      expect(invalidateMock).not.toHaveBeenCalled();
+      expect(invalidateMock).toHaveBeenCalledTimes(1);
       expect(navigateMock).toHaveBeenCalledWith({ to: '/' });
     });
   });

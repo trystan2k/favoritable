@@ -8,7 +8,14 @@ export const Route = createFileRoute('/api/bookmarks')({
           await import('@/features/bookmarks/server/create-bookmark.server');
         const input = await request.json().catch(() => null);
 
-        return Response.json(await handleCreateBookmarkRequest(input));
+        try {
+          return Response.json(await handleCreateBookmarkRequest(input));
+        } catch (error) {
+          if (error instanceof Response) {
+            return error;
+          }
+          throw error;
+        }
       }
     }
   }
