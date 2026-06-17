@@ -130,14 +130,12 @@ export async function canonicalizeBookmarkUrls(
   await client.execute('begin');
 
   try {
-    await Promise.all(
-      summary.updates.map((update) =>
-        client.execute({
-          args: [update.canonicalUrl, update.id],
-          sql: 'update bookmark set url = ? where id = ?'
-        })
-      )
-    );
+    for (const update of summary.updates) {
+      await client.execute({
+        args: [update.canonicalUrl, update.id],
+        sql: 'update bookmark set url = ? where id = ?'
+      });
+    }
 
     await client.execute('commit');
   } catch (error) {
