@@ -34,16 +34,12 @@ test.describe('Google OAuth sign-in flow', () => {
     await page.getByRole('button', { name: /^next$/i }).click();
 
     await page.waitForURL(/\/($|\?)/, { timeout: 120000 });
-    await expect(
-      page.getByRole('heading', { level: 2, name: 'Protected library shell ready' })
-    ).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: 'Your bookmarks' })).toBeVisible();
 
     await page.reload();
 
     await expect(page).toHaveURL(/\/($|\?)/);
-    await expect(
-      page.getByRole('heading', { level: 2, name: 'Protected library shell ready' })
-    ).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: 'Your bookmarks' })).toBeVisible();
 
     await page.goto(appRoutes.home);
     await expect(page).toHaveURL(/\/($|\?)/);

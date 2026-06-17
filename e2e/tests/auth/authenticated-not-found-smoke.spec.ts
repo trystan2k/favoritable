@@ -11,7 +11,7 @@ test('@smoke unknown authenticated route renders shell-wrapped localized 404 wit
 
   // Protected shell chrome must be present (shell-wrapped 404)
   await expect(
-    page.getByRole('heading', { level: 2, name: 'Protected library shell ready' })
+    page.getByRole('heading', { level: 2, name: 'Protected bookmark library' })
   ).toBeVisible();
   await expect(page.getByRole('button', { name: /open account menu/i })).toBeVisible();
 
@@ -29,7 +29,5 @@ test('@smoke unknown authenticated route renders shell-wrapped localized 404 wit
   // Follow CTA — reaches protected home
   await ctaLink.click();
   await expect(page).toHaveURL(/\/$/);
-  await expect(
-    page.getByRole('heading', { level: 2, name: 'Protected library shell ready' })
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Your bookmarks' })).toBeVisible();
 });

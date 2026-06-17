@@ -1,5 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { ProtectedHomePage } from '@/features/app-shell/views/ProtectedHomePage';
+import { loadLibraryBookmarks } from '@/features/bookmarks/routes/route-library';
+import { BookmarkLibraryPage } from '@/features/bookmarks/views/BookmarkLibraryPage';
 
-export const Route = createFileRoute('/_protected/')({ component: ProtectedHomePage });
+export const Route = createFileRoute('/_protected/')({
+  component: ProtectedIndexRoute,
+  loader: () => loadLibraryBookmarks()
+});
+
+function ProtectedIndexRoute() {
+  const bookmarks = Route.useLoaderData();
+
+  return <BookmarkLibraryPage bookmarks={bookmarks} />;
+}

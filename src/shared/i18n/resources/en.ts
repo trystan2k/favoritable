@@ -1,17 +1,17 @@
 export const en = {
   appShell: {
     header: {
-      body: 'Theme persistence, profile actions, and auth redirects stay live.',
-      caption: 'Protected shell with Better Auth session',
-      eyebrow: 'Theme shell',
-      title: 'Protected library shell ready'
+      body: 'Theme persistence, profile actions, quick add, and auth redirects stay live.',
+      caption: 'Protected library with Better Auth session',
+      eyebrow: 'Library shell',
+      title: 'Protected bookmark library'
     },
     localeSaveError: 'Could not save language. Restored previous language.',
     sidebar: {
-      activeSection: 'Library shell',
+      activeSection: 'Library',
       collections: 'Collections later',
       eyebrow: 'Protected route',
-      footnote: 'Empty app chrome only. Bookmark workflows land in later child tasks.',
+      footnote: 'Minimal library now live. Collections, settings, and polish land later.',
       navLabel: 'Shell sections',
       settings: 'Settings later'
     },
@@ -72,15 +72,63 @@ export const en = {
     language: 'Language',
     soon: 'Soon'
   },
-  home: {
-    body: 'Google OAuth, persisted sessions, and protected shell access now replace the placeholder auth seam from FAV-21.',
-    eyebrow: 'Empty shell',
-    heading: 'Auth foundation ready for bookmark features',
-    status: {
-      protected: 'Protected',
-      session: 'Session',
-      theme: 'Theme',
-      themeValue: 'Persisted runtime toggle'
+  bookmarks: {
+    library: {
+      actions: {
+        add: 'Add bookmark'
+      },
+      body: 'Your newest saved links land here first.',
+      empty: {
+        body: 'Save your first bookmark to start building your library.',
+        title: 'No bookmarks saved yet'
+      },
+      eyebrow: 'Library',
+      heading: 'Your bookmarks',
+      linkOpensInNewTab: 'opens in a new tab'
+    },
+    quickAdd: {
+      actions: {
+        cancel: 'Back to library',
+        save: 'Save bookmark',
+        saving: 'Saving…'
+      },
+      body: 'Paste a URL, then adjust the title or description if you want.',
+      errors: {
+        duplicateUrl: 'This URL is already saved in your library.',
+        genericSave: 'Could not save bookmark. Try again.'
+      },
+      eyebrow: 'Quick add',
+      fields: {
+        description: {
+          label: 'Description',
+          placeholder: 'Optional note about this bookmark'
+        },
+        title: {
+          hint: 'Leave blank to use the URL hostname and path.',
+          label: 'Title',
+          placeholder: 'Optional title override'
+        },
+        url: {
+          label: 'URL',
+          placeholder: 'https://example.com/article'
+        }
+      },
+      heading: 'Save a bookmark',
+      validation: {
+        description: {
+          invalid: 'Description must be a string.',
+          tooLong: 'Description must be 4096 characters or fewer.'
+        },
+        invalidInput: 'Invalid bookmark input.',
+        title: {
+          invalid: 'Title must be a string.',
+          tooLong: 'Title must be 512 characters or fewer.'
+        },
+        url: {
+          invalid: 'Enter a valid bookmark URL.',
+          tooLong: 'Bookmark URL must be 2048 characters or fewer.'
+        }
+      }
     }
   },
   authError: {

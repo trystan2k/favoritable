@@ -10,17 +10,14 @@ test('@smoke seeded authenticated session reaches protected shell, survives relo
   await page.goto(appRoutes.home);
 
   await expect(page).toHaveURL(/\/$/);
-  await expect(
-    page.getByRole('heading', { level: 2, name: 'Protected library shell ready' })
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Your bookmarks' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Add bookmark' })).toBeVisible();
   await expect(page.getByRole('button', { name: /open account menu/i })).toBeVisible();
 
   await page.reload();
 
   await expect(page).toHaveURL(/\/$/);
-  await expect(
-    page.getByRole('heading', { level: 2, name: 'Protected library shell ready' })
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Your bookmarks' })).toBeVisible();
 
   await page.getByRole('button', { name: /open account menu/i }).click();
   await page.getByRole('button', { name: 'Sign out' }).click();

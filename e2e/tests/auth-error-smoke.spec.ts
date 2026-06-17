@@ -7,7 +7,7 @@ test('@smoke auth error route renders standalone localized error page with CTA t
   await page.goto(appRoutes.authError);
 
   await expect(
-    page.getByRole('heading', { level: 2, name: 'Protected library shell ready' })
+    page.getByRole('heading', { level: 2, name: 'Protected bookmark library' })
   ).toHaveCount(0);
 
   await expect(page.getByRole('heading', { level: 1, name: 'Authentication error' })).toBeVisible();

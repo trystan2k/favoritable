@@ -7,6 +7,11 @@ import { drizzle } from 'drizzle-orm/libsql';
 import { migrate } from 'drizzle-orm/libsql/migrator';
 
 import { getDatabaseFilePath, resolveDatabaseCredentials } from '../src/db/database-url.ts';
+import {
+  BookmarkUrlCanonicalizationError,
+  canonicalizeBookmarkUrls,
+  shouldCanonicalizeBookmarkUrlsBeforeMigrate
+} from './lib/bookmark-url-canonicalization.ts';
 
 const databaseCredentials = resolveDatabaseCredentials();
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -27,6 +32,23 @@ async function bootstrapDatabase() {
   const client = createClient(databaseCredentials);
 
   try {
+    if (await shouldCanonicalizeBookmarkUrlsBeforeMigrate(client)) {
+      try {
+        await canonicalizeBookmarkUrls(client, {
+          applyChanges: true,
+          failOnDuplicates: true
+        });
+      } catch (error) {
+        if (error instanceof BookmarkUrlCanonicalizationError) {
+          throw new Error(`Bookmark URL upgrade failed before migrations.\n${error.message}`, {
+            cause: error
+          });
+        }
+
+        throw error;
+      }
+    }
+
     const db = drizzle(client);
 
     await migrate(db, {

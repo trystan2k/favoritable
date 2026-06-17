@@ -16,7 +16,9 @@ import {
 import {
   assertBookmarkLabelOwnership,
   getBookmarkByIdForUser,
+  getBookmarkByUrlForUser,
   getLabelByIdForUser,
+  listBookmarksForUser,
   requireBookmarkByIdForUser,
   UserScopeAccessError
 } from '@/features/bookmarks/server/user-scope.server';
@@ -215,6 +217,109 @@ describe('bookmark user scope helpers', () => {
         context!.db
       )
     ).resolves.toBeNull();
+  });
+
+  test('returns bookmarks by url only for the authenticated owner', async () => {
+    await expect(
+      getBookmarkByUrlForUser(
+        {
+          url: 'https://favoritable.app/owner-bookmark',
+          userId: 'user-1'
+        },
+        context!.db
+      )
+    ).resolves.toMatchObject({
+      id: 'bookmark-1',
+      userId: 'user-1'
+    });
+
+    await expect(
+      getBookmarkByUrlForUser(
+        {
+          url: 'https://favoritable.app/owner-bookmark',
+          userId: 'user-2'
+        },
+        context!.db
+      )
+    ).resolves.toBeNull();
+  });
+
+  test('matches canonical root urls after canonicalizing lookup values', async () => {
+    await context!.client.execute(`
+      insert into bookmark (
+        id,
+        user_id,
+        url,
+        slug,
+        title,
+        state,
+        favorite,
+        created_at,
+        updated_at
+      )
+      values (
+        'bookmark-root-canonical',
+        'user-1',
+        'https://example.com/',
+        'example-root',
+        'Example Root',
+        'active',
+        0,
+        1700000000200,
+        1700000000200
+      )
+    `);
+
+    await expect(
+      getBookmarkByUrlForUser(
+        {
+          url: 'https://example.com',
+          userId: 'user-1'
+        },
+        context!.db
+      )
+    ).resolves.toMatchObject({
+      id: 'bookmark-root-canonical',
+      userId: 'user-1'
+    });
+  });
+
+  test('lists bookmarks for one user newest first', async () => {
+    await context!.client.execute(`
+      insert into bookmark (
+        id,
+        user_id,
+        url,
+        slug,
+        title,
+        state,
+        favorite,
+        created_at,
+        updated_at
+      )
+      values (
+        'bookmark-3',
+        'user-1',
+        'https://favoritable.app/newest-bookmark',
+        'newest-bookmark',
+        'Newest Bookmark',
+        'active',
+        0,
+        1700000000100,
+        1700000000100
+      )
+    `);
+
+    await expect(listBookmarksForUser({ userId: 'user-1' }, context!.db)).resolves.toMatchObject([
+      {
+        id: 'bookmark-3',
+        userId: 'user-1'
+      },
+      {
+        id: 'bookmark-1',
+        userId: 'user-1'
+      }
+    ]);
   });
 
   test('rejects cross-user bookmark reads with a scoped access error', async () => {

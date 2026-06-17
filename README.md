@@ -82,7 +82,7 @@ Favoritable persists Better Auth data in SQLite through Drizzle. Copy `.env.exam
 pnpm db:bootstrap
 ```
 
-`pnpm dev`, `pnpm test`, and the preview E2E path already run this bootstrap step for fresh local databases.
+`pnpm dev`, `pnpm test`, and the preview E2E path already run this bootstrap step for fresh local databases. For legacy bookmark data, the bootstrap/migrate flow now canonicalizes stored bookmark URLs before applying the unique `(user_id, url)` constraint and fails loud if canonical-equivalent same-user duplicates still need manual cleanup.
 
 ## Routing
 

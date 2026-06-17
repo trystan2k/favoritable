@@ -3,14 +3,22 @@ import { drizzle } from 'drizzle-orm/libsql';
 
 import { resolveDatabaseCredentials } from '@/db/database-url';
 import * as schema from '@/db/schema/schema';
-import { getAuthEnvironment } from '@/features/auth/server/env.server';
 
 let database: ReturnType<typeof drizzle<typeof schema>> | null = null;
 
+const defaultDatabaseUrl = 'file:./data/favoritable.db';
+
+function readEnvironmentVariable(name: string) {
+  const value = process.env[name]?.trim();
+
+  return value ? value : undefined;
+}
+
 export function createDb(databaseUrl?: string, databaseAuthToken?: string) {
-  const environment = databaseUrl === undefined ? getAuthEnvironment() : null;
-  const resolvedDatabaseUrl = databaseUrl ?? environment!.databaseUrl;
-  const resolvedDatabaseAuthToken = databaseAuthToken ?? environment?.databaseAuthToken;
+  const resolvedDatabaseUrl =
+    databaseUrl ?? readEnvironmentVariable('DATABASE_URL') ?? defaultDatabaseUrl;
+  const resolvedDatabaseAuthToken =
+    databaseAuthToken ?? readEnvironmentVariable('DATABASE_AUTH_TOKEN');
   const databaseClient = createClient(
     resolveDatabaseCredentials(resolvedDatabaseUrl, resolvedDatabaseAuthToken)
   );

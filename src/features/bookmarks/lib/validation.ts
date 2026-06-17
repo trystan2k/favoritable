@@ -1,3 +1,5 @@
+import { canonicalizeBookmarkUrl, isValidHttpUrl } from '@/features/bookmarks/lib/bookmark-url';
+
 export type ValidationFieldErrors<TField extends string> = Partial<Record<TField, string[]>>;
 
 export type ValidationResult<TData, TField extends string> =
@@ -172,7 +174,7 @@ export function normalizeOptionalUrl(value: unknown): InvalidValue | string | un
     return normalizedValue;
   }
 
-  return isValidHttpUrl(normalizedValue) ? normalizedValue : invalidValue;
+  return isValidHttpUrl(normalizedValue) ? canonicalizeBookmarkUrl(normalizedValue) : invalidValue;
 }
 
 export function normalizeRequiredUrl(value: unknown): InvalidValue | string {
@@ -182,7 +184,7 @@ export function normalizeRequiredUrl(value: unknown): InvalidValue | string {
     return invalidValue;
   }
 
-  return isValidHttpUrl(normalizedValue) ? normalizedValue : invalidValue;
+  return isValidHttpUrl(normalizedValue) ? canonicalizeBookmarkUrl(normalizedValue) : invalidValue;
 }
 
 export function unwrapOptionalValidatedValue<T>(value: InvalidValue | T | undefined) {
@@ -199,14 +201,4 @@ export function unwrapRequiredValidatedValue<T>(value: InvalidValue | T) {
   }
 
   return value;
-}
-
-function isValidHttpUrl(value: string) {
-  try {
-    const url = new URL(value);
-
-    return url.protocol === 'http:' || url.protocol === 'https:';
-  } catch {
-    return false;
-  }
 }
