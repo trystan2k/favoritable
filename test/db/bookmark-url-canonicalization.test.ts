@@ -1,13 +1,28 @@
+import type { InArgs, InStatement, ResultSet, createClient } from '@libsql/client';
 import { describe, expect, test, vi } from 'vitest';
 
 import { canonicalizeBookmarkUrls } from '../../scripts/lib/bookmark-url-canonicalization';
 
-type ExecuteInput =
-  | string
-  | {
-      args?: unknown[];
-      sql: string;
-    };
+type SqlClient = Pick<ReturnType<typeof createClient>, 'execute'>;
+
+function createResult(rows: unknown): ResultSet {
+  return {
+    columns: [],
+    columnTypes: [],
+    lastInsertRowid: undefined,
+    rows,
+    rowsAffected: 0,
+    toJSON() {
+      return {
+        columns: this.columns,
+        columnTypes: this.columnTypes,
+        lastInsertRowid: this.lastInsertRowid,
+        rows: this.rows,
+        rowsAffected: this.rowsAffected
+      };
+    }
+  } as ResultSet;
+}
 
 type MockBookmarkRow = {
   id: string;
@@ -24,32 +39,35 @@ function createMockClient(
   const commands: string[] = [];
   const updateIds: string[] = [];
 
-  const client = {
-    execute: vi.fn(async (input: ExecuteInput) => {
-      const statement = typeof input === 'string' ? input : input.sql;
+  const executeMock = vi.fn<SqlClient['execute']>(
+    async (stmtOrSql: InStatement | string, args?: InArgs): Promise<ResultSet> => {
+      const statement = typeof stmtOrSql === 'string' ? stmtOrSql : stmtOrSql.sql;
+      const statementArgs =
+        typeof stmtOrSql === 'string' ? args : 'args' in stmtOrSql ? stmtOrSql.args : undefined;
 
       commands.push(statement);
 
       if (statement.includes("sqlite_master where type = 'table'")) {
-        return { rows: [{ 1: 1 }] };
+        return createResult([{ 1: 1 }]);
       }
 
       if (statement.includes('select id, user_id, url')) {
-        return {
-          rows: rows.map((row) => ({
+        return createResult(
+          rows.map((row) => ({
             id: row.id,
             url: row.url,
             user_id: row.userId
           }))
-        };
+        );
       }
 
       if (statement === 'begin' || statement === 'commit' || statement === 'rollback') {
-        return { rows: [] };
+        return createResult([]);
       }
 
       if (statement === 'update bookmark set url = ? where id = ?') {
-        const updateId = String(typeof input === 'string' ? '' : input.args?.[1]);
+        const updateIdArg = Array.isArray(statementArgs) ? statementArgs[1] : undefined;
+        const updateId = typeof updateIdArg === 'string' ? updateIdArg : '';
 
         updateIds.push(updateId);
 
@@ -57,11 +75,14 @@ function createMockClient(
           throw new Error('update failed');
         }
 
-        return { rows: [] };
+        return createResult([]);
       }
 
       throw new Error(`Unexpected statement: ${statement}`);
-    })
+    }
+  );
+  const client: SqlClient = {
+    execute: executeMock as SqlClient['execute']
   };
 
   return {

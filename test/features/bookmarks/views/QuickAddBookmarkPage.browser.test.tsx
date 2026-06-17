@@ -144,7 +144,7 @@ describe('QuickAddBookmarkPage', () => {
     });
   });
 
-  test('awaits route invalidation then navigates to the library after a successful save', async () => {
+  test('starts library navigation immediately after a successful save', async () => {
     const submitBookmark = vi.fn<() => Promise<CreateBookmarkResult>>(async () => ({
       bookmarkId: 'bookmark-1',
       success: true as const
@@ -162,9 +162,12 @@ describe('QuickAddBookmarkPage', () => {
     fireEvent.submit(screen.getByRole('button', { name: 'Save bookmark' }).closest('form')!);
 
     await waitFor(() => {
-      expect(invalidateMock).toHaveBeenCalledTimes(1);
       expect(navigateMock).toHaveBeenCalledWith({ to: '/' });
       expect(screen.getByRole('button', { name: 'Save bookmark' })).not.toBeDisabled();
+    });
+
+    await waitFor(() => {
+      expect(invalidateMock).toHaveBeenCalledTimes(1);
     });
   });
 

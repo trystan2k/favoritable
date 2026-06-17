@@ -131,6 +131,7 @@ export async function canonicalizeBookmarkUrls(
 
   try {
     for (const update of summary.updates) {
+      // oxlint-disable-next-line no-await-in-loop -- transaction updates must stay sequential for deterministic rollback behavior
       await client.execute({
         args: [update.canonicalUrl, update.id],
         sql: 'update bookmark set url = ? where id = ?'
