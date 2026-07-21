@@ -117,7 +117,7 @@ describe('root route optional session loader', () => {
           name: 'Thiago'
         }
       }
-    } as never);
+    });
 
     const { shellComponent } = RootRoute.options as unknown as {
       shellComponent: (props: { children: ReactNode }) => ReactElement;
@@ -132,7 +132,7 @@ describe('root route optional session loader', () => {
   });
 
   test('root shell uses default locale when no session exists', () => {
-    vi.spyOn(RootRoute, 'useRouteContext').mockReturnValue({ session: null } as never);
+    vi.spyOn(RootRoute, 'useRouteContext').mockReturnValue({ session: null });
 
     const { shellComponent } = RootRoute.options as unknown as {
       shellComponent: (props: { children: ReactNode }) => ReactElement;

@@ -8,7 +8,7 @@ import { TestI18nProvider } from '@/test-support/TestI18nProvider';
 const { selectState } = vi.hoisted(() => ({
   selectState: {
     onValueChange: undefined as ((value: string | null) => void) | undefined,
-    renderedValue: null as unknown
+    renderedValue: null as string | null
   }
 }));
 

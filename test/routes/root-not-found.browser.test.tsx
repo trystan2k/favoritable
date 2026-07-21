@@ -49,7 +49,7 @@ describe('RootNotFoundComponent', () => {
 
   test('renders standalone localized 404 for signed-out sessions', async () => {
     window.localStorage.setItem('favoritable-locale', 'es');
-    vi.spyOn(RootRoute, 'useRouteContext').mockReturnValue({ session: null } as never);
+    vi.spyOn(RootRoute, 'useRouteContext').mockReturnValue({ session: null });
 
     render(
       <TestI18nProvider>
@@ -78,7 +78,7 @@ describe('RootNotFoundComponent', () => {
           name: 'Thiago'
         }
       }
-    } as never);
+    });
     updateUserMock.mockResolvedValue({ error: null });
 
     render(
