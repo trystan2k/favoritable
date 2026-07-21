@@ -9,19 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as AuthErrorRouteImport } from './routes/auth-error'
 import { Route as ProtectedRouteImport } from './routes/_protected'
+import { Route as AuthErrorRouteImport } from './routes/auth-error'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProtectedIndexRouteImport } from './routes/_protected/index'
 import { Route as ApiBookmarksRouteImport } from './routes/api/bookmarks'
-import { Route as ApiAuthTestSessionRouteImport } from './routes/api/auth/test-session'
-import { Route as ApiAuthProvidersRouteImport } from './routes/api/auth/providers'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ProtectedBookmarksNewRouteImport } from './routes/_protected/bookmarks/new'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiAuthProvidersRouteImport } from './routes/api/auth/providers'
+import { Route as ApiAuthTestSessionRouteImport } from './routes/api/auth/test-session'
 
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+const ProtectedRoute = ProtectedRouteImport.update({
+  id: '/_protected',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthErrorRoute = AuthErrorRouteImport.update({
@@ -29,8 +28,9 @@ const AuthErrorRoute = AuthErrorRouteImport.update({
   path: '/auth-error',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProtectedRoute = ProtectedRouteImport.update({
-  id: '/_protected',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProtectedIndexRoute = ProtectedIndexRouteImport.update({
@@ -43,9 +43,14 @@ const ApiBookmarksRoute = ApiBookmarksRouteImport.update({
   path: '/api/bookmarks',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAuthTestSessionRoute = ApiAuthTestSessionRouteImport.update({
-  id: '/api/auth/test-session',
-  path: '/api/auth/test-session',
+const ProtectedBookmarksNewRoute = ProtectedBookmarksNewRouteImport.update({
+  id: '/bookmarks/new',
+  path: '/bookmarks/new',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthProvidersRoute = ApiAuthProvidersRouteImport.update({
@@ -53,15 +58,10 @@ const ApiAuthProvidersRoute = ApiAuthProvidersRouteImport.update({
   path: '/api/auth/providers',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
+const ApiAuthTestSessionRoute = ApiAuthTestSessionRouteImport.update({
+  id: '/api/auth/test-session',
+  path: '/api/auth/test-session',
   getParentRoute: () => rootRouteImport,
-} as any)
-const ProtectedBookmarksNewRoute = ProtectedBookmarksNewRouteImport.update({
-  id: '/bookmarks/new',
-  path: '/bookmarks/new',
-  getParentRoute: () => ProtectedRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -142,11 +142,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+    '/_protected': {
+      id: '/_protected'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ProtectedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth-error': {
@@ -156,11 +156,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthErrorRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_protected': {
-      id: '/_protected'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof ProtectedRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_protected/': {
@@ -177,11 +177,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiBookmarksRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/auth/test-session': {
-      id: '/api/auth/test-session'
-      path: '/api/auth/test-session'
-      fullPath: '/api/auth/test-session'
-      preLoaderRoute: typeof ApiAuthTestSessionRouteImport
+    '/_protected/bookmarks/new': {
+      id: '/_protected/bookmarks/new'
+      path: '/bookmarks/new'
+      fullPath: '/bookmarks/new'
+      preLoaderRoute: typeof ProtectedBookmarksNewRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/providers': {
@@ -191,19 +198,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthProvidersRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
+    '/api/auth/test-session': {
+      id: '/api/auth/test-session'
+      path: '/api/auth/test-session'
+      fullPath: '/api/auth/test-session'
+      preLoaderRoute: typeof ApiAuthTestSessionRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/_protected/bookmarks/new': {
-      id: '/_protected/bookmarks/new'
-      path: '/bookmarks/new'
-      fullPath: '/bookmarks/new'
-      preLoaderRoute: typeof ProtectedBookmarksNewRouteImport
-      parentRoute: typeof ProtectedRoute
     }
   }
 }
