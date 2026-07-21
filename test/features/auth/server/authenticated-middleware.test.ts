@@ -60,9 +60,9 @@ describe('authenticated server middleware', () => {
       await runServerMiddleware({
         context: undefined,
         handlerType: 'serverFn',
-        next: (() => {
+        next: () => {
           throw new Error('Expected anonymous middleware call to short-circuit before next().');
-        }) as never,
+        },
         pathname: '/_server-fns/protected',
         request: new Request('https://favoritable.test/_server-fns/protected', {
           headers: {

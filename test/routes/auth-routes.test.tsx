@@ -295,7 +295,7 @@ describe('auth routes', () => {
       typeof AuthApiRoute.options.server?.handlers === 'function'
         ? AuthApiRoute.options.server.handlers({} as never)
         : AuthApiRoute.options.server?.handlers;
-    const response = await (handlerRecord?.GET as any)?.({ request } as never);
+    const response = await (handlerRecord?.GET as any)?.({ request });
 
     expect(authHandlerMock).toHaveBeenCalledWith(request);
     await expect(response?.text()).resolves.toBe('GET');
@@ -309,7 +309,7 @@ describe('auth routes', () => {
       typeof AuthApiRoute.options.server?.handlers === 'function'
         ? AuthApiRoute.options.server.handlers({} as never)
         : AuthApiRoute.options.server?.handlers;
-    const response = await (handlerRecord?.POST as any)?.({ request } as never);
+    const response = await (handlerRecord?.POST as any)?.({ request });
 
     expect(authHandlerMock).toHaveBeenCalledWith(request);
     await expect(response?.text()).resolves.toBe('POST');
@@ -320,7 +320,7 @@ describe('auth routes', () => {
       typeof AuthProvidersRoute.options.server?.handlers === 'function'
         ? AuthProvidersRoute.options.server.handlers({} as never)
         : AuthProvidersRoute.options.server?.handlers;
-    const response = await (handlerRecord?.GET as any)?.({} as never);
+    const response = await (handlerRecord?.GET as any)?.({});
 
     await expect(response?.json()).resolves.toEqual({ google: true });
   });
@@ -331,7 +331,7 @@ describe('auth routes', () => {
       request: createLocalhostTestSessionRequest({
         'x-favoritable-test-session-secret': testSessionSecret
       })
-    } as never);
+    });
 
     expect(response?.status).toBe(404);
   });
@@ -341,7 +341,7 @@ describe('auth routes', () => {
     const handlerRecord = getAuthTestSessionHandlers();
     const response = await (handlerRecord?.POST as any)?.({
       request: createLocalhostTestSessionRequest()
-    } as never);
+    });
 
     expect(response?.status).toBe(404);
   });
@@ -353,7 +353,7 @@ describe('auth routes', () => {
       request: createLocalhostTestSessionRequest({
         'x-favoritable-test-session-secret': 'wrong-secret'
       })
-    } as never);
+    });
 
     expect(response?.status).toBe(404);
   });
@@ -365,7 +365,7 @@ describe('auth routes', () => {
       request: createLocalhostTestSessionRequest({
         'x-favoritable-test-session-secret': testSessionSecret
       })
-    } as never);
+    });
 
     await expect(response?.json()).resolves.toEqual({
       cookies: [
@@ -399,7 +399,7 @@ describe('auth routes', () => {
         request: createLocalhostTestSessionRequest({
           'x-favoritable-test-session-secret': testSessionSecret
         })
-      } as never)
+      })
     ).rejects.toThrow('Better Auth test helpers are unavailable for E2E session bootstrap.');
   });
 
@@ -415,7 +415,7 @@ describe('auth routes', () => {
         request: createLocalhostTestSessionRequest({
           'x-favoritable-test-session-secret': testSessionSecret
         })
-      } as never)
+      })
     ).rejects.toThrow('Better Auth test login did not return a cookie header.');
   });
 });

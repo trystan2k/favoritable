@@ -82,7 +82,7 @@ function createMockClient(
     }
   );
   const client: SqlClient = {
-    execute: executeMock as SqlClient['execute']
+    execute: executeMock
   };
 
   return {
